@@ -2,15 +2,15 @@ es:
   congratulations_you_have_signed_up: ¡Felicidades! Te has registrado en %{site_title}.
   cookie_disabled_warning: Las cookies están bloqueadas en tu navegador. No podrás iniciar sesión hasta que las actives.
   email_verification_body: |-
-    Que se haya registrado para %{site_title} (%{host}).
+      Que se haya registrado para %{site_title} (%{host}).
 
-    Antes de poder iniciar sesión debe comprobar que esta es tu correo electrónico.
+      Antes de poder iniciar sesión debe comprobar que esta es tu correo electrónico.
 
-    Haga clic en el enlace de abajo o copie y péguelo en su navegador:
+      Haga clic en el enlace de abajo o copie y péguelo en su navegador:
 
-    %{verify_email_link}
+      %{verify_email_link}
 
-    Si no desea unirse, simplemente ignorar este mensaje.
+      Si no desea unirse, simplemente ignorar este mensaje.
   forgotten_email_address: ¿Qué correo electrónico empleaste para crear tu cuenta?
   invalid_email_text: La dirección de correo electrónico no es válida.
   invalid_token: Autenticación inválida
@@ -86,7 +86,7 @@ es:
   delete: Eliminar
   delete_thing: Eliminar %{thing}
   deleted: Borrado
-  destroy: destruir
+  destroy: Destruir
   destroy_confirmation: ¿Quieres eliminar este(a) %{thing}? Esta acción no se puede deshacer.
   destroy_thing: Destruye %{thing}
   drop_files_here: Soltar archivos aquí
@@ -118,9 +118,11 @@ es:
       daily_digest: "Sí: un resumen diario de cambios por %{site}"
       page_update: "%{site}: Una página ha sido modificada"
       pages_you_are_watching_have_been_modified:
-        one: Una página que estás observando ha sido modificada.
-        other: '%{count} páginas que estás observando han sido modificadas desde la última notificación.'
+        one: "Una página que estás observando ha sido modificada."
+        other: "%{count} páginas que estás observando han sido modificadas desde la última notificación."
       the_page_you_are_watching_description: La página que estás observando "%{page_title}" ha sido modificada
+      you_can_find_updates_here: 'Encontrarás más detalles y una lista de páginas con cambios recientes aquí:'
+      you_can_turn_off_or_configure_notifications: Desactivar las notificaciones por correo, recibir un resumen de cambios, o recibir un correo cada vez que la página es cambiada
   exception:
     description:
       forbidden: Lo sentimos. No puedes realizar esa acción.
@@ -242,15 +244,16 @@ es:
   group_destroyed_email: "¡%{group_type} %{group} se ha destruido!"
   group_destroyed_subject: "¡%{group_type} %{group} ha sido eliminado por %{user}!"
   group_invite_email: |-
-    %{from_user} te ha invitado a participar en el grupo "%{group}". Si deseas unirte a este grupo, usa este enlace:
+      %{from_user} te ha invitado a participar en el grupo "%{group}". Si deseas unirte a este grupo, usa este enlace:
 
-    %{accept_invite_link}
+      %{accept_invite_link}
 
-    La página principal de este grupo se puede encontrar aquí:
-    %{group_home_link}
+      La página principal de este grupo se puede encontrar aquí:
+      %{group_home_link}
 
-    Si no deseas participar, simplemente ignora este mensaje.
+      Si no deseas participar, simplemente ignora este mensaje.
   group_invite_subject: Invitación a unirse a grupo "%{group}"
+  committee_choose_group: 'Elija un grupo de este %{group_type}:'
   committee_description: Comités son grupos dentro de una organización o red. Un comité es totalmente subordinado a su organización matriz o red. Un usuario añadido a la comisión de fuera de la organización o red sólo tendrá acceso a la comisión.
   council_description: Consejos son grupos con poderes administrativos especiales. Cada organización o red pueden tener un consejo. Si lo hace, la gente en el Consejo tendrá poder sobre la red u organización.
   council_description_details: Por defecto, todos los miembros pueden modificar el% {grupo}. Si desea restringir los poderes administrativos a ciertos usuarios, crear un consejo y añadir usuarios a la misma.
@@ -312,6 +315,7 @@ es:
   language: Idioma
   message_user_wrote_caption: "%{user} escribió:"
   message_you_wrote_caption: 'Tu escribiste:'
+  my_dashboard: Mi Tablero
   notification_select:
     digest: 'Sí: un resumen diario de cambios'
     none: 'No: no hay mensajes de correo electrónico para los cambios'
@@ -616,9 +620,11 @@ es:
   request_to_friend: Solicitud para convertirse en Contactos
   request_to_friend_description: '%{user} quiere ser el contacto de %{other_user}'
   request_to_friend_short: ¿Debe %{user} ser contacto de %{other_user}?
+  request_to_join: Pide entrar
   request_to_join_network_short: ¿Debe %{group} ser parte de %{network}?
   request_to_join_our_network_description: grupo %{group} fue invitado a unirse a la red %{network}
   request_to_join_short: ¿Debe %{user} unirse a %{group}?
+  request_to_join_us: Pide entrar
   request_to_join_us_description: '%{user} fue invitado a unirse %{group}'
   request_to_join_us_via_email_description: '%{email} fue invitado a unirse a %{group}'
   request_to_join_us_via_email_short: ¿Debe %{email} unirse a %{group}?
@@ -763,10 +769,12 @@ es:
   insert_image: Insertar imagen
   leave_editing_wiki_page_warning: Si sales de esta página perderás los cambios que hayas realizado.
   next_change: próximo cambio
+  other_section_locked_error_html: Solo puedes bloquear un sección a la vez. Has bloqueado %{section}.
   prev_change: cambio anterior
   preview: Vista Previa
   private_wiki: Wiki Privado
   public_wiki: Wiki Público
+  save_or_cancel_edit_lock_wiki_error: Has bloqueado este wiki. Nadie más podrá editarlo hasta que presiones %{save_button} o  %{cancel} para dejar de editar.
   user_locked_section_html: "<b>%{user}</b> ha bloqueado la sección <b>%{section}</b>."
   version: Versión
   version_doesnt_exist: No hay versión %{version}

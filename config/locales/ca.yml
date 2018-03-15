@@ -2,15 +2,15 @@ ca:
   congratulations_you_have_signed_up: ¡Enhorabona! t'has registrat a %{site_title}.
   cookie_disabled_warning: Teniu les cookies inhabilitades. No podreu iniciar sessió fins que activeu les cookies.
   email_verification_body: |-
-    Heu sol·licitat l'alta per a %{site_title} (%{host}).
+      Heu sol·licitat l'alta per a %{site_title} (%{host}).
 
-    Abans de poder iniciar sessió, heu de verificar que aquest compte de correu és vostre.
+      Abans de poder iniciar sessió, heu de verificar que aquest compte de correu és vostre.
 
-    Feu clic al següent enllaç o copieu-lo i enganxeu-lo al vostre navegador:
+      Feu clic al següent enllaç o copieu-lo i enganxeu-lo al vostre navegador:
 
-    %{verify_email_link}
+      %{verify_email_link}
 
-    Si no voleu donar-vos d'alta, només cal que ignoreu aquest missatge.
+      Si no voleu donar-vos d'alta, només cal que ignoreu aquest missatge.
   forgotten_email_address: Quina adreça de correu electrònic vau donar en crear el vostre compte?
   invalid_email_text: La adreça de correu electrònic que has indicat no és vàlida.
   invalid_token: Codi No Vàlid
@@ -77,6 +77,7 @@ ca:
   cancel: Cancel·la
   close_button: Tanca
   confirm: Confirmació
+  create: Crea
   create_a_new_thing: Crea un/a nou/nova %{thing}
   create_button: Crea
   create_thing: Crea %{thing}
@@ -90,6 +91,7 @@ ca:
   destroy_thing: Destrueix %{thing}
   drop_files_here: Arrossegueu els fitxers aquí
   edit: Edita
+  files_pending: S'estan carregant els fitxers...
   loading_progress: S'està carregant...
   ok_button: D'Acord
   optional: Opcional
@@ -109,6 +111,16 @@ ca:
   upload: Penja
   mailer:
     hello: Hola %{user_name}
+    pgp_key:
+      key_uploaded_subject: Notificacions
+    page_histories:
+      change_your_settings_here: 'Canvieu les opcions de notificació per correu electrònic aquí: %{page_link}'
+      daily_digest: "%{site} : Resum diari dels canvis"
+      page_update: "%{site} : Actualització de pàgina"
+      the_page_you_are_watching_description: La pàgina "%{page_title}" que vigileu ha estat modificada
+      we_leave_out_details: Hem tret els detalls en aquest missatge per protegir la informació que potser preferiu mantenir en privat.
+      you_can_find_updates_here: 'Trobareu més detalls i una llista de les pàgines recentment canviades aquí:'
+      you_can_turn_off_or_configure_notifications: Desactiveu les notificacions per correu electrònic, rebeu un resum dels canvis, o rebeu un missatge de correu electrònic cada vegada que hi hagi canvis a una pàgina
   exception:
     description:
       forbidden: No tens els permisos per realitzar aquesta acció.
@@ -133,6 +145,7 @@ ca:
   upload_new_image: Penja una imatge nova
   upload_zip_file_link: Penja un arxiu ZIP
   approved_by_entity: Aprovat per %{entity}
+  friends: Contactes
   name: Nom
   owner: Propietari
   people: Persones
@@ -151,8 +164,11 @@ ca:
   all: Tot
   autocomplete:
     placeholder:
+      enter_name_of_group_or_person: 'Introduïu el nom d''un grup o persona '
       enter_name_of_group: Introduïu el nom d'un grup
       enter_name_of_person: Introduïu el nom d'una persona
+      enter_name_of_contact: Introduïu el nom d'un contacte
+  everybody: Todxs
   go: Vés
   list_things: Llista %{things}
   modified: modificat
@@ -172,6 +188,7 @@ ca:
   unknown: Desconegut
   contacts: Contactes
   member_groups_of_network: Grups Membres
+  my_contacts: Contactes
   peers: Companys
   action_cannot_be_undone: Aquesta acció no es pot desfer.
   administration: Administració
@@ -206,6 +223,7 @@ ca:
   title: Títol
   visibility: Visibilitat
   visits: Visites
+  all_groups: Tots els grups
   basic_settings: Paràmetres bàsics
   committee: Comissió
   committees: Comitès
@@ -223,7 +241,17 @@ ca:
   structure: Estructura
   group_destroyed_email: "S'ha destruït %{group_type} %{group}!"
   group_destroyed_subject: "%{user} ha eliminat %{group_type} %{group}!"
+  group_invite_email: |-
+      %{from_user} us ha convidat a formar part del grup «%{group}». Si us hi voleu unir, feu clic aquí:
+
+      %{accept_invite_link}
+
+      La pàgina inicial d'aquest grup és aquí:
+      %{group_home_link}
+
+      Si no voleu formar part d'aquest grup, simplement ignoreu aquest missatge.
   group_invite_subject: Invitació al grup «%{group}»
+  committee_choose_group: 'Trieu un grup per aquest %{group_type}'
   committee_description: Els Comitès són grups dins d'una organització o xarxa. Un comitè està completament subordinat a la seva organització o xarxa mare. Un usuari afegit a un comitè des d'una organització o xarxa externes només tindrà accés al comitè.
   council_description: Els Consells són grups amb poders d'administració especials. Cada organització o xarxa pot tenir un consell. Si el té, les persones del consell tindran poder sobre la xarxa o la organització.
   council_description_details: Per defecte, tots els membres poden modificar el %{group}. Si voleu restringir els poders d'administració a certs usuaris, creeu un consell i afegiu-hi usuaris.
@@ -282,14 +310,21 @@ ca:
   display_name: Nom a mostrar
   do_you_want_to_receive_email_notifications: Voleu rebre notificacions per correu electrònic sobre els canvis a les pàgines que esteu «vigilant»?
   email: Correu electrònic
+  fingerprint: Empremta digital
   language: Idioma
   message_user_wrote_caption: "%{user} ha escrit:"
   message_you_wrote_caption: 'Heu escrit:'
+  my_dashboard: La Meva Consola
   notification_select:
     digest: 'Sí: un resum diari dels canvis'
     none: 'No: cap missatge'
     single: 'Sí: un missatge per cada canvi'
   or_image_url: o una URL d'imatge
+  pgp_key: Clau PGP
+  pgp_public_key: Clau pública
+  pgp_key_invalid: La clau que heu introduït no es pot importar. Realment heu enganxat una clau PGP pública?
+  pgp_key_expired: La clau PGP que heu introduït caducarà.
+  private_profile: Perfil privat
   remove_image_link: Elimina la imatge
   save_changes: Desa els canvis
   select_image_file: selecciona un fitxer d'imatge
@@ -388,6 +423,7 @@ ca:
   destroy_page_via_trash_info: Es mourà la pàgina a la paperera, d'on es pot recuperar més tard.
   information: Informació
   page_details_link: "Detalls de %{page_class}"
+  page_is_public: Aquesta pàgina és pública.
   participation: Participació
   public_checkbox_help: Si està seleccionat, qualsevol por veure aquesta pàgina.
   remove_access_error: No s'ha pogut eliminar l'accés a aquesta pàgina. No podeu eliminar l'accés del propietari o un accés que és necessari per a que pugueu administrar la pàgina.
@@ -421,22 +457,38 @@ ca:
   send_email: Envia un missatge per correu electrònic
   name_or_email_not_found: '«%{name}» no és el nom de cap usuari o grup, ni una adreça de correu electrònic vàlida. '
   additional_page_access: Accés Addicional
+  announcement_page_description: Anunci
+  announcement_page_display: Anunci
+  announcements_page_display: Anuncis
+  article_page_description: Creeu un bloc o un article de notícies.
+  article_page_display: Article
   asset_page_description: Penja una foto, document, full de càlcul, presentació o qualsevol altre tipus de fitxer.
   asset_page_display: Fitxer
   attachments: Adjunts
+  collection_class_description: Pàgines especials que contenen altres pàgines.
   create_page: Crea una pàgina
   discussion_page_description: Comentar sobre un tema en particular un grups o amb altres usuaris.
   discussion_page_display: Conversa del Grup
+  event_page_description: Esdeveniment del calendari
+  event_page_display: Esdeveniment
+  external_video_page_description: Mostra un vídeo allotjat en un lloc web extern.
+  external_video_page_display: Vídeo extern
+  folder_class_description: Crea una carpeta per organitzar altres pàgines.
+  folder_display: Carpeta
   gallery_description: Puja múltiples imatges o organitza algunes imatges existents a un conjunt.
   gallery_display: Galeria
+  message_page_description: Enviar un missatge personal a destinataris individuals.
+  message_page_display: Missatge personal
   page_added_to_group: S'afegirà aquesta pàgina a %{group_type} %{group_name}.
   page_create_owner: Propietari de la pàgina
+  page_group_event: Esdeveniment
   page_owner_error: Ha d'haver-hi un propietari de pàgina.
   ranked_vote_page_description: Crea una llista d'opcions per a que la gent pugui ordenar les seves preferències.
   ranked_vote_page_display: Vot en Preferència
   rate_many_page_description: Crea una llista d'opcions per a que la gent pugui aprovar-les o desaprovar-les.
   rate_many_page_display: 'Sondeig d''Aprovació '
   select_file_to_upload: Seleccioneu un fitxer per carregar.
+  survey_page_description: Crea una llista d'opcions per a que la gent pugui aprovar o desaprovar d'elles.
   survey_page_display: Sondeig
   task_list_page_description: Crea una llista de tasques i assigna-les a tu mateix/a o als altres.
   task_list_page_display: Llista de Tasques
@@ -502,6 +554,7 @@ ca:
   survey_select_a_rating_message: Seleccioneu una valoració per veure el següent element.
   survey_skip_next_link: Salta al següent
   survey_thanks_submit_message: Gràcies per enviar la vostra resposta.
+  survey_you_already_rated_response_with_rating_heading: Ja heu valorat aquesta resposta - Li heu donat un %{rating}.
   survey_you_previousely_rated_message: Heu valorat prèviament aquest element amb un %{rating}.
   survey_your_rating_heading: 'La vostra valoració:'
   their_answer_goes_here_label: La seva resposta va aquí...
@@ -578,7 +631,11 @@ ca:
   request_to_friend: Sol·licita ser contacte
   request_to_friend_description: '%{user} vol ser amic/amiga de %{other_user}'
   request_to_friend_short: '%{user} ha de ser un contacte de %{other_user}?'
+  request_to_join: Sol·licitud per unir-se
+  request_to_join_network_short: '%{group} ha d''unir-se a %{network}?'
   request_to_join_our_network_description: el grup %{group} ha sigut convidat a formar part de la xarxa %{network}
+  request_to_join_short: '%{user} ha d''unir-se a %{group}?'
+  request_to_join_us: Sol·licitud per unir-se
   request_to_join_us_description: '%{user} ha sigut convidat a %{group}'
   request_to_join_us_via_email_description: '%{email} ha sigut convidat a %{group}'
   request_to_join_us_via_email_short: '%{email} ha d''unir-se a %{group}?'
@@ -647,6 +704,7 @@ ca:
   alert_saved: S'han desat els canvis
   csrf_error_message: 'La vostra sol·licitud d''inici de sessió té pinta de ser un atac contra aquest lloc web. No us preocupeu: això passa sovint, fins i tot en sol·licituds innocents.  Simplement som súper paranoics. Només cal que torneu a carregar la pàgina abans de tornar-ho intentar. Podeu seguir aquest enllaç per provar-ho de nou.'
   error_saving_new_order_message: 'Hi ha hagut un error en desar el nou ordre: %{error_message}'
+  activate_js_to_rearrange_photos: Activeu JavaScript per poder arrossegar i reordenar les fotos!
   add_another_file: Afegeix un altre fitxer
   add_existing_image: Afegeix una foto
   add_photo_to_gallery: Feu clic sobre una foto per afegir-la
@@ -655,6 +713,7 @@ ca:
   cancel_link: cancel·la
   download: Descarregar
   download_gallery: Galeria de Descarregues
+  drag_and_drop_to_rearrange_photos: 'Arrossega i Solta les imatges per reordenar-les  '
   edit_gallery: Edita la galeria
   error_saving_new_order: Hi ha hagut un error en desar el nou ordre!
   file_must_be_image_error: El fitxer ha de ser una imatge per estar a la galeria.
@@ -673,6 +732,7 @@ ca:
   slideshow_delay_input: Actualitza cada %{input_field} segons
   successful_undelete_image: S'ha recuperat la imatge correctament.
   successfully_removed_image: S'ha mogut la imatge amb èxit %{undo_link}
+  upload_images_link: Penja
   you_are_not_allowed_to_do_that: No teniu permís per fer això!
   caption: Cita
   file: Fitxer
@@ -683,7 +743,10 @@ ca:
   size: Mida
   video_embed: Incrustar
   add_tags: Afegeix etiquetes
+  current_tags: Etiquetes actuals
   no_tags: sense etiquetes
+  popular_tags: Etiquetes populars
+  recent_tags: Etiquetes recents
   separate_tags: Separeu les etiquetes amb comes.
   tag: Etiqueta
   tags: Etiquetes
@@ -705,6 +768,7 @@ ca:
   view_slideshow: Veure Projecció de Diapositives
   break_lock_button: Desbloquejar
   can_still_save: Encara podeu desar.
+  cant_edit_section_html: No es pot editar %{section}.
   cant_find_wiki_section: No es pot trobar la secció %{section} de la wiki
   changes_made: Canvis fets %{when}.
   changes_might_be_overwritten: Els vostres canvis poden ser sobreescrits.
@@ -716,10 +780,13 @@ ca:
   insert_image: Insereix una imatge
   leave_editing_wiki_page_warning: Si abandoneu aquesta pàgina perdreu els canvis que heu fet.
   next_change: Següent Canvi
+  other_section_locked_error_html: No podeu bloquejar més d'una secció alhora. Ja teniu bloquejada %{section}.
   prev_change: Canvi Anterior
   preview: Preveure
   private_wiki: Wiki privada
   public_wiki: Wiki pública
+  save_or_cancel_edit_lock_wiki_error: Heu bloquejat aquesta wiki. Els altres usuaris no podran editar-la fins que feu clic a %{save_button} o %{cancel} per tancar l'edició.
+  user_locked_section_html: "%{user} ha bloquejat %{section}."
   version: Versió
   version_doesnt_exist: No hi ha una versió %{version}
   version_exists_error: Aquesta wiki està bloquejada perquè l'usuari %{user} ha desat nous canvis recentment. Encara podeu desar els vostres canvis, però sobreescriuran la nova versió.
@@ -727,6 +794,7 @@ ca:
   versions: Versions
   wiki: Wiki
   wiki_existed_new_version_created: Aquesta wiki ja ha estat creada per un altre usuari. Els vostres canvis s'han desat com una nova versió.
+  wiki_is_locked_html: Aquest wiki està bloquejat per %{user}
   wiki_revert_version: Revertir a la Versió %{version}
   wiki_section_edit: Edita Aquesta Secció
   wiki_section_is_locked: La secció %{section} està bloquejada per %{user}.

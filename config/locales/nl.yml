@@ -2,19 +2,19 @@ nl:
   congratulations_you_have_signed_up: Gefeliciteerd! Je bent toegetreden tot %{site_title}.
   cookie_disabled_warning: Je heeft Cookies afgezet. Je kan niet inloggen tot je Cookies heeft toegelaten.
   email_verification_body: |-
-    Je heeft jezelf ingeschreven voor %{site_title} (%{host}).
+      Je heeft jezelf ingeschreven voor %{site_title} (%{host}).
 
 
-    Voor je kan inloggen moet jij je email verifieren.
+      Voor je kan inloggen moet jij je email verifieren.
 
 
-    Klik op de link beneden of kopieer en invoeg de link in je browser:
+      Klik op de link beneden of kopieer en invoeg de link in je browser:
 
 
-    %{verify_email_link}
+      %{verify_email_link}
 
 
-    Wanneer je niet bijtreden wil kan je deze email gewoon ignoreren.
+      Wanneer je niet bijtreden wil kan je deze email gewoon ignoreren.
   forgotten_email_address: Welke emailadres heeft je ons gegeven toen jij heeft je toegang opgesteld?
   invalid_email_text: Het emailadres je heeft ingeschreven is niet geldig.
   invalid_token: Teken niet geldig

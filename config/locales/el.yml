@@ -2,15 +2,15 @@ el:
   congratulations_you_have_signed_up: Συγχαρητήρια! Έχετε κάνει εγγραφή στο %{site_title}.
   cookie_disabled_warning: Έχετε απενεργοποιήσει τα cookies. Δεν θα είστε σε θέση να συνδεθείτε μέχρι να ενεργοποιήσετε τα cookies.
   email_verification_body: |-
-    Έχετε κάνει εγγραφή στο %{site_title} (%{host}).
+      Έχετε κάνει εγγραφή στο %{site_title} (%{host}).
 
-    Πριν μπορέσετε να μπείτε στον λογαριασμό σας, πρέπει να επιβεβαιώσουμε ότι πρόκειται για το δικό σας email.
+      Πριν μπορέσετε να μπείτε στον λογαριασμό σας, πρέπει να επιβεβαιώσουμε ότι πρόκειται για το δικό σας email.
 
-    Κάντε κλικ στον παρακάτω σύνδεσμο ή κάντε αντιγραφή-επικόλληση στον φυλλομετρητή σας:
+      Κάντε κλικ στον παρακάτω σύνδεσμο ή κάντε αντιγραφή-επικόλληση στον φυλλομετρητή σας:
 
-    %{verify_email_link}
+      %{verify_email_link}
 
-    Αν δεν επιθυμείτε να εγγραφείτε, απλώς αγνοήστε αυτό το μήνυμα.
+      Αν δεν επιθυμείτε να εγγραφείτε, απλώς αγνοήστε αυτό το μήνυμα.
   forgotten_email_address: Ποια διεύθυνση email είχατε δώσει κατά τη δημιουργία του λογαριασμού σας;
   invalid_email_text: Η διεύθυνση email που δώσατε δεν είναι έγκυρη.
   invalid_token: Μη έγκυρο ενδεικτικό
@@ -109,6 +109,13 @@ el:
   upload: Φόρτωση
   mailer:
     hello: Γεια %{user_name}
+    page_histories:
+      change_your_settings_here: 'Μπορείτε να αλλάξετε τις ρυθμίσεις των ειδοποιήσεων ηλεκτρονικού ταχυδρομείου εδώ: %{page_link}'
+      page_update: "%{site} : Μια σελίδα έχει τροποποιηθεί"
+      the_page_you_are_watching_description: Η σελίδα "%{page_title}" που παρακαολουθείτε έχει τροποποιηθεί
+      we_leave_out_details: Σ' αυτό το μήνυμα, έχουμε παραλείψει τις λεπτομέρειες που μπορεί να θέλετε να κρατήσετε εμπιστευτικές.
+      you_can_find_updates_here: 'Μπορείτε να βρείτε περισσότερες λεπτομέρειες καθώς και μια λίστα των πρόσφατα τροποποιημένων σελίδεων εδώ:'
+      you_can_turn_off_or_configure_notifications: Απενεργοποιείστε τις ειδοποιήσεις ηλεκτρονικού ταχυδρομείου, επιλέξτε να λαμβάνετε μια περίληψη των αλλαγών, ή ένα email κάθε φορά που η σελίδα έχει αλλάξει.
   exception:
     description:
       forbidden: Συγνώμη. Δεν έχετε τη δυνατότηα να εκτελέσετε αυτή την ενέργεια.
@@ -223,6 +230,15 @@ el:
   structure: Δομή
   group_destroyed_email: "Η/Το %{group_type} %{group} διαγραφτηκε με ασφάλεια!"
   group_destroyed_subject: "Η/Το %{group_type} %{group} διαγράφτηκε από τον/την %{user}!"
+  group_invite_email: |-
+      Ο/Η %{from_user} σας προσκαλεί να γραφτείτε στην ομάδα %{group}. Αν θέλετε να γραφτείτε, κάντε κλικ εδώ:
+
+      %{accept_invite_link}
+
+      Η αρχική σελίδα της ομάδας βρίσκεται εδώ:
+      %{group_home_link}
+
+      Αν δεν επιθυμείτε να γραφτείτε, απλώς αγνοήστε αυτό το μήνυμα.
   group_invite_subject: Πρόσκληση για συμμετοχή στην ομάδα "%{group}"
   committee_description: Οι Επιτροπές είναι ομάδες εντός μιας οργάνωσης ή ενός δικτύου. Μια επιτροπή υπάγεται στην οργάνωση ή το δίκτυο της. Ένας χρήστης που προστίθεται στην επιτροπή εκτός της οργάνωσης ή του δικτύου θα έχει πρόσβαση μόνο στην επιτροπή.
   council_description: Συμβούλια είναι οι ομάδες με ειδικές διαχειριστικές εξουσίες. Κάθε οργάνωση ή δίκτυο μπορεί να έχει ένα συμβούλιο. Σε αυτή την περίπτωση, τα μέλη του  συμβουλίου έχουν διαχειριστικές αρμοδιότητες στην οργάνωση ή το δίκτυο.
@@ -502,6 +518,7 @@ el:
   survey_select_a_rating_message: Επιλέξτε βαθμολογία για να δείτε το επόμενο στοιχείο
   survey_skip_next_link: Μετάβαση στο επόμενο
   survey_thanks_submit_message: Ευχαριστούμε για την απάντησή σας.
+  survey_you_already_rated_response_with_rating_heading: Έχετε ήδη βαθμολογήσει αυτή την απάντηση - έχετε δώσει τη βαθμολογία %{rating}.
   survey_you_previousely_rated_message: Έχετε ήδη βαθμολογήσει αυτό το στοιχείο ως %{rating}.
   survey_your_rating_heading: 'Η βαθμολογία σας:'
   their_answer_goes_here_label: Η απάντηση μπαίνει εδώ...
@@ -575,7 +592,9 @@ el:
   request_to_friend: Αίτημα φιλίας
   request_to_friend_description: Ο/Η χρήστης %{user} ζήτησε να προστεθεί στις επαφές του/της χρήστη %{other_user}.
   request_to_friend_short: Να προστεθεί ο/η %{user} στις επαφές του/της %{other_user};
+  request_to_join_network_short: Να ενταχθεί η ομάδα %{group} στο  δίκτυο %{network};
   request_to_join_our_network_description: Η ομάδα %{group} καλέστηκε στο δίκτυο %{network}.
+  request_to_join_short: Να ενταχθεί ο/η %{group} στην ομάδα %{group};
   request_to_join_us_description: Ο/Η χρήστης %{user} καλέστηκε στην ομάδα %{group}.
   request_to_join_us_via_email_description: Ο/Η χρήστης με διεύθυνση email %{email} έχει καλεστεί στην ομάδα %{group}.
   request_to_join_us_via_email_short: Να ενταχθεί ο/η χρήστης  %{email} στην ομάδα %{group};
@@ -644,6 +663,7 @@ el:
   alert_saved: Οι αλλαγές έχουν αποθηκευτεί
   csrf_error_message: 'Η αίτηση σύνδεσής σας μοιάζει με προσπάθεια επίθεσης σε αυτή την σελίδα. Μην ανησυχείτε, το λάθος αυτό συμβαίνει συχνά, ακόμη και για αθώα αιτήματα. Είμαστε απλά επιπλέον καχύποπτοι. Το μόνο που έχετε να κάνετε είναι να ξαναφορτώσετε τη σελίδα πριν επιχειρήσετε να συνδεθείτε. Μπορείτε να ακολουθήσετε αυτό τον σύνδεσμο για να προσπαθήσετε ξανά.'
   error_saving_new_order_message: 'Σφάλμα κατά την αποθήκευση της νέας σειράς:  %{error_message}'
+  activate_js_to_rearrange_photos: Ενεργοποιήστε την JavaScript ώστε να ανατακτοποιείτε τις φωτογραφίες με Drag&Drop
   add_another_file: Προσθήκη άλλου αρχείου
   add_existing_image: Προσθήκη φωτογραφίας
   add_photo_to_gallery: Κάντε κλικ σε μια φωτογραφία για να την προσθέσετε
@@ -652,6 +672,7 @@ el:
   cancel_link: ακύρωση
   download: Λήψη
   download_gallery: Λήψη γκαλερί
+  drag_and_drop_to_rearrange_photos: Μετακινήστε εικόνες για να τις ανακατατάξετε
   edit_gallery: Επεξεργασία γκαλερί
   error_saving_new_order: Σφάλμα κατά την αποθήκευση της νέας σειράς!
   file_must_be_image_error: Το αρχείο πρέπει να είναι εικόνα για προστεθεί στη γκαλερί σας.
@@ -702,6 +723,7 @@ el:
   view_slideshow: Προβολή διαφανειών
   break_lock_button: Παύση κλειδώματος
   can_still_save: Μπορείτε ακόμα να αποθηκεύσετε.
+  cant_edit_section_html: Δεν μπορείτε να επεξεργαστείτε την ενότητα %{section}.
   cant_find_wiki_section: Η ενότητα %{section} του wiki δεν μπορεί να βρεθεί
   changes_made: 'Οι αλλαγές έγιναν %{when}. '
   changes_might_be_overwritten: Οι αλλαγές σας μπορεί να αντικατασταθούν.
@@ -713,10 +735,13 @@ el:
   insert_image: Εισαγωγή εικόνας
   leave_editing_wiki_page_warning: Οι αλλαγές σας θα χαθούν αν φύγετε από τη σελίδα.
   next_change: Επόμενη αλλαγή
+  other_section_locked_error_html: Μπορείτε να κλειδώσετε μια ενότητα τη φορά. Έχετε ήδη κλειδώσει την ενότητα %{section}.
   prev_change: Προηγούμενη αλλαγή
   preview: Προεπισκόπηση
   private_wiki: Κλειστό Wiki
   public_wiki: Δημόσιο Wiki
+  save_or_cancel_edit_lock_wiki_error: Έχετε κλειδώσει αυτό το wiki. Οι υπόλοιποι χρήστες δεν θα είναι σε θέση να το επεξεργαστούν μέχρι να κάνετε κλικ στο κουμπί %{save_button} ή  %{cancel}  για να σταματήσετε την επεξεργασία.
+  user_locked_section_html: "Ο/Η %{user} έχει κλειδώσει την ενότητα %{section}."
   version: Έκδοση
   version_doesnt_exist: Δεν υπάρχει έκδοση %{version}
   version_exists_error: Το wiki είναι κλειδωμένο επειδή ο χρήστης %{user} έχει αποθηκεύσει νέες αλλαγές πρόσφατα. Μπορείτε να αποθηκεύσετε τις αλλαγές σας, αλλά αυτό θα αντικαταστήσει τη νέα έκδοση.
@@ -724,6 +749,7 @@ el:
   versions: Εκδόσεις
   wiki: Wiki
   wiki_existed_new_version_created: Αυτό το wiki έχει ήδη δημιουργηθεί από άλλο χρήστη. Οι αλλαγές σας αποθηκεύτηκαν ως νέα έκδοση.
+  wiki_is_locked_html: Το wiki έχει κλειδωθεί από τον/την %{user}.
   wiki_revert_version: Επαναφορά στην έκδοση %{version}
   wiki_section_edit: Επεξεργασία αυτής της ενότητας
   wiki_section_is_locked: Η ενότητα %{section} έχει κλειδωθεί από τον/την %{user}.
