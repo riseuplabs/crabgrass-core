@@ -56,16 +56,18 @@ module Group::MembershipsPermission
   # for most other cases, use may_create_expell_request?
   #
   def may_destroy_membership?(membership = @membership)
-    group = membership.group
-    user = membership.user
-    (
-      current_user.council_member_of?(group) &&
-      !user.council_member_of?(group) &&
-      user != current_user
-    ) || (
-      group.committee? &&
-      current_user.may?(:admin, group.parent)
-    )
+    if membership.is_a?(Group::Membership)
+      group = membership.group
+      user = membership.user
+      (
+        current_user.council_member_of?(group) &&
+        !user.council_member_of?(group) &&
+        user != current_user
+      ) || (
+        group.committee? &&
+        current_user.may?(:admin, group.parent)
+      )
+    end
   end
 
   ##
@@ -97,13 +99,24 @@ module Group::MembershipsPermission
   # see RequestToRemoveUser.may_create?
   #
   def may_create_expell_request?(membership = @membership)
-    group = membership.group
-    user = membership.user
-    current_user.may?(:admin, group) && (
-      group.committee? || (
-        !RequestToRemoveUser.existing(user: user, group: group) &&
-        RequestToRemoveUser.may_create?(current_user: current_user, user: user, group: group)
+    if membership.is_a?(Group::Federating)
+      group = membership.group
+      network = membership.network
+      current_user.may?(:admin, network) && (
+        (
+          !RequestToRemoveGroup.existing(group: group, network: network) &&
+          RequestToRemoveGroup.may_create?(current_user: current_user, group: group, network: network)
+        )
       )
-    )
+    else
+      group = membership.group
+      user = membership.user
+      current_user.may?(:admin, group) && (
+        group.committee? || (
+          !RequestToRemoveUser.existing(user: user, group: group) &&
+          RequestToRemoveUser.may_create?(current_user: current_user, user: user, group: group)
+        )
+      )
+    end
   end
 end
