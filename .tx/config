@@ -1,0 +1,16 @@
+[main]
+host = https://www.transifex.com
+
+[crabgrass.riseup]
+file_filter = extensions/locales/riseup/<lang>.yml
+minimum_perc = 0
+source_file = extensions/locales/riseup/en.yml
+source_lang = en
+type = YML
+
+[crabgrass.develop]
+file_filter = config/locales/<lang>.yml
+minimum_perc = 0
+source_file = config/en.yml
+source_lang = en
+type = YML
