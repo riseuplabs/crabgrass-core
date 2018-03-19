@@ -45,7 +45,7 @@ class RequestToJoinOurNetwork < Request
   end
 
   def short_description
-    [:request_to_join_our_network_short, { group: group_span(group), network: group_span(network) }]
+    [:request_to_join_network_short, { group: group_span(group), network: group_span(network) }]
   end
 
   def icon_entity
