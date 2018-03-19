@@ -1,104 +1,45 @@
+I18n rake tasks
+------------------------
+
+There are several rake tasks, see in lib/tasks/i18n.rb
+
+To get an overview run:
+$ rake cg:i18n:bundle
+$ rake cg:i18n:report
+
+In order to download translations, you need a config/transifex.netrc file.
+For example:
+machine www.transifex.com login crabgrass password xxxxxxxxxxxxxxxxx
+
+
 TRANSIFEX
 ------------------------
-To handle translations, we are using a system called Transifex. On transifex, the crabgrass home page is here:
-https://www.transifex.net/projects/p/crabgrass/
-To upload a new English source file using the web interface, go to 'Resources' -> 'develop' -> 'Update source file'
-In the screen to edit the resource, you can upload a new source file.
-We will upload just the en.yml as a resource, which is generated from the different English files.
-The en.yml file should not be edited directly, as then changes will be lost when somebody generates it again.
+To handle translations, we are using a system called Transifex. On transifex,
+the crabgrass home page is here:
+https://www.transifex.com/riseuplabs/crabgrass.
+Translators see the value from the english source file.
 
-There is transifex documentation at https://docs.transifex.com/
-and the Transifix API:
-http://help.transifex.net/features/api/api-v2.1.html
+There is more transifex documentation at https://docs.transifex.com/.
 
-There is a rake task to pull translations for the enabled languages. This can be run with:
-rake cg:i18n:download
-For this task to work, you must set the transifex password in the appropriate config/crabgrass/crabgrass.{environment}.yml file.
-
-Some more specific documentation:
-To get out translated files, we can download them from the website.
-curl -L --user {user}:{pass} -X GET https://www.transifex.net/api/2/project/crabgrass/resource/master/translation/{language-to-get}/?file
-
-to get stats:
-curl -L --user {user}:{pass} -X GET https://www.transifex.net/api/2/project/crabgrass/resource/master/stats/
-
-It would be nice to upload new source files, but I haven't gotten that to work right. I was hoping something like this would work, but it does not:
- curl -L --user {user}:{pass} -X  PUT -H "Content-Type: multipart/form-data" --upload-file "config/locales/en.yml" https://www.transifex.net/api/2/project/crabgrass/resource/master/content
-
-We can also explore using the transifix client:
-http://help.transifex.net/features/client/index.html
-
-KEY CHANGES
------------------
-
-  user_profile_description_may_see -> user_profile_description_may_view
-
-  contact_request_message_label -> friend_request_message_label
-  contact_request_sent -> friend_request_sent
-  remove_contact_confirmation -> friend_remove_confirmation
-
-  approve_contact_info -> destroy
-  approve_contact_request -> destroy
-  add_contact_info -> destroy
-  contact_removed -> destroy
-  not_contact_of -> destroy
-  already_contacts_info -> destroy
-
-ADDITIONS
+USING THE TRANSIFEX CLIENT
 ------------------------
 
-added in crabgrass, not translated:
+The transifex client allows you to pull translations and update source files
+from your console \o/.
+https://docs.transifex.com/client/introduction
 
-  optional: "Optional"
+Installing the client:
+https://docs.transifex.com/client/installing-the-client
 
-  date_this_year: "This Year"
+Configuring the client:
+https://docs.transifex.com/client/client-configuration
 
-  updated_by: "Updated by"
-  person: "Person"
+Command list:
+--------------
+$ tx status
 
-  recipient: "Recipient"
-  messages_with: "Conversation with %{other_user}"
-  no_things_found: "No %{things} found."
-  thing_destroyed: "%{thing} destroyed"
+Updating source files to transifex:
+$ tx push --source
 
-  created_by_entity: "Created by %{entity}"
-  approved_by_entity: "Approved by %{entity}"
-  rejected_by_entity: "Rejected by %{entity}"
-
-  request: "Request"
-
-  request_pending: "%{thing} is pending approval"
-
-  request_to_friend: "Friend Request"
-  request_to_join_our_network: "Network Join Invite"
-  request_to_join_us: "Join Invite"
-  request_to_join_us_via_email: "Join Invite"
-  request_to_join_you: "Join Request"
-  request_to_join_your_network: "Network Join Request"
-  request_to_destroy_our_group: "Destroy Group Vote"
-  request_to_remove_user: "Remove Member Vote"
-  request_to_remove_user_description: "%{user} has proposed to remove %{member} from %{group_type} %{group}"
-
-  request_to_friend_short: "%{user} friends %{other_user}?"
-  request_to_join_our_network_short: "%{network} joins %{group}?"
-  request_to_join_us_short: "%{user} joins %{group}?"
-  request_to_join_us_via_email_short: "%{email} joins %{group}?"
-  request_to_join_you_short: "%{user} joins %{group}?"
-  request_to_join_your_network_short: "%{group} joins %{network}?"
-  request_to_destroy_our_group_short: "Destroy %{group}?"
-  request_to_remove_user_short: "Expell %{member}?"
-
-  # search filters
-  created_by_user: "Created by %{user}"
-  created_by_dotdotdot: "Created by..."
-  search_most_edits: "Most Edits"
-  search_most_views: "Most Views"
-  search_most_stars: "Most Stars"
-
-  # page searchin sections, maybe:
-  my_pages: "My Pages"
-  properties: "Properties"
-  popular_pages: "Popular Pages"
-  advanced: "Advanced"
-  access: "Access"
-  type: "Type"
+Downloading and overwriting local translation files:
+$ tx pull -a
