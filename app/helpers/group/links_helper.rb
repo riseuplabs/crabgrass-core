@@ -129,8 +129,8 @@ module Group::LinksHelper
       leave_group_link
     elsif may_destroy_membership?(membership)
       confirm = :membership_destroy_confirm_message.t(
-        entity: content_tag(:b, membership.entity.name),
-        group: content_tag(:b, @group.name)
+        entity: membership.entity.name,
+        group: @group.name
       )
       link_to(:remove.t, group_membership_path(@group, membership),
              remote: true,
