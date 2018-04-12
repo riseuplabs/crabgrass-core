@@ -197,17 +197,17 @@ class Page::Share
   end
 
   def send_emails?
-    send_notices? && defaults[:mailer_defaults] && defaults[:send_email]
+    send_notices? && defaults[:mailer_options] && defaults[:send_email]
   end
 
   def send_emails(users)
     users.select!(&:wants_notification_email?)
     users.each do |user|
-      # logger.debug '----------------- emailing %s' % user.email
+      #Rails.logger.debug '----------------- emailing %s' % user.email
       mail = Mailer.share_notice user,
                                  defaults[:send_message],
                                  defaults[:mailer_options]
-      mail.deliver
+      mail.deliver_now
     end
   end
 end
