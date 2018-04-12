@@ -85,7 +85,7 @@ GEM
     crabgrass_media (0.2.0)
       activesupport (~> 4.2)
       mime-types (~> 3.1)
-    crass (1.0.3)
+    crass (1.0.4)
     daemons (1.2.4)
     delayed_job (4.1.2)
       activesupport (>= 3.0, < 5.1)
@@ -128,7 +128,7 @@ GEM
       activerecord (>= 4.1.0)
     json (1.8.6)
     libv8 (3.16.14.17)
-    loofah (2.1.1)
+    loofah (2.2.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.0)
@@ -173,8 +173,8 @@ GEM
       activesupport (>= 4.2.0.beta, < 5.0)
       nokogiri (~> 1.6)
       rails-deprecated_sanitizer (>= 1.0.1)
-    rails-html-sanitizer (1.0.3)
-      loofah (~> 2.0)
+    rails-html-sanitizer (1.0.4)
+      loofah (~> 2.2, >= 2.2.2)
     railties (4.2.10)
       actionpack (= 4.2.10)
       activesupport (= 4.2.10)
@@ -280,6 +280,7 @@ DEPENDENCIES
   prototype-rails!
   prototype_legacy_helper (= 0.0.0)!
   rails (~> 4.2.10)
+  rails-html-sanitizer (~> 1.0.4)
   rake (~> 10.0)
   rubyzip (~> 1.2.1)
   sass
@@ -299,4 +300,4 @@ DEPENDENCIES
   zip-zip
 
 BUNDLED WITH
-   1.16.0
+   1.16.1
