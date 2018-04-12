@@ -14,6 +14,11 @@ end
 # use the 4.2 series including all security fixes
 gem 'rails', '~> 4.2.10'
 
+# Security updates for dependencies not updated in rails 4.2 yet
+# see https://cve.circl.lu/cve/CVE-2018-3741 ,
+# https://github.com/flavorjones/loofah/issues/144
+gem 'rails-html-sanitizer', '~> 1.0.4'
+
 # Rake is rubys make... performing tasks
 # locking in to latest major to fix API
 gem 'rake', '~> 10.0', require: false
