@@ -81,6 +81,9 @@ class Group::MembershipRequestsController < Group::BaseController
       raise ErrorMessage
     end
     success @req
-    redirect_to requests_path(@req)
+    respond_to do |format|
+      format.js {render inline: "location.reload();" }
+      format.html {redirect_to requests_path(@req)}
+    end
   end
 end

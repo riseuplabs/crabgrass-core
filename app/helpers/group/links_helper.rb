@@ -125,12 +125,12 @@ module Group::LinksHelper
   # remove a user from a group or a group from a network.
   #
   def destroy_membership_link(membership)
-    if membership.user_id == current_user.id
+    if membership.entity.is_a?(User) && (membership.user_id == current_user.id)
       leave_group_link
     elsif may_destroy_membership?(membership)
       confirm = :membership_destroy_confirm_message.t(
-        entity: content_tag(:b, membership.entity.name),
-        group: content_tag(:b, @group.name)
+        entity: membership.entity.name,
+        group: @group.name
       )
       link_to(:remove.t, group_membership_path(@group, membership),
              remote: true,
@@ -138,7 +138,6 @@ module Group::LinksHelper
              icon: 'minus', data: {confirm: confirm })
     else
       if membership.entity.is_a? Group
-        return 'not yet supported'
         req = RequestToRemoveGroup.existing(group: membership.entity, network: @group)
       else
         req = RequestToRemoveUser.existing(user: membership.entity, group: @group)

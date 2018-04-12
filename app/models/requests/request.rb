@@ -135,6 +135,7 @@ class Request < ActiveRecord::Base
     RequestToJoinYou
     RequestToJoinYourNetwork
     RequestToRemoveUser
+    RequestToRemoveGroup
   ].freeze
 
   #
@@ -342,6 +343,12 @@ class Request < ActiveRecord::Base
     group ||= self.group
     return nil if group.blank?
     format('<group>%s</group>', group.name).html_safe
+  end
+
+  def network_span(network = nil)
+    network ||= self.network
+    return nil if network.blank?
+    format('<network>%s</network>', network.name).html_safe
   end
 
   #

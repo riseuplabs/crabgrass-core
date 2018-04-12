@@ -57,6 +57,8 @@ en:
   group_membership_count: "%{count} Members"
   membership_destroy_confirm_message: "Are you sure you want to remove %{entity} from %{group}?"
   membership_exists_error: "Membership already exists for %{member}"
+  membership_leave_message: "You have been removed from %{group}"
+  membership_notification: "Membership notification"
   membership_requests: "Membership Requests"
   public_groups: "Public Groups"
   shared_groups: "Shared Groups"
