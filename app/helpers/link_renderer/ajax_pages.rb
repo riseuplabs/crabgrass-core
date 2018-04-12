@@ -8,10 +8,11 @@
 class LinkRenderer::AjaxPages < LinkRenderer::Ajax
   def page_link_to(page, text, attributes = {})
     url = @template.page_search_path(add: "/page/#{page}")
+    with = "FilterPath.encode()+'&'+Form.serialize($('page_search_form'))"
     options = {
       remote: true,
-      method: :get,
-      data: { with: 'FilterPath.encode()', loading: @template.show_spinner(spinner_id) }
+      method: :post,
+      data: { with: with, loading: @template.show_spinner(spinner_id) }
     }
     @template.link_to(text, url, options.merge(attributes))
   end
