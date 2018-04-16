@@ -84,16 +84,11 @@ class Mailer::PageHistories < ActionMailer::Base
     return if @histories.blank? || @recipient.email.blank?
     @histories = @histories.group_by(&:page).to_a
     options = add_encrypt_options(options)
-    create_fresh_gpg_directory if options[:gpg]
+    # FIXME: We want a new keyring for each encryption (or user).
+    # The following solution does not work for parallel requests.
+    #PgpKey.create_fresh_gpg_directory if options[:gpg]
     options = add_sign_options(options)
     super options.reverse_merge from: sender, to: @recipient.email
-  end
-
-  def create_fresh_gpg_directory
-    gpg_dir = Rails.root.join('assets','keyrings', "tmp").to_s
-    FileUtils.rm_rf(gpg_dir) if File.exist?(gpg_dir)
-    FileUtils.makedirs(gpg_dir)
-    ENV['GNUPGHOME']=gpg_dir
   end
 
   def self.digest_recipients

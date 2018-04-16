@@ -21,7 +21,7 @@ class PgpKey < ActiveRecord::Base
 
   def update_key
     if self.key_changed?
-      create_fresh_gpg_directory
+      PgpKey.create_fresh_gpg_directory
       import_key
     end
   end
@@ -53,7 +53,7 @@ class PgpKey < ActiveRecord::Base
     end
   end
 
-  def create_fresh_gpg_directory
+  def self.create_fresh_gpg_directory
     gpg_dir = Rails.root.join('assets','keyrings', "tmp").to_s
     FileUtils.rm_rf(gpg_dir) if File.exist?(gpg_dir)
     FileUtils.makedirs(gpg_dir)

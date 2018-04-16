@@ -6,11 +6,6 @@ class Mailer::PageHistoriesTest < ActionMailer::TestCase
     # only :blue (and :dolphin) have a valid key. :red's is broken, :yellow's is expired and green
     # does not have a key
     @user = users(:blue)
-    # FIXME: If we use a broken/expired key, mail-gpg does not raise an exception.
-    # Instead it encrypts the email using all keys available in the keyring
-    # As a workaround to make tests pass we create a new keyring for each test.
-    # see: https://github.com/jkraemer/mail-gpg/issues/55
-#    create_fresh_gpg_directory
     watch_page
     mailer_class.deliveries = nil
   end
@@ -65,7 +60,7 @@ class Mailer::PageHistoriesTest < ActionMailer::TestCase
     assert mailer_class.deliveries.first.encrypted?
   end
 
-  def test_send_encrypted_paranoid_digest_encrypted
+  def test_send_paranoid_digest_encrypted
     with_paranoid_emails
     receive_notifications 'Digest'
     updated_page_as users(:red)

@@ -6,7 +6,6 @@ class Mailer::PgpKeyUploadTest < ActionMailer::TestCase
 # key is invalid or expired
 
   def setup
-    create_fresh_gpg_directory
     mailer_class.deliveries = nil
   end
 
