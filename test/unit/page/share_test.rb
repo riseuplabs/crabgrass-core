@@ -26,9 +26,6 @@ class Page::ShareTest < ActiveSupport::TestCase
                             'send_message' => 'hello red',
                             'send_email' => true,
                             'mailer_options' =>  { site: Site.new,
-                                                   host: 'localhost',
-                                                   protocol: 'http://',
-                                                   port: '3000',
                                                    page: page,
                                                    current_user: user }
     share.with 'red' => { access: 'edit' }
