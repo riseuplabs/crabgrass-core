@@ -365,6 +365,8 @@ en:
   membership_destroy_confirm_message: Are you sure you want to remove %{entity} from
     %{group}?
   membership_exists_error: Membership already exists for %{member}
+  membership_leave_message: You have been removed from %{group}
+  membership_notification: Membership notification
   membership_requests: Membership Requests
   public_groups: Public Groups
   shared_groups: Shared Groups
@@ -818,6 +820,7 @@ en:
     network %{network}.
   request_to_join_short: Shall %{user} join %{group}?
   request_to_join_us: Request to Join
+  request_to_join_us_short: Shall %{user} join %{group}?
   request_to_join_us_description: The user %{user} was invited to join the group %{group}.
   request_to_join_us_via_email_description: The email address %{email} was invited to
     join the group %{group}.
@@ -831,6 +834,10 @@ en:
   request_to_remove_user_description: The user %{user} has proposed to remove %{member}
     from %{group_type} %{group}.
   request_to_remove_user_short: Shall %{member} be removed from %{group}?
+  request_to_remove_group: Request to Remove Group
+  request_to_remove_group_description: The user %{user} has proposed to remove %{group}
+    from %{network}.
+  request_to_remove_group_short: Shall %{group} be removed from %{network}?
 
 
 ########################################

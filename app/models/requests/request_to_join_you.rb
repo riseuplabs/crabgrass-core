@@ -43,7 +43,7 @@ class RequestToJoinYou < MembershipRequest
   end
 
   def short_description
-    [:request_to_join_you_short, { user: user_span(created_by), group: group_span(group) }]
+    [:request_to_join_short, { user: user_span(created_by), group: group_span(group) }]
   end
 
   protected

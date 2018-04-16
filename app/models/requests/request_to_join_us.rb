@@ -40,7 +40,7 @@ class RequestToJoinUs < MembershipRequest
   end
 
   def short_description
-    [:request_to_join_us_short, { user: user_span(recipient), group: group_span(group) }]
+    [:request_to_join_short, { user: user_span(recipient), group: group_span(group) }]
   end
 
   def icon_entity

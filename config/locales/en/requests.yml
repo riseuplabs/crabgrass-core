@@ -63,7 +63,7 @@ en:
   request_to_join_our_network:
     one: "Invitation to Join"
     other: "Invitations to Join"
-  request_to_join_our_network_short: "Shall %{group} join %{network}?"
+  request_to_join_network_short: "Shall %{group} join %{network}?"
   request_to_join_our_network_description: "The group %{group} was invited to join then network %{network}."
   request_to_join_short: "Shall %{user} join %{group}?"
   request_to_join_us: "Request to Join"
