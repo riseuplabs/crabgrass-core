@@ -22,6 +22,7 @@ class Page::ShareTest < ActiveSupport::TestCase
     # There might be a key for red in the keyring (depending
     # on the order in which the tests run
     user2.pgp_key = nil
+    PgpKey.create_fresh_gpg_directory
     page = Page.create(title: 'x', user: user, access: :admin)
 
     share = Page::Share.new page, user,

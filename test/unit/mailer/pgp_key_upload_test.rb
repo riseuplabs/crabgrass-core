@@ -6,6 +6,7 @@ class Mailer::PgpKeyUploadTest < ActionMailer::TestCase
 # key is invalid or expired
 
   def setup
+    ActionMailer::Base.default_url_options = {:host => 'localhost:3000'}
     mailer_class.deliveries = nil
   end
 

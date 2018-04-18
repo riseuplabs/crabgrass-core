@@ -6,6 +6,7 @@ class Mailer::PgpSignTest < ActionMailer::TestCase
     @user = users(:blue)
     add_pgp_key
     watch_page
+    ActionMailer::Base.default_url_options = {:host => 'localhost:3000'}
     mailer_class.deliveries = nil
   end
 
@@ -14,7 +15,7 @@ class Mailer::PgpSignTest < ActionMailer::TestCase
     updated_page_as users(:red)
     mailer_class.deliver_digests
     mail = mailer_class.deliveries.first
-    if ENV['GPGKEY'] 
+    if ENV['GPGKEY']
       assert mail.encrypted?
       decrypted_mail = mail.decrypt(verify: true)
       assert_equal 'robot@riseup.net', decrypted_mail['sign-as'].value
