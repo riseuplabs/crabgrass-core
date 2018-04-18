@@ -41,7 +41,7 @@ class PageSearchTest < JavascriptIntegrationTest
 
   def test_owned_by_me
     user = users(:blue)
-    page = user.pages_owned.first
+    page = user.pages_owned.second
     login user
     click_on 'Pages'
     click_on 'Own'

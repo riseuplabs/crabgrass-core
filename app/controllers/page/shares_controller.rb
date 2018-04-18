@@ -135,7 +135,7 @@ class Page::SharesController < Page::SidebarsController
   #
   def build_recipient_array
     if params[:recipient] and params[:recipient][:name].present?
-      recipients_names = params[:recipient][:name].strip.split(/[, ]/)
+      recipients_names = params[:recipient][:name].strip.gsub(' ', '+').split(/[, ]/)
       recipients_names.map do |recipient_name|
         find_recipient(recipient_name, mode_param)
       end.compact
