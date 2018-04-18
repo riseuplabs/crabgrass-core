@@ -58,6 +58,7 @@ class Mailer::PageHistories < ActionMailer::Base
 
   def add_encrypt_options(options)
     return options unless @recipient.pgp_key
+    return options if @recipient.pgp_key.expired?
     gpg =  {encrypt: true, keys: { @recipient.email => @recipient.pgp_key.key }}
     options.merge gpg: gpg
   end
@@ -83,6 +84,9 @@ class Mailer::PageHistories < ActionMailer::Base
     return if @histories.blank? || @recipient.email.blank?
     @histories = @histories.group_by(&:page).to_a
     options = add_encrypt_options(options)
+    # FIXME: We want a new keyring for each encryption (or user).
+    # The following solution does not work for parallel requests.
+    #PgpKey.create_fresh_gpg_directory if options[:gpg]
     options = add_sign_options(options)
     super options.reverse_merge from: sender, to: @recipient.email
   end

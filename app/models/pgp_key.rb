@@ -12,11 +12,16 @@ class PgpKey < ActiveRecord::Base
   before_validation :update_key
   after_save :notify_user, if: :key_changed?
 
+  def expired?
+    return false if self.expires == nil # valid forever
+    self.expires < 15.minutes.from_now
+  end
+
   protected
 
   def update_key
     if self.key_changed?
-      create_fresh_gpg_directory
+      PgpKey.create_fresh_gpg_directory
       import_key
     end
   end
@@ -48,7 +53,7 @@ class PgpKey < ActiveRecord::Base
     end
   end
 
-  def create_fresh_gpg_directory
+  def self.create_fresh_gpg_directory
     gpg_dir = Rails.root.join('assets','keyrings', "tmp").to_s
     FileUtils.rm_rf(gpg_dir) if File.exist?(gpg_dir)
     FileUtils.makedirs(gpg_dir)

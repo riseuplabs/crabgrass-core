@@ -162,7 +162,7 @@ gem 'zip-zip', require: 'zip'
 
 # gnupg for email encryption
 #
-gem 'mail-gpg'
+gem 'mail-gpg', '~> 0.3.3'
 
 ##
 # Environment specific
