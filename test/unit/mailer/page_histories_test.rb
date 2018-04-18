@@ -7,6 +7,7 @@ class Mailer::PageHistoriesTest < ActionMailer::TestCase
     # does not have a key
     @user = users(:blue)
     watch_page
+    ActionMailer::Base.default_url_options = {:host => 'localhost:3000'}
     mailer_class.deliveries = nil
   end
 
