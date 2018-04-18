@@ -5,7 +5,7 @@
 
 - style_from_path = case @path.try(:arg_for, 'view'); when 'compact' then 'table'; when 'detailed' then 'rows'; when 'grid' then 'grid'; end
 - style = local_assigns[:style] || style_from_path || 'table'
-- pages = local_assigns[:pages] ||= @pages
+- pages = local_assigns[:pages] ||= @pages.select{|page| page.owner_id and page.owner_name != 'none'}
 - paginate = false # pages.respond_to?(:total_entries)
 - paginate_options ||= {}
 
