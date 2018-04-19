@@ -19,10 +19,7 @@ class Page::ShareTest < ActiveSupport::TestCase
   def test_notify_user_by_email
     user = users(:kangaroo)
     user2 = users(:red)
-    # There might be a key for red in the keyring (depending
-    # on the order in which the tests run
-    user2.pgp_key = nil
-    PgpKey.create_fresh_gpg_directory
+    Mailer.deliveries = nil
     page = Page.create(title: 'x', user: user, access: :admin)
 
     share = Page::Share.new page, user,
