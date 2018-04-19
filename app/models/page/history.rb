@@ -58,7 +58,7 @@ class Page::History < ActiveRecord::Base
 
   def item_name
     case item
-    when Group then item.full_name
+    when Group then item.display_name
     when User then item.display_name
     else 'Unknown/Deleted'
     end
