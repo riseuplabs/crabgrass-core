@@ -69,6 +69,10 @@ class Wiki::WikisController < Wiki::BaseController
 
   # only track wiki updates on pages that have been saved
   def track_action(event = nil, event_options = {})
+    event_options = event_options.reverse_merge current_user: current_user,
+                                                group: @group,
+                                                user: current_user,
+                                                page: @page
     super if @page && @wiki.previous_changes[:body]
   end
 
