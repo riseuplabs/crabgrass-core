@@ -18,7 +18,7 @@
 #
 # :sphinx_internal_id, :class_crc, :sphinx_deleted, :title_sort,
 # :page_type_sort, :created_by_login_sort, :updated_by_login_sort,
-# :owner_name_sort, :page_created_at, :page_updated_at, :views_count,
+# :owner_name_sort, :page_created_at, :page_updated_at,
 # :created_by_id, :updated_by_id, :resolved, :stars_count, :access_ids,
 # :media, :owner_id
 #

@@ -42,7 +42,6 @@ page<%=i%>:
 <% if rand(3) == 0 %>
   stars_count: <%= rand(4) %>
 <% end %>
-  views_count: <%= rand(100) %>
 <% if rand(3) == 0 %>
   resolved: false
 <% end %>

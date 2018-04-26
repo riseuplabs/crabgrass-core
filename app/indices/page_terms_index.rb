@@ -28,7 +28,6 @@ ThinkingSphinx::Index.define 'page/terms', with: :active_record,
   # has :watched_by_ids, :type => :multi
 
   # counts
-  has :views_count
   has :stars_count
 
   # flags and access

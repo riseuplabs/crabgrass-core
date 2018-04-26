@@ -260,9 +260,6 @@ class Page::BaseTest < ActiveSupport::TestCase
 
     page.update_attribute :stars_count, rand(500)
     assert_equal page.updated_at, last_updated_at
-
-    page.update_attribute :views_count, rand(500)
-    assert_equal page.updated_at, last_updated_at
   end
 
   def test_even_with_timestamps_disabled_it_should_timestamp_when_create

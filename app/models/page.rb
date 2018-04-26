@@ -35,8 +35,7 @@ require 'English'
 #     t.string   "updated_by_login"
 #     t.string   "created_by_login"
 #     t.integer  "flow",               :limit => 11
-#     t.integer  "stars",              :limit => 11, :default => 0
-#     t.integer  "views_count",        :limit => 11, :default => 0,    :null => false
+#     t.integer  "stars_count",              :limit => 11, :default => 0
 #     t.integer  "owner_id",           :limit => 11
 #     t.string   "owner_type"
 #     t.string   "owner_name"
