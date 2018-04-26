@@ -13,7 +13,7 @@
 #
 # When you want to search on a string field, you use @conditions.
 #
-# These fields are defines as sphinx attributes, and should use
+# These fields are defined as sphinx attributes, and should use
 # @with instead of @conditions:
 #
 # :sphinx_internal_id, :class_crc, :sphinx_deleted, :title_sort,
@@ -198,9 +198,6 @@ class PathFinder::Sphinx::Query < PathFinder::Query
     column = case column
              when 'updated_at' then 'page_updated_at'
              when 'created_at' then 'page_created_at'
-             when 'views' then 'views_count'
-             when 'stars' then 'stars_count'
-             # MISSING: when 'edits' then 'edits_count' missing
              # MISSING: when 'contributors' then 'contributors_count'
              # MISSING: when 'posts' then 'posts_count'
              else column

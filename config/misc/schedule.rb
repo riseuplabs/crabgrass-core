@@ -24,21 +24,12 @@ set :host, ENV['RAILS_ENV'] === 'development' ?
 
 job_type :curl, 'curl -L -XPOST http://:host/do/cron/run/:task'
 
-every 1.hour, at: '0:30' do
-  curl 'tracking_update_hourlies'
-end
-
 # reindex currently takes R = 80sec.
 # delta index takes d = 5ms longer for each document in the delta.
 # Minimum total time is for delta growing up to
 #    sqr( 2*R / d) ~ 180 documents
 every 6.hour, at: '0:40' do
   rake 'ts:index'
-end
-
-every 1.day do
-  curl 'codes_expire'
-  curl 'tracking_update_dailies'
 end
 
 every 1.day, :at => '0:20 am' do

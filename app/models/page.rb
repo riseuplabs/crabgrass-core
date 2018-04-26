@@ -72,7 +72,6 @@ class Page < ActiveRecord::Base
   include Page::Subclass        # page subclassing
   include Page::Index           # page full text searching
   include Page::Starring        # star specific functionality
-  include Page::Stats           # page tracking views, edits and stars
   include Page::HistoryTracking # page <> page_history
 
   has_many :page_notices,

@@ -103,29 +103,4 @@ module Page::BeforeFilters
     true
   end
 
-  def update_view_count
-    return true unless @page and @page.id
-    action = case params[:action]
-             when 'create' then :edit
-             when 'edit' then :edit
-             when 'show' then :view
-    end
-    return true unless action
-
-    group = nil
-    user  = nil
-    if Conf.tracking?
-      if @group
-        group = @group
-      elsif @page.owner.is_a?(Group)
-        group = @page.owner
-      end
-      user = @page.owner if @page.owner.is_a?(User)
-    end
-    Tracking::Page.insert(
-      page: @page, current_user: current_user, action: action,
-      group: group, user: user
-    )
-    true
-  end
 end

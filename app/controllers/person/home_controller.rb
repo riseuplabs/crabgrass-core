@@ -12,6 +12,5 @@ class Person::HomeController < Person::BaseController
 
   def show
     @profile = @user.profiles.public
-    track
   end
 end

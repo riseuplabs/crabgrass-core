@@ -10,8 +10,6 @@
       %tr
         %th{style: 'width:30%'}= federation_view? ? :member_groups_of_network.t : :user.t
         %th= :profile_member_since.t
-        - if !federation_view?
-          %th= :visits.t
         %th{style: 'width:30%'}
       - myself = @memberships.detect {|m| m.entity.name == current_user.name}
       - memberships = @memberships.reject {|m| m.entity.name == current_user.name}

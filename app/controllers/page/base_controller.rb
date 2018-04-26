@@ -38,7 +38,6 @@ class Page::BaseController < ApplicationController
   # ... after all the others
   after_filter :save_if_needed, except: :create
   after_filter :update_viewed, only: :show
-  after_filter :update_view_count, only: %i[show edit create]
 
   include Page::BeforeFilters
 
