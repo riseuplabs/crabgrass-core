@@ -196,7 +196,6 @@ module User::Users
       ret = []
       ret << :friend   if friend_of?(user)
       ret << :peer     if peer_of?(user)
-      #   ret << :fof      if fof_of?(user)
       ret << :stranger
       ret
     end
