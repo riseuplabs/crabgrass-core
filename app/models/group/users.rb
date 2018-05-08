@@ -138,6 +138,7 @@ module Group::Users
 
     user.clear_peer_cache_of_my_peers
     membership.destroy
+    Notice::UserRemovedNotice.create! group: self, user: user
     user.update_membership_cache
     clear_key_cache
 
