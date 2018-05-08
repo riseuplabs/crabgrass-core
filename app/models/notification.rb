@@ -34,7 +34,7 @@ class Notification
   end
 
   def create_notice(attrs = {})
-    class_name = "#{event}_notice"
-    class_name.classify.constantize.create attrs
+    class_name = "Notice::".concat("#{event}_notice".classify)
+    class_name.constantize.create! attrs
   end
 end

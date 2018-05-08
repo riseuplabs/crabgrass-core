@@ -52,7 +52,7 @@ class Group::GroupsController < Group::BaseController
   def notify_former_users
     notification = Notification.new(:group_destroyed, group: @group, user: current_user)
     notification.deliver_mails_to(@group.users, mailer_options)
-    notification.create_notices_for(@group.users)
+    notification.create_notices_for(@group.users, group: @group)
   end
 
   def group_destroyed_redirect
