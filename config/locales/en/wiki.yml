@@ -6,7 +6,6 @@ en:
   cant_find_wiki_section: "Can't find wiki section %{section}"
   changes_made: "Changes made %{when}."
   changes_might_be_overwritten: "Your changes might be overwritten."
-  comparing_changes_header: "Comparing changes between %{old_version} and %{new_version}."
   diff_link: "view changes"
   edit_wiki: "Edit Wiki"
   force_save_button: "Break Lock and Save"
