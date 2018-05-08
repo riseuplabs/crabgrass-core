@@ -426,47 +426,37 @@ ActiveRecord::Schema.define(version: 20180426154112) do
   add_index "posts", ["discussion_id", "created_at"], :name => "index_posts_on_discussion_id"
 
   create_table "profiles", force: :cascade do |t|
-    t.integer  "entity_id",              limit: 4
-    t.string   "entity_type",            limit: 255
-    t.boolean  "stranger",                             default: false, null: false
-    t.boolean  "peer",                                 default: false, null: false
-    t.boolean  "friend",                               default: false, null: false
-    t.boolean  "foe",                                  default: false, null: false
-    t.string   "name_prefix",            limit: 255
-    t.string   "first_name",             limit: 255
-    t.string   "middle_name",            limit: 255
-    t.string   "last_name",              limit: 255
-    t.string   "name_suffix",            limit: 255
-    t.string   "nickname",               limit: 255
-    t.string   "role",                   limit: 255
-    t.string   "organization",           limit: 255
+    t.integer  "entity_id",           limit: 4
+    t.string   "entity_type",         limit: 255
+    t.boolean  "stranger",                          default: false, null: false
+    t.boolean  "peer",                              default: false, null: false
+    t.boolean  "friend",                            default: false, null: false
+    t.boolean  "foe",                               default: false, null: false
+    t.string   "first_name",          limit: 255
+    t.string   "middle_name",         limit: 255
+    t.string   "last_name",           limit: 255
+    t.string   "role",                limit: 255
+    t.string   "organization",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "birthday"
-    t.boolean  "fof",                                  default: false, null: false
-    t.text     "summary",                limit: 65535
-    t.integer  "wiki_id",                limit: 4
-    t.integer  "layout_id",              limit: 4
+    t.boolean  "fof",                               default: false, null: false
+    t.text     "summary",             limit: 65535
+    t.integer  "wiki_id",             limit: 4
+    t.integer  "layout_id",           limit: 4
     t.boolean  "may_see"
-    t.boolean  "may_see_committees"
-    t.boolean  "may_see_networks"
-    t.boolean  "may_see_members"
-    t.boolean  "may_request_membership"
-    t.integer  "membership_policy",      limit: 4,     default: 0
-    t.boolean  "may_see_groups"
-    t.boolean  "may_see_contacts"
-    t.boolean  "may_request_contact",                  default: true
-    t.boolean  "may_pester",                           default: true
+    t.integer  "membership_policy",   limit: 4,     default: 0
+    t.boolean  "may_request_contact",               default: true
+    t.boolean  "may_pester",                        default: true
     t.boolean  "may_burden"
     t.boolean  "may_spy"
-    t.string   "language",               limit: 5
-    t.integer  "discussion_id",          limit: 4
-    t.string   "place",                  limit: 255
-    t.integer  "video_id",               limit: 4
-    t.text     "summary_html",           limit: 65535
-    t.integer  "geo_location_id",        limit: 4
-    t.integer  "picture_id",             limit: 4
-    t.boolean  "encrypt",                              default: false
+    t.string   "language",            limit: 5
+    t.integer  "discussion_id",       limit: 4
+    t.string   "place",               limit: 255
+    t.integer  "video_id",            limit: 4
+    t.text     "summary_html",        limit: 65535
+    t.integer  "geo_location_id",     limit: 4
+    t.integer  "picture_id",          limit: 4
+    t.boolean  "encrypt",                           default: false
   end
 
   add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"

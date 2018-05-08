@@ -59,7 +59,7 @@ class RequestToDestroyOurGroup < Request
 
   def description_args
     { group:      group_span,
-      group_type: group.group_type,
+      group_type: group.group_type.downcase,
       user:       user_span(created_by) }
   end
 end

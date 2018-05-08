@@ -16,7 +16,7 @@ module Page::ParticipationHelper
 
   def participation_pagination_links(parts, params = {})
     # for will_paginate to work, we must pass it params hash instead of a url.
-    params.reverse_merge! controller: 'pages/participations', page_id: @page.id, action: 'index', tab: 'participation'
+    params.reverse_merge! controller: 'participations', page_id: @page.id, action: 'index', tab: 'participation'
     # We can't use the normal ModalboxAjax LinkRenderer since the
     # participations are displayed in a tab within the modalbox
     pagination_links parts, params: params, renderer: LinkRenderer::Ajax

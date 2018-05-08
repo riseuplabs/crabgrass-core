@@ -18,7 +18,7 @@ module ProfileMethods
   end
 
   # returns the first profile that matches one of the access symbols in *arg
-  # in this order of precedence: foe, friend, peer, fof, stranger.
+  # in this order of precedence: foe, friend, peer, stranger.
   def find_by_access(*args)
     return find_by_no_access if args.empty?
 
@@ -26,12 +26,12 @@ module ProfileMethods
 
     conditions = args.collect { |access| "profiles.`#{access}` = ?" }.join(' OR ')
     where([conditions] + ([true] * args.size))
-      .order('foe DESC, friend DESC, peer DESC, fof DESC, stranger DESC')
+      .order('foe DESC, friend DESC, peer DESC, stranger DESC')
       .first
   end
 
   def find_by_no_access
-    fields = %i[foe friend peer fof stranger]
+    fields = %i[foe friend peer stranger]
     conditions = fields.collect { |access| "profiles.`#{access}` = ?" }.join(' AND ')
     where([conditions] + ([false] * fields.size)).first
   end

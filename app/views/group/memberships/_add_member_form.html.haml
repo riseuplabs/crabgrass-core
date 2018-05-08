@@ -4,5 +4,6 @@
     = autocomplete_members_field_tag('user_name', group: @group.parent.name, onkeypress: '')
     = submit_tag(:add_button.t, class: 'btn btn-default')
   = spinner('add')
-  %span.help-block= :add_members_to_committee.t
+  %span.help-block= :add_members_to_committee.t(group_type: t(@group.group_type.downcase))
+
 = focus_form('add_member_form')
