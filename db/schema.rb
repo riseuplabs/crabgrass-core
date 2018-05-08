@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180314151824) do
+ActiveRecord::Schema.define(version: 20180426154112) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "subject_id",   limit: 4
@@ -121,16 +121,6 @@ ActiveRecord::Schema.define(version: 20180314151824) do
     t.integer  "masthead_asset_id", limit: 4
     t.integer  "favicon_id",        limit: 4
   end
-
-  create_table "dailies", force: :cascade do |t|
-    t.integer "page_id",    limit: 4
-    t.integer "views",      limit: 4
-    t.integer "stars",      limit: 4
-    t.integer "edits",      limit: 4
-    t.date    "created_at"
-  end
-
-  add_index "dailies", ["page_id"], :name => "index_dailies_on_page_id"
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   limit: 4,        default: 0
@@ -243,16 +233,6 @@ ActiveRecord::Schema.define(version: 20180314151824) do
   add_index "groups", ["name"], :name => "index_groups_on_name"
   add_index "groups", ["parent_id"], :name => "index_groups_parent_id"
 
-  create_table "hourlies", force: :cascade do |t|
-    t.integer  "page_id",    limit: 4
-    t.integer  "views",      limit: 4
-    t.integer  "stars",      limit: 4
-    t.integer  "edits",      limit: 4
-    t.datetime "created_at"
-  end
-
-  add_index "hourlies", ["page_id"], :name => "index_hourlies_on_page_id"
-
   create_table "memberships", force: :cascade do |t|
     t.integer  "group_id",     limit: 4
     t.integer  "user_id",      limit: 4
@@ -335,7 +315,6 @@ ActiveRecord::Schema.define(version: 20180314151824) do
     t.boolean  "delta"
     t.string   "media",              limit: 255
     t.integer  "stars_count",        limit: 4,        default: 0
-    t.integer  "views_count",        limit: 4,        default: 0, null: false
     t.string   "owner_name",         limit: 255
     t.integer  "owner_id",           limit: 4
   end
@@ -372,7 +351,6 @@ ActiveRecord::Schema.define(version: 20180314151824) do
     t.string   "created_by_login",   limit: 255
     t.integer  "flow",               limit: 4,        default: 0
     t.integer  "stars_count",        limit: 4,        default: 0
-    t.integer  "views_count",        limit: 4,        default: 0,    null: false
     t.integer  "owner_id",           limit: 4
     t.string   "owner_type",         limit: 255
     t.string   "owner_name",         limit: 255
@@ -670,17 +648,6 @@ ActiveRecord::Schema.define(version: 20180314151824) do
     t.string   "action",     limit: 255, default: "", null: false
     t.string   "value",      limit: 40,  default: "", null: false
     t.datetime "created_at",                          null: false
-  end
-
-  create_table "trackings", force: :cascade do |t|
-    t.integer  "page_id",         limit: 4
-    t.integer  "current_user_id", limit: 4
-    t.integer  "group_id",        limit: 4
-    t.datetime "tracked_at"
-    t.boolean  "views"
-    t.boolean  "edits"
-    t.boolean  "stars"
-    t.integer  "user_id",         limit: 4
   end
 
   create_table "translations", force: :cascade do |t|

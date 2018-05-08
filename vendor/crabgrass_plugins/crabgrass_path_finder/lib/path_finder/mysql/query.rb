@@ -167,40 +167,11 @@ class PathFinder::Mysql::Query < PathFinder::Query
 
   def cleanup_sort_column(column)
     case column
-    when 'views' then 'views_count'
-    when 'stars' then 'stars_count'
-      # MISSING: when 'edits' then 'edits_count'
     when 'contributors' then 'contributors_count'
     when 'posts' then 'posts_count'
     else column
     end
     column.gsub(/[^[:alnum:]]+/, '_')
-  end
-
-  def add_most_condition(what, num, unit)
-    unit = unit.downcase.pluralize
-    name = what == 'edits' ? 'contributors' : what
-    num.gsub!(/[^\d]+/, ' ')
-    if unit == 'months'
-      unit = 'days'
-      num = num.to_i * 31
-    elsif unit == 'years'
-      unit = 'days'
-      num = num.to_i * 365
-    end
-    if unit == 'days'
-      joins :dailies
-      where format('dailies.created_at > UTC_TIMESTAMP() - INTERVAL %s DAY', num)
-      @order << "SUM(dailies.#{what}) DESC"
-      select "pages.*, SUM(dailies.#{what}) AS #{name}_count"
-    elsif unit == 'hours'
-      joins :hourlies
-      where format('hourlies.created_at > UTC_TIMESTAMP() - INTERVAL %s HOUR', num)
-      @order << "SUM(hourlies.#{what}) DESC"
-      select "pages.*, SUM(hourlies.#{what}) AS #{name}_count"
-    else
-      return
-    end
   end
 
   # filter on page type or types, and maybe even media flag too!

@@ -50,7 +50,6 @@ FactoryBot.define do
     stars_count 0
     created_at  { generate(:created_date) }
     updated_at  { generate(:updated_date) }
-    views_count { rand(100) }
     resolved    { generate(:boolean) }
 
     factory(:wiki_page, class: WikiPage)             {}

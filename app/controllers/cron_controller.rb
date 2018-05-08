@@ -13,10 +13,6 @@ class CronController < ActionController::Base
 
   def run
     case params[:id]
-    when 'tracking_update_hourlies'
-      Tracking::Page.delay.process
-    when 'tracking_update_dailies'
-      Tracking::Daily.update
     when 'codes_expire'
       Page::AccessCode.cleanup_expired
     when 'deliver_digests'
