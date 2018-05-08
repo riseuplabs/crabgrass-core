@@ -35,18 +35,18 @@ module Group::LinksHelper
 
   def leave_group_link
     if may_leave_group?
-      link_to :leave_group_link.t(group_type: @group.group_type),
+      link_to :leave_group_link.t(group_type: t(@group.group_type.downcase)),
               group_my_membership_path(@group, current_user),
-              confirm: :leave_group_confirmation.t(group_type: @group.group_type),
+              confirm: :leave_group_confirmation.t(group_type: t(@group.group_type.downcase)),
               method: :delete,
               class: 'navi'
     end
   end
 
   def directly_join_group_link
-    link_to :join_group_link.t(group_type: @group.group_type),
+    link_to :join_group_link.t(group_type: t(@group.group_type.downcase)),
             group_my_memberships_path(@group),
-            confirm: :join_group_confirmation.t(group_type: @group.group_type),
+            confirm: :join_group_confirmation.t(group_type: t(@group.group_type.downcase)),
             method: :post
   end
 
@@ -58,7 +58,7 @@ module Group::LinksHelper
     elsif requested
       link_line :bullet, :request_exists.t, link_to(:show_thing.t(thing: :request.t), me_request_path(requested))
     else
-      link_to :request_join_group_link.t(group_type: @group.group_type),
+      link_to :request_join_group_link.t(group_type: t(@group.group_type.downcase)),
               group_membership_requests_path(@group, type: 'join'),
               method: 'post'
     end

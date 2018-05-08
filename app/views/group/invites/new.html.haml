@@ -1,7 +1,7 @@
 - if @group.network?
   = I18n.t(:network_invite_info)
 - else
-  = I18n.t(:invite_info, group_type: @group.group_type.downcase)
+  = I18n.t(:invite_info, group_type: t(@group.group_type.downcase))
 
 %p
   %em= I18n.t(:recipient_tip)

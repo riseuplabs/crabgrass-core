@@ -12,7 +12,7 @@ module Mailers::Group
     @user = event[:user]
     @recipients = recipient.email.to_s
     @subject = I18n.t(:group_destroyed_subject,
-                      group_type: @group.group_type,
+                      group_type: t(@group.group_type.downcase),
                       group: @group.full_name,
                       user: @user.try.display_name)
 

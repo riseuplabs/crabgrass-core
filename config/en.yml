@@ -309,7 +309,6 @@ en:
     models:
       committee: committee
       council: council
-      group: organization
       network: network
   all_groups: All Groups
   basic_settings: Basic Settings
@@ -381,8 +380,8 @@ en:
     %{group} wiki.
   public_group_wiki: Public
   private_group_wiki: Private
-  add_members_to_committee: Add a group member to this committee. To add people not
-    in the parent group, send an invite instead.
+  add_members_to_committee: Add a group member to this %{group_type}. To add people
+    not in the parent group, send an invite instead.
   allow_membership_requests: Allow Membership Requests
   committee_publicly_visible: Make Committees Publicly Visible
   committee_publicly_visible_description: Committees are visible to non-members at %{domain}/yourgroupname
@@ -446,6 +445,7 @@ en:
   pgp_key_invalid: The key you entered cannot be imported. Did you really paste a public
     PGP key?
   pgp_key_expired: The PGP key you entered is expired.
+  pgp_key_placeholder: Enter your public PGP key
   private_profile: Private Profile
   remove_image_link: remove image
   save_changes: Save Changes

@@ -34,7 +34,7 @@
       - formy.row do |r|
         - r.label :pgp_public_key.t
         - r.info :pgp_key_description.t
-        - r.input key_fields.text_area(:key, rows: 5, class: 'form-control', placeholder: "Enter a public PGP Key")
+        - r.input key_fields.text_area(:key, rows: 5, class: 'form-control', placeholder: :pgp_key_placeholder.t)
       - if @user.pgp_key.fingerprint
         - formy.row do |r|
           - r.label :fingerprint.t

@@ -20,7 +20,7 @@
   - thing = group_type
 
 - content_for :title do
-  %h1= :create_a_new_thing.t(thing: thing.t.downcase)
+  %h1= :create_a_new_thing.t(thing: thing.t)
 
 = form_for(@committee || @group, url: url) do |form|
 
@@ -57,7 +57,7 @@
       - r.label_for 'group_language'
       - r.input form.select('language', all_languages_for_select, {include_blank: true}, {class: 'form-control'})
       - r.info "(#{:optional.t}) "
-      - r.info :group_language.t(group: group_type.t.downcase)
+      - r.info :group_language.t(group: t(group_type.downcase))
 
       -# adding avatar wasn't working, and seems okay for now to have it added under settings
 

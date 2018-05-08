@@ -4,7 +4,6 @@ en:
     models:
       committee: committee
       council: council
-      group: organization
       network: network
 
   ## BASIC TERMS
@@ -76,7 +75,7 @@ en:
   private_group_wiki: "Private"
 
   ## UNSORTED
-  add_members_to_committee: "Add a group member to this committee. To add people not in the parent group, send an invite instead."
+  add_members_to_committee: "Add a group member to this %{group_type}. To add people not in the parent group, send an invite instead."
   allow_membership_requests: "Allow Membership Requests"
   committee_publicly_visible: "Make Committees Publicly Visible"
   committee_publicly_visible_description: "Committees are visible to non-members at %{domain}/yourgroupname"

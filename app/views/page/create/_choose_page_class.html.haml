@@ -2,9 +2,9 @@
 
 - header = capture do
   %h1.first
-    = I18n.t(:create_a_new_thing, thing: I18n.t(:page).downcase)
+    = I18n.t(:create_a_new_thing, thing: I18n.t(:page.downcase))
   - if @group
-    = I18n.t(:page_added_to_group, group_type: @group.group_type.downcase, group_name: content_tag(:b, @group.name)).html_safe
+    = I18n.t(:page_added_to_group, group_type: t(@group.group_type.downcase), group_name: content_tag(:b, @group.name)).html_safe
   %hr
 
 = column_layout 2, page_creation_links, class: 'layout', header: header, style: 'margin: 0 auto'
