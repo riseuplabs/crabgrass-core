@@ -219,7 +219,6 @@ Crabgrass::Application.routes.draw do
         post 'revert'
       end
     end
-    resources :diffs, only: [:show]
   end
 
   ##
