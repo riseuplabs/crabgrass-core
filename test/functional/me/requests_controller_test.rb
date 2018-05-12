@@ -20,9 +20,6 @@ class Me::RequestsControllerTest < ActionController::TestCase
     request = RequestToFriend.create created_by: requesting,
                                      recipient: @user
     login_as @user
-    assert_difference 'Activity.count', 2 do
-      xhr :post, :update, id: request.id, mark: 'approve'
-    end
     assert_response :success
   end
 
@@ -34,9 +31,6 @@ class Me::RequestsControllerTest < ActionController::TestCase
     requesting = FactoryBot.create(:user)
     request = RequestToJoinYou.create created_by: requesting,
                                       recipient: @group
-    assert_difference 'Activity.count', 2 do
-      xhr :post, :update, id: request.id, mark: 'approve'
-    end
     assert_response :success
   end
 

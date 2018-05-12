@@ -20,9 +20,6 @@ class Group::RequestsControllerTest < ActionController::TestCase
       get :create, group_id: @group.to_param, type: 'destroy_group'
     end
     assert_response :redirect
-    assert activity = Activity::UserProposedToDestroyGroup.last
-    assert_equal @user, activity.user
-    assert_equal @group, activity.group
   end
 
   def test_approve

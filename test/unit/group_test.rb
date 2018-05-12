@@ -145,14 +145,10 @@ class GroupTest < ActiveSupport::TestCase
   def test_destroy
     g = groups(:warm)
     red = users(:red)
-
     assert_difference 'Group::Membership.count', -1 * g.users.count do
       g.destroy
     end
-
     assert_nil pages(:committee_page).reload.owner_id
-    assert_nil Activity::GroupLostUser.for_all(red).first,
-               'there should be no user left group message'
   end
 
   def test_avatar
