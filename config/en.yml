@@ -80,7 +80,7 @@ en:
 ### en/crabgrass.yml
   crabgrass:
     description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> AGPL
-      software libre</a> for network organizing.
+      software libre</a> for network organizing
   
   '
     get_involved: Get Involved
@@ -843,20 +843,7 @@ en:
 ########################################
 ### en/unsorted.yml
   view_label: View
-  activity_contact_created: "%{user} added %{other_user} as a friend"
-  activity_group_created: "%{user} created %{group_type} %{group}"
-  activity_group_destroyed: "%{group} was destroyed by %{user}"
-  activity_message: "%{author} wrote: %{message}"
-  activity_message_received: 'You received %{message_tag} from %{other_user}: %{title}'
   activity_twinkled: '%{user} has starred your post "%{post}"'
-  activity_unread: You have %{count} unread [private messages]
-  activity_unread_singular: You have an unread [private message]
-  activity_user_destroyed: "%{user} has retired"
-  activity_user_joined_group: "%{user} has joined %{group_type} %{group}"
-  activity_user_joined_site: "%{user} has joined %{group}"
-  activity_user_left_group: "%{user} has left %{group_type} %{group}"
-  activity_user_left_site: "%{user} has left %{group}"
-  activity_wall_message: "%{author} wrote to %{user}: %{message}"
   asset_version_list_version_heading: version
   created_on: Created on
   delete_version_confirm: Are you sure you want to delete this version?
@@ -982,7 +969,6 @@ en:
   cant_find_wiki_section: Can't find wiki section %{section}
   changes_made: Changes made %{when}.
   changes_might_be_overwritten: Your changes might be overwritten.
-  comparing_changes_header: Comparing changes between %{old_version} and %{new_version}.
   diff_link: view changes
   edit_wiki: Edit Wiki
   force_save_button: Break Lock and Save
