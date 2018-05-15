@@ -12,7 +12,6 @@ class Group::GroupsController < Group::BaseController
   before_filter :initialize_group, only: %w[new create]
   before_filter :fetch_associations, only: :destroy
 
-  track_actions :create
   after_filter :notify_former_users, only: :destroy
 
   guard :may_ALIAS_group?

@@ -12,8 +12,6 @@ class Group::RequestsController < Group::BaseController
   # permissions handled by model:
   guard create: :allow, update: :allow, destroy: :allow
 
-  track_actions :create
-
   rescue_render create: :index
 
   def index
@@ -46,10 +44,6 @@ class Group::RequestsController < Group::BaseController
 
   def requested_class
     REQUEST_TYPES[params[:type]].try.constantize
-  end
-
-  def track_action
-    super "request_to_#{params[:type]}" if REQUEST_TYPES.key? params[:type]
   end
 
   def current_view

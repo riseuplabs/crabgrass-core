@@ -8,15 +8,11 @@
 module Common::Requests
   extend ActiveSupport::Concern
 
-  include Common::Tracking::Action
-
   included do
     helper_method :current_state
     helper_method :request_path
     helper_method :requests_path
     before_filter :fetch_request, only: %i[update destroy show]
-
-    track_actions :update, if: :approved?
 
     after_filter :create_notices, only: :create
     after_filter :dismiss_notices, only: :update
@@ -103,11 +99,6 @@ module Common::Requests
     elsif mark == :reject
       msg = :rejected_by_entity.t(entity: current_user.name)
     end
-  end
-
-  def track_action(event = nil, options = {})
-    event ||= @req.event
-    super event, @req.event_attrs.merge(options)
   end
 
   def create_notices

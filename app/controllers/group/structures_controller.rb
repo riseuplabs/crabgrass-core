@@ -1,9 +1,6 @@
 class Group::StructuresController < Group::SettingsController
-  include Common::Tracking::Action
 
   guard :may_edit_group_structure?, actions: %i[new create destroy]
-
-  track_actions :create
 
   def show; end
 
@@ -47,7 +44,4 @@ class Group::StructuresController < Group::SettingsController
     params.fetch(:group, {}).permit :name, :full_name, :language
   end
 
-  def track_action
-    super("#{action_string}_group", group: @committee)
-  end
 end

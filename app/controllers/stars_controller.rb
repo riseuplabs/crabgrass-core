@@ -24,6 +24,7 @@ class StarsController < ApplicationController
   include Common::Tracking::Action
 
   before_filter :fetch_starred
+  track_actions :create
 
   def create
     @starred.stars.create(user: current_user)
