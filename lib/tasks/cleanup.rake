@@ -33,7 +33,6 @@ namespace :cg do
       :remove_invalid_federation_requests,
       :remove_invalid_email_requests,
       :remove_empty_tasks,
-      :fix_activity_types,
       :fix_invalid_request_states,
       :reset_peer_caches,
       :fix_contributors_count
@@ -241,13 +240,6 @@ namespace :cg do
     task(remove_empty_tasks: :environment) do
       count = Task.where(name: '', description: '').delete_all
       puts "Removed #{count} tasks that lacked a name and a description"
-    end
-
-    desc 'Fix type column in activities so the classes actually exist'
-    task(fix_activity_types: :environment) do
-      count = Activity.where(type: 'UserRemovedFromGroupActivity')
-                      .update_all(type: 'UserLeftGroupActivity')
-      puts "Fixed #{count} Activities by setting an existing type."
     end
 
     desc 'Fix invalid states of requests'

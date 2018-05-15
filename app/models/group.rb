@@ -34,7 +34,6 @@ class Group < ActiveRecord::Base
 
   acts_as_castle
 
-  # not saved to database, just used by activity feed:
   attr_accessor :created_by
 
   ##

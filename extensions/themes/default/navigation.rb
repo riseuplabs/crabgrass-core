@@ -1,5 +1,3 @@
-
-
 define_navigation do
   ##
   ## HOME
@@ -13,14 +11,11 @@ define_navigation do
   end
 
   ##
-
-  ##
   ## ME
   ##
 
   global_section :me do
     label   { :me.t }
-    # visible { logged_in? }
     url     { logged_in? ? me_home_path : '/' }
     active  { context?(:me) || controller?(:account, :session, :root) }
     html    partial: '/layouts/global/nav/me_menu'
@@ -39,40 +34,6 @@ define_navigation do
       active { page_controller? }
       icon   :page_white_copy
     end
-
-    #    context_section :activities do
-    #      label  { :activities.t }
-    #      url    { me_activities_path }
-    #      active { controller?('me/activities') }
-    #      icon   :transmit
-    #      local_section :all do
-    #        label  "All Activities"
-    #        url    { me_activities_path }
-    #        active { controller?('me/activities') and params[:view].empty? }
-    #      end
-    #      local_section :my do
-    #        label  "Mine"
-    #        url    { me_activities_path(:view => 'my') }
-    #        active { controller?('me/activities') and params[:view] == 'my' }
-    #      end
-    #      local_section :friends do
-    #        label  "People"
-    #        url    { me_activities_path(:view => 'friends') }
-    #        active { controller?('me/activities') and params[:view] == 'friends' }
-    #      end
-    #      local_section :groups do
-    #        label  "Groups"
-    #        url    { me_activities_path(:view => 'groups') }
-    #        active { controller?('me/activities') and params[:view] == 'groups' }
-    #      end
-    #    end
-
-    #    context_section :calendar do
-    #      label  "Calendar"
-    #      url    { me_events_path }
-    #      active { controller?('me/events') }
-    #      icon   :date
-    #    end
 
     context_section :messages do
       label  { :messages.t }
@@ -206,9 +167,6 @@ define_navigation do
     html partial: '/layouts/global/nav/groups_menu'
 
     context_section :directory do
-      # visible { context?(:none) and controller?('group/directory') }
-      # active  { context?(:none) and controller?('group/directory') }
-
       visible { context?(:none) }
       active  { context?(:none) }
 
@@ -249,13 +207,6 @@ define_navigation do
       active { page_controller? }
     end
 
-    #    context_section :calendar do
-    #      label  { :calendar.t }
-    #      url    { group_events_path(@group) }
-    #      active { controller?('group/events') }
-    #      icon   :date
-    #    end
-
     context_section :members do
       visible { may_list_memberships? }
       label   { :members.t }
@@ -291,17 +242,6 @@ define_navigation do
         active  { controller?('group/membership_requests') }
       end
 
-      # local_section :leave_group_link do
-      #  visible { may_leave_group? }
-      #  html    { leave_group_link }
-      # end
-
-      # local_section :membership_settings do
-      #  visible { may_edit_group? }
-      #  label   { 'Membership Settings' }
-      #  url     { group_permissions_path(@group, :view => 'membership') }
-      #  active  false
-      # end
     end
 
     context_section :settings do
@@ -355,19 +295,4 @@ define_navigation do
     end
   end
 
-  ##
-  ## GROUPS DIRECTORY
-  ##
-
-  #  global_section :group_directory do
-  #    visible { @group.nil? }
-  #    label  "Groups"
-  #    url    { groups_directory_path }
-  #    active { controller?('groups') }
-  #    html   :partial => '/layouts/global/nav/groups_menu'
-  ##    section :place do
-  ##    end
-  ##    section :location do
-  ##    end
-  #  end
 end

@@ -1,10 +1,6 @@
-# We have lists of former actions in a number of places. For example page
-# history lists actions related to a given page.
-# We want to list activities of groups and users on their landing pages and on
-# a combined feed for the current_users friends and groups.
-#
-# Therefore we need to keep track of the things people do. We store them in
-# different records based on the context (Activity and PageHistory).
+# The page history lists actions related to a given page.
+# Therefore we need to keep track of the changes. We store them in
+# PageHistory.
 #
 # This module makes creating the records from the controller easy.
 #

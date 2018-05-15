@@ -191,68 +191,7 @@ module Common::Ui::EntityDisplayHelper
   end
 
   #
-  # used to display a list of entities
-  #
-  # options:
-  #
-  #   :entities -- the entity objects to list. if empty, nothing is displayed.
-  #   :before   -- text to put before the list, if enitities is non-empty.
-  #   :after    -- text to put after the list. if set, entity list is always treated as non-empty.
-  #
-  # other options are passed on through to display_entity
-  #
-  # def entity_list(options)
-  #   html = []
-  #   before = options.delete(:before)
-  #   after = options.delete(:after)
-  #   entities = options.delete(:entities)
-  #   if entities or before or after
-  #     html << before
-  #     if entities.any?
-  #       html << content_tag(:ul, :class => 'entities') do
-  #         entities.collect do |entity|
-  #           content_tag(:li, link_to_entity(entity, options))
-  #         end
-  #       end
-  #     end
-  #     html << after
-  #   end
-  #   return html.join
-  # end
-
-  # def entity_nav_list(options)
-  #   html = []
-  #   header = options.delete(:header)
-  #   footer = options.delete(:footer)
-  #   entities = options.delete(:entities)
-  #   if entities or header or footer
-  #     content_tag(:ul, :class => 'nav nav-list') do
-  #       html = ""
-  #       if header
-  #         html << content_tag(:li, header, :class => 'nav-header')
-  #       end
-  #       if entities.any?
-  #         entities.collect do |entity|
-  #           html << content_tag(:li, link_to_entity(entity, options))
-  #         end
-  #       end
-  #       html
-  #     end
-  #   else
-  #     ""
-  #   end
-  # end
-
-  ##
-  ## ENCODED ENTITY TEXT
-  ##
-  ## There are many places where we have some text with a user or group encoded in it like so:
-  ##
-  ## "hey, check out <group>animals</group>."
-  ##
-
-  #
-  # used to convert the text produced by activities & requests into actual links
+  # used to convert the text produced by requests into actual links
   #
   def expand_links(text, options = nil)
     if block_given?
