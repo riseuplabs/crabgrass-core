@@ -45,6 +45,7 @@ en:
   search: Search
   see_all_link: "See All"
   see_more_link: More
+  sorry: Sorry
   thing_not_found: "%{thing} not found"
   total: "%{count} total"
   unknown: Unknown

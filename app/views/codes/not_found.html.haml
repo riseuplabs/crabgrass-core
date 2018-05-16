@@ -1,0 +1,5 @@
+- # take a long time to return error, to prevent attacks.
+- sleep(0.25)
+-content_for :title do
+  %h1= :sorry.t
+  = I18n.t(:access_code_expired, code: params[:id])

@@ -37,6 +37,10 @@ class Page::AccessCode < ActiveRecord::Base
     self.expires_at ||= Time.now + 30.days
   end
 
+  def expired?
+    self.expires_at <= Time.now.utc
+  end
+
   def self.cleanup_expired
     delete_all ['expires_at < ?', Time.now.utc]
   end

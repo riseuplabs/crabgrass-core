@@ -84,7 +84,7 @@ Crabgrass::Application.routes.draw do
   # UPGRADE: this is pre rails 3 syntax. If you want to bring these
   # routes back please upgrade them
   #  match '/invites/:action/*path', controller: 'requests', action: /accept/
-  #  match '/code/:id', to: 'codes#jump'
+  get '/code/:id', to: 'codes#jump'
 
   ##
   ## ACCOUNT
