@@ -197,7 +197,7 @@ Crabgrass::Application.routes.draw do
     resource :history,    only: [:show], controller: 'history'
     resource :attributes, only: [:update]
     resource :title,      only: %i[edit update], controller: 'title'
-    resource :trash,      only: %i[edit update], controller: 'trash'
+    resource :trash,      only: %i[edit update destroy], controller: 'trash'
   end
 
   resources :posts, only: [] do |_posts|

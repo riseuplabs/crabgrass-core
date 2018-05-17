@@ -14,6 +14,11 @@ class Page::TrashController < Page::SidebarsController
     end
   end
 
+  def destroy
+    @page.destroy
+    redirect_to me_home_path
+  end
+
   protected
 
   def track_action
