@@ -257,6 +257,7 @@ en:
   search: Search
   see_all_link: See All
   see_more_link: More
+  sorry: Sorry
   thing_not_found: "%{thing} not found"
   total: "%{count} total"
   unknown: Unknown
@@ -485,6 +486,7 @@ en:
     by < and > that the video site – youtube, etc – makes available to you for putting
     the video on other sites.
   video_embed_code_prompt: Embed code from external video source.
+  access_code_expired: The code %{code} has expired or does not exist.
   email_link_expires: This link will expire in %{days} days.
   email_notice_access: 'You may access this page here:'
   email_notice_hello: Hello, %{from} has sent you a web page.
@@ -588,6 +590,7 @@ en:
   share_grant_required_error: "%{name} is not allowed to view this page. They must be
     granted greater access first."
   share_include_message: Include a custom message
+  share_include_paranoid_message: Include a custom message in Notice (not in Email).
   share_page_link: Share %{page_class}
   share_page_recipients: Share page with
   share_send_notification: Send notification

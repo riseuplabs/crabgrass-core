@@ -23,7 +23,10 @@
       %label
         = check_box :notification, :send_email, checked: send_email
         = :send_email.t
-    = :share_include_message.t
+    - if Conf.paranoid_emails?
+      = :share_include_paranoid_message.t
+    - else
+      = :share_include_message.t
     #share_message_holder
       = text_area(:notification, :send_message, rows: 6, class: 'form-control')
 

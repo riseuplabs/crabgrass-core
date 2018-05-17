@@ -9,6 +9,7 @@ class Page::AccessCodeTest < ActiveSupport::TestCase
       Page::AccessCode.create! expires_at: 1.hour.from_now
     end
 
+    assert_equal true, Page::AccessCode.first.expired?
     assert_equal 2, Page::AccessCode.count
 
     Page::AccessCode.cleanup_expired
