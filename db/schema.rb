@@ -11,27 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180426154112) do
-
-  create_table "activities", force: :cascade do |t|
-    t.integer  "subject_id",   limit: 4
-    t.string   "subject_type", limit: 255
-    t.string   "subject_name", limit: 255
-    t.integer  "item_id",      limit: 4
-    t.string   "item_type",    limit: 255
-    t.string   "item_name",    limit: 255
-    t.string   "type",         limit: 255
-    t.string   "extra",        limit: 255
-    t.integer  "key",          limit: 4
-    t.datetime "created_at"
-    t.integer  "access",       limit: 2,   default: 2
-    t.integer  "related_id",   limit: 4
-    t.integer  "site_id",      limit: 4
-    t.boolean  "flag"
-  end
-
-  add_index "activities", ["created_at"], :name => "created_at"
-  execute "CREATE INDEX subject_0_4_0 ON activities (subject_id,subject_type(4),access)"
+ActiveRecord::Schema.define(version: 20180515155729) do
 
   create_table "asset_versions", force: :cascade do |t|
     t.integer  "asset_id",       limit: 4

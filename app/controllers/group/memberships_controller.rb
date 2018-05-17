@@ -5,13 +5,10 @@
 #
 
 class Group::MembershipsController < Group::BaseController
-  include Common::Tracking::Action
 
   guard index: :may_list_memberships?,
         destroy: :may_destroy_membership?,
         create: :may_create_membership?
-
-  track_actions :create, :destroy, unless: :federation_view?
 
   #
   # list all the memberships
