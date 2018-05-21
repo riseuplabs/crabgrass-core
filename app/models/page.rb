@@ -308,12 +308,6 @@ class Page < ActiveRecord::Base
     parts.compact.min { |a, b| (a.access || 100) <=> (b.access || 100) }
   end
 
-  # this should be in the database, for now hardwired as "true".
-  # if true, then anyone who can view a page can comment on it.
-  def public_comments?
-    true
-  end
-
   protected
 
   # do not allow comments or editing of deleted pages:

@@ -15,9 +15,11 @@
 
 :ruby
   posts = local_assigns[:posts] ||= @posts
-  show_reply = safe_call(:may_create_post?) || false
+  #show_reply = safe_call(:may_create_post?) || false
+  show_reply = current_user.may?(:pester, @recipient) if current_user && @recipient
+  show_post_form = logged_in? && (show_reply || may_show?(@page) ||  @page.public?)
 
-- if posts.any? || show_reply
+- if posts.any? || show_post_form
   %section#posts.post_list
     = post_pagination_links(posts)
     %table.posts.round
@@ -25,7 +27,7 @@
         layout: 'ui/table/devided_row',
         collection: posts,
         locals: { last: posts.last }
-      - if show_reply
+      - if show_post_form
         = render partial: 'common/posts/reply',
           layout: 'ui/table/devided_row',
           locals: { link_name: :reply, post: Post.new }

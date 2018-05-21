@@ -3,13 +3,11 @@ class Page::PostsController < ApplicationController
 
   include_controllers 'common/posts'
 
-  permissions 'posts'
   helper 'page/post'
 
   prepend_before_filter :fetch_data
   before_filter :login_required, except: :show
-  before_filter :authorization_required, only: :create
-  guard create: :may_create_post?
+  after_action :verify_authorized
 
   track_actions :create, :update, :destroy
 
@@ -29,11 +27,13 @@ class Page::PostsController < ApplicationController
   end
 
   def create
+    authorize @page, :show?
     if @post = @page.add_post(current_user, post_params)
       respond_to do |format|
         format.js   { redirect_to action: :index }
         format.html { redirect_to page_url(@page) + "#post-#{@post.id}" }
       end
+      authorize @post
     end
   end
 

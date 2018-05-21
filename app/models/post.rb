@@ -26,6 +26,14 @@ class Post < ActiveRecord::Base
   after_destroy :post_destroyed
 
   ##
+  ## POST ACCESS CONTROL
+  ##
+
+  def self.policy_class
+    PostPolicy
+  end
+
+  ##
   ## FINDERS
   ##
 

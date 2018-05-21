@@ -13,6 +13,10 @@ module Common
       policy(record).show?
     end
 
+    def may_twinkle?(record)
+      policy(record).twinkle?
+    end
+
     def may_update?(record)
       policy(record).update?
     end
