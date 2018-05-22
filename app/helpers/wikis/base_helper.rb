@@ -23,7 +23,7 @@ module Wikis::BaseHelper
         t.options 'data-remote' => true, 'data-method' => :get, :class => 'wiki_tab wiki_away'
       end
     end
-    if may_edit_wiki?(wiki)
+    if may_update?(wiki)
       formy.tab do |t|
         t.label :edit.t
         t.url edit_wiki_path(wiki)

@@ -15,20 +15,6 @@ module Wikis::VersionsHelper
   # NAVIGATION LINKS
   #
 
-  def version_action_links(version)
-    link_line version_diff_link(version),
-              version_revert_link(version)
-  end
-
-  def show_version_remote_function(version)
-    remote_function(
-      url: wiki_version_path(@wiki, version),
-      method: :get,
-      loading: 'showSpinner()',
-      loaded: 'hideSpinners()'
-    )
-  end
-
   def list_versions_link
     label = :list_things.t(things: :versions.t)
     url = wiki_versions_path(@wiki)
@@ -76,25 +62,8 @@ module Wikis::VersionsHelper
   end
 
   def version_show_link(version)
-    return unless may_edit_wiki?(@wiki)
+    return unless may_update?(@wiki)
     link_to :version_link.t, wiki_version_path(@wiki, version)
   end
 
-  def version_diff_link(version, remote = false)
-    return unless may_show_wiki_diff?(version)
-    if remote
-      link_to :diff_link.t, wiki_diff_path(@wiki, version.diff_id),
-        remote: true,
-        method: :get
-    else
-      link_to :diff_link.t, wiki_diff_path(@wiki, version.diff_id)
-    end
-  end
-
-  def version_revert_link(version)
-    return unless may_revert_wiki_version?(version)
-    link_to :wiki_version_revert_link.t, revert_wiki_version_path(@wiki, version),
-      remote: true,
-      method: :post
-  end
 end

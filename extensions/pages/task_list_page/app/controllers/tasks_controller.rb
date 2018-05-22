@@ -51,7 +51,7 @@ class TasksController < Page::BaseController
   end
 
   def fetch_data
-    authorize @page, :edit?
+    authorize @page, :update?
   end
 
   def fetch_task

@@ -51,7 +51,7 @@ class RateManyPossiblesController < Page::BaseController
   end
 
   def fetch_poll
-    authorize @page, :edit?
+    authorize @page, :update?
     @poll = @page.data
   end
 end

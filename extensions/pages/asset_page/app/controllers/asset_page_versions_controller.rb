@@ -6,12 +6,12 @@ class AssetPageVersionsController < Page::BaseController
   end
 
   def create
-    authorize @page, :edit?
+    authorize @page, :update?
     @asset.generate_thumbnails
   end
 
   def destroy
-    authorize @page, :edit?
+    authorize @page, :update?
     @asset_version = @asset.versions.find_by_version(params[:id])
     @asset_version.destroy
     current_user.updated(@page)

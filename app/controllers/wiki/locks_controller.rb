@@ -4,6 +4,7 @@ class Wiki::LocksController < Wiki::BaseController
   # when given the wiki locked error
   #
   def update
+    authorize @wiki
     if params[:cancel]
       render template: 'wiki/wikis/show'
     elsif params[:break_lock]
@@ -19,6 +20,7 @@ class Wiki::LocksController < Wiki::BaseController
   # onbeforeunload.
   #
   def destroy
+    authorize @wiki, :update?
     @wiki.release_my_lock!(@section, current_user)
     head :accepted
   rescue Wiki::Sections::SectionNotFoundError

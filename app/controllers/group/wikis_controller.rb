@@ -1,6 +1,5 @@
 class Group::WikisController < Group::BaseController
   guard :may_edit_group?
-  permissions 'wikis'
 
   def create
     if params[:profile] == 'private'

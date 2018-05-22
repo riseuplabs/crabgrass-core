@@ -49,7 +49,7 @@ class RankedVotePossiblesController < Page::BaseController
   end
 
   def fetch_poll
-    authorize @page, :edit?
+    authorize @page, :update?
     @poll = @page.data if @page
     true
   end

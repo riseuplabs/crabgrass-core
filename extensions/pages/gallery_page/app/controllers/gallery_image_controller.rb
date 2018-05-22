@@ -17,7 +17,7 @@ class GalleryImageController < Page::BaseController
 
   # removed an non ajax fallback, azul
   def sort
-    authorize @page, :edit?
+    authorize @page, :update?
     @page.sort_images params[:assets_list]
     current_user.updated(@page)
     render plain: I18n.t(:order_changed)

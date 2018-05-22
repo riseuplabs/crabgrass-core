@@ -1,9 +1,16 @@
 class Wiki::AssetsController < Wiki::BaseController
   before_filter :fetch_assets, only: :new
 
-  def new; end
+  def new
+    # FIXME: Authorize needed because BaseController wants us to
+    # authorize each action. Authorize asset creation instead. Authorize
+    # asset creation instead
+    authorize @wiki, :show?
+  end
 
   def create
+    # FIXME: Authorize asset creation instead
+    authorize @wiki, :show?
     asset = Asset.build uploaded_data: params[:asset][:uploaded_data], parent_page: @page
     @page ||= asset.create_page(current_user, @wiki.context)
     asset.save

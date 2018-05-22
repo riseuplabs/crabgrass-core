@@ -29,6 +29,6 @@ class Page::TagsController < Page::SidebarsController
   end
 
   def authorize_page
-    authorize @page, :edit?
+    authorize @page, :update?
   end
 end

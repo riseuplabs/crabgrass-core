@@ -44,18 +44,4 @@ class Wiki::VersionsControllerTest < ActionController::TestCase
     assert_redirected_to action: :index
   end
 
-  def test_revert
-    login_as :orange
-    page = pages(:wiki)
-    wiki = page.data
-    wiki.update_section!(:document, users(:blue), 1, 'version 1')
-    wiki.update_section!(:document, users(:yellow), 2, 'version 2')
-    post :revert, wiki_id: wiki.id, id: 1
-
-    wiki.reload
-
-    assert_redirected_to wiki_versions_path(wiki),
-                         'revert should redirect to wiki versions list'
-    assert_equal 'version 1', wiki.body
-  end
 end

@@ -12,7 +12,7 @@ class Page::SidebarsController < ApplicationController
   helper 'page/base', 'page/sidebar'
 
   def show
-    authorize @page, :edit?
+    authorize @page, :update?
     render template: 'page/sidebar/reset'
   end
 

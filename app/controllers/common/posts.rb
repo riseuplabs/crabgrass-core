@@ -15,18 +15,18 @@
 #
 module Common::Posts
   def edit
-    authorize @post, :edit?
+    authorize @post
     render template: 'common/posts/edit'
   end
 
   def update
-    authorize @post, :edit?
+    authorize @post
     @post.update_attribute('body', params[:post][:body]) if params[:save]
     redirect_to action: :show
   end
 
   def destroy
-    authorize @post, :edit?
+    authorize @post
     @post.destroy
     render template: 'common/posts/destroy'
   end

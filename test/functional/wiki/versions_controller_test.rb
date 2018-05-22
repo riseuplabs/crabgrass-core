@@ -21,17 +21,14 @@ class Wiki::VersionsControllerTest < ActionController::TestCase
   end
 
   def test_show
-    assert_permission :may_edit_wiki? do
-      get :show, wiki_id: @wiki.to_param, id: @version.to_param
-    end
+    get :show, wiki_id: @wiki.to_param, id: @version.to_param
     assert_equal @version, assigns['version']
     assert_equal @wiki.versions.first, assigns['former']
   end
 
   def test_index
-    assert_permission :may_edit_wiki? do
-      get :index, wiki_id: @wiki.to_param
-    end
+    get :index, wiki_id: @wiki.to_param
+    assert_response :success
   end
 
   def test_destroy_not_possible
@@ -40,16 +37,4 @@ class Wiki::VersionsControllerTest < ActionController::TestCase
     end
   end
 
-  def test_revert
-    @wiki.body = 'new version'
-    @wiki.save
-    assert_difference '@wiki.versions.count' do
-      assert_permission :may_revert_wiki_version? do
-        post :revert, wiki_id: @wiki.to_param, id: @version.to_param
-      end
-    end
-    assert_equal @original_body, @wiki.reload.body
-    assert_response :redirect
-    assert_redirected_to wiki_versions_url(@wiki)
-  end
 end

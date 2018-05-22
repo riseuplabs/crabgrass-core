@@ -32,7 +32,7 @@ class Page::SharesController < Page::SidebarsController
   # display the share or notify forms.
   # this returns the html, which is used to populate the modalbox
   def show
-    authorize @page, (share? ? :admin? : :edit?)
+    authorize @page, (share? ? :admin? : :update?)
     render template: "page/shares/show_#{mode_param}"
   end
 
@@ -60,7 +60,7 @@ class Page::SharesController < Page::SidebarsController
   #    "the-true-levellers"=>{"access"=>"admin"}}
   #
   def update
-    authorize @page, (share? ? :admin? : :edit?)
+    authorize @page, (share? ? :admin? : :update?)
     @success_message = I18n.t(notify_or_share_message)
     if params[:share_button] || params[:notify_button]
       share = Page::Share.new(@page, current_user, share_options)
