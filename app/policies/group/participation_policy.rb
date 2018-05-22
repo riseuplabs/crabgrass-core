@@ -7,7 +7,7 @@ class Group::ParticipationPolicy < ApplicationPolicy
   def destroy?
     return false unless page_policy.admin?
     return true unless user.member_of?(record.group)
-    if record.group_id == page.owner_id and @page.owner_type == 'Group'
+    if record.group_id == page.owner_id and page.owner_type == 'Group'
         false
     else
       user.may_admin_page_without?(page, record)
