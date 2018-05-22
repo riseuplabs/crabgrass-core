@@ -7,7 +7,7 @@ module Group::WikisHelper
   # profile: [private|public]
   #
   def create_group_wiki_link(profile)
-    link_to :create_thing.t(thing: :group_wiki.t),
+    link_to :create_thing.t(thing: :group_wiki.t)+' ('+(profile+'_wiki').to_sym.t+')',
             group_wikis_path(@group, profile: profile),
             method: :post, icon: :plus
   end

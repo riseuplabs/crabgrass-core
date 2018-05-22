@@ -11,8 +11,7 @@ class Group::WikisController < Group::BaseController
       raise ErrorMessage, 'missing profile parameter'
     end
     wiki = @profile.create_wiki version: 0, body: '', user: current_user
-    params[:edit_mode] = 'on'
-    redirect_to action: :index
+    redirect_to action: :index, anchor: params[:profile]
   end
 
   def index
