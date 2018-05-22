@@ -5,6 +5,7 @@
 #
 module Group::Users
   extend ActiveSupport::Concern
+  SMALL_GROUP_SIZE = 5
   # large groups will be ignored when calculating peers.
   LARGE_GROUP_SIZE = 50
 
@@ -31,11 +32,16 @@ module Group::Users
   end
 
   module ClassMethods
-    # tmp hack until we have a better viewing system in place.
-    def most_visits
-      joins(:memberships)
+    def most_unique_visits
+        joins(:memberships)
         .group('groups.id')
         .order('count(memberships.total_visits) DESC')
+    end
+
+    def most_total_visits
+        joins(:memberships)
+        .group('groups.id')
+        .order('sum(memberships.total_visits) DESC')
     end
 
     def recent_visits
@@ -58,19 +64,33 @@ module Group::Users
         .select('groups.*')
         .having("count(memberships.id) > #{LARGE_GROUP_SIZE}")
     end
+
+    def small
+      joins(:memberships)
+        .group('groups.id')
+        .select('groups.*')
+        .having("count(memberships.id) < #{SMALL_GROUP_SIZE}")
+    end
+
+    def one_member
+      joins(:memberships)
+        .group('groups.id')
+        .select('groups.*')
+        .having("count(memberships.id) = 1")
+    end
+
+    def no_members
+      where("id NOT IN (SELECT group_id FROM memberships)")
+    end
+
+    def less_members_than(count)
+      joins(:memberships)
+        .group('groups.id')
+        .select('groups.*')
+        .having("count(memberships.id) < #{count}")
+    end
   end
 
-  # commented out... removing a council member from a group is no big deal,
-  # they can still just add themselves back. -e
-  #
-  # def users_allowed_to_vote_on_removing(user)
-  #  # only council members can vote on removing council members
-  #  if self.has_a_council? and user.may?(:admin, self)
-  #    return self.council.users
-  #  else
-  #    return self.users
-  #  end
-  # end
 
   #
   # timestamp of the last visit of a user
@@ -172,13 +192,4 @@ module Group::Users
     end
     increment!(:version)
   end
-
-  # maps a user <-> group relationship to user <-> language
-  #  def in_user_terms(relationship)
-  #    case relationship
-  #      when :member;   'friend'
-  #      when :ally;     'peer'
-  #      else; relationship.to_s
-  #    end
-  #  end
 end
