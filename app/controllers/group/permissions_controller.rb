@@ -2,11 +2,12 @@ class Group::PermissionsController < Group::BaseController
   helper 'castle_gates'
 
   def index
+    authorize @group, :admin?
     @holders = key_holders(:public)
   end
 
   def update
-    # update
+    authorize @group, :admin?
     gate = @group.gate(params.delete(:gate))
     new_state = params[:new_state]
 

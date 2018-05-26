@@ -1,24 +1,30 @@
 class Group::StructuresController < Group::SettingsController
 
-  guard :may_edit_group_structure?, actions: %i[new create destroy]
+  after_action :verify_authorized, only: %i[new create destroy]
 
   def show; end
 
   def new
+    authorize @group, :edit_structure?
     @committee = group_class.new
   end
 
   def create
+    authorize @group, :edit_structure?
     if group_type == :committee
-      raise PermissionDenied unless may_create_committee?
+      raise PermissionDenied unless policy(@group).may_create_committee?
     else
-      raise PermissionDenied unless may_create_council?
+      raise PermissionDenied unless policy(@group).may_create_council?
     end
     @committee = group_class.new group_params
     @group.add_committee!(@committee)
     @committee.add_user!(current_user) if @committee.council?
     success :group_successfully_created.t
     redirect_to group_url(@committee)
+  end
+
+  def destroy
+    authorize @group, :edit_structure?
   end
 
   protected

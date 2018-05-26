@@ -3,7 +3,8 @@ class Group::AvatarsController < Group::BaseController
   include_controllers 'common/always_perform_caching'
   before_filter :setup
 
-  guard :allow
+  # TODO: :verify_authorized should be set to false.
+  after_action :verify_authorized, only: :index
 
   protected
 

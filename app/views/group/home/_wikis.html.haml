@@ -2,7 +2,7 @@
   showTabByHash();
 #group_home_wiki_area
   .p.shy_parent{class: first(:heading)}
-    - if may_edit_group?
+    - if may_update?(@group)
       = link_to :edit.t, group_wikis_path(@group),
         icon: :pencil,
         class: 'shy edit',

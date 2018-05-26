@@ -10,9 +10,7 @@ class Group::PermissionsControllerTest < ActionController::TestCase
 
   def test_index
     login_as @user
-    assert_permission :may_admin_group? do
-      get :index, group_id: @group.to_param
-    end
+    get :index, group_id: @group.to_param
     assert_response :success
   end
 
@@ -26,13 +24,11 @@ class Group::PermissionsControllerTest < ActionController::TestCase
   def test_update
     public_code = @controller.send(:key_holders, :public).first.code
     login_as @user
-    assert_permission :may_admin_group? do
-      xhr :post, :update,
-          group_id: @group.to_param,
-          id: public_code,
-          gate: 'view',
-          new_state: 'open'
-    end
+    xhr :post, :update,
+        group_id: @group.to_param,
+        id: public_code,
+        gate: 'view',
+        new_state: 'open'
     assert_response :success
     assert @group.has_access?(:view, :public)
   end

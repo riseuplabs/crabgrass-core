@@ -9,10 +9,16 @@ class Group::RequestsControllerTest < ActionController::TestCase
   end
 
   def test_index
-    assert_permission :may_admin_group? do
+    get :index, group_id: @group.to_param
+    assert_response :success
+  end
+
+  def test_index_not_allowed
+    stranger = FactoryBot.create(:user)
+    login_as stranger
+    assert_not_found do
       get :index, group_id: @group.to_param
     end
-    assert_response :success
   end
 
   def test_create
@@ -20,6 +26,14 @@ class Group::RequestsControllerTest < ActionController::TestCase
       get :create, group_id: @group.to_param, type: 'destroy_group'
     end
     assert_response :redirect
+  end
+
+  def test_create_not_allowed
+    stranger = FactoryBot.create(:user)
+    login_as stranger
+    assert_not_found do
+      get :create, group_id: @group.to_param, type: 'destroy_group'
+    end
   end
 
   def test_approve

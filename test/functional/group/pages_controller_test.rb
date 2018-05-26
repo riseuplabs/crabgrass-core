@@ -5,9 +5,7 @@ class Group::PagesControllerTest < ActionController::TestCase
     user = users(:penguin)
     group = groups(:rainbow)
     login_as user
-    assert_permission :may_show_group? do
-      get :index, group_id: group
-    end
+    get :index, group_id: group
     assert_response :success
     assert assigns('pages').any?
     assert assigns('pages').all? { |p| p.public? || user.may?(:view, p) }

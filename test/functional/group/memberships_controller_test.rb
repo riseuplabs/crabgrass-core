@@ -9,9 +9,7 @@ class Group::MembershipsControllerTest < ActionController::TestCase
 
   def test_index
     login_as @user
-    assert_permission :may_list_memberships? do
-      get :index, group_id: @group.to_param
-    end
+    get :index, group_id: @group.to_param
     assert_response :success
   end
 
@@ -23,9 +21,7 @@ class Group::MembershipsControllerTest < ActionController::TestCase
     @group.add_user! other_user
     membership = @group.memberships.find_by_user_id(other_user.id)
     login_as @user
-    assert_permission :may_destroy_membership? do
-      xhr :delete, :destroy, group_id: @group.to_param, id: membership.id
-    end
+    xhr :delete, :destroy, group_id: @group.to_param, id: membership.id
     assert_response :success
   end
 

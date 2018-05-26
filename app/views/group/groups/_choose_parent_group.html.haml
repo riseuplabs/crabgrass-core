@@ -10,9 +10,9 @@
 .two_column_float
   - current_user.groups_and_networks.each do |group|
     - if group_type == :committee
-      - next unless may_create_committee? group
+      - next unless policy(group).may_create_committee?
     - elsif group_type == :council
-      - next unless may_create_council? group
+      - next unless policy(group).may_create_council?
     .column_item
       - if group_type == :committee
         - url = new_group_committee_path(group)

@@ -6,6 +6,7 @@ require 'test_helper'
 ## in case some of this logic is put back into Group::WikiController.
 ##
 
+# FIXME: tests are not running - magiX involved???
 class Group::WikisControllerTest < ActionController::TestCase
   def setup
     @user = FactoryBot.create(:user)
@@ -13,11 +14,10 @@ class Group::WikisControllerTest < ActionController::TestCase
     @group.add_user!(@user)
   end
 
+  # TODO: check if we want to test negative case as well
   def xtest_new
     login_as @user
-    assert_permission :may_edit_group? do
-      xhr :get, :new, group_id: @group.to_param
-    end
+    xhr :get, :new, group_id: @group.to_param
     assert_response :success
     assert assigns['wiki'].new_record?
   end
@@ -59,13 +59,12 @@ class Group::WikisControllerTest < ActionController::TestCase
     assert_select 'input#wiki_private[type="hidden"][value="true"]'
   end
 
+  # TODO: check if we want to test negative case as well
   def xtest_create_private
     login_as @user
-    assert_permission :may_edit_group? do
-      xhr :post, :create,
-          group_id: @group.to_param,
-          wiki: { body: '_created_', private: true }
-    end
+    xhr :post, :create,
+        group_id: @group.to_param,
+        wiki: { body: '_created_', private: true }
     wiki = Wiki.last
     assert '<em>created</em>', wiki.body_html
     assert wiki.profile.private?
@@ -74,13 +73,12 @@ class Group::WikisControllerTest < ActionController::TestCase
     assert_redirected_to group_home_url(@group, wiki_id: wiki.id)
   end
 
+  # TODO: check if we want to test negative case as well
   def xtest_create_public
     login_as @user
-    assert_permission :may_edit_group? do
-      xhr :post, :create,
-          group_id: @group.to_param,
-          wiki: { body: '_created_', private: false }
-    end
+    xhr :post, :create,
+        group_id: @group.to_param,
+        wiki: { body: '_created_', private: false }
     wiki = Wiki.last
     assert '<em>created</em>', wiki.body_html
     assert wiki.profile.public?

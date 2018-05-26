@@ -1,7 +1,10 @@
 class Group::SettingsController < Group::BaseController
-  def show; end
+  def show
+    authorize @group, :admin?
+  end
 
   def update
+    authorize @group, :admin?
     @group.update_attributes! group_params
     success
     redirect_to group_settings_url(@group)

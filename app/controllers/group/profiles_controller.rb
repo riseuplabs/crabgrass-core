@@ -2,9 +2,12 @@ class Group::ProfilesController < Group::BaseController
   before_filter :fetch_profile
   helper :profile
 
-  def edit; end
+  def edit
+    authorize @group, :admin?
+  end
 
   def update
+    authorize @group, :admin?
     if params[:clear_photo]
       @profile.picture.destroy
     else

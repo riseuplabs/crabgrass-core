@@ -9,10 +9,8 @@ class Group::MyMembershipsControllerTest < ActionController::TestCase
   def test_create
     @group.grant_access! public: %i[join view]
     login_as @user
-    assert_permission :may_join_group? do
-      assert_difference '@group.users.count' do
-        get :create, group_id: @group.to_param
-      end
+    assert_difference '@group.users.count' do
+      get :create, group_id: @group.to_param
     end
     assert_response :redirect
   end
@@ -22,10 +20,8 @@ class Group::MyMembershipsControllerTest < ActionController::TestCase
     @group.add_user! FactoryBot.create(:user) # make sure there are at least 2 users
     login_as @user
     membership = @group.memberships.find_by_user_id(@user.id)
-    assert_permission :may_leave_group? do
-      assert_difference '@group.users.count', -1 do
-        delete :destroy, group_id: @group.to_param, id: membership.id
-      end
+    assert_difference '@group.users.count', -1 do
+      delete :destroy, group_id: @group.to_param, id: membership.id
     end
     assert_response :redirect
   end

@@ -2,17 +2,17 @@
 -# note: the cache needs to go within the permission check
 -# otherwise we are caching stuff for people who shouldn't see it.
 -#
-- if may_list_group_committees?
+- if policy(@group).may_list_group_committees?
   - if @group.real_committees.size > 0
     = entity_list @group.real_committees.order(:name),
       header: :committees.t
     -# , after: link_line(create_committee_link))
   - if @group.has_a_council?
     = entity_list([@group.council], header: :council.t)
-- if @group.network? and may_list_memberships?
+- if @group.network? and policy(@group).may_list_memberships?
   = entity_list @group.groups.order(:name),
     header: :member_groups_of_network.t
   -#after: link_line(:bullet, list_memberships_link, invite_link, requests_link))
-- if may_list_group_networks?
+- if policy(@group).may_list_group_networks?
   = entity_list @group.networks.order(:name),
     header: :networks.t

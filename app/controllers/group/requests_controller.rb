@@ -8,13 +8,13 @@
 class Group::RequestsController < Group::BaseController
   include_controllers 'common/requests'
 
-  # guard defaults to may_admin_group?
   # permissions handled by model:
-  guard create: :allow, update: :allow, destroy: :allow
+  after_action :verify_authorized, only: :index
 
   rescue_render create: :index
 
   def index
+    authorize @group, :admin? # FIXME: not sure if we need this
     @requests = Request
                 .having_state(current_state)
                 .send(current_view, @group)

@@ -10,9 +10,7 @@ class Group::SettingsControllerTest < ActionController::TestCase
 
   def test_logged_in
     login_as @user
-    assert_permission :may_admin_group? do
-      get :show, group_id: @group.to_param
-    end
+    get :show, group_id: @group.to_param
     assert_response :success
     assert_select '.inline_message_list', 0
   end
@@ -26,10 +24,8 @@ class Group::SettingsControllerTest < ActionController::TestCase
   def test_not_a_member
     stranger = FactoryBot.create(:user)
     login_as stranger
-    assert_permission :may_admin_group?, false do
-      assert_permission_denied do
-        get :show, group_id: @group.to_param
-      end
+    assert_permission_denied do
+      get :show, group_id: @group.to_param
     end
   end
 
@@ -43,10 +39,17 @@ class Group::SettingsControllerTest < ActionController::TestCase
 
   def test_update
     login_as @user
-    assert_permission :may_admin_group? do
-      post :update, group: { full_name: 'full name' }, group_id: @group.to_param
-    end
+    post :update, group: { full_name: 'full name' }, group_id: @group.to_param
     assert_response 302
     assert_equal 'full name', assigns('group').full_name
   end
+
+  def test_update_not_allowed
+    stranger = FactoryBot.create(:user)
+    login_as stranger
+    assert_permission_denied do
+      post :update, group: { full_name: 'full name' }, group_id: @group.to_param
+    end
+  end
+
 end

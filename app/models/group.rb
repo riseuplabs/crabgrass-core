@@ -36,7 +36,10 @@ class Group < ActiveRecord::Base
 
   attr_accessor :created_by
 
-  ##
+  def self.policy_class
+    GroupPolicy
+  end
+
   ## FINDERS
   ##
 
