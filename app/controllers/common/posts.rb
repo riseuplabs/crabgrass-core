@@ -7,10 +7,6 @@
 #        post_path(post, *args)  -- path for updating the post.
 #             posts_path(*args)  -- path to create a post.
 #
-# Permissions:
-#
-#     may_create_post?()
-#   may_edit_post?(post)
 #
 #
 module Common::Posts

@@ -1,11 +1,7 @@
 class PostPolicy < ApplicationPolicy
 
   def create?
-    if recipient
-      user.may?(:pester, recipient)
-    elsif page
-     logged_in? && (page_policy.show? || page.public?)
-    end
+    logged_in? && (page_policy.show? || page.public?)
   end
 
   def update?
@@ -30,9 +26,4 @@ class PostPolicy < ApplicationPolicy
   def page
     record.discussion.page
   end
-
-  def recipient
-    record.discussion.user_talking_to(user)
-  end
-
 end
