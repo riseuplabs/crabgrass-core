@@ -151,20 +151,6 @@ module User::Users
       end
     end
 
-    # ensure a relationship between this and the other user exists
-    # add a new post to the private discussion shared between this and the other_user.
-    #
-    # +in_reply_to+ is an optional argument for the post that this new post
-    # is replying to.
-    #
-    # currently, this is not stored, but used to generate a more informative
-    # notification on the user's wall.
-    #
-    def send_message_to!(other_user, body, in_reply_to = nil)
-      relationship = relationships.with(other_user).first || add_contact!(other_user)
-      relationship.send_message(body, in_reply_to)
-    end
-
     def stranger_to?(user)
       !peer_of?(user) and !contact_of?(user)
     end

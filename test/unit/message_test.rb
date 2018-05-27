@@ -1,13 +1,14 @@
 require 'test_helper'
 
-class PrivatePostTest < ActiveSupport::TestCase
+class MessageTest < ActiveSupport::TestCase
   def setup
     @sender = users(:blue)
     @recipient = users(:penguin)
   end
 
   def test_initial_message
-    post = @sender.send_message_to! @recipient, 'blablabla'
+    post = Message.send from: @sender, to: @recipient,
+      body: 'blablabla'
     assert sending
     assert discussion = sending.discussion
     assert_equal 1, discussion.posts_count
@@ -16,15 +17,21 @@ class PrivatePostTest < ActiveSupport::TestCase
   end
 
   def test_reply_to_same_discussion
-    post = @sender.send_message_to! @recipient, 'blablabla'
-    @recipient.send_message_to! @sender, 'blablabla', post
+    post = Message.send from: @sender, to: @recipient,
+      body: 'blablabla'
+    repl = Message.send from: @recipient, to: @sender,
+      body: 'blablabla',
+      in_reply_to_id: post.id
     assert discussion = recieving.discussion
     assert_equal sending.discussion, discussion
   end
 
   def test_reply_unread_count
-    post = @sender.send_message_to! @recipient, 'blablabla'
-    @recipient.send_message_to! @sender, 'blablabla', post
+    post = Message.send from: @sender, to: @recipient,
+      body: 'blablabla'
+    repl = Message.send from: @recipient, to: @sender,
+      body: 'blablabla',
+      in_reply_to_id: post.id
     discussion = recieving.discussion
     assert_equal 2, discussion.posts_count
     assert discussion.unread_by?(@recipient)

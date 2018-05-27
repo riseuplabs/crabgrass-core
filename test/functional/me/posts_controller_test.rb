@@ -5,7 +5,7 @@ class Me::PostsControllerTest < ActionController::TestCase
     me = users(:blue)
     you = users(:red)
     login_as me
-    me.send_message_to! you, 'test message'
+    Message.send from: me, to: you, body: 'test message'
     discussion = me.discussions.from_user(you).first
     get :index, discussion_id: you.login
     assert_response :success
@@ -25,7 +25,7 @@ class Me::PostsControllerTest < ActionController::TestCase
   def test_delete_post
     me = users(:blue)
     you = users(:red)
-    post = me.send_message_to! you, 'test message'
+    post = Message.send from: me, to: you, body: 'test message'
     login_as me
     assert_difference 'Post.count', -1 do
       xhr :delete, :destroy, discussion_id: you.login, id: post

@@ -6,25 +6,30 @@
 #
 # Also isolate all the private message specific discussion preperation.
 #
+# Message.send(params)
+# is equivalent to
+# Message.new(params).send
+#
+# Both will create and return a PrivatePost object.
+#
+# In addition they create the necessary Relationship and Discussion.
 
 class Message
+
+  # create and return the post corresponding to params
+  def self.send(params)
+    new(params).send
+  end
+
+
   def initialize(params)
-    @sender = params.delete :sender
-    @recipient = params.delete :recipient
+    @sender = params.delete :from
+    @recipient = params.delete :to
     @params = params
   end
 
   attr_reader :sender, :recipient
 
-  def save
-    sender.send_message_to!(@recipient, params[:body], in_reply_to)
-  end
-
-  protected
-
-  attr_reader :params
-
-  # ensure a relationship between this and the other user exists
   # add a new post to the private discussion shared between this and the other_user.
   #
   # +in_reply_to+ is an optional argument for the post that this new post
@@ -33,9 +38,22 @@ class Message
   # currently, this is not stored, but used to generate a more informative
   # notification on the user's wall.
   #
-  def send_message_to!(other_user, body, in_reply_to = nil)
-    relationship = relationships.with(other_user).first || add_contact!(other_user)
+  def send
     relationship.send_message(body, in_reply_to)
+  end
+
+  protected
+
+  attr_reader :params
+
+  # ensure a relationship between this and the other user exists
+  def relationship
+    sender.relationships.with(recipient).first ||
+      sender.add_contact!(recipient)
+  end
+
+  def body
+    params[:body]
   end
 
   def in_reply_to

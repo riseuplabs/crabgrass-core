@@ -32,15 +32,15 @@ class Me::PostsController < Me::BaseController
   def create
     @message = Message.new message_params
     authorize @message
-    @message.save
+    @post = @message.send
     redirect_to action: :index
   end
 
   protected
 
   def message_params
-    params.require(:post).permit(:body).merge sender: current_user,
-      recipient: @recipient,
+    params.require(:post).permit(:body).merge from: current_user,
+      to: @recipient,
       in_reply_to_id: params[:in_reply_to_id]
   end
 

@@ -142,11 +142,6 @@ class Post < ActiveRecord::Base
     "#{user} #{body}"
   end
 
-  # not used anymore
-  def editable_by?(user)
-    user.id == user_id
-  end
-
   def starred_by?(user)
     stars.exists? user_id: user
   end
