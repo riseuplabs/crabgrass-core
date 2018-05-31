@@ -2,45 +2,14 @@
 class SurveyPageController < Page::BaseController
   helper 'survey_page'
 
-  guard :may_ACTION_survey?
-  permissions 'survey_page'
-
-  #  def new
-  #    @survey = Survey.new
-  #  end
-  #
-  #  def make
-  #    @survey = Survey.create! params[:survey]
-  #    @page.data = @survey
-  #    @page.save
-  #  rescue exc
-  #    warning exc
-  #  end
-
   def show
+    authorize @page
     if @page.data.nil?
       redirect_to page_url(@page, action: 'edit')
     else
       @survey.responses(true)
       # ^^ there is no good reason why this is necessary, but it seems to be the case.
     end
-  end
-
-  def edit
-    if request.post?
-      if @survey.new_record?
-        @survey = Survey.create!(params[:survey])
-        @page.data = @survey
-        @page.save!
-      else
-        @survey.update_attributes!(params[:survey])
-      end
-      current_user.updated(@page)
-      flash_message success: true
-      redirect_to page_url(@page, action: 'edit')
-    end
-  rescue
-    @survey.errors.each { |e| flash_message error: e.message }
   end
 
   protected
