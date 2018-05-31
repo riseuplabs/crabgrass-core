@@ -10,7 +10,6 @@ class Group::DirectoryController < ApplicationController
   before_filter :set_default_path
 
   helper 'group/directory'
-  permission_helper 'group/structures'
 
   def index
     @groups = groups_to_display.order(:name).paginate(pagination_params)

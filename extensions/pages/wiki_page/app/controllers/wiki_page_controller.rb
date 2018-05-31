@@ -1,7 +1,5 @@
 class WikiPageController < Page::BaseController
   helper 'wikis/base', 'wikis/sections'
-  permission_helper 'wikis'
-
   before_filter :find_last_seen, only: :show
 
   def show

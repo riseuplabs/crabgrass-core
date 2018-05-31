@@ -16,13 +16,12 @@ class GroupPolicy < ApplicationPolicy
     user.may?(:admin, record)
   end
 
+  # TODO: we need to investigate group creation a bit.
+  # record may be a group or network.
   def create?
-    (record.nil? || user.may?(:admin, record))
+    return false if record.network? && !Conf.networks
+    user.may?(:admin, record)
   end
-
-#  def may_create_network?
-#    Conf.networks and logged_in?
-#  end
 
   #
   # this is for immediately destroying the group.

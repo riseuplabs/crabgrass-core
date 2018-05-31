@@ -11,9 +11,10 @@ class Page::BaseController < ApplicationController
 
   layout 'page'
 
-  # the page banner has links that the user cannot see when unauthorized, like membership.
+  # the page banner has links that the user cannot see when unauthorized,
+  # like membership.
   # so, we must load the appropriate permissions from groups.
-  permission_helper 'group/memberships', 'group/base', 'me'
+  permission_helper 'me'
 
   helper 'page/base', 'page/sidebar', 'page/post'
 

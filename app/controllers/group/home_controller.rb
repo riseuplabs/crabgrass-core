@@ -6,7 +6,6 @@ class Group::HomeController < Group::BaseController
 
   layout 'sidecolumn'
   helper 'wikis/base', 'wikis/sections'
-  permission_helper 'wikis'
 
   def initialize(options = {})
     super()
