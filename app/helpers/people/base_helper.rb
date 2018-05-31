@@ -19,7 +19,8 @@ module People::BaseHelper
   end
 
   def profile_send_message_link
-    if may_pester?
+    message = Message.new from: current_user, to: @user
+    if may_create? message
       link_to :send_message_link.t, me_discussion_posts_path(@user), icon: :page_message
     end
   end

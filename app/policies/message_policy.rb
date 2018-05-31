@@ -1,6 +1,7 @@
 class MessagePolicy < ApplicationPolicy
   def create?
-    user.may?(:pester, recipient)
+    user != recipient &&
+      user.may?(:pester, recipient)
   end
 
   protected
