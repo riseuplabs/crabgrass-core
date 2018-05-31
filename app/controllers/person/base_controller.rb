@@ -1,8 +1,7 @@
 class Person::BaseController < ApplicationController
   before_filter :fetch_person
-  before_filter :authorization_required
 
-  permissions 'people'
+  permission_helper 'people'
   helper 'people/base'
 
   protected
@@ -10,7 +9,7 @@ class Person::BaseController < ApplicationController
   def fetch_person
     # person might be preloaded by DispatchController
     @user ||= User.where(login: (params[:person_id] || params[:id])).first!
-    raise_not_found unless may_show_home?
+    raise_not_found unless policy(@user).show?
   end
 
   def setup_context

@@ -1,5 +1,4 @@
 class Person::HomeController < Person::BaseController
-  guard :may_show_home?
   layout 'sidecolumn'
 
   #
@@ -9,8 +8,10 @@ class Person::HomeController < Person::BaseController
     super()
     @user = options[:user]
   end
+  hide_action :initialize
 
   def show
+    authorize @user
     @profile = @user.profiles.public
   end
 end
