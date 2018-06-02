@@ -21,10 +21,6 @@ class Page::CreateController < ApplicationController
   helper 'page/share', 'page/owner', 'page/creation'
   track_actions :create
 
-  # the page banner has links that the user cannot see when unauthorized, like membership.
-  # so, we must load the appropriate permissions from groups and me.
-  permission_helper 'me'
-
   #
   # if there is any error in the 'create' action, call the 'new' action
   # to setup and display the view. useful for subclassing.

@@ -1,21 +1,23 @@
 class Person::FriendRequestsController < Person::BaseController
   before_filter :login_required
+  after_action :verify_authorized
 
-  guard create: :may_request_contact?,
-        new: :may_request_contact?
-
-
-  def new; end
+  def new
+    @request = RequestToFriend.new recipient: @user, created_by: current_user
+    authorize @request
+  end
 
   def create
     if params[:cancel]
+      skip_authorization
       redirect_to entity_url(@user)
     else
-      req = RequestToFriend.create! recipient: @user, created_by: current_user,
-                                    message: params[:message]
-      if req.valid?
-        success req
-        create_notice req
+      @request = RequestToFriend.new recipient: @user, created_by: current_user,
+        message: params[:message]
+      authorize @request
+      if @request.save
+        success @request
+        create_notice @request
         redirect_to entity_url(@user)
       else
         error
@@ -25,6 +27,7 @@ class Person::FriendRequestsController < Person::BaseController
   end
 
   def destroy
+    skip_authorization
     raise_not_found unless current_user.friend_of? @user
     current_user.remove_contact!(@user)
     success

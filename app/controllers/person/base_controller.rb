@@ -1,7 +1,6 @@
 class Person::BaseController < ApplicationController
   before_filter :fetch_person
 
-  permission_helper 'people'
   helper 'people/base'
 
   protected
