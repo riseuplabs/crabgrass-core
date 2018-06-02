@@ -1,7 +1,6 @@
 .sidebox
   = render 'sidebox'
-  - if may_list_friends?
+  - if current_user.may? :see_contacts, @user
     = render 'friends'
-  - if may_list_groups?
+  - if current_user.may? :see_groups, @user
     = render 'groups'
-

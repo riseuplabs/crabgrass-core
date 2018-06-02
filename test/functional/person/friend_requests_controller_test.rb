@@ -6,11 +6,6 @@ class Person::FriendRequestsControllerTest < ActionController::TestCase
     recipient  = users(:yellow)
     login_as requesting
 
-    # Stub permission access for current test case
-    def requesting.may?(*_args)
-      true
-    end
-
     assert_difference 'Notice::RequestNotice.count', 1 do
       xhr :post, :create, person_id: recipient.login
     end

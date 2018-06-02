@@ -12,6 +12,11 @@ class Person::HomeController < Person::BaseController
 
   def show
     authorize @user
-    @profile = @user.profiles.public
+    if current_user.may? :view, @user
+      @profile = @user.profiles.public
+      @pages = Page.paginate_by_path '/descending/updated_at/limit/30/',
+        options_for_user(@user),
+        pagination_params
+    end
   end
 end

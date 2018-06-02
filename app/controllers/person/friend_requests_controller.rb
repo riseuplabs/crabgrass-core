@@ -2,8 +2,8 @@ class Person::FriendRequestsController < Person::BaseController
   before_filter :login_required
 
   guard create: :may_request_contact?,
-        new: :may_request_contact?,
-        destroy: :may_remove_contact?
+        new: :may_request_contact?
+
 
   def new; end
 
@@ -25,6 +25,7 @@ class Person::FriendRequestsController < Person::BaseController
   end
 
   def destroy
+    raise_not_found unless current_user.friend_of? @user
     current_user.remove_contact!(@user)
     success
     redirect_to entity_url(@user)
