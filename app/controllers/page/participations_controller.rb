@@ -65,7 +65,6 @@ class Page::ParticipationsController < Page::SidebarsController
     if policy(@part).destroy?
       @part.destroy
       entity = @part.entity
-      entity.clear_access_cache if entity.respond_to? :clear_access_cache
     else
       raise ErrorMessage.new(:remove_access_error.t)
     end

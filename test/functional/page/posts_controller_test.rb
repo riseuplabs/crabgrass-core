@@ -32,7 +32,6 @@ class Page::PostsControllerTest < ActionController::TestCase
     # let's make sure posting a comment does not grant more access...
     assert_nil public_page.user_participations.where(user_id: users(:blue)).first.access
     # despite commenting you can only view the page because it is public
-    users(:blue).clear_access_cache
     assert !users(:blue).may?(:view, public_page)
   end
 

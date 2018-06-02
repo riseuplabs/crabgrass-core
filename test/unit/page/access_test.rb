@@ -11,13 +11,9 @@ class Page::AccessTest < ActiveSupport::TestCase
 
     assert !user.may?(:view, page), 'user should NOT be able to view page'
     page.add(group, access: :view)
-    assert !user.may?(:view, page), 'we cache may? queries'
-    user.clear_access_cache
     assert user.may?(:view, page), 'user should BE able to view page'
 
     page.remove(group)
-    page.reload
-    user.clear_access_cache
     assert !user.may?(:view, page), 'user should NOT be able to view page'
   end
 

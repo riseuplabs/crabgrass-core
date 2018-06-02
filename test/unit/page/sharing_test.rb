@@ -14,13 +14,11 @@ class Page::SharingTest < ActiveSupport::TestCase
 
     # share with user
     page.add(red, access: :view).save!
-    red.clear_access_cache
     assert_equal true, red.may?(:view, page), 'user red should see the page'
     assert_equal false, red.may?(:edit, page), 'user red should not be able to edit the page'
 
     # share with group
     page.add(rainbow, access: :edit).save!
-    red.clear_access_cache
     assert_equal true, red.may?(:edit, page), 'user red should be able to edit the page'
     assert_equal true, rainbow.may?(:edit, page), 'group rainbow should be able to edit the page'
   end

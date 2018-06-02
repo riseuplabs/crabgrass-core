@@ -89,7 +89,6 @@ module User::Pages
   # watch, star are all false, and the user has not contributed.)
   #
   def add_page(page, part_attrs)
-    clear_access_cache
     part_attrs = part_attrs.dup
     participation = page.participation_for_user(self)
     if participation
@@ -118,7 +117,6 @@ module User::Pages
   # remove self from the page.
   # only call by page.remove(user)
   def remove_page(page)
-    clear_access_cache
     page.users.delete(self)
     page.updated_by_id_will_change!
     page.association_will_change(:users)
