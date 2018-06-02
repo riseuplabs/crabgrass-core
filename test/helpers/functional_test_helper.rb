@@ -55,26 +55,6 @@ module FunctionalTestHelper
     assert_equal layout, @response.layout
   end
 
-  # using mocks to test permissions
-  # see MockableTestHelper for implementation of
-  # expect and verify
-  def assert_permission(permission, ret = true)
-    @controller.expect_or_raise permission, ret
-    yield
-    begin
-      @controller.verify
-    rescue MockExpectationError => e
-      message = "Asserted Permission was not called.\n"
-      message += "  Params used were: #{@controller.params.inspect}.\n"
-      action = @controller.params[:action]
-      message += "  action was: #{action}.\n"
-      method = @controller.class.permission_for_action(action)
-      message += method ? "  Method selected would be: #{method}.\n" :
-       "  No method was cached. Are you using login_required?\n"
-      raise MockExpectationError.new(message)
-    end
-  end
-
   ##
   ## ROUTE HELPERS
   ##
