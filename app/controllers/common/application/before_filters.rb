@@ -59,32 +59,6 @@ module Common::Application::BeforeFilters
     raise AuthenticationRequired unless logged_in?
   end
 
-  # Filter method to enforce authorization.
-  #
-  # By default we require this for all actions.
-  #
-  # To allow actions by default use guard in your controllers:
-  #
-  #   guard :allow
-  #   guard :edit => :may_edit_robot?
-  #
-  # To not require authorization for a specific action:
-  #
-  #   guard :show => :allow
-  #
-  def authorization_required
-    raise PermissionDenied unless authorized?
-  end
-
-  #
-  # if we have authorization_required this will be called and check the
-  # permissions accordingly
-  #
-  # overwrite if you want to handle permissions differently
-  def authorized?
-    @authorized ||= check_permissions
-  end
-
   #
   # sets the current locale
   #

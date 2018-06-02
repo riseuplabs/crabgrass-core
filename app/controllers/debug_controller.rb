@@ -17,8 +17,8 @@ if Rails.env.development?
 
     protected
 
-    def authorized?
-      Rails.env.development?
+    def authorization_required
+      raise PermissionDenied unless Rails.env.development?
     end
   end
 end

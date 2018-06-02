@@ -6,7 +6,6 @@ class Group::DirectoryController < ApplicationController
   #    unexpectedly without either giving groups some warning or adding an
   #    additional level to the permissions.
 
-  skip_before_filter :authorization_required
   before_filter :set_default_path
 
   helper 'group/directory'

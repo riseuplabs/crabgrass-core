@@ -1,15 +1,8 @@
 class Group::GroupsController < Group::BaseController
   include Common::Tracking::Action
 
-  # restricting the before filter to { :only => :destroy } doesn't work, because
-  # then it changes position in the filter chain and runs after the guards, but
-  # may_admin?(@group) requires @group to be set.
-  def fetch_group
-    super if action? :destroy
-  end
-  protected :fetch_group
-
   before_filter :initialize_group, only: %w[new create]
+  before_filter :fetch_group, only: :destroy
   before_filter :fetch_associations, only: :destroy
 
   after_filter :notify_former_users, only: :destroy
