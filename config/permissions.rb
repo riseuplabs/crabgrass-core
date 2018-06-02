@@ -5,8 +5,8 @@
 #       low level permissions, stored in db, defined in this file.
 #
 #   (2) controller/view permissions
-#       higher level permissions, based on methods, built on model permissions,
-#       and defined in /app/permissions
+#       higher level permissions, built on model permissions.
+#       We use pundit for these and define them in /app/policies
 #
 # Entity permissions
 # -------------------------------
