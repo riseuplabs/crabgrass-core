@@ -1,7 +1,7 @@
 ## Javascript
 
 # ie specific js
-# Rails.application.config.assets.precompile += ['ie.js']
+Rails.application.config.assets.precompile += ['shims.js']
 
 ## Stylesheets
 
