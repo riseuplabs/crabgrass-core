@@ -218,7 +218,9 @@ module Common::Application::RescueErrors
   def log_exception(exception)
     Rails.logger.warn "Rescuing from #{exception.class}."
     Rails.logger.warn exception.log_message if exception.respond_to? :log_message
-    Rails.logger.warn Rails.backtrace_cleaner.clean(exception.backtrace).join("\n")
+    if exception.backtrace
+      Rails.logger.warn Rails.backtrace_cleaner.clean(exception.backtrace).join("\n")
+    end
   end
 
   # def flash_auth_error(mode)
