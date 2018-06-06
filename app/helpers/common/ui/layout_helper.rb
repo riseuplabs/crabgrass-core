@@ -96,7 +96,7 @@ module Common::Ui::LayoutHelper
     end
 
     lines << '<!--[if IE]>'
-    lines << javascript_include_tag(SPROCKETS_PREFIX + 'shims.js')
+    lines << javascript_include_tag('shims')
     lines << '<![endif]-->'
 
     # inline script code
