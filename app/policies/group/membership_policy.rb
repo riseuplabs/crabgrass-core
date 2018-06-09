@@ -32,8 +32,8 @@ class Group::MembershipPolicy < ApplicationPolicy
   #
   def may_create_expell_request?
     if record.is_a?(Group::Federating)
-      group = membership.group
-      network = membership.network
+      group = record.group
+      network = record.network
       user.may?(:admin, network) && (
         (
           !RequestToRemoveGroup.existing(group: group, network: network) &&
@@ -41,8 +41,8 @@ class Group::MembershipPolicy < ApplicationPolicy
         )
       )
     else
-      group = membership.group
-      record_user = membership.user
+      group = record.group
+      record_user = record.user
       user.may?(:admin, group) && (
         group.committee? || (
           !RequestToRemoveUser.existing(user: record_user, group: group) &&
