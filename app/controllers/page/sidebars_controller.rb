@@ -7,6 +7,7 @@ class Page::SidebarsController < ApplicationController
 
   before_filter :fetch_page
   before_filter :login_required
+  after_filter :verify_authorized
   layout false
 
   helper 'page/base', 'page/sidebar'

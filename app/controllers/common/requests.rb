@@ -25,6 +25,8 @@ module Common::Requests
   # and sees that a request is pending and wants to click on a link for more information.
   #
   def show
+    # Finder is limited to requests we can see.
+    skip_authorization
     render template: 'common/requests/show'
   end
 
@@ -32,6 +34,8 @@ module Common::Requests
   # update action changes the state of the request
   #
   def update
+    # uses model permissions.
+    skip_authorization
     if mark
       @req.mark!(mark, current_user)
       success I18n.t(@req.name), success_message
@@ -41,9 +45,10 @@ module Common::Requests
 
   #
   # destroy a request.
-  # uses model permissions.
   #
   def destroy
+    # uses model permissions.
+    skip_authorization
     @req.destroy_by!(current_user)
     notice request_destroyed_message, :later
     render template: 'common/requests/destroy'

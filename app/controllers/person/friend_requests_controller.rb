@@ -1,6 +1,5 @@
 class Person::FriendRequestsController < Person::BaseController
   before_filter :login_required
-  after_action :verify_authorized
 
   def new
     @request = RequestToFriend.new recipient: @user, created_by: current_user

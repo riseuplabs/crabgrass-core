@@ -8,13 +8,10 @@
 class Group::RequestsController < Group::BaseController
   include_controllers 'common/requests'
 
-  # permissions handled by model:
-  after_action :verify_authorized, only: :index
-
   rescue_render create: :index
 
   def index
-    authorize @group, :admin? # FIXME: not sure if we need this
+    authorize @group, :admin?
     @requests = Request
                 .having_state(current_state)
                 .send(current_view, @group)
@@ -28,6 +25,7 @@ class Group::RequestsController < Group::BaseController
   # RequestToCreateCouncil
   #
   def create
+    authorize @group, :admin?
     @req = requested_class.create! recipient: @group,
                                    requestable: @group,
                                    created_by: current_user

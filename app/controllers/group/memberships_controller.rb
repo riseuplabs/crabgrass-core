@@ -6,8 +6,6 @@
 
 class Group::MembershipsController < Group::BaseController
 
-  after_action :verify_authorized, only: %i[index create destroy]
-
   #
   # list all the memberships
   #

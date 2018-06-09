@@ -1,8 +1,8 @@
 class Group::StructuresController < Group::SettingsController
 
-  after_action :verify_authorized, only: %i[new create destroy]
-
-  def show; end
+  def show;
+    authorize @group
+  end
 
   def new
     authorize @group, :edit_structure?

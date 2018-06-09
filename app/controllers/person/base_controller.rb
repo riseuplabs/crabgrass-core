@@ -1,5 +1,6 @@
 class Person::BaseController < ApplicationController
   before_filter :fetch_person
+  after_action :verify_authorized
 
   helper 'people/base'
 
