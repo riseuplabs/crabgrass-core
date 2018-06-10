@@ -32,8 +32,35 @@ class Page::CreateControllerTest < ActionController::TestCase
     assert Page.last.users.include? @user
   end
 
-  def test_create_page_for_group
+  def test_create_page_for_group_as_member
     @group = FactoryBot.create(:group)
+    @group.add_user! @user
+    login_as @user
+    assert_difference 'WikiPage.count' do
+      post :create,
+           owner: @group.name,
+           page: { title: 'title' },
+           type: 'wiki',
+           page_type: 'WikiPage'
+    end
+    assert_equal @group, Page.last.owner
+    assert Page.last.users.include? @user
+  end
+
+  def test_create_page_for_group_as_nonmember
+    @group = FactoryBot.create(:group)
+    login_as @user
+    assert_raises Pundit::NotAuthorizedError do
+      post :create,
+           owner: @group.name,
+           page: { title: 'title' },
+           type: 'wiki',
+           page_type: 'WikiPage'
+    end
+  end
+
+  def test_create_page_for_public_group
+    @group = groups(:public_group)
     login_as @user
     assert_difference 'WikiPage.count' do
       post :create,

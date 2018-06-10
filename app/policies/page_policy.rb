@@ -12,6 +12,7 @@ class PagePolicy < ApplicationPolicy
   end
 
   def create?
+    return group_allows_adding_page? if group
     admin?
   end
 
@@ -26,4 +27,15 @@ class PagePolicy < ApplicationPolicy
   def print?
     show?
   end
+
+  protected
+
+  def group
+    record.group
+  end
+
+  def group_allows_adding_page?
+    user.may?(:edit, group) or group.access?(public: :view)
+  end
+
 end
