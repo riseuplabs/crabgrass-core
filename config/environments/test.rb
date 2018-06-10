@@ -26,6 +26,9 @@ Crabgrass::Application.configure do
   # database-specific column types
   # config.active_record.schema_format = :sql
 
+  # rails 5 like behaviour
+  config.active_support.test_order = :random
+
   ##
   ## CRABGRASS OPTIONS
   ##
