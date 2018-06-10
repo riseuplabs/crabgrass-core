@@ -41,5 +41,5 @@ Crabgrass::Application.configure do
   ## See doc/DEBUGGING for tips.
   ##
 
-  require "#{Rails.root}/lib/crabgrass/debug.rb"
+  require "crabgrass/debug.rb"
 end
