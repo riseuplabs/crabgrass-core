@@ -10,18 +10,16 @@ class Group::MembershipPolicy < ApplicationPolicy
   # for most other cases, use may_create_expell_request?
   #
   def destroy?
-    if record.is_a?(Group::Membership)
-      group =record.group
-      record_user = record.user
-      (
-        user.council_member_of?(group) &&
-        !record_user.council_member_of?(group) &&
-        record_user != user
-      ) || (
-        group.committee? &&
-        user.may?(:admin, group.parent)
-      )
-    end
+    group =record.group
+    record_user = record.user
+    (
+      user.council_member_of?(group) &&
+      !record_user.council_member_of?(group) &&
+      record_user != user
+    ) || (
+      group.committee? &&
+      user.may?(:admin, group.parent)
+    )
   end
 
   #
@@ -31,24 +29,13 @@ class Group::MembershipPolicy < ApplicationPolicy
   # see RequestToRemoveUser.may_create?
   #
   def may_create_expell_request?
-    if record.is_a?(Group::Federating)
-      group = record.group
-      network = record.network
-      user.may?(:admin, network) && (
-        (
-          !RequestToRemoveGroup.existing(group: group, network: network) &&
-          RequestToRemoveGroup.may_create?(current_user: user, group: group, network: network)
-        )
+    group = record.group
+    record_user = record.user
+    user.may?(:admin, group) && (
+      group.committee? || (
+        !RequestToRemoveUser.existing(user: record_user, group: group) &&
+        RequestToRemoveUser.may_create?(current_user: user, user: record_user, group: group)
       )
-    else
-      group = record.group
-      record_user = record.user
-      user.may?(:admin, group) && (
-        group.committee? || (
-          !RequestToRemoveUser.existing(user: record_user, group: group) &&
-          RequestToRemoveUser.may_create?(current_user: user, user: record_user, group: group)
-        )
-      )
-    end
+    )
   end
 end

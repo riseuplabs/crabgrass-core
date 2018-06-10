@@ -36,6 +36,7 @@ class GroupPolicy < ApplicationPolicy
   # may user join the group immediately?
   #
   # for requests, see may_create_join_request?
+  # TODO: turn into MembershipPolicy#create?
   #
   def may_join_group?
     logged_in? and
@@ -146,6 +147,8 @@ class GroupPolicy < ApplicationPolicy
   #
   # request to create a council
   #
+  # TODO: write test that covers this
+  #       Is it ever used?
   def may_create_council_request?
     RequestToCreateCouncil.may_create?(group: record, current_user: user)
   end
