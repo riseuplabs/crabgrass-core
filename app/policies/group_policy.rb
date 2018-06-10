@@ -8,7 +8,7 @@ class GroupPolicy < ApplicationPolicy
     user.may? :view, record
   end
 
-  def edit?
+  def update?
     user.may?(:edit, record)
   end
 

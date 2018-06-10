@@ -7,10 +7,6 @@ class PagePolicy < ApplicationPolicy
     record.public? || user.may?(:view, record)
   end
 
-  def new?
-    logged_in?
-  end
-
   def create?
     return group_allows_adding_page? if group
     admin?
@@ -24,9 +20,9 @@ class PagePolicy < ApplicationPolicy
     user.may?(:admin, record)
   end
 
-  def print?
-    show?
-  end
+  alias_method :print?, :show?
+  alias_method :new?, :logged_in?
+  alias_method :destroy?, :admin?
 
   protected
 

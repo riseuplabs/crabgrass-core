@@ -6,36 +6,12 @@ class ApplicationPolicy
     @record = record
   end
 
-  def index?
-    false
-  end
-
-  def show?
-    false
-  end
-
-  def create?
-    false
-  end
-
   def new?
     create?
   end
 
-  def update?
-    false
-  end
-
   def edit?
     update?
-  end
-
-  def admin?
-    false
-  end
-
-  def destroy?
-    admin?
   end
 
   protected
