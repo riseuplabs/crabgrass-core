@@ -5,6 +5,6 @@ en:
     get_involved: "Get Involved"
     help_pages: "Crabgrass Help Pages"
     help_translate: "Help Translate"
-    powered_by_html: "This site is powered by <a href=\"https://we.riseup.net/crabgrass\">crabgrass</a>%{description}\n"
+    powered_by_html: "This site is powered by <a href=\"https://0xacab.org/riseuplabs/crabgrass\">crabgrass</a>%{description}\n"
     report_a_bug: "Report a Bug"
     request_a_feature: "Request a Feature"
