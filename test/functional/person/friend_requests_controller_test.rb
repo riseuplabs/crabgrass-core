@@ -1,6 +1,13 @@
 require 'test_helper'
 
 class Person::FriendRequestsControllerTest < ActionController::TestCase
+
+  def setup
+    # required! see CastleGates README
+    # TODO: get rid of the cache.
+    User.clear_key_cache
+  end
+
   def test_new_contact_request_notifies_recipient
     users(:yellow).grant_access! public: :request_contact
     requesting = users(:red)
