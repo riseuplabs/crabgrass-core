@@ -4,7 +4,7 @@ class Wiki::VersionsController < Wiki::BaseController
 
   def index
     authorize @wiki, :update?
-    @versions = @wiki.versions.most_recent.paginate(pagination_params)
+    @versions = @wiki.versions.try.most_recent.paginate(pagination_params)
   end
 
   protected

@@ -1,7 +1,7 @@
 class Group::WikisController < Group::BaseController
 
   def create
-    authorize @group, :edit?
+    authorize @group, :admin?
     if params[:profile] == 'private'
       @profile = @group.profiles.private
     elsif params[:profile] == 'public'
@@ -14,7 +14,7 @@ class Group::WikisController < Group::BaseController
   end
 
   def index
-    authorize @group, :edit?
+    authorize @group, :admin?
     @private_wiki = @group.private_wiki
     @public_wiki  = @group.public_wiki
   end
