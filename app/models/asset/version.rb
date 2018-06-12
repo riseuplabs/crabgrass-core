@@ -1,6 +1,10 @@
 class Asset::Version < ActiveRecord::Base
   delegate :page, :public?, :has_access!, to: :asset
 
+  def self.policy_class
+    AssetPolicy
+  end
+
   # all our paths will have version info inserted into them
   def path
     @path ||= Asset::Storage::Path.new id: asset.id,
