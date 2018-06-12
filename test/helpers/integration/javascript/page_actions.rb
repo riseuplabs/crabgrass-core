@@ -100,6 +100,14 @@ module PageActions
     page.page_terms.committed!
   end
 
+  def remove_page_from_trash(page = @page)
+    click_on 'Destroy Immediately'
+    click_on 'OK'
+    wait_for_ajax
+    # ensure after_commit callbacks are triggered so sphinx indexes the page.
+    page.page_terms.committed!
+  end
+
   def attach_file_to_page(file = fixture_file('photo.jpg'), _page = @page)
     within '#attachments' do
       click_on 'Edit'

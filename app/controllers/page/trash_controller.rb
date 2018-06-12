@@ -17,6 +17,7 @@ class Page::TrashController < Page::SidebarsController
   end
 
   def destroy
+    authorize @page
     @page.destroy
     redirect_to me_home_path
   end
