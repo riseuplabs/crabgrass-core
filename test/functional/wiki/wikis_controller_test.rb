@@ -2,10 +2,11 @@ require 'test_helper'
 
 class Wiki::WikisControllerTest < ActionController::TestCase
   def setup
-    @user = FactoryBot.create(:user)
-    @user2 = FactoryBot.create(:user)
-    @group = FactoryBot.create(:group)
-    @group.add_user!(@user)
+    @user = users(:blue)
+    @group = groups(:rainbow)
+    @group2 = groups(:groupwithcouncil) # all members may edit the wiki is false
+    @user2 = users(:dolphin)# not a member of rainbow
+    @user3 = users(:red) # not in council of groupwithcouncil
   end
 
   def test_edit
@@ -21,7 +22,15 @@ class Wiki::WikisControllerTest < ActionController::TestCase
     assert_equal @user, @wiki.reload.locker_of(:document)
   end
 
-  def test_edit_not_allowed
+  def test_edit_without_council_powers_not_allowed
+    @wiki = @group2.profiles.private.create_wiki body: 'private'
+    login_as @user3
+    assert_permission_denied do
+      xhr :get, :edit, id: @wiki.id
+    end
+  end
+
+  def test_edit_as_non_member_not_allowed
     @wiki = create_profile_wiki
     login_as @user2
     assert_permission_denied do

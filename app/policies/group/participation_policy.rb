@@ -6,11 +6,11 @@ class Group::ParticipationPolicy < ApplicationPolicy
   # although it is clumsy.
   def destroy?
     return false unless page_policy.admin?
-    return true unless user.member_of?(record.group)
-    if record.group_id == page.owner_id and page.owner_type == 'Group'
+    return true unless user.member_of?(participation.group)
+    if participation.group_id == page.owner_id and page.owner_type == 'Group'
         false
     else
-      user.may_admin_page_without?(page, record)
+      user.may_admin_page_without?(page, participation)
     end
   end
 
@@ -20,7 +20,11 @@ class Group::ParticipationPolicy < ApplicationPolicy
     Pundit.policy!(user, page)
   end
 
+  def participation
+    record
+  end
+
   def page
-    record.page
+    participation.page
   end
 end

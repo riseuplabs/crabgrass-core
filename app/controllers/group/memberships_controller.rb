@@ -30,8 +30,8 @@ class Group::MembershipsController < Group::BaseController
   # add someone directly to a group
   #
   def create
-    authorize @group, :may_create_membership?
     raise_not_found unless @group && @user
+    authorize @group, :may_create_membership?
     @group.add_user! @user
     index # load @memberships
     success

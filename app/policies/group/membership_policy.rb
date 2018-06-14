@@ -10,12 +10,12 @@ class Group::MembershipPolicy < ApplicationPolicy
   # for most other cases, use may_create_expell_request?
   #
   def destroy?
-    group =record.group
-    record_user = record.user
+    group =membership.group
+    membership_user = membership.user
     (
       user.council_member_of?(group) &&
-      !record_user.council_member_of?(group) &&
-      record_user != user
+      !membership_user.council_member_of?(group) &&
+      membership_user != user
     ) || (
       group.committee? &&
       user.may?(:admin, group.parent)
@@ -29,13 +29,18 @@ class Group::MembershipPolicy < ApplicationPolicy
   # see RequestToRemoveUser.may_create?
   #
   def may_create_expell_request?
-    group = record.group
-    record_user = record.user
+    group = membership.group
+    membership_user = membership.user
     user.may?(:admin, group) && (
       group.committee? || (
-        !RequestToRemoveUser.existing(user: record_user, group: group) &&
-        RequestToRemoveUser.may_create?(current_user: user, user: record_user, group: group)
+        !RequestToRemoveUser.existing(user: membership_user, group: group) &&
+        RequestToRemoveUser.may_create?(current_user: user, user: membership_user, group: group)
       )
     )
   end
+
+  def membership
+    record
+  end
+
 end

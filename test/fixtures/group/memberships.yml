@@ -48,7 +48,7 @@ c:
   group_id: 3
   user_id: 6
   id: <%= id += 1 %>
-  created_at: <%= 13.days.ago.to_s :db %> 
+  created_at: <%= 13.days.ago.to_s :db %>
 d:
   group_id: 3
   user_id: 7
@@ -99,7 +99,7 @@ cold_penguin:
   group_id: 32
   user_id: 12
   id: <%= id += 1 %>
-  
+
 # animals
 
 g:
@@ -170,5 +170,23 @@ js:
 superadmin_blue:
   group_id: 4001
   user_id: 4
+  id: <%= id += 1 %>
+
+# blue is in the council of groupwithcouncil,
+# red is not
+
+blue_group_with_council:
+  group_id: 4011
+  user_id: 4
+  id: <%= id += 1 %>
+
+blue_council_of_group_with_council:
+  group_id: 4012
+  user_id: 4
+  id: <%= id += 1 %>
+
+red_group_with_council:
+  group_id: 4011
+  user_id: 8
   id: <%= id += 1 %>
 

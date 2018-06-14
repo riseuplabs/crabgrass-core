@@ -5,16 +5,16 @@ class PostPolicy < ApplicationPolicy
   end
 
   def update?
-    record and
-      record.user_id == user.id
+    post and
+      post.user_id == user.id
   end
 
   alias destroy? update?
 
   def twinkle?
-    record.discussion.page and
+    post.discussion.page and
       page_policy.show? and
-      user.id != record.user_id
+      user.id != post.user_id
   end
 
   protected
@@ -23,7 +23,11 @@ class PostPolicy < ApplicationPolicy
     Pundit.policy!(user, page)
   end
 
+  def post
+    record
+  end
+
   def page
-    record.discussion.page
+    post.discussion.page
   end
 end

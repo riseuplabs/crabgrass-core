@@ -1,9 +1,13 @@
 class AssetPolicy < ApplicationPolicy
   def show?
-    record.try.public? || user.may?(:view, record)
+    asset.try.public? || user.may?(:view, asset)
   end
 
   def destroy?
-    user.may?(:admin, record)
+    user.may?(:admin, asset)
+  end
+
+  def asset
+    record
   end
 end

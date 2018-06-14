@@ -4,16 +4,16 @@
 # Table name: groups
 #
 #  id             :integer(11)   not null, primary key
-#  name           :string(255)   
-#  summary        :string(255)   
-#  url            :string(255)   
-#  type           :string(255)   
-#  parent_id      :integer(11)   
-#  admin_group_id :integer(11)   
-#  council        :boolean(1)    
-#  created_at     :datetime      
-#  updated_at     :datetime      
-#  avatar_id      :integer(11)   
+#  name           :string(255)
+#  summary        :string(255)
+#  url            :string(255)
+#  type           :string(255)
+#  parent_id      :integer(11)
+#  admin_group_id :integer(11)
+#  council        :boolean(1)
+#  created_at     :datetime
+#  updated_at     :datetime
+#  avatar_id      :integer(11)
 #
 
 true_levellers:
@@ -116,4 +116,38 @@ super_admin_group:
   site_id: 2
   created_at: <%= rand(30).days.ago.to_s :db %>
 
+groupwithcouncil:
+  id: 4011
+  name: groupwithcouncil
+  full_name: "group with council"
+  url: null
+  type: null
+  parent_id: null
+  council_id: 4012
+  created_at: 2018-06-13 14:51:08
+  updated_at: 2018-06-13 15:32:58
+  avatar_id: null
+  style: null
+  language: ""
+  version: 3
+  min_stars: 1
+  site_id: null
+  full_council_powers: false
 
+councilofgroupwithcouncil:
+  id: 4012
+  name: groupwithcouncil+council
+  full_name: "council of group with council"
+  url: null
+  type: Council
+  parent_id: 4011
+  council_id: null
+  created_at: 2018-06-13 15:31:47
+  updated_at: 2018-06-13 15:31:48
+  avatar_id: null
+  style: null
+  language: ""
+  version: 1
+  min_stars: 1
+  site_id: null
+  full_council_powers: true

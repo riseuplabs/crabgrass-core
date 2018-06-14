@@ -4,7 +4,7 @@ class PagePolicy < ApplicationPolicy
   # So we need to make sure users who do not have explicit
   # access the page can still see it if it's public.
   def show?
-    record.public? || user.may?(:view, record)
+    page.public? || user.may?(:view, page)
   end
 
   def create?
@@ -13,11 +13,11 @@ class PagePolicy < ApplicationPolicy
   end
 
   def update?
-    user.may?(:edit, record)
+    user.may?(:edit, page)
   end
 
   def admin?
-    user.may?(:admin, record)
+    user.may?(:admin, page)
   end
 
   alias_method :print?, :show?
@@ -27,11 +27,14 @@ class PagePolicy < ApplicationPolicy
   protected
 
   def group
-    record.group
+    page.group
   end
 
   def group_allows_adding_page?
     user.may?(:edit, group) or group.access?(public: :view)
   end
 
+  def page
+    record
+  end
 end

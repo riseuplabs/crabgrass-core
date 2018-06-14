@@ -4,7 +4,9 @@ class Group::WikisControllerTest < ActionController::TestCase
   def setup
     @user = users(:blue)
     @group = groups(:rainbow)
+    @group2 = groups(:groupwithcouncil)# all members may edit the wiki is false
     @user2 = users(:dolphin)# not a member of rainbow
+    @user3 = users(:red) # not in council of groupwithcouncil
   end
 
   def test_show_wiki_settings
@@ -13,10 +15,21 @@ class Group::WikisControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_show_wiki_settings_not_allowed
+  def test_show_wiki_settings_no_member
     login_as @user2
     assert_permission_denied do
       xhr :get, :index, group_id: @group.to_param
+    end
+  end
+
+  # TODO: maybe another test wich proves that
+  # settings will not be shown to non-council members -
+  # no matter if the settings allow them to edit the
+  # group wiki
+  def test_show_wiki_settings_no_council_member
+    login_as @user3
+    assert_permission_denied do
+      xhr :get, :index, group_id: @group2.to_param
     end
   end
 
@@ -58,24 +71,6 @@ class Group::WikisControllerTest < ActionController::TestCase
         wiki: { body: '_created_' }
     wiki = Wiki.last
     assert '<em>created</em>', wiki.body_html
-    assert wiki.profile.public?
-    assert_response :redirect
-    assert_redirected_to group_wikis_url(@group, anchor: :public)
-  end
-
-  # FIXME: does not increment versions
-  def xtest_create_with_existing_wiki
-    @wiki = @group.profiles.public.create_wiki body: 'init'
-    @wiki.update_attribute :updated_at, 2.weeks.ago
-    @wiki.save
-    login_as @user
-    assert_difference '@wiki.versions.count' do
-      xhr :post, :create,
-          group_id: @group.to_param, profile: :public,
-          wiki: { body: '_new vesion_' }
-    end
-    wiki = Wiki.last
-    assert '<em>_new version_</em>', wiki.body_html
     assert wiki.profile.public?
     assert_response :redirect
     assert_redirected_to group_wikis_url(@group, anchor: :public)

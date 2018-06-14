@@ -3,8 +3,8 @@ class Wiki::VersionsController < Wiki::BaseController
   def show; end
 
   def index
-    authorize @wiki, :update?
-    @versions = @wiki.versions.try.most_recent.paginate(pagination_params)
+    authorize @wiki, :show?
+    @versions = @wiki.versions.most_recent.paginate(pagination_params)
   end
 
   protected
@@ -13,7 +13,7 @@ class Wiki::VersionsController < Wiki::BaseController
   def fetch_wiki
     super
     return if action? :index
-    authorize @wiki, :update?
+    authorize @wiki, :show?
     @version = @wiki.find_version(params[:id])
     @former = @wiki.find_version(params[:id].to_i - 1) if params[:id].to_i > 1
   rescue Wiki::VersionNotFoundError => ex

@@ -14,7 +14,7 @@ class Group::WikisController < Group::BaseController
   end
 
   def index
-    authorize @group, :admin?
+    authorize @group, :update?
     @private_wiki = @group.private_wiki
     @public_wiki  = @group.public_wiki
   end
