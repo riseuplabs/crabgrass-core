@@ -169,46 +169,6 @@ class Profile < ActiveRecord::Base
     picture || video
   end
 
-  # UPGRADE FUNCTIONALITY
-
-  def to_gates
-    if entity.is_a? User
-      to_user_gates
-    elsif entity.is_a? Group
-      to_group_gates
-    end
-  end
-
-  def to_user_gates
-    gates = %i[view see_groups see_contacts pester request_contact]
-    gates.select do |gate_name|
-      profile_flag = (gate_name == :view ? 'may_see' : "may_#{gate_name}")
-      send profile_flag
-    end
-  end
-
-  def to_group_gates
-    gates = %i[
-      view
-      pester
-      burden
-      spy
-      join
-      request_membership
-      see_members
-      see_committees
-      see_networks
-    ]
-    gates.select do |gate_name|
-      if gate_name == :join
-        membership_policy_is? :open
-      else
-        profile_flag = (gate_name == :view ? 'may_see' : "may_#{gate_name}")
-        send profile_flag
-      end
-    end
-  end
-
   def summary_html
     super.try :html_safe
   end

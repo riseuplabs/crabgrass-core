@@ -209,4 +209,4 @@ before 'deploy:finalize_update', 'crabgrass:link_to_shared'
 after  'deploy:create_symlink', 'crabgrass:create_version_files'
 after  'deploy:restart', 'passenger:restart', 'deploy:cleanup'
 
-before 'crabgrass:upgrade_to_0_6', 'deploy', 'crabgrass:cleanup_outdated_data', 'deploy:migrate'
+before 'deploy', 'crabgrass:cleanup_outdated_data', 'deploy:migrate'

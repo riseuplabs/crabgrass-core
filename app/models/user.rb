@@ -317,27 +317,5 @@ class User < ActiveRecord::Base
   def clear_access_cache
     @access = nil
   end
-
-  # Migrate permissions from pre-CastleGates databases to CastleGates.
-  # Called from cg:upgrade:user_permissions task.
-  def migrate_permissions!
-    private_gates = []
-    public_gates = []
-
-    if public_profile
-      public_gates = public_profile.to_user_gates
-      set_access! public: public_gates
-    end
-    if private_profile
-      private_gates = private_profile.to_user_gates
-      friends_gates = (private_gates + public_gates).uniq
-      set_access! friends: friends_gates
-      if private_profile.peer?
-        set_access! peers: friends_gates
-      elsif public_gates.present?
-        set_access! peers: public_gates
-      end
-    end
-  end
 end
 
