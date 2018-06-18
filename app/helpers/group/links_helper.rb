@@ -92,7 +92,7 @@ module Group::LinksHelper
                   method: :delete,
                   class: 'btn btn-danger',
                   confirm: :destroy_confirmation.t(thing: @group.name)
-      elsif policy(@group).may_create_destroy_request?
+      elsif may_request_destroy_group?
         link_to :destroy_thing.t(thing: @group.display_name),
                 group_requests_path(@group, type: 'destroy_group'),
                 method: 'post',
@@ -113,7 +113,7 @@ module Group::LinksHelper
         link_to(:request_pending.t(request: :request_to_create_council.t.capitalize), group_request_path(@group, req))
       elsif policy(@group).may_create_council?
         link_to(:create_a_new_thing.t(thing: :council.t), new_group_council_path(@group))
-      elsif policy(@group).may_create_council_request?
+      elsif may_request_create_council?
         link_to(:create_a_new_thing.t(thing: :council.t),
                 group_requests_path(@group, type: 'create_council'),
                 method: 'post')
@@ -180,4 +180,25 @@ module Group::LinksHelper
     options[:title] = tag.name
     link_to tag.name, groups_url(action: 'tags') + '/' + path.join('/'), options
   end
+
+  ##
+  ## TODO: check if we find a better place for the following methods
+  #
+  ## ACCESS
+  ##
+  ## for all request types which are only used in helpers/views, we do not
+  ## use class specific policies but the base classes policy
+  ## (RequestPolicy) which uses the may_create? method of the respective
+  ## request class
+
+  def may_request_destroy_group?
+    req = RequestToDestroyOurGroup.new(recipient: @group, requestable: @group)
+    policy(req).create?
+  end
+
+  def may_request_create_council?
+    req = RequestToCreateCouncil.new(recipient: @group, requestable: @group)
+    policy(req).create?
+  end
+
 end

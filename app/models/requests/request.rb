@@ -58,6 +58,14 @@ class Request < ActiveRecord::Base
   before_validation :set_default_state, on: :create
 
   ##
+  ## ACCESS
+  ##
+
+  def self.policy_class
+    RequestPolicy
+  end
+
+  ##
   ## FINDERS
   ##
 

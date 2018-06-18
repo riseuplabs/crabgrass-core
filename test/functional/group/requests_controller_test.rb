@@ -36,6 +36,24 @@ class Group::RequestsControllerTest < ActionController::TestCase
     end
   end
 
+  def test_request_to_create_council
+    group = groups(:animals)
+    group.update(created_at: Time.now - 1.month)
+    user = users(:blue)
+    group.memberships.find_by(user.id).update(created_at: Time.now - 1.month)
+    login_as user
+    assert_difference 'RequestToCreateCouncil.count' do
+      get :create, group_id: group.to_param, type: 'create_council'
+    end
+  end
+
+  def test_request_to_create_council_not_allowed
+    group = groups(:animals)
+    assert_no_difference 'RequestToCreateCouncil.count' do
+      get :create, group_id: group.to_param, type: 'create_council'
+    end
+  end
+
   def test_approve
     @other = FactoryBot.create(:user)
     @group.add_user! @other

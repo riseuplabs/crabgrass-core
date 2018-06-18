@@ -33,13 +33,6 @@ class GroupPolicy < ApplicationPolicy
     )
   end
 
-  #
-  # request to destroy the group
-  #
-  def may_create_destroy_request?
-    user.may?(:admin, group)
-  end
-
   ##
   ## MEMBERSHIPS
   ##
@@ -127,15 +120,6 @@ class GroupPolicy < ApplicationPolicy
       !group.has_a_council? and
       user.may?(:admin, group) and
       (group.recent? || group.single_user?)
-  end
-
-  #
-  # request to create a council
-  #
-  # TODO: write test that covers this
-  #       Is it ever used?
-  def may_create_council_request?
-    RequestToCreateCouncil.may_create?(group: group, current_user: user)
   end
 
   def may_create_committee?
