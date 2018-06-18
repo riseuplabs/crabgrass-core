@@ -37,7 +37,7 @@ class GroupPolicy < ApplicationPolicy
   # request to destroy the group
   #
   def may_create_destroy_request?
-    RequestToDestroyOurGroup.may_create?(group: group, current_user: user)
+    user.may?(:admin, group)
   end
 
   ##
