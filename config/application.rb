@@ -58,6 +58,7 @@ module Crabgrass
       'ErrorNotFound' => :not_found,
       'Wiki::Sections::SectionNotFoundError' => :not_found,
       'PermissionDenied' => :forbidden,
+      'Pundit::NotAuthorizedError' => :forbidden,
       'AuthenticationRequired' => :unauthorized
     )
 

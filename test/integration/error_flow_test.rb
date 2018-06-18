@@ -43,4 +43,14 @@ class ErrorFlowTest < IntegrationTest
     assert_content 'Not Found'
     assert_equal '/asdfswera', current_path
   end
+
+  def test_not_authorized
+    visit '/'
+    fill_in 'login', with: 'red'
+    fill_in 'password', with: 'red'
+    click_button :sign_in.t
+    visit 'groups/groupwithcouncil/profile/edit'
+    assert_content 'Permission Denied'
+  end
+
 end
