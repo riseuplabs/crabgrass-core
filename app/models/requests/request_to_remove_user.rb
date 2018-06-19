@@ -17,6 +17,10 @@ class RequestToRemoveUser < Request
     pending.with_requestable(options[:user]).for_recipient(options[:group]).first
   end
 
+  def self.for_membership(membership)
+    with_requestable(membership.user).for_recipient(membership.group)
+  end
+
   #
   # permissions
   #

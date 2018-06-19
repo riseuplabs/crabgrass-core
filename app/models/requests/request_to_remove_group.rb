@@ -17,6 +17,10 @@ class RequestToRemoveGroup < Request
     pending.with_requestable(options[:group]).for_recipient(options[:network]).first
   end
 
+  def self.for_membership(membership)
+    with_requestable(membership.group).for_recipient(membership.network)
+  end
+
   #
   # permissions
   #
@@ -24,10 +28,6 @@ class RequestToRemoveGroup < Request
   def may_create?(current_user)
     current_user.may?(:admin, network) and
       current_user.longterm_member_of?(network)
-  end
-
-  def self.may_create?(options)
-    new(group: options[:group], network: options[:network]).may_create?(options[:current_user])
   end
 
   def may_approve?(current_user)

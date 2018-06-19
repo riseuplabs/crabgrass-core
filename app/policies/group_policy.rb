@@ -52,17 +52,6 @@ class GroupPolicy < ApplicationPolicy
       ((user && user.member_of?(group.parent)) || user.nil?)
   end
 
-  # may user join the group immediately?
-  #
-  # for requests, see may_create_join_request?
-  #
-  def may_join_group?
-    logged_in? and
-      group and
-      (user.may?(:admin, group) or user.may?(:join, group)) and
-      !user.direct_member_of?(group)
-  end
-
   #
   # may request to join the group?
   #

@@ -13,6 +13,8 @@ class Group::BaseController < ApplicationController
     # group might be preloaded by DispatchController
     @group ||= Group.find_by_name(params[:group_id] || params[:id])
     raise_not_found unless policy(@group).show?
+    @membership = Group::Membership.where(group: @group, user: current_user).
+      first_or_initialize
   end
 
   def setup_context

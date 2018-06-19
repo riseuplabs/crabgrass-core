@@ -11,7 +11,6 @@ class AvatarsController < ApplicationController
   caches_page :show
 
   def show
-    byebug
     @image = Avatar.find_by_id params[:id]
     if @image.nil?
       size = Avatar.pixels(params[:size])

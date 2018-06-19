@@ -25,8 +25,8 @@ module Group::LinksHelper
 
   def join_group_link
     return unless logged_in?
-    return if current_user.direct_member_of? @group
-    if policy(@group).may_join_group?
+    return if @membership.persisted?
+    if may_create? @membership
       directly_join_group_link
     elsif policy(@group).may_create_join_request?
       join_request_link
@@ -34,13 +34,11 @@ module Group::LinksHelper
   end
 
   def leave_group_link
-    if policy(@group).may_leave_group?
-      link_to :leave_group_link.t(group_type: t(@group.group_type.downcase)),
-              group_my_membership_path(@group, current_user),
-              confirm: :leave_group_confirmation.t(group_type: t(@group.group_type.downcase)),
-              method: :delete,
-              class: 'navi'
-    end
+    link_to :leave_group_link.t(group_type: t(@group.group_type.downcase)),
+            group_my_membership_path(@group, current_user),
+            confirm: :leave_group_confirmation.t(group_type: t(@group.group_type.downcase)),
+            method: :delete,
+            class: 'navi'
   end
 
   def directly_join_group_link
@@ -133,34 +131,38 @@ module Group::LinksHelper
   # remove a user from a group or a group from a network.
   #
   def destroy_membership_link(membership)
-    if membership.entity.is_a?(User) && (membership.user_id == current_user.id)
-      leave_group_link
-    elsif may_destroy?(membership)
-      confirm = :membership_destroy_confirm_message.t(
-        entity: membership.entity.name,
-        group: @group.name
-      )
-      link_to(:remove.t, group_membership_path(@group, membership),
-             remote: true,
-             method: 'delete',
-             icon: 'minus', data: {confirm: confirm })
-    else
-      if membership.entity.is_a? Group
-        req = RequestToRemoveGroup.existing(group: membership.entity, network: @group)
+    if may_destroy?(membership)
+      if membership.user == current_user
+        leave_group_link
       else
-        req = RequestToRemoveUser.existing(user: membership.entity, group: @group)
+        confirm = :membership_destroy_confirm_message.t(
+          entity: membership.entity.name,
+          group: @group.name
+        )
+        link_to(:remove.t, group_membership_path(@group, membership),
+                remote: true,
+                method: 'delete',
+                icon: 'minus', data: {confirm: confirm })
       end
-
-      if req
-        link_to :request_pending.t(request: req.class.model_name.human),
-                group_membership_request_path(@group, req)
-      elsif policy(membership).may_create_expell_request?
+    else
+      request = expell_request(membership)
+      if request.persisted?
+        link_to :request_pending.t(request: request.class.model_name.human),
+                group_membership_request_path(@group, request)
+      elsif may_create? request
         link_to(:remove.t, group_membership_requests_path(@group, type: 'destroy', entity: membership.entity.name),
                remote: true,
                method: 'post',
                icon: 'minus')
       end
     end
+  end
+
+  def expell_request(membership)
+    klass = membership.entity.is_a?(Group) ?
+      RequestToRemoveGroup :
+      RequestToRemoveUser
+    klass.for_membership(membership).first_or_initialize
   end
 
   ##
