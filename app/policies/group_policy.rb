@@ -16,8 +16,6 @@ class GroupPolicy < ApplicationPolicy
     user.may?(:admin, group)
   end
 
-  # TODO: we need to investigate group creation a bit.
-  # group may be a group or network.
   def create?
     return false if group.network? && !Conf.networks
     user.may?(:admin, group)
@@ -36,10 +34,6 @@ class GroupPolicy < ApplicationPolicy
   ##
   ## MEMBERSHIPS
   ##
-  ## TODO: check if we can move those to memberships_policy.
-  ## Not sure how this might work, because in most cases we have
-  ## no membership object
-  #
 
   ##
   ## CREATION

@@ -50,7 +50,9 @@ class Group::RequestsControllerTest < ActionController::TestCase
   def test_request_to_create_council_not_allowed
     group = groups(:animals)
     assert_no_difference 'RequestToCreateCouncil.count' do
-      get :create, group_id: group.to_param, type: 'create_council'
+      assert_permission_denied do
+        get :create, group_id: group.to_param, type: 'create_council'
+      end
     end
   end
 

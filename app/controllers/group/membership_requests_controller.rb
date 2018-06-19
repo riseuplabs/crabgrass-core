@@ -13,7 +13,7 @@ class Group::MembershipRequestsController < Group::BaseController
   after_action :verify_authorized, only: :index
 
   def index
-    authorize @group, :admin? # FIXME: not sure if we need this
+    authorize @group, :admin?
     @requests = Request
                 .membership_related
                 .having_state(current_state)
