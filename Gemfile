@@ -163,6 +163,10 @@ gem 'zip-zip', require: 'zip'
 #
 gem 'mail-gpg', '~> 0.3.3'
 
+# https://groups.google.com/forum/#!topic/ruby-security-ann/2S9Pwz2i16k
+# not available in rails 4.2 yet
+gem 'sprockets', '~> 3.7.2'
+
 ##
 # Environment specific
 ##
