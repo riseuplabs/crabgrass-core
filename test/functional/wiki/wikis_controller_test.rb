@@ -85,6 +85,22 @@ class Wiki::WikisControllerTest < ActionController::TestCase
            'cancel should not set updated_by'
   end
 
+  def test_show_wiki_on_public_page
+    @wiki = create_page_wiki
+    @page.public = true
+    @page.save
+    xhr :get, :show, id: @wiki.id
+    assert_response :success
+    assert_equal @wiki, assigns['wiki']
+  end
+
+  def test_hide_wiki_on_private_page
+    @wiki = create_page_wiki
+    assert_permission_denied do
+      xhr :get, :show, id: @wiki.id
+    end
+  end
+
   def test_show_private_group_wiki
     @wiki = create_profile_wiki(true)
     login_as @user

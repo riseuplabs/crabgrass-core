@@ -4,7 +4,7 @@ class WikiPolicy < ApplicationPolicy
     if wiki.profile && wiki.profile.private?
       update?
     else
-      user.may?(:view, (wiki.page || wiki.group))
+      container_policy.show?
     end
   end
 
@@ -12,8 +12,13 @@ class WikiPolicy < ApplicationPolicy
     user.may?(:edit, (wiki.page || wiki.group))
   end
 
+  protected
+
   def wiki
     record
   end
 
+  def container_policy
+    Pundit.policy!(user, wiki.page || wiki.group)
+  end
 end
