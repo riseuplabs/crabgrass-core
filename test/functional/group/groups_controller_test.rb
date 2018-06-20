@@ -13,45 +13,35 @@ class Group::GroupsControllerTest < ActionController::TestCase
 
   def test_choose_group_type
     login_as @user
-    assert_permission :may_create_group? do
-      get :new
-    end
+    get :new
     assert_response :success
     assert_template :_choose_group_type
   end
 
   def test_new_committee
     login_as @user
-    assert_permission :may_create_group? do
-      get :new, type: 'committee'
-    end
+    get :new, type: 'committee'
     assert_response :success
     assert_template :_choose_parent_group
   end
 
   def test_new_council
     login_as @user
-    assert_permission :may_create_group? do
-      get :new, type: 'council'
-    end
+    get :new, type: 'council'
     assert_response :success
     assert_template :_choose_parent_group
   end
 
   def test_new_group
     login_as @user
-    assert_permission :may_create_group? do
-      get :new, type: 'group'
-    end
+    get :new, type: 'group'
     assert_response :success
     assert_template 'group/structures/_new_form'
   end
 
   def test_new_network
     login_as @user
-    assert_permission :may_create_group? do
-      get :new, type: 'network'
-    end
+    get :new, type: 'network'
     assert_response :success
     assert_template 'group/structures/_new_form'
   end
@@ -59,9 +49,7 @@ class Group::GroupsControllerTest < ActionController::TestCase
   def test_create_group
     login_as @user
     assert_difference 'Group.count' do
-      assert_permission :may_create_group? do
-        post :create, group: { name: 'test-create-group', full_name: 'Group for Testing Group Creation!' }
-      end
+      post :create, group: { name: 'test-create-group', full_name: 'Group for Testing Group Creation!' }
       assert_response :redirect
       group = Group.find_by_name 'test-create-group'
       assert_redirected_to group_url(group)
@@ -117,9 +105,17 @@ class Group::GroupsControllerTest < ActionController::TestCase
     group.add_user!(user)
     login_as user
     assert_difference 'Group.count', -1 do
-      assert_permission :may_destroy_group? do
-        delete :destroy, id: group.to_param
-      end
+      delete :destroy, id: group.to_param
     end
   end
+
+  def test_destroy_group_not_allowed
+    user = FactoryBot.create(:user)
+    group = FactoryBot.create(:group)
+    login_as user
+    assert_not_found do
+      delete :destroy, id: group.to_param
+    end
+  end
+
 end

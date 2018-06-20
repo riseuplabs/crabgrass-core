@@ -21,10 +21,6 @@ class RequestToCreateCouncil < Request
       user.longterm_member_of?(group)
   end
 
-  def self.may_create?(options)
-    new(recipient: options[:group], requestable: options[:group]).may_create?(options[:current_user])
-  end
-
   def may_approve?(user)
     user.may?(:admin, group) and
       user.id != created_by_id and

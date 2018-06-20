@@ -1,5 +1,4 @@
 class Person::HomeController < Person::BaseController
-  guard :may_show_home?
   layout 'sidecolumn'
 
   #
@@ -9,8 +8,15 @@ class Person::HomeController < Person::BaseController
     super()
     @user = options[:user]
   end
+  hide_action :initialize
 
   def show
-    @profile = @user.profiles.public
+    authorize @user
+    if current_user.may? :view, @user
+      @profile = @user.profiles.public
+      @pages = Page.paginate_by_path '/descending/updated_at/limit/30/',
+        options_for_user(@user),
+        pagination_params
+    end
   end
 end

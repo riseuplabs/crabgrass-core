@@ -15,10 +15,9 @@
 -#%div.margin-bottom(style="position: relative")
 -#  %div{:style => 'position: absolute; top: 0; bottom: 0; left: 0; right: 0; height: 202px; max-width: 202px;' + avatar_style(@user, 'huge')}
 
-- if may_show_profile?
-
-
-  %img.margin-bottom{:style => "display:block; width: 100% !important; height: auto !important", :src => avatar_url_for(@user, :huge)}
+- if @profile
+  %img.margin-bottom{ style: "display:block; width: 100% !important; height: auto !important",
+    src: avatar_url_for(@user, :huge)}
 
   - if @profile.summary.present?
     - anything = true

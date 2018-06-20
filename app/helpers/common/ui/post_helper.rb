@@ -26,7 +26,7 @@ module Common::Ui::PostHelper
   # sometimes, posts are not really posts. in this case, we skip the edit link.
   #
   def edit_post_link(post)
-    if post.is_a?(Post) && may_edit_post?(post)
+    if post.is_a?(Post) && may_update?(post)
       link_to :edit.t, edit_post_path(post),
         remote: true,
         method: 'get',
@@ -36,7 +36,7 @@ module Common::Ui::PostHelper
   end
 
   def star_post_action(post)
-    return unless may_twinkle_posts?(post)
+    return unless may_twinkle?(post)
     if !post.starred_by?(current_user)
       link_to '', post_star_path(post), remote: true,
                                         class: 'small_icon_button shy',

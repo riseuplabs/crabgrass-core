@@ -6,7 +6,7 @@ module Group::DirectoryHelper
     place = h(group.profiles.public.place)
     count = :group_membership_count.t(count: group.users.count)
     summary = group.profiles.public.summary_html
-    committees = if may_list_group_committees?(group)
+    committees = if policy(group).may_list_group_committees?
                    group.real_committees
                  else
                    nil

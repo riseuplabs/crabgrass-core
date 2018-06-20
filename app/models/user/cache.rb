@@ -105,7 +105,6 @@ module User::Cache
   # set the id caches to non-nil in this method unless we want to
   # recurse forever.
   def update_membership_cache(_membership = nil)
-    clear_access_cache
     direct, all, admin_for = get_group_ids
     peer = get_peer_ids(direct)
     update_attributes version: (version || -1) + 1, # this fixes if version is nil, but probably we should get at the root of that.
@@ -144,7 +143,6 @@ module User::Cache
                    friend_id_cache: nil,
                    all_group_id_cache: nil,
                    admin_for_group_id_cache: nil
-    clear_access_cache
   end
 
   # called whenever an empty self.friend_id_cache is accessed

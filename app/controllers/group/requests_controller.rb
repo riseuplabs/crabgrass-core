@@ -8,13 +8,10 @@
 class Group::RequestsController < Group::BaseController
   include_controllers 'common/requests'
 
-  # guard defaults to may_admin_group?
-  # permissions handled by model:
-  guard create: :allow, update: :allow, destroy: :allow
-
   rescue_render create: :index
 
   def index
+    authorize @group, :admin?
     @requests = Request
                 .having_state(current_state)
                 .send(current_view, @group)
@@ -28,9 +25,11 @@ class Group::RequestsController < Group::BaseController
   # RequestToCreateCouncil
   #
   def create
-    @req = requested_class.create! recipient: @group,
-                                   requestable: @group,
-                                   created_by: current_user
+    @req = requested_class.new recipient: @group,
+                               requestable: @group,
+                               created_by: current_user
+    authorize @req
+    @req.save!
     success @req
     redirect_to request_path(@req)
   end

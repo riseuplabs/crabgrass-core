@@ -1,5 +1,5 @@
 #group_membership_list
-  - if may_create_membership?(@group)
+  - if policy(@group).may_create_membership?
     = render 'add_member_form'
     .h3= :members.t
   - else

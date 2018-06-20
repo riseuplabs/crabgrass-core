@@ -36,6 +36,18 @@ class GroupCreationTest < IntegrationTest
     assert_group_created
   end
 
+  def test_create_council_request
+    group = groups(:animals)
+    group.update(created_at: Time.now - 1.month)
+    user = users(:blue)
+    group.memberships.find_by(user.id).update(created_at: Time.now - 1.month)
+    visit '/animals'
+    click_on 'Settings'
+    click_on 'Structure'
+    click_on 'Create a new Council'
+    assert_content 'Request to Create Council'
+  end
+
   def test_groups_menu
     for i in 0..20
       visit_new_group_form

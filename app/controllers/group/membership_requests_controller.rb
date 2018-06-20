@@ -9,11 +9,11 @@
 class Group::MembershipRequestsController < Group::BaseController
   include_controllers 'common/requests'
 
-  # may_admin_group? is required by default.
-  # permissions handled by model:
-  guard create: :allow, update: :allow, destroy: :allow
+  # the other permissions are handled by the model
+  after_action :verify_authorized, only: :index
 
   def index
+    authorize @group, :admin?
     @requests = Request
                 .membership_related
                 .having_state(current_state)

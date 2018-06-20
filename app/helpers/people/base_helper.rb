@@ -13,13 +13,14 @@ module People::BaseHelper
               confirm: :friend_remove_confirmation.t(user: @user.name)
     elsif req = RequestToFriend.existing(from: current_user, to: @user)
       link_to :request_pending.t(request: :request_to_friend.t.capitalize), me_request_path(req), icon: 'clock'
-    elsif may_request_contact?
+    elsif may_create? RequestToFriend.new(recipient: @user)
       link_to_modal :request_friend_link.t, new_person_friend_request_path(@user), icon: 'plus'
     end
   end
 
   def profile_send_message_link
-    if may_pester?
+    message = Message.new from: current_user, to: @user
+    if may_create? message
       link_to :send_message_link.t, me_discussion_posts_path(@user), icon: :page_message
     end
   end

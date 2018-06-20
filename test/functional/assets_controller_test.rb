@@ -60,6 +60,17 @@ class AssetsControllerTest < ActionController::TestCase
     end
   end
 
+  def test_destroy_not_allowed
+    user = FactoryBot.create :user
+    page = FactoryBot.create :page, created_by: users(:blue)
+    asset = page.add_attachment! uploaded_data: upload_data('photo.jpg')
+    user.updated(page)
+    login_as user
+    assert_permission_denied do
+      delete :destroy, id: asset.id, page_id: page.id
+    end
+  end
+
   private
 
   def thumbnail(path)

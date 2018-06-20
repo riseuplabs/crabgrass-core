@@ -161,6 +161,24 @@ super_admin_group:
   holder_code: 84001
   gate_bitfield: <%= ~0 %>
 
+castle_gates_keys_59:
+  castle_id: 4011
+  castle_type: Group
+  holder_code: 84011
+  gate_bitfield: 7999
+
+castle_gates_keys_60:
+  castle_id: 4012
+  castle_type: Group
+  holder_code: 84012
+  gate_bitfield: 8191
+
+castle_gates_keys_61:
+  castle_id: 4011
+  castle_type: Group
+  holder_code: 84012
+  gate_bitfield: 8191
+
 ##
 ## User Keys:
 ##

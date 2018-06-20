@@ -26,6 +26,14 @@ class Post < ActiveRecord::Base
   after_destroy :post_destroyed
 
   ##
+  ## POST ACCESS CONTROL
+  ##
+
+  def self.policy_class
+    PostPolicy
+  end
+
+  ##
   ## FINDERS
   ##
 
@@ -132,11 +140,6 @@ class Post < ActiveRecord::Base
   # used for indexing
   def to_s
     "#{user} #{body}"
-  end
-
-  # not used anymore
-  def editable_by?(user)
-    user.id == user_id
   end
 
   def starred_by?(user)

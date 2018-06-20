@@ -1,7 +1,7 @@
 #title.page_title.shy_parent
   %h1
     = @page.title
-    - if may_edit_page?
+    - if may_update?(@page)
       = link_to_modal :edit_title.t.titleize, edit_page_title_path(@page),
         class: 'shy inline plain',
         icon: 'pencil'

@@ -1,10 +1,7 @@
 class TasksController < Page::BaseController
   before_filter :fetch_task, only: %i[edit update destroy]
-  before_filter :fetch_user_participation
   before_filter :setup_second_nav
   after_filter :update_participations, only: %i[create update destroy]
-
-  guard :may_edit_page?
 
   def create
     @task = @page.tasks.new task_params.merge created_by: current_user
@@ -53,6 +50,10 @@ class TasksController < Page::BaseController
     @second_nav = 'tasks'
   end
 
+  def fetch_data
+    authorize @page, :update?
+  end
+
   def fetch_task
     @task = @page.tasks.find params[:id]
   end
@@ -95,9 +96,5 @@ class TasksController < Page::BaseController
     # current_user.updated(@page) <-- if we want the page to become unread on each update
     @page.save # instead of current_user.updated
     true
-  end
-
-  def fetch_user_participation
-    @upart = @page.participation_for_user(current_user) if @page and current_user
   end
 end

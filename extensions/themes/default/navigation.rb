@@ -192,7 +192,7 @@ define_navigation do
     end
 
     context_section :home do
-      visible { may_show_group? }
+      visible { may_show?(@group) }
       label  { :home.t }
       icon   :house
       url    { entity_path(@group) }
@@ -200,7 +200,7 @@ define_navigation do
     end
 
     context_section :pages do
-      visible { may_show_group? }
+      visible { may_show?(@group) }
       label  { :pages.t }
       icon   :page_white_copy
       url    { group_pages_path(@group) }
@@ -208,35 +208,35 @@ define_navigation do
     end
 
     context_section :members do
-      visible { may_list_memberships? }
+      visible { policy(@group).may_list_memberships? }
       label   { :members.t }
       icon    :user
       url     { group_memberships_path(@group) }
       active  { controller?('group/memberships', 'group/invites', 'group/membership_requests') }
 
       local_section :people do
-        visible { may_list_memberships? }
+        visible { policy(@group).may_list_memberships? }
         label   { :people.t }
         url     { group_memberships_path(@group) }
         active  { controller?('group/memberships') and params[:view] != 'groups' }
       end
 
       local_section :groups do
-        visible { may_list_memberships? and @group.network? }
+        visible { policy(@group).may_list_memberships? and @group.network? }
         label   { :groups.t }
         url     { group_memberships_path(@group, view: 'groups') }
         active  { controller?('group/memberships') and params[:view] == 'groups' }
       end
 
       local_section :invites do
-        visible { may_admin_group? }
+        visible { may_admin?(@group) }
         label   { :send_invites.t }
         url     { new_group_invite_path(@group) }
         active  { controller?('group/invites') }
       end
 
       local_section :requests do
-        visible { may_admin_group? }
+        visible { may_admin?(@group) }
         label   { :membership_requests.t }
         url     { group_membership_requests_path(@group) }
         active  { controller?('group/membership_requests') }
@@ -245,49 +245,49 @@ define_navigation do
     end
 
     context_section :settings do
-      visible { may_admin_group? }
+      visible { may_admin?(@group) }
       label  { :settings.t }
       icon   :control
       url    { group_settings_path(@group) }
       active { controller?('group/settings', 'group/permissions', 'group/profiles', 'group/structures', 'group/requests', 'group/wikis', 'wiki/versions', 'wiki/diffs') }
 
       local_section :settings do
-        visible { may_admin_group? }
+        visible { may_admin?(@group) }
         label  { :basic_settings.t }
         url    { group_settings_path(@group) }
         active { controller?('group/settings') }
       end
 
       local_section :permissions do
-        visible { may_admin_group? }
+        visible { may_admin?(@group) }
         label  { :permissions.t }
         url    { group_permissions_path(@group) }
         active { controller?('group/permissions') }
       end
 
       local_section :profile do
-        visible { may_admin_group? }
+        visible { may_admin?(@group) }
         label  { :profile.t }
         url    { edit_group_profile_path(@group) }
         active { controller?('group/profiles') }
       end
 
       local_section :wiki do
-        visible { may_admin_group? }
+        visible { may_admin?(@group) }
         label  { :wiki.t }
         url    { group_wikis_path(@group) }
         active { controller?('group/wikis', 'wiki/versions', 'wiki/diffs') }
       end
 
       local_section :structure do
-        visible { may_admin_group? }
+        visible { may_admin?(@group) }
         label  { :structure.t }
         url    { group_structure_path(@group) }
         active { controller?('group/structures') }
       end
 
       local_section :requests do
-        visible { may_admin_group? }
+        visible { may_admin?(@group) }
         label  { :requests.t }
         url    { group_requests_path(@group) }
         active { controller?('group/requests') }

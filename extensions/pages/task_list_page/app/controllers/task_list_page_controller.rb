@@ -3,6 +3,7 @@ class TaskListPageController < Page::BaseController
   before_filter :setup_second_nav
 
   def show
+    authorize @page
     @pending = @page.tasks.pending
     @completed = @page.tasks.completed
   end

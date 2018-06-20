@@ -1,5 +1,3 @@
--# see permissions_helper for the source of this data
-
 
 %div.debug
 
@@ -23,24 +21,3 @@
       = text_field_tag('id')
       = hidden_field_tag('url', request.path)
       = submit_tag("Become")
-  
-  %h3 Deciding
-  %ul
-    - permission_log.each do |key, info|
-      %li.method
-        METHOD FOUND:
-        = info
-        %br/
-        %br/
-  %br/
-  %br/
-
-  %h3 All
-  - permission_methods = controller.methods.grep(/^may_.*\?$/).group_by{|method|method.to_s.sub(/^.*_/,'')}.sort_by{|elem|elem[0]}
-  - permission_methods.each do |section|
-    %ul
-      %li.first
-        = section[0]
-      - section[1].each do |method|
-        %li= method
-    %br/

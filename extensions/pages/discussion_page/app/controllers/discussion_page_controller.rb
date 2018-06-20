@@ -1,7 +1,10 @@
 class DiscussionPageController < Page::BaseController
-  def show; end
+  def show
+    authorize @page
+  end
 
   def print
+    authorize @page, :show?
     render layout: 'printer-friendly'
   end
 

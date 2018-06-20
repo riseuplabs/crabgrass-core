@@ -13,6 +13,14 @@ class Page::SharesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_show_share_popup_not_allowed
+    login_as @recipient
+    page = FactoryBot.create :page, created_by: @owner
+    assert_permission_denied do
+      xhr :get, :show, page_id: page.id, mode: 'share'
+    end
+  end
+
   def test_show_notify_popup
     login_as @owner
     page = FactoryBot.create :page, created_by: @owner
@@ -72,5 +80,18 @@ class Page::SharesControllerTest < ActionController::TestCase
     end
     assert_equal 'page_history_granted_user_full_access',
                  Page::History.last.description_key
+  end
+
+  def test_share_page_not_allowed
+    page = FactoryBot.create :page, created_by: @owner
+    login_as @recipient
+    admin = { access: 'admin' }
+    assert_permission_denied do
+      xhr :post, :update, share_button: true,
+                          recipients: { blue: admin },
+                          page_id: page.id,
+                          mode: 'share',
+                          format: :js
+    end
   end
 end

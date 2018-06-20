@@ -5,11 +5,11 @@
   -# give it an id so we can hide it with javascript
   #inline-page-notice= notice
 .wiki{data: {diff: wiki.former && wiki_version_path(wiki, wiki.former.version)}}
-  - cache [wiki, wiki.version, may_edit_wiki?(wiki) && current_language] do
+  - cache [wiki, wiki.version, may_update?(wiki) && current_language] do
     -# the indentation for wikis must be preserved exactly, or
     -# <pre> blocks get indented by haml.
     = preserve do
-      - if may_edit_wiki?(wiki)
+      - if may_update?(wiki)
         = decorate_wiki_sections(wiki)
       - else
         = wiki.body_html

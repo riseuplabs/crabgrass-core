@@ -8,7 +8,9 @@ class Group::InvitesController < Group::BaseController
   # requrires may_admin_group? as Group::BaseController
   # TODO: if it is an open group, admin should not be required.
 
-  def new; end
+  def new
+    authorize @group, :admin?
+  end
 
   #
   # create some new invites, possibly of the type:
@@ -18,6 +20,7 @@ class Group::InvitesController < Group::BaseController
   # RequestToJoinUsViaEmail
   #
   def create
+    authorize @group, :admin?
     recipients = Page::Recipients.new(params[:recipients])
     users  = recipients.users
     groups = @group.network? ? recipients.groups : []

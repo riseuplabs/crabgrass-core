@@ -57,7 +57,7 @@ module Page::SidebarHelper
   #
 
   def watch_line
-    if may_show_page?
+    if may_show? @page
       existing_watch = (@upart and @upart.watch?) or false
       li_id = 'watch_li'
       checkbox_id = 'watch_checkbox'
@@ -72,7 +72,7 @@ module Page::SidebarHelper
   # checkbox to add/remove public
   #
   def public_line
-    if may_admin_page?
+    if may_admin? @page
       url = page_attributes_path(@page, public: (!@page.public?).inspect)
       content_tag :li, id: 'public_li' do
         sidebar_checkbox(I18n.t(:public),
@@ -93,7 +93,7 @@ module Page::SidebarHelper
   # checkbox to add/remove star
   #
   def star_line
-    if may_show_page?
+    if may_show? @page
       if @upart and @upart.star?
         icon = 'star'
         add = false
@@ -118,7 +118,7 @@ module Page::SidebarHelper
   # used in the sidebar of deleted pages
   #
   def undelete_line
-    if may_admin_page?
+    if may_admin? @page
       content_tag :li do
         link_to(I18n.t(:undelete_from_trash), page_trash_path(@page, type: 'undelete'),
           remote: true,
@@ -132,7 +132,7 @@ module Page::SidebarHelper
   # used in the sidebar of deleted pages
   #
   def destroy_line
-    if may_admin_page?
+    if may_admin? @page
       content_tag :li do
         link_to(:destroy_page_via_shred.t, page_trash_path(@page),
           remote: true,
@@ -150,7 +150,7 @@ module Page::SidebarHelper
   def page_attachments
     if @page.assets.any?
       safe_join @page.assets.collect { |asset| page_attachment(asset) }
-    elsif may_edit_page?
+    elsif may_update? @page
       ''
     end
   end
@@ -198,7 +198,7 @@ module Page::SidebarHelper
   end
 
   def edit_attachments_line
-    if may_edit_page?
+    if may_update? @page
       popup_line name: 'assets',
                  label: :edit.t,
                  icon: 'attach',
@@ -209,7 +209,7 @@ module Page::SidebarHelper
   end
 
   def edit_tags_line
-    if may_edit_page?
+    if may_update? @page
       popup_line(
         id: 'tag_li',
         icon: 'tag',
@@ -220,7 +220,7 @@ module Page::SidebarHelper
   end
 
   def share_line
-    if may_admin_page?
+    if may_admin? @page
       popup_line(
         id: 'share_li',
         icon: 'group',
@@ -231,7 +231,7 @@ module Page::SidebarHelper
   end
 
   def notify_line
-    if may_edit_page?
+    if may_update? @page
       popup_line(
         id: 'notify_li',
         icon: 'whistle',
@@ -242,7 +242,7 @@ module Page::SidebarHelper
   end
 
   def delete_line
-    if may_admin_page?
+    if may_admin? @page
       popup_line(
         id: 'trash_li',
         icon: 'trash',
@@ -253,7 +253,7 @@ module Page::SidebarHelper
   end
 
   def details_line
-    if may_edit_page?
+    if may_update? @page
       popup_line(
         id: 'details_li',
         icon: 'page_admin',

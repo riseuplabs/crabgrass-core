@@ -1,7 +1,5 @@
 class WikiPageController < Page::BaseController
   helper 'wikis/base', 'wikis/sections'
-  permission_helper 'wikis'
-
   before_filter :find_last_seen, only: :show
 
   def show
@@ -28,7 +26,7 @@ class WikiPageController < Page::BaseController
   end
 
   def fetch_data
-    return true unless @page
+    authorize @page, :show?
     @wiki = @page.wiki
   end
 
@@ -43,6 +41,6 @@ class WikiPageController < Page::BaseController
   end
 
   def default_to_edit?
-    @wiki.body.blank? && may_edit_page?
+    @wiki.body.blank? && policy(@page).edit?
   end
 end

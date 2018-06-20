@@ -5,122 +5,27 @@
 class SurveyPageResponseController < Page::BaseController
   helper 'survey_page'
 
-  guard show: :may_view_survey_response?,
-        index: :may_view_survey_response?,
-        update: :may_modify_survey_response?,
-        edit: :may_modify_survey_response?,
-        new: :may_create_survey_response?,
-        make: :may_create_survey_response?,
-        destroy: :may_destroy_survey_response?
-
-  permissions 'survey_page'
-
-  before_filter :verify_post, only: %i[make update destroy]
-
   def show
-    @response = @survey.responses.find_by_id params[:id]
+    if @response.user == current_user
+      skip_authorization
+    else
+      authorize @page, permission_level
+    end
     redirect_to response_path(get_jump_id, page_id: @page.id) if params[:jump]
   end
 
   def index
+    authorize @page, permission_level
     @responses = @survey.responses.paginate(include: %w[answers ratings],
                                             page: params[:page])
   end
 
-  #
-  #   def new
-  #     @response = SurveyResponse.new
-  #   end
-  #
-  #   # this should be 'create', but that is currently used by BasePageController.
-  #   # grrr. that breaks our nice CRUD.
-  #   def make
-  #     @response = @survey.responses.create!(params[:response]) do |resp|
-  #       resp.user = current_user # (user_id is protected)
-  #     end
-  #     current_user.updated(@page)
-  #     flash_message success: I18n.t(:survey_thanks_submit_message)
-  #     if may_rate_survey_response?
-  #       flash_message success: I18n.t(:survey_please_check_and_rate_message)
-  #     else
-  #       flash_message success: I18n.t(:survey_please_check_message)
-  #     end
-  #     redirect_to page_url(@page, action: 'response-show', id: @response.id)
-  #   rescue => exc
-  #     warning exc
-  #     render template: 'survey_page_response/new'
-  #   end
-  #
-  #   def edit
-  #   end
-  #
-  #   def update
-  #     @response.update_attributes!(params[:response])
-  #     flash_message success: I18n.t(:survey_thanks_submit_message)
-  #     if may_rate_survey_response?
-  #       success I18n.t(:survey_please_check_and_rate_message), :later
-  #     else
-  #       success I18n.t(:survey_please_check_message), :later
-  #     end
-  #     redirect_to page_url(@page, action: 'response-show', id: @response.id)
-  #   rescue => exc
-  #     warning exc
-  #   end
-  #
-  #   def destroy
-  #     @response.destroy
-  #     if @response.user_id == current_user.id and may_create_survey_response?
-  #       redirect_to page_url(@page, action: 'response-new')
-  #     elsif may_view_survey_response?
-  #       redirect_to page_url(@page, action: 'response-list')
-  #     else
-  #       redirect_to page_url(@page, action: 'show')
-  #     end
-  #   end
-  #
-  #   # xhr and get
-  #   # The user may either rate the current response, or skip it. The response
-  #   # has either been rated already or not. If it has been rated already, it may
-  #   # have been given a rating of nil, to let us know that the user has skipped it.
-  #   #
-  #   # There is a slight problem, which I am not sure how to solve. If the user skips
-  #   # a response by choosing not to rate it, we cannot put it at the end of the
-  #   # 'unrated' queue because this makes it impossible to skip the last unrated
-  #   # response. However, if we put the skipped item at the bottom of the rated
-  #   # queue, it makes it so you won't see it for a long time.
-  #   #
-  #   # This is how it works now, which I guess is better. Skip, then, means that you
-  #   # really don't want to have to rate it.
-  #   #
-  #   def rate
-  #     # set the rating for the current response
-  #     if( params[:id] && params[:rating] && @response)
-  #       if rating = current_user.rating_for(@response)
-  #         # we must destroy the rating, so that the timestamp will change.
-  #         rating.destroy
-  #       end
-  #       # don't count zero rating, but create the record so we know the user
-  #       # didn't want to rate it:
-  #       params[:rating] = nil if params[:rating] == "0"
-  #       Rating.create!(rateable: @response, user: current_user, rating: params[:rating])
-  #     end
-  #
-  #     # display the current response
-  #     @previous_response = @response
-  #     @next = next_four_responses(@survey)
-  #     @response = @next.shift # pop off the first item
-  #     if current_user.rated?(@response)
-  #       @rating = current_user.rating_for(@response).rating
-  #     else
-  #       @rating = 0
-  #     end
-  #   end
-  #
-
   protected
 
-  def verify_post
-    raise PermissionDenied unless request.post?
+  def permission_level
+    return :show? if @survey.view_may_see_responses?
+    return :update? if @survey.edit_may_see_responses?
+    return :admin?
   end
 
   # called early in filter chain

@@ -70,9 +70,6 @@ class User::SocialTest < ActiveSupport::TestCase
 
     # users(:green).profiles.public.may_pester = true
     green.grant_access! public: :pester
-    assert !kangaroo.may?(:pester, green),
-      'we cache access permissions'
-    kangaroo.clear_access_cache
     assert kangaroo.may?(:pester, green),
       'should be able to pester if set in profile'
   end

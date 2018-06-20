@@ -28,7 +28,7 @@
   -#
   -# TAGS
   -#
-  - if @page.tags.any? || may_edit_page?
+  - if @page.tags.any? || may_update?(@page)
     .h3= I18n.t(:tags)
     %div.tags
       = page_tags

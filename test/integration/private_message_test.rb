@@ -25,7 +25,7 @@ class PrivateMessageTest < IntegrationTest
 
   def test_send_a_message_from_user_profile_with_disccussion
     login @blue
-    @blue.send_message_to! @red, @message
+    Message.send from: @blue, to: @red, body: @message
     visit @red.login.to_s
     click_on :send_message_link.t
 

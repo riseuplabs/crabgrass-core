@@ -7,8 +7,6 @@ class Person::DirectoryController < ApplicationController
 
   before_filter :prepare_path
 
-  guard :allow
-
   def index
     @query ||= finder.query_term
     @users = finder.find.alphabetic_order.paginate(pagination_params)

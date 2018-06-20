@@ -3,6 +3,7 @@ class RankedVotePageController < Page::BaseController
   before_filter :find_possibles, only: %i[show edit]
 
   def show
+    authorize @page
     # we need to specify the whole page_url not just the action here
     # because we might have ended up here from the DispatchController.
     redirect_to page_url(@page, action: :edit) unless @poll.possibles.any?
@@ -11,9 +12,12 @@ class RankedVotePageController < Page::BaseController
     @sorted_possibles = @poll.ranked_candidates.collect { |id| @poll.possibles.find(id) }
   end
 
-  def edit; end
+  def edit;
+    authorize @page
+  end
 
   def print
+    authorize @page, :show?
     @who_voted_for = @poll.tally
     @sorted_possibles = @poll.ranked_candidates.collect { |id| @poll.possibles.find(id) }
 

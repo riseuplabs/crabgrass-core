@@ -10,6 +10,11 @@ class RequestToFriend < Request
   validates_format_of :recipient_type, with: /\AUser\z/
   validate :no_friendship_yet, on: :create
 
+  def self.policy_class
+    RequestToFriendPolicy
+  end
+
+
   def no_friendship_yet
     if created_by.friendships.with(recipient_id).exists?
       errors.add(:base, 'Friendship already exists')

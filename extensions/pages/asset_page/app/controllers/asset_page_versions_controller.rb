@@ -1,17 +1,17 @@
 class AssetPageVersionsController < Page::BaseController
-  guard index: :may_show_page?,
-        create: :may_show_page?,
-        destroy: :may_edit_page?
   helper 'asset_page'
 
-  def index; end
+  def index
+    authorize @page, :show?
+  end
 
   def create
+    authorize @page, :update?
     @asset.generate_thumbnails
-    current_user.updated(@page)
   end
 
   def destroy
+    authorize @page, :update?
     @asset_version = @asset.versions.find_by_version(params[:id])
     @asset_version.destroy
     current_user.updated(@page)

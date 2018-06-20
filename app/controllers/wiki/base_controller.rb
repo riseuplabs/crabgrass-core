@@ -1,11 +1,7 @@
 class Wiki::BaseController < ApplicationController
   before_filter :fetch_wiki
-
-  permissions 'wikis'
-  before_filter :login_required, :authorization_required
-  guard :may_edit_wiki?
-
-  permission_helper 'group/memberships', 'group/base'
+  before_filter :login_required
+  after_action :verify_authorized
 
   helper 'wikis/base'
 

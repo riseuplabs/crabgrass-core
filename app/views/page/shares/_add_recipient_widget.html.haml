@@ -2,7 +2,7 @@
   mode = 'share' if mode.nil? # either 'share' or 'notify'
   form_name = mode + '_page_form'
   add_button_id = 'add_recipient_button'
-  access_value = may_select_access_participation? ? "$('recipient_access').value" : "'#{Conf.default_page_access}'"
+  access_value = "$('recipient_access').value"
 
   # this is a little hacky: page_share_path is a nested resource of page, which makes sense. there
   # is one specific case when we don't need a page, however, and that is when we simply want to
@@ -41,7 +41,7 @@
         placeholder: :enter_name_of_group_or_person
     %td= "&nbsp;".html_safe
     %td
-      - if mode == 'share' and may_select_access_participation?
+      - if mode == 'share'
         = select_page_access 'recipient[access]', blank: false
       - else
         = hidden_field_tag 'recipient[access]'

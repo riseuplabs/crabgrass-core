@@ -2,6 +2,7 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+  include Pundit
   protect_from_forgery
 
   layout proc { |c| c.request.xhr? ? false : 'application' } # skip layout for ajax

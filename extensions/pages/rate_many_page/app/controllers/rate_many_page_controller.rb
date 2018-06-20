@@ -13,6 +13,7 @@ class RateManyPageController < Page::BaseController
   protected
 
   def fetch_poll
+    authorize @page, :show?
     return true unless @page
     @poll = @page.data
   end

@@ -13,23 +13,19 @@ class Wiki::AssetsControllerTest < ActionController::TestCase
 
   def test_new
     login_as @user
-    assert_permission :may_edit_wiki? do
-      get :new, wiki_id: @wiki.id
-    end
+    get :new, wiki_id: @wiki.id
     assert_response :success
     assert_equal [@old_image], assigns('images')
   end
 
   def test_create
     login_as @user
-    assert_permission :may_edit_wiki? do
       assert_difference 'Asset.count' do
         assert_difference '@group.pages.count' do
           sleep 1 # make sure most recent always works
           xhr :post, :create, wiki_id: @wiki.id,
                               asset: { uploaded_data: upload_data('gears.jpg') }
         end
-      end
     end
     assert_equal [Asset.last, @old_image], assigns('images')
   end

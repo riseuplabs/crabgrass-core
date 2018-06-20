@@ -1,31 +1,26 @@
 class Group::GroupsController < Group::BaseController
   include Common::Tracking::Action
 
-  # restricting the before filter to { :only => :destroy } doesn't work, because
-  # then it changes position in the filter chain and runs after the guards, but
-  # may_admin_group? requires @group to be set.
-  def fetch_group
-    super if action? :destroy
-  end
-  protected :fetch_group
-
   before_filter :initialize_group, only: %w[new create]
+  before_filter :fetch_group, only: :destroy
   before_filter :fetch_associations, only: :destroy
 
   after_filter :notify_former_users, only: :destroy
 
-  guard :may_ALIAS_group?
 
-  def new; end
+  def new
+    authorize @group
+  end
 
   #
   # responsible for creating groups and networks.
   # councils and committees are created by groups/structures
   #
   def create
+    authorize @group
     @group.save!
     current_user.reload # may have gained access to new group
-    @group.add_user!(current_user) unless @group.network? && may_admin_group?
+    @group.add_user!(current_user) unless @group.network? && policy(@group).admin?
     success :group_successfully_created.t
     redirect_to group_url(@group)
   end
@@ -36,6 +31,7 @@ class Group::GroupsController < Group::BaseController
   # unlike creation, all destruction of all group types is handled here.
   #
   def destroy
+    authorize @group
     @group.destroy
     success :thing_destroyed.t(thing: @group.name)
     redirect_to group_destroyed_redirect

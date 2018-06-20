@@ -34,6 +34,7 @@ module Crabgrass
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
     config.active_record.disable_implicit_join_references = true
+    config.active_record.raise_in_transactional_callbacks = true
 
     config.active_support.deprecation = :notify
 
@@ -57,6 +58,7 @@ module Crabgrass
       'ErrorNotFound' => :not_found,
       'Wiki::Sections::SectionNotFoundError' => :not_found,
       'PermissionDenied' => :forbidden,
+      'Pundit::NotAuthorizedError' => :forbidden,
       'AuthenticationRequired' => :unauthorized
     )
 
@@ -71,7 +73,7 @@ module Crabgrass
 
     config.exceptions_app = Crabgrass::PublicExceptions.new(Rails.public_path)
 
-    
+
    # FIXME: Needed for Rails 4.2 according to the documentation
 #  config.active_job.queue_adapter = :delayed_job
 

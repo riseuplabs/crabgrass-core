@@ -6,14 +6,11 @@
 
 class Group::MembershipsController < Group::BaseController
 
-  guard index: :may_list_memberships?,
-        destroy: :may_destroy_membership?,
-        create: :may_create_membership?
-
   #
   # list all the memberships
   #
   def index
+    authorize @group, :may_list_memberships?
     if federation_view?
       @memberships = @group.federatings.paginate(pagination_params)
     else
@@ -25,6 +22,7 @@ class Group::MembershipsController < Group::BaseController
   # immediately destroy a membership
   #
   def destroy
+    authorize @membership
     @group.remove_user! @user # memberships must be destroyed via group.remove_user!
   end
 
@@ -33,6 +31,7 @@ class Group::MembershipsController < Group::BaseController
   #
   def create
     raise_not_found unless @group && @user
+    authorize @group, :may_create_membership?
     @group.add_user! @user
     index # load @memberships
     success

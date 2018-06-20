@@ -1,8 +1,6 @@
 class RateManyPossiblesController < Page::BaseController
   before_filter :fetch_poll
 
-  guard :may_edit_page?
-
   # ajax only, returns nothing
   # for this to work, there must be a <ul id='sort_list_xxx'> element
   # and it must be declared sortable like this:
@@ -53,7 +51,7 @@ class RateManyPossiblesController < Page::BaseController
   end
 
   def fetch_poll
-    return true unless @page
+    authorize @page, :update?
     @poll = @page.data
   end
 end

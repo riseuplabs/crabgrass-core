@@ -14,6 +14,10 @@ class GalleryController < Page::BaseController
 
   protected
 
+  def fetch_data
+    authorize @page
+  end
+
   def setup_view
     @image_count = @page.images.size if @page
     @show_right_column = true

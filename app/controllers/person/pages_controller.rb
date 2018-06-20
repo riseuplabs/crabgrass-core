@@ -1,8 +1,8 @@
 class Person::PagesController < Person::BaseController
   include_controllers 'common/page_search'
-  guard :may_show_home?
 
   def index
+    authorize @user, :show?
     @path  = apply_path_modifiers(parsed_path)
     @pages = Page.paginate_by_path(@path, options_for_user(@user), pagination_params)
     render template: 'common/pages/search/index'

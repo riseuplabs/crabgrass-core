@@ -6,15 +6,11 @@ class Me::PostsController < Me::BaseController
   include_controllers 'common/posts'
 
   prepend_before_filter :fetch_data
-
-  before_filter :authorization_required
-  permissions 'posts'
-  guard :may_ALIAS_post?
-  guard index: :allow,
-        show: :allow
+  after_action :verify_authorized
 
   # /me/discussions/green/posts
   def index
+    skip_authorization
     @other_user = @recipient
     if @discussion
       @discussion.mark!(:read, current_user)
@@ -27,18 +23,26 @@ class Me::PostsController < Me::BaseController
 
   # used in redirects after editing a post
   def show
+    skip_authorization
     respond_to do |format|
       format.js { render 'common/posts/show' }
     end
   end
 
   def create
-    in_reply_to = Post.find_by_id(params[:in_reply_to_id])
-    current_user.send_message_to!(@recipient, params[:post][:body], in_reply_to)
+    @message = Message.new message_params
+    authorize @message
+    @post = @message.send
     redirect_to action: :index
   end
 
   protected
+
+  def message_params
+    params.require(:post).permit(:body).merge from: current_user,
+      to: @recipient,
+      in_reply_to_id: params[:in_reply_to_id]
+  end
 
   def fetch_data
     if params[:discussion_id]

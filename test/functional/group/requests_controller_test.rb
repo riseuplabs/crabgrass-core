@@ -9,10 +9,16 @@ class Group::RequestsControllerTest < ActionController::TestCase
   end
 
   def test_index
-    assert_permission :may_admin_group? do
+    get :index, group_id: @group.to_param
+    assert_response :success
+  end
+
+  def test_index_not_allowed
+    stranger = FactoryBot.create(:user)
+    login_as stranger
+    assert_not_found do
       get :index, group_id: @group.to_param
     end
-    assert_response :success
   end
 
   def test_create
@@ -20,6 +26,34 @@ class Group::RequestsControllerTest < ActionController::TestCase
       get :create, group_id: @group.to_param, type: 'destroy_group'
     end
     assert_response :redirect
+  end
+
+  def test_create_not_allowed
+    stranger = FactoryBot.create(:user)
+    login_as stranger
+    assert_not_found do
+      get :create, group_id: @group.to_param, type: 'destroy_group'
+    end
+  end
+
+  def test_request_to_create_council
+    group = groups(:animals)
+    group.update(created_at: Time.now - 1.month)
+    user = users(:blue)
+    group.memberships.find_by(user.id).update(created_at: Time.now - 1.month)
+    login_as user
+    assert_difference 'RequestToCreateCouncil.count' do
+      get :create, group_id: group.to_param, type: 'create_council'
+    end
+  end
+
+  def test_request_to_create_council_not_allowed
+    group = groups(:animals)
+    assert_no_difference 'RequestToCreateCouncil.count' do
+      assert_permission_denied do
+        get :create, group_id: group.to_param, type: 'create_council'
+      end
+    end
   end
 
   def test_approve

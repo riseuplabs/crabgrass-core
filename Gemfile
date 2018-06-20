@@ -78,6 +78,10 @@ gem 'actionpack-page_caching'
 # Single use tools
 ##
 
+# Pundit, permission system
+# latest version available. Stick to major release
+gem 'pundit', '~> 1.1'
+
 # Bcrypt for has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 

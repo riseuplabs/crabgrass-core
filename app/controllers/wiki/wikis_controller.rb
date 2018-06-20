@@ -9,20 +9,19 @@ class Wiki::WikisController < Wiki::BaseController
   include Common::Tracking::Action
 
   skip_before_filter :login_required, only: :show
-  before_filter :authorized?, only: :show
-
   track_actions :update
 
-  guard show: :may_show_wiki?
   helper 'wikis/sections'
   layout false
 
   def show
+    authorize @wiki
     @wiki.last_seen_at = last_visit if last_visit
-    render template: 'wiki/wikis/show' # , :locals => {:preview => params['preview']}
+    render template: 'wiki/wikis/show'
   end
 
   def print
+    authorize @wiki, :show?
     # no pagination for the posts - one large print view.
     if @page.try.discussion
       @posts = @page.discussion.posts.visible.includes(:user)
@@ -35,6 +34,7 @@ class Wiki::WikisController < Wiki::BaseController
   # in order to lock the section.
   #
   def edit
+    authorize @wiki
     Wiki::Lock.transaction do
       @wiki.lock!(@section, current_user)
     end
@@ -53,6 +53,7 @@ class Wiki::WikisController < Wiki::BaseController
   # to have any effect.
   #
   def update
+    authorize @wiki
     release_lock if cancel?
     update_wiki if save?
     render template: 'wiki/wikis/show'

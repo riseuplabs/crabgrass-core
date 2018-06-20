@@ -292,30 +292,7 @@ class User < ActiveRecord::Base
     # users may perform all actions on themselves
     return true if self == protected_thing
     key = protected_thing.to_s
-    if @access and @access[key] and !@access[key][perm].nil?
-      result = @access[key][perm]
-    else
-      begin
-        result = protected_thing.has_access!(perm, self)
-      rescue PermissionDenied
-        result = false
-      end
-      # has_access? might call clear_access_cache, so we need to rebuild it
-      # after it has been called.
-      @access ||= {}
-      @access[key] ||= {}
-      @access[key][perm] = result
-    end
-    result or raise PermissionDenied.new('Permission denied!')
-  end
-
-  #
-  # zeros out the in-memory page access cache. generally, this is called for
-  # you, but must be called manually in the case where access was via a
-  # group and that group loses page access.
-  #
-  def clear_access_cache
-    @access = nil
+    protected_thing.has_access!(perm, self)
   end
 
   # Migrate permissions from pre-CastleGates databases to CastleGates.

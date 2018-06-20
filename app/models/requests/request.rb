@@ -58,6 +58,14 @@ class Request < ActiveRecord::Base
   before_validation :set_default_state, on: :create
 
   ##
+  ## ACCESS
+  ##
+
+  def self.policy_class
+    RequestPolicy
+  end
+
+  ##
   ## FINDERS
   ##
 
@@ -111,11 +119,11 @@ class Request < ActiveRecord::Base
   end
 
   def self.for_recipient(recipient)
-    where(recipient_id: recipient)
+    where(recipient: recipient)
   end
 
   def self.with_requestable(requestable)
-    where(requestable_id: requestable)
+    where(requestable: requestable)
   end
 
   def self.visible_to(user)

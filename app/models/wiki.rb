@@ -60,6 +60,10 @@ class Wiki < ActiveRecord::Base
   # see description below.
   after_save :save_page_after_save
 
+  def self.policy_class
+    ::WikiPolicy
+  end
+
   # section locks should never be nil
   alias existing_section_locks section_locks
   def section_locks(force_reload = false)

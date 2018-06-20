@@ -23,8 +23,6 @@
 # the page is private and they already have access.
 #
 class Page::SharesController < Page::SidebarsController
-  guard update: :may_share_page?
-
   helper 'page/share', 'page/participation'
 
   before_filter :close_popup, only: :update, if: :cancel_update?
@@ -34,6 +32,7 @@ class Page::SharesController < Page::SidebarsController
   # display the share or notify forms.
   # this returns the html, which is used to populate the modalbox
   def show
+    authorize @page, (share? ? :admin? : :update?)
     render template: "page/shares/show_#{mode_param}"
   end
 
@@ -61,16 +60,8 @@ class Page::SharesController < Page::SidebarsController
   #    "the-true-levellers"=>{"access"=>"admin"}}
   #
   def update
+    authorize @page, (share? ? :admin? : :update?)
     @success_message = I18n.t(notify_or_share_message)
-    notify_or_share
-  end
-
-  protected
-
-  #
-  # Main Update Task
-  #
-  def notify_or_share
     if params[:share_button] || params[:notify_button]
       share = Page::Share.new(@page, current_user, share_options)
       @uparts, @gparts = share.with params[:recipients]
@@ -82,6 +73,8 @@ class Page::SharesController < Page::SidebarsController
     warning I18n.t('autocomplete.placeholder.enter_name_of_group_or_person')
     refresh_sidebar
   end
+
+  protected
 
   def share_options
     options = params[:notification] || HashWithIndifferentAccess.new
@@ -165,7 +158,7 @@ class Page::SharesController < Page::SidebarsController
         notice(:share_already_exists_error.t(name: recipient.name))
         return nil
       elsif upart.nil? && action == :notify
-        if !recipient.may?(:view, @page) and !may_share_page?
+        if !recipient.may?(:view, @page) and !policy(@page).admin?
           error(:notify_no_access_error.t(name: recipient.name))
           return nil
         end

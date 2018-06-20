@@ -1,4 +1,5 @@
 class Page::TagsController < Page::SidebarsController
+  before_filter :authorize_page
   helper 'page/tags'
   SUGGESTION_COUNT = 6
 
@@ -25,5 +26,9 @@ class Page::TagsController < Page::SidebarsController
     @page.tags_will_change!
     @page.save!
     refresh_sidebar
+  end
+
+  def authorize_page
+    authorize @page, :update?
   end
 end

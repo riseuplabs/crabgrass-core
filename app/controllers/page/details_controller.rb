@@ -3,5 +3,7 @@ class Page::DetailsController < Page::SidebarsController
   # tabs end up getting removed from the details popup.
   helper 'page/owner', 'page/participation', 'page/share'
 
-  def show; end
+  def show
+    authorize @page
+  end
 end

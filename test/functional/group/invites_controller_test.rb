@@ -18,20 +18,16 @@ class Group::InvitesControllerTest < ActionController::TestCase
 
   def test_new
     login_as @user
-    assert_permission :may_admin_group? do
-      get :new, group_id: @group.to_param
-    end
+    get :new, group_id: @group.to_param
     assert_response :success
   end
 
   def test_create
     login_as @user
     recipient = FactoryBot.create(:user)
-    assert_permission :may_admin_group? do
-      assert_difference 'RequestToJoinUs.count' do
-        post :create, group_id: @group.to_param,
-                      recipients: recipient.name
-      end
+    assert_difference 'RequestToJoinUs.count' do
+      post :create, group_id: @group.to_param,
+                    recipients: recipient.name
     end
     assert_response :redirect
     assert_redirected_to action: :new
@@ -43,11 +39,9 @@ class Group::InvitesControllerTest < ActionController::TestCase
 
   def test_invite_group_to_network
     login_as @user
-    assert_permission :may_admin_group? do
-      assert_difference 'RequestToJoinOurNetwork.count' do
-        post :create, group_id: @network.to_param,
-                      recipients: @group.name
-      end
+    assert_difference 'RequestToJoinOurNetwork.count' do
+      post :create, group_id: @network.to_param,
+                    recipients: @group.name
     end
     assert_response :redirect
     assert_redirected_to action: :new
@@ -56,11 +50,9 @@ class Group::InvitesControllerTest < ActionController::TestCase
   def test_create_email_invite
     email =  'test@mail.me'
     login_as @user
-    assert_permission :may_admin_group? do
-      assert_difference 'RequestToJoinUsViaEmail.count' do
-        post :create, group_id: @group.to_param,
-                      recipients: email
-      end
+    assert_difference 'RequestToJoinUsViaEmail.count' do
+      post :create, group_id: @group.to_param,
+                    recipients: email
     end
     assert_response :redirect
     assert_redirected_to action: :new

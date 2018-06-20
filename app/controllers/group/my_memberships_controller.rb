@@ -1,13 +1,13 @@
 class Group::MyMembershipsController < Group::BaseController
-  guard create: :may_join_group?,
-        destroy: :may_leave_group?
 
   def create
+    authorize @membership
     @group.add_user!(current_user)
     redirect_to entity_url(@group)
   end
 
   def destroy
+    authorize @membership
     @group.remove_user!(current_user)
     if current_user.may?(:view, @group)
       redirect_to entity_url(@group)

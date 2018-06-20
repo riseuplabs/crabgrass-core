@@ -262,6 +262,10 @@ class Page < ActiveRecord::Base
   ## PAGE ACCESS CONTROL
   ##
 
+  def self.policy_class
+    PagePolicy
+  end
+
   public
 
   # This method should never be called directly. It should only be called
@@ -302,12 +306,6 @@ class Page < ActiveRecord::Base
       parts << participation_for_group(entity)
     end
     parts.compact.min { |a, b| (a.access || 100) <=> (b.access || 100) }
-  end
-
-  # this should be in the database, for now hardwired as "true".
-  # if true, then anyone who can view a page can comment on it.
-  def public_comments?
-    true
   end
 
   protected

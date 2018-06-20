@@ -3,10 +3,9 @@
 - #
 - # PAGE SIDEBAR
 - #
-- if @options.show_sidebar
-  - content_for(:right_column) do
-    %nav#sidebar
-      = render 'page/sidebar/sidebar'
+- content_for(:right_column) do
+  %nav#sidebar
+    = render 'page/sidebar/sidebar'
 
 - #
 - # PAGE TITLEBOX

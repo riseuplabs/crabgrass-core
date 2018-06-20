@@ -1,14 +1,11 @@
 class GalleryImageController < Page::BaseController
   helper 'gallery'
 
-  # show and edit use base page permissions
-  guard :may_edit_page?
-  guard show: :may_show_page?
-
   # default_fetch_data is disabled for new in Pages::BaseController
   prepend_before_filter :fetch_page_for_new, only: :new
 
   def show
+    authorize @page
     @showing = @page.showings.includes(:asset).find_by_asset_id(params[:id])
     @image = @showing.asset
     # position sometimes starts at 0 and sometimes at 1?
@@ -18,17 +15,9 @@ class GalleryImageController < Page::BaseController
     @previous = @showing.higher_item
   end
 
-  # cleaned out unused edit and update actions here.
-  # They were quite powerful. Uploading a number of images at once
-  # and supporting zip upload.
-  # But now we use the general purpose assets controller instead.
-  # That one supports multi file upload and drag&drop.
-  #
-  # If you want to bring back some of the old features you might be
-  # interested in looking at the git history
-
   # removed an non ajax fallback, azul
   def sort
+    authorize @page, :update?
     @page.sort_images params[:assets_list]
     current_user.updated(@page)
     render plain: I18n.t(:order_changed)

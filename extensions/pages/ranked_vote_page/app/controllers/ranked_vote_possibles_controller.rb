@@ -2,8 +2,6 @@ class RankedVotePossiblesController < Page::BaseController
   before_filter :fetch_poll
   before_filter :fetch_possible, only: %i[edit update destroy]
 
-  guard :may_edit_page?
-
   # returns nothing
   # for this to work, there must be a <ul id='sort_list_xxx'> element
   # and it must be declared sortable like this:
@@ -51,6 +49,7 @@ class RankedVotePossiblesController < Page::BaseController
   end
 
   def fetch_poll
+    authorize @page, :update?
     @poll = @page.data if @page
     true
   end

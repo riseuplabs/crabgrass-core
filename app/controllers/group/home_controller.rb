@@ -1,14 +1,11 @@
 class Group::HomeController < Group::BaseController
   skip_before_filter :login_required
-  # fetch_group already checks may_show_group?
-  skip_before_filter :authorization_required
 
   before_filter :fetch_wikis
   after_filter :track_visit, if: :logged_in?
 
   layout 'sidecolumn'
   helper 'wikis/base', 'wikis/sections'
-  permission_helper 'wikis'
 
   def initialize(options = {})
     super()
@@ -16,6 +13,7 @@ class Group::HomeController < Group::BaseController
   end
 
   def show
+    authorize @group
     @pages = Page.paginate_by_path '/descending/updated_at/limit/30/',
                                    options_for_group(@group), pagination_params
   end
@@ -23,7 +21,7 @@ class Group::HomeController < Group::BaseController
   protected
 
   def fetch_wikis
-    @private_wiki = fetch_wiki(:private) if may_edit_group?
+    @private_wiki = fetch_wiki(:private) if policy(@group).edit?
     @public_wiki = fetch_wiki(:public)
   end
 
