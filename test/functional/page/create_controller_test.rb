@@ -50,7 +50,7 @@ class Page::CreateControllerTest < ActionController::TestCase
   def test_create_page_for_group_as_nonmember
     @group = FactoryBot.create(:group)
     login_as @user
-    assert_raises Pundit::NotAuthorizedError do
+    assert_permission_denied do
       post :create,
            owner: @group.name,
            page: { title: 'title' },

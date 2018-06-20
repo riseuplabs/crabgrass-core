@@ -3,7 +3,7 @@ module FunctionalTestHelper
     if block_given?
       begin
         yield
-      rescue PermissionDenied, Pundit::NotAuthorizedError
+      rescue PermissionDenied
         return true
       end
     end

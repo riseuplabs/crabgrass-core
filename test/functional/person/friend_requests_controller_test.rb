@@ -28,7 +28,7 @@ class Person::FriendRequestsControllerTest < ActionController::TestCase
     recipient  = users(:yellow)
     login_as requesting
 
-    assert_raises Pundit::NotAuthorizedError do
+    assert_permission_denied do
       xhr :post, :create, person_id: recipient.login
     end
   end
