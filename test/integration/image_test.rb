@@ -13,6 +13,21 @@ class ImageTest < IntegrationTest
     assert_equal 200, status_code
   end
 
+  def test_file_removed_before_first_visit
+    asset = FactoryBot.create :image_asset
+    asset.send :destroy_file
+    visit asset.url
+    assert_equal 404, status_code
+  end
+
+  def test_file_removed
+    asset = FactoryBot.create :image_asset
+    visit asset.url
+    asset.send :destroy_file
+    visit asset.url
+    assert_equal 404, status_code
+  end
+
   # we used to have some iso encoding so links would escape to
   # strings include %F3.
   # Now this old link will lead to utf-8 errors as the chars > \xF0 are
