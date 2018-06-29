@@ -232,7 +232,7 @@ Crabgrass::Application.routes.draw do
   ## SPECIAL PATH ROUTES for PAGES and ENTITIES
   ##
 
-  resources :contexts, path: '', only: :show do
+  resources :contexts, path: '', only: :show, constraints: { format: :html } do
     resources :pages, path: '',
                       controller: :context_pages,
                       only: %i[show edit] do
