@@ -297,19 +297,6 @@ class Group < ActiveRecord::Base
     destroy_permissions
   end
 
-  public
-
-  # migrate permissions from pre-CastleGates databases to CastleGates.
-  # Called from cg:upgrade:migrate_group_permissions task.
-  # Overwritten by Committee to take into account parent permissions
-  def migrate_permissions!
-    if public_profile
-      set_access! public: public_profile.to_group_gates
-    else
-      set_access! public: []
-    end
-  end
-
   protected
 
   after_save :update_name_copies
