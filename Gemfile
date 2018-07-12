@@ -15,9 +15,9 @@ end
 gem 'rails', '~> 4.2.10'
 
 # Security updates for dependencies not updated in rails 4.2 yet
-# see https://cve.circl.lu/cve/CVE-2018-3741 ,
-# https://github.com/flavorjones/loofah/issues/144
-gem 'rails-html-sanitizer', '~> 1.0.4'
+# https://github.com/sharesight/help.sharesight.com/pull/17
+gem 'nokogiri', '~> 1.8.3'
+gem 'sprockets', '~> 3.7.2'
 
 # Rake is rubys make... performing tasks
 # locking in to latest major to fix API
