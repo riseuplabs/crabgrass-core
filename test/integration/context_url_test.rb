@@ -39,4 +39,19 @@ class ContextUrlTest < IntegrationTest
     visit '/rainbow/new_rainbow_page'
     assert_content 'could not find'
   end
+
+  def test_invalid_format
+    visit '/rainbow.xml'
+    assert_equal 404, status_code
+  end
+
+  def test_valid_format
+    visit '/rainbow.html'
+    assert_equal 200, status_code
+  end
+
+  def test_valid_default_format
+    visit '/rainbow'
+    assert_equal 200, status_code
+  end
 end

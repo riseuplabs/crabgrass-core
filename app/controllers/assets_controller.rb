@@ -10,6 +10,8 @@ class AssetsController < ApplicationController
     send_file private_filename(file),
               type: file.content_type,
               disposition: disposition(file)
+  rescue ActionController::MissingFile
+    raise_not_found
   end
 
   def destroy
@@ -44,6 +46,8 @@ class AssetsController < ApplicationController
       # redirect to the same url again, but next time they will get the symlinks
       redirect_to
     end
+  rescue Errno::ENOENT
+    Rails.logger.error "File for Asset ##{@asset.id} has not been found."
   end
 
   ## Helper Methods

@@ -21,6 +21,7 @@ class ErrorFlowTest < IntegrationTest
     assert_equal '/me/pages', current_path
   end
 
+
   def test_not_found_but_exists
     visit '/private_group'
     assert_content 'Not Found'
