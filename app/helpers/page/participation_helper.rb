@@ -21,4 +21,12 @@ module Page::ParticipationHelper
     # participations are displayed in a tab within the modalbox
     pagination_links parts, params: params, renderer: LinkRenderer::Ajax
   end
+
+  def pagination_size
+    default_size = 10
+    min_size = 3
+    size = default_size - @page.group_participations.size
+    return size > min_size ? size : min_size
+  end
+
 end

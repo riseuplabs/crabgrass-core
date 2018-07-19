@@ -7,6 +7,11 @@ class PagePolicy < ApplicationPolicy
     page.public? || user.may?(:view, page)
   end
 
+  # needed for paging in page details -> permissions | participations
+  def index?
+    user.may?(:view, page)
+  end
+
   def create?
     return group_allows_adding_page? if group
     admin?
