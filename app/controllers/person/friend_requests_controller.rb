@@ -20,7 +20,7 @@ class Person::FriendRequestsController < Person::BaseController
         redirect_to entity_url(@user)
       else
         error
-        redirect_to new_person_requests_url(@user)
+        redirect_to person_home_url(@user)
       end
     end
   end
