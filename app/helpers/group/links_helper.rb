@@ -146,7 +146,7 @@ module Group::LinksHelper
       end
     else
       request = expell_request(membership)
-      if request.persisted?
+      if request.persisted? && !request.approved?
         link_to :request_pending.t(request: request.class.model_name.human),
                 group_membership_request_path(@group, request)
       elsif may_create? request
