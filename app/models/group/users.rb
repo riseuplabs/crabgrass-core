@@ -156,6 +156,14 @@ module Group::Users
     membership = memberships.find_by_user_id(user.id)
     raise ErrorMessage.new('no such membership') unless membership
 
+    # removing all participations (makes the stars disappear - not sure
+    # if we want this)
+    pages = membership.group.pages_owned
+    pages.each do |page|
+      page.users.delete user if page.users.include? user
+      page.save!
+    end
+
     user.clear_peer_cache_of_my_peers
     membership.destroy
     Notice::UserRemovedNotice.create! group: self, user: user
@@ -169,6 +177,7 @@ module Group::Users
     committees.each do |committe|
       committe.remove_user!(user) unless committe.users.find_by_id(user.id).blank?
     end
+
   end
 
   def open_membership?
