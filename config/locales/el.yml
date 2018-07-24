@@ -54,13 +54,13 @@ el:
   reset_password_mail_warning: Αν δεν έχετε ζητήσει αλλαγή κωδικού πρόσβασης, επικοινωνήστε μαζί μας.
   reset_password_text: Γεια, %{user}. Αν έχετε ξεχάσει τον κωδικό που χρησιμοποιείτε για τον λογαριασμό σας, μπορείτε να ορίσετε έναν νέο εδώ.
   crabgrass:
-    description_html: ', <a href="https://www.gnu.org/licenses/agpl.html"> άδεια ελεύθερου λογισμικού AGPL</a> για την οργάνωση της δικτύωσης.
+    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> άδεια ελεύθερου λογισμικού AGPL</a> για την οργάνωση της δικτύωσης
 
       '
     get_involved: Συμμετέχετε
     help_pages: Σελίδες βοήθειας
     help_translate: Βοηθήστε στη μετάφραση
-    powered_by_html: 'Ο ιστότοπος υποστηρίζεται από το <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+    powered_by_html: 'Ο ιστότοπος υποστηρίζεται από το <a href="https://0xacab.org/riseuplabs/crabgrass">crabgrass</a>%{description}
 
       '
     report_a_bug: Αναφορά σφάλματος
@@ -264,7 +264,6 @@ el:
   members_may_edit_wiki_description: Αν δεν είναι επιλεγμένο, μόνο τα μέλη του συμβουλίου μπορούν να επεξεργαστούν το wiki της ομάδας %{group}.
   public_group_wiki: Δημόσια
   private_group_wiki: Προσωπικό
-  add_members_to_committee: 'Προσθέστε ένα μέλος ομάδας σ'' αυτή την επιτροπή. Για να προσθέσετε κάποιο μη μέλος, στείλτε αντ'' αυτού μια πρόσκληση. '
   allow_membership_requests: Επιτρέψτε τις αιτήσεις εγγραφής μελών
   committee_publicly_visible: Κάνε τις επιτροπές δημόσια ορατές
   committee_publicly_visible_description: Οι επιτροπές είναι ορατές σε μη μέλη στη διεύθυνση %{domain}/yourgroupname
@@ -595,30 +594,21 @@ el:
   request_to_join_network_short: Να ενταχθεί η ομάδα %{group} στο  δίκτυο %{network};
   request_to_join_our_network_description: Η ομάδα %{group} καλέστηκε στο δίκτυο %{network}.
   request_to_join_short: Να ενταχθεί ο/η %{group} στην ομάδα %{group};
+  request_to_join_us_short: Να ενταχθεί ο/η %{group} στην ομάδα %{group};
   request_to_join_us_description: Ο/Η χρήστης %{user} καλέστηκε στην ομάδα %{group}.
   request_to_join_us_via_email_description: Ο/Η χρήστης με διεύθυνση email %{email} έχει καλεστεί στην ομάδα %{group}.
   request_to_join_us_via_email_short: Να ενταχθεί ο/η χρήστης  %{email} στην ομάδα %{group};
   request_to_join_you: Αίτημα εγγραφής
   request_to_join_you_description: Ο/Η χρήστης %{user} ζήτησε να γραφτεί στην ομάδα %{group}.
+  request_to_join_your_network: Αίτημα εγγραφής
   request_to_join_your_network_description: Η ομάδα %{group} ζήτησε να εγγραφεί στο δίκτυο %{network}.
   request_to_remove_user: Αίτημα αφαίρεσης μέλους
   request_to_remove_user_description: Ο/Η χρήστης %{user} πρότεινε την αφαίρεση του/της %{member} από την %{group_type} %{group}.
   request_to_remove_user_short: Να αφαιρεθεί ο/η %{member} από την ομάδα %{group};
+  request_to_remove_group_description: Ο/Η χρήστης %{user} πρότεινε την αφαίρεση του/της %{group} από την %{network}.
+  request_to_remove_group_short: Να αφαιρεθεί ο/η %{group} από την ομάδα %{network};
   view_label: Προβολή
-  activity_contact_created: "Ο/Η %{user} πρόσθεσε τον/την %{other_user} ως επαφή"
-  activity_group_created: "Ο/Η %{user} δημιούργησε την/το %{group_type} %{group}"
-  activity_group_destroyed: "Η %{group} διαγράφηκε από τον χρήστη %{user}"
-  activity_message: "Ο/Η %{author} έγραψε: %{message}"
-  activity_message_received: 'Έχετε λάβει %{message_tag} από %{other_user}: %{title}'
   activity_twinkled: 'Ο %{user} σημείωσε την ανάρτησή σας "%{post}" με αστέρι'
-  activity_unread: Έχετε %{count} αδιάβαστα [προσωπικά μηνύματα]
-  activity_unread_singular: Έχετε ένα αδιάβαστο [προσωπικό μήνυμα]
-  activity_user_destroyed: "Ο/Η %{user} αποσύρθηκε"
-  activity_user_joined_group: "Ο/Η %{user} γράφτηκε στην/στο %{group_type} %{group}"
-  activity_user_joined_site: "Ο/Η %{user} γράφτηκε στην ομάδα %{group}"
-  activity_user_left_group: "Ο/Η %{user} αποχώρησε από την/το %{group_type} %{group}"
-  activity_user_left_site: "Ο/Η %{user} αποχώρησε από %{group} "
-  activity_wall_message: "Ο/Η %{author} έγραψε στον/στην %{user}: %{message}"
   asset_version_list_version_heading: έκδοση
   created_on: Δημιουργήθηκε την
   delete_version_confirm: Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την έκδοση;
@@ -727,7 +717,6 @@ el:
   cant_find_wiki_section: Η ενότητα %{section} του wiki δεν μπορεί να βρεθεί
   changes_made: 'Οι αλλαγές έγιναν %{when}. '
   changes_might_be_overwritten: Οι αλλαγές σας μπορεί να αντικατασταθούν.
-  comparing_changes_header: Σύγκριση αλλαγών από ανάμεσα σε %{old_version} και %{new_version}.
   diff_link: προβολή αλλαγών
   edit_wiki: Επεξεργασία Wiki
   force_save_button: Παύση κλειδώματος και αποθήκευση

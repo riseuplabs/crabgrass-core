@@ -12,7 +12,7 @@ de:
 
       Wenn du dich nicht eintragen willst, ignorier diese Mail einfach.
   forgotten_email_address: Welche E-Mailadresse hast Du bei der Anmeldung angegeben?
-  invalid_email_text: Die von dir angegebene E-Mailadresse ist ungültig.
+  invalid_email_text: Die von dir angegebene Email-Adresse ist ungültig.
   invalid_token: Ungültiger Token
   invalid_token_text: Der Link zum Rücksetzen des Passwortes ist ungültig. Wahrscheinlich wurde er schon benutzt oder seine Gültigkeit ist abgelaufen.
   login: Anmelden
@@ -60,7 +60,7 @@ de:
     get_involved: Bring Dich mit ein
     help_pages: Anleitung für Crabgrass
     help_translate: Beim Übersetzen helfen
-    powered_by_html: 'Diese Seite wurde mit <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description} erstellt.
+    powered_by_html: 'Diese Site wurde mit <a href="https://0xacab.org/riseuplabs/crabgrass">crabgrass</a> erstellt. %{description}
 
       '
     report_a_bug: Fehler berichten
@@ -88,7 +88,7 @@ de:
   deleted: Gelöscht
   destroy: Löschen
   destroy_confirmation: Du bist dabei diese %{thing} zu löschen. Bist du sicher dass du dies tun willst? Dieser Vorgang kann nicht rückgängig gemacht werden.
-  destroy_thing: '%{thing}Löschen'
+  destroy_thing: '%{thing} Löschen'
   drop_files_here: Dateien hier her ziehen
   edit: Bearbeiten
   files_pending: Dateien werden geladen...
@@ -122,17 +122,17 @@ de:
         one: "Eine Seite, die du beobachtest, wurde seit der letzten Benachrichtigung bearbeitet."
         other: "%{count} der Seiten, die du beobachtest, wurden seit der letzten Benachrichtigung verändert."
       the_page_you_are_watching_description: Die Seite "%{page_title}", die du beobachtest, wurde bearbeitet
-      upload_your_public_pgp_key: Um verschlüsselte Emails mit detaillierten Neuigkeiten zu erhalten, lade bitte deinen PGP Schlüssel hoch.
-      we_leave_out_details: Wir lassen die Details in dieser E-Mail weg, um die Informationen zu schützen, die du wahrscheinlich für dich behalten möchtest.
+      upload_your_public_pgp_key: Um verschlüsselte Emails mit detaillierteren Neuigkeiten zu erhalten, lade bitte deinen öffentlichen PGP-Schlüssel hoch.
+      we_leave_out_details: Wir lassen die Details in dieser Email weg, um Informationen zu schützen, die du womöglich für dich behalten möchtest.
       you_can_find_updates_here: 'Weitere Details und eine Liste der zuletzt bearbeiteten Seiten findest du hier:'
-      you_can_turn_off_or_configure_notifications: Deaktiviere E-Mail-Benachrichtigungen, empfange eine Zusammenfassung der Änderungen oder erhalte jedes Mal eine E-Mail, wenn eine Seite geändert wurde.
+      you_can_turn_off_or_configure_notifications: Deaktiviere Email-Benachrichtigungen, bekomme eine Zusammenfassung der Änderungen oder erhalte jedes Mal eine Email, wenn eine Seite geändert wurde.
   exception:
     description:
-      forbidden: Du hast nicht die notwendigen Zugriffsrechte. Sorry.
+      forbidden: Du hast nicht die notwendigen Zugriffsrechte um diese Aktion auszuführen. Tut uns leid.
       group:
-        not_found: Wir haben die Gruppe, nach der Du gesucht hast, nicht gefunden. Tut uns Leid.
+        not_found: Wir konnten die Gruppe, nach der Du gesucht hast, nicht finden. Tut uns Leid.
       not_found: Wir haben das, wonach Du gesucht hast, nicht gefunden. Tut uns Leid.
-      unauthorized: Logge dich bitte ein, um diese Aktion auszuführen.
+      unauthorized: Bitte melde dich an, um diese Aktion auszuführen.
     title:
       forbidden: Zugriff verweigert
       group:
@@ -144,7 +144,7 @@ de:
   close_and_reload_gallery: Galerie schließen und erneut laden
   confirm_image_delete: Willst du dieses Bild wirklich löschen? Dieser Vorgang kann nicht rückgängig gemacht werden.
   edit_image: Bild bearbeiten
-  edit_gallery_explanation: Füge neue Bilder hinzu oder ziehe Bilder hin und her um ihre Reihenfolge zu verändern.
+  edit_gallery_explanation: Füge neue Bilder hinzu oder verschiebe Bilder um ihre Reihenfolge zu verändern.
   image_count: Bild %{number} von %{count}
   image_count_total: "%{count} Bilder"
   upload_new_image: Neues Bild hochladen
@@ -189,6 +189,7 @@ de:
   search: Suche
   see_all_link: Alles sehen
   see_more_link: Mehr
+  sorry: Tut uns leid
   thing_not_found: "%{thing} nicht gefunden"
   total: "%{count} insgesamt"
   unknown: Unbekannt
@@ -196,7 +197,7 @@ de:
   member_groups_of_network: Gruppen im Netzwerk
   my_contacts: Meine Kontakte
   peers: Peers
-  action_cannot_be_undone: Es kann nicht wieder rückgängig gemacht werden.
+  action_cannot_be_undone: Diese Aktion kann nicht rückgängig gemacht werden.
   administration: Administration
   back: Zurück
   comments: Kommentare
@@ -248,9 +249,9 @@ de:
   group_destroyed_email: "%{group_type} %{group} wurde gelöscht!"
   group_destroyed_subject: "%{group_type} %{group} wurde von %{user} gelöscht!"
   group_invite_email: |-
-      %{from_user} hat Dich eingeladen, der Gruppe "%{group}" beizutreten.
+      %{from_user} hat dich eingeladen, der Gruppe "%{group}" beizutreten.
 
-      Hier kannst Du dieser Einladung folgen:
+      Klicke hierauf, wenn du dieser Einladung folgen möchtest:
 
       %{accept_invite_link}
 
@@ -260,7 +261,7 @@ de:
 
       Wenn du der Gruppe nicht beitreten möchtest, kannst du diese Mail einfach ignorieren.
   group_invite_subject: Einladung, der Gruppe "%{group}" beizutreten
-  committee_choose_group: 'Wähle eine Gruppe als %{group_type} aus:'
+  committee_choose_group: 'Wähle eine Gruppe für diese %{group_type} aus:'
   committee_description: Arbeitsgruppen sind Gruppen innerhalb einer Organisation oder eines Netzwerkes. Eine Arbeitsgruppe ist dieser Organisation oder diesem Netzwerk vollkommen untergeordnet. Werden Nutzer_innen, die nicht Mitglied der übergeordneten Gruppe sind, der Arbeitsgruppe hinzugefügt, haben sie nur Zugang zu dieser Arbeitsgruppe.
   council_description: Räte sind Gruppen mit speziellen administrativen Befugnissen. Jede Organisation und jedes Netzwerk kann einen Rat haben. Wenn das so ist haben die Leute in diesem Rat Befugnisse über die Gruppe oder das Netzwerk.
   council_description_details: Standardmäßig können alle Mitglieder die %{group} bearbeiten. Wenn du administrative Befugnisse nur bestimmten NutzerInnen geben willst, kannst du einen Rat erstellen und diese NutzerInnen in den Rat einladen.
@@ -274,6 +275,8 @@ de:
   group_membership_count: "%{count} Mitglieder"
   membership_destroy_confirm_message: Bist du sicher das du '%{entity}' aus %{group} entfernen willst?
   membership_exists_error: Mitgliedschaft besteht bereits für %{member}
+  membership_leave_message: Du wurdest aus %{group} entfernt
+  membership_notification: Mitgliedschafts-Benachrichtigung
   membership_requests: Mitgliedschaftsanfragen
   public_groups: Öffentliche Gruppen
   shared_groups: Gemeinsame Gruppen
@@ -285,7 +288,7 @@ de:
   members_may_edit_wiki_description: Wenn nicht angeklickt können nur Ratsmitglieder das %{group} - Wiki bearbeiten.
   public_group_wiki: Öffentlich
   private_group_wiki: Privat
-  add_members_to_committee: Füge ein neues Mitglied der Gruppe dieser Arbeitsgruppe hinzu. Um Leute hinzuzufügen, die nicht zur übergeordneten Gruppe gehören, schicke ihnen stattdessen eine Einladung.
+  add_members_to_committee: Neues Mitglied zu %{group_type} hinzufügen. Um Leute hinzuzufügen, die nicht zur übergeordneten Gruppe gehören, schicke ihnen stattdessen eine Einladung.
   allow_membership_requests: Mitgliedschaftsanfragen erlauben
   committee_publicly_visible: Arbeitsgruppen öffentlich sichtbar machen
   committee_publicly_visible_description: Arbeitsgruppen können von Nichtmitgliedern unter %{domain}/DeinGruppenName eingesehen werden.
@@ -334,6 +337,7 @@ de:
   pgp_key_description: 'Experimentier-Modus: Lade deinen öffentlichen PGP Schlüssel hoch, wenn du verschlüsselte Email Benachrichtigungen bekommen willst. Dir wird eine verschlüsselte Bestätigungs-Mail gesendet.'
   pgp_key_invalid: Der eingegebene Schlüssel kann nicht importiert werden. Bist du dir sicher, dass es ein öffentlicher PGP Schlüssel ist?
   pgp_key_expired: Der von dir eingegebene PGP Key ist abgelaufen.
+  pgp_key_placeholder: Füge deinen öffentlichen PGP-Schlüssel ein
   private_profile: Privates Profil
   remove_image_link: Bild entfernen
   save_changes: Änderungen speichern
@@ -362,6 +366,7 @@ de:
   current_video_sources: 'derzeit Unterstützung für: youtube, blip.tv, google video, vimeo'
   video_embed_code_description: Dies ist nicht die Adresse der Webseite. Es ist ein Code, umschlossen von < und > welcher von der Videoseite - YouTube, etc. - verfügbar gemacht wird, um das Video auf anderen Seiten einzubinden ("Embedding Code").
   video_embed_code_prompt: Embedcode eines externen Videos
+  access_code_expired: Der Code %{code}ist abgelaufen oder existiert nicht.
   email_link_expires: Dieser Link wird in %{days} Tagen ablaufen.
   email_notice_access: 'Du kannst diese Seite hier erreichen:'
   email_notice_hello: Hallo, %{from} hat dir eine Web Seite gesendet.
@@ -451,6 +456,7 @@ de:
   share_already_exists_error: '"%{name}" hat bereits Zugriff auf diese Seite.'
   share_grant_required_error: "%{name} darf diese Seite nicht ansehen. Sie_er benötigt erst weitere Zugriffsrechte."
   share_include_message: Füge eine eigene Nachricht ein
+  share_include_paranoid_message: Füge einen eigenen Text zur Benachrichtigung hinzu (nicht in Email).
   share_page_link: '%{page_class} teilen'
   share_page_recipients: Seite teilen mit
   share_send_notification: Sende Benachrichtigung
@@ -650,30 +656,22 @@ de:
   request_to_join_our_network_description: Gruppe %{group} wurde eingeladen, sich dem Netzwerk %{network} anzuschließen
   request_to_join_short: Soll %{user} der Gruppe %{group} beitreten?
   request_to_join_us: Anfrage beizutreten
+  request_to_join_us_short: Soll %{user} der Gruppe %{group} beitreten?
   request_to_join_us_description: '%{user} wurde eingeladen, sich der Gruppe %{group} anzuschließen'
   request_to_join_us_via_email_description: Die E-Mailadresse %{email} wurde eingeladen, sich %{group} anzuschließen
   request_to_join_us_via_email_short: Soll %{email} %{group} beitreten?
   request_to_join_you: Anfrage beizutreten
   request_to_join_you_description: Der_die Nutzer_in %{user} würde sich gerne der Gruppe %{group} anschließen
+  request_to_join_your_network: Anfrage beizutreten
   request_to_join_your_network_description: Die Gruppe %{group} möchte sich dem Netzwerk %{network} anschließen
   request_to_remove_user: Anfrage ein Mitglied zu entfernen
   request_to_remove_user_description: Der_die Nutzer_in %{user} hat vorgeschlagen %{member} aus %{group_type} %{group} zu entfernen.
   request_to_remove_user_short: Soll %{member} aus %{group} entfernt werden?
+  request_to_remove_group: Anfrage, Gruppe zu entfernen
+  request_to_remove_group_description: '%{user} hat vorgeschlagen, %{group} aus %{network} zu entfernen'
+  request_to_remove_group_short: Soll %{group} aus %{network} entfernt werden?
   view_label: Ansehen
-  activity_contact_created: "%{user} hat %{other_user} als Kontakt hinzugefügt"
-  activity_group_created: "%{user} hat %{group_type} %{group} erstellt"
-  activity_group_destroyed: "%{group} wurde durch %{user} gelöscht"
-  activity_message: "%{author} schrieb: %{message}"
-  activity_message_received: 'Du hast eine %{message_tag} von %{other_user} erhalten: %{title}'
   activity_twinkled: '%{user} hat deinen Beitrag "%{post}" mit Sternchen versehen.'
-  activity_unread: Du hast %{count} ungelesene [Privatnachrichten]
-  activity_unread_singular: Du hast eine ungelesene [Privatnachricht]
-  activity_user_destroyed: "%{user} hat sein_ihr Konto gelöscht"
-  activity_user_joined_group: "%{user} ist der %{group_type} %{group} beigetreten"
-  activity_user_joined_site: "%{user} hat sich %{group} angeschlossen"
-  activity_user_left_group: "%{user} hat %{group_type} %{group} verlassen"
-  activity_user_left_site: "%{user} hat %{group} verlassen"
-  activity_wall_message: "%{author} schrieb an %{user}: %{message}"
   asset_version_list_version_heading: Version
   created_on: Erstellt am
   delete_version_confirm: Willst Du diese Version wirklich löschen?
@@ -786,7 +784,6 @@ de:
   cant_find_wiki_section: Kann die Wikisektion %{section} nicht finden.
   changes_made: Veränderung vorgenommen %{when}.
   changes_might_be_overwritten: Deine Veränderungen könnten überschrieben werden.
-  comparing_changes_header: Vergleich der Änderungen zwischen %{old_version} und %{new_version}.
   diff_link: Unterschiede ansehen
   edit_wiki: Bearbeite Wiki
   force_save_button: Sperre aufheben und speichern

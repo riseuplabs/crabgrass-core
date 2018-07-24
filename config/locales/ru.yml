@@ -57,7 +57,7 @@ ru:
     get_involved: Помощь проекту
     help_pages: Помощь
     help_translate: Перевод
-    powered_by_html: 'Этот сайт использует  <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+    powered_by_html: 'Этот сайт использует  <a href="https://0xacab.org/riseuplabs/crabgrass">crabgrass</a>%{description}
 
       '
     report_a_bug: Сообщить об ошибке
@@ -106,6 +106,10 @@ ru:
   upload: Загрузить
   mailer:
     hello: Hello, %{user_name}
+    page_histories:
+      daily_digest: "%{site} : ежедневный отчет об изменениях"
+      page_update: "%{site} : Страница была отредактирована"
+      the_page_you_are_watching_description: Страница которую вы просматриваете "%{page_title}" была изменена
   exception:
     description:
       forbidden: Извините. У вас нет возможности выполнить это действие.
@@ -531,29 +535,18 @@ ru:
   request_to_friend: Заявки на добавление в контакты
   request_to_friend_description: Пользователь %{user} хотел бы стать товарищем пользователя %{other_user}
   request_to_join_our_network_description: группе %{group} предложено присоединиться к сети %{network}
+  request_to_join_us_short: Присоединить %{user} к %{group}?
   request_to_join_us_description: '%{user} был приглашён в %{group}'
   request_to_join_us_via_email_description: '%{email} было предложено присоединиться к %{group}'
   request_to_join_us_via_email_short: Связать %{email} с %{group}?
   request_to_join_you: Заявка
   request_to_join_you_description: '%{user} запросил вступление в члены %{group}'
+  request_to_join_your_network: Заявка
   request_to_join_your_network_description: От группы %{group} поступил запрос на присоединение к сети %{network}
   request_to_remove_user: Запрос на исключение участника
   request_to_remove_user_description: Пользователь %{user} предложил исключить %{member} из %{group_type} %{group}.
   request_to_remove_user_short: '%{member} будет исключен из %{group}?'
   view_label: Просмотр
-  activity_contact_created: "%{user} добавил %{other_user} в число товарищей"
-  activity_group_created: "%{user} создал %{group_type} %{group}"
-  activity_group_destroyed: "группа %{group} была ликвидирована пользователем %{user}"
-  activity_message: "%{author} написал(а): %{message}"
-  activity_message_received: 'Вы получили %{message_tag} от%{other_user}%{title}: '
-  activity_unread: У вас %{count} непрочитанных [личных сообщений]
-  activity_unread_singular: У вас есть непрочитанное [private message]
-  activity_user_destroyed: "пользователь %{user} удалил свою учётную запись"
-  activity_user_joined_group: "%{user} вступил в %{group_type} %{group}"
-  activity_user_joined_site: "%{user} присоединился к %{group}"
-  activity_user_left_group: "%{user} покинул %{group_type} %{group}"
-  activity_user_left_site: "%{user} покинул %{group}"
-  activity_wall_message: "%{author} написал %{user}: %{message}"
   asset_version_list_version_heading: версия
   created_on: Создано
   delete_version_confirm: Вы действительно хотите удалить эту версию?
@@ -651,7 +644,6 @@ ru:
   cant_find_wiki_section: Не могу найти pаздел wiki %{section}
   changes_made: Изменения были внесены %{when}.
   changes_might_be_overwritten: Ваши изменения могут быть перезаписаны.
-  comparing_changes_header: Сравнение изменений, сделанных %{user} в %{when} с %{old_version}  до %{new_version}
   diff_link: различия
   edit_wiki: Редактировать запись
   force_save_button: Снять блокировку и сохранить

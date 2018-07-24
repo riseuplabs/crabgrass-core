@@ -82,12 +82,6 @@ sv:
   edit_profile_link: Ändra profil
   incoming: Inkommande
   invite_info: Ange en lista med användarnamn eller e-postadresser till folk som du vill bjuda in till denna %{group_type}.
-  activity_contact_created: "%{user} lade till %{other_user} som kontakt"
-  activity_group_created: "%{user} skapade en %{group_type} %{group}"
-  activity_group_destroyed: "%{group} förstördes av %{user}"
-  activity_user_destroyed: "%{user} har dragit sig tillbaka"
-  activity_user_joined_group: "%{user} gick med i %{group_type} %{group}"
-  activity_user_left_group: "%{user} lämnade %{group_type} %{group}"
   created_on: Skapad
   delete_version_confirm: Vill du säkert radera den här informationen?
   file_size: Filstorlek
@@ -127,6 +121,5 @@ sv:
   chat: Chatt
   include_full_checkbox: ta med länk till hela bilden
   break_lock_button: Bryt lås
-  comparing_changes_header: Jämför ändringar av %{user} %{when} från %{old_version} till %{new_version}
   diff_link: diff
   formatting_reference_link: formateringsreferens

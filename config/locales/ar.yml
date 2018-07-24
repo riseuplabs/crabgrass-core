@@ -54,13 +54,13 @@ ar:
   reset_password_mail_warning: الرجاء الإتصال بنا إذا لم تطلب تغيير كلمة المرور
   reset_password_text: مرحباً %{user} .لو فقدت كلمة المرور الخاصة بك يمكنك إنشاء كلمة مرور جديدة
   crabgrass:
-    description_html: ',<a href="https://www.gnu.org/licenses/agpl-3.0.html">التطبيقات مفتوحة المصدر</a>لتنظيم هيكل شبكة الانترنت.
+    description_html: ',<a href="https://www.gnu.org/licenses/agpl-3.0.html">التطبيقات مفتوحة المصدر</a>لتنظيم هيكل شبكة الانترنت
 
       '
     get_involved: شارك
     help_pages: دليل مستخدم  Crabgrass
     help_translate: ساعد بالترجمة
-    powered_by_html: 'يتم تشغيل هذا الموقع بواسطة<a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+    powered_by_html: 'يتم تشغيل هذا الموقع بواسطة<a href="https://0xacab.org/riseuplabs/crabgrass">crabgrass</a>%{description}
 
       '
     report_a_bug: أخبرنا عن مشكلة تقنية
@@ -294,7 +294,6 @@ ar:
   members_may_edit_wiki_description: فى حالة عدم التحديد, فقط الاعضاء يمكنهم تحرير الويكى الخاصة ب%{group}
   public_group_wiki: عام
   private_group_wiki: خاص
-  add_members_to_committee: اضف عضو مجموعة إلى هذه اللجنة . لإضافة أشخاص ليسوا أعضاء فى المجموعة الأم يمكنك إرسال دعوات
   allow_membership_requests: السماح بتقديم طلبات العضوية
   committee_publicly_visible: إجعل هذه اللجنة مرئية للجميع
   committee_publicly_visible_description: يمكن مشاهدة اللجان لغير الأعضاء على %{domain}/yourgroupname
@@ -683,30 +682,19 @@ ar:
   request_to_join_our_network_description: '%{group} تم دعوة المجوعة للإنضمام إلى شبكة %{network}'
   request_to_join_short: هل %{user} سينضم إلى %{group} ؟
   request_to_join_us: طلب للإنضمام
+  request_to_join_us_short: هل %{user} سينضم إلى %{group} ؟
   request_to_join_us_description: '%{user} تم دعوته للانضمام %{group}'
   request_to_join_us_via_email_description: '%{email} تم دعوته للإنضمام %{group}'
   request_to_join_us_via_email_short: هل ينضم %{email} إلى %{group}؟
   request_to_join_you: طلب للإنضمام
   request_to_join_you_description: '%{user} تم دعوته للإنضمام  %{group}'
+  request_to_join_your_network: طلب للإنضمام
   request_to_join_your_network_description: '%{group} تم دعوته للإنضمام الى الشبكة   %{network}'
   request_to_remove_user: 'طلب لإزالة عضو '
   request_to_remove_user_description: المستخدم%{user} إقتَرَح إزالة %{member} من %{group_type} %{group}
   request_to_remove_user_short: هل تريد إزالة العضو %{member} من %{group} ؟
   view_label: معاينة
-  activity_contact_created: "قام %{user} بإضافة %{other_user} كجزء من قائمة الإتصال"
-  activity_group_created: "%{user} أنشأ %{group_type} %{group}"
-  activity_group_destroyed: "تم الغاء %{group} بواسطة %{user}"
-  activity_message: "%{author} كتب: %{message}"
-  activity_message_received: 'لقد إستلمت %{message_tag} من %{other_user}: %{title}'
   activity_twinkled: '%{user} قام بوسم منشورك "%{post}"'
-  activity_unread: يوجد لديك %{count} رسالة خاصة غير مقروءة
-  activity_unread_singular: يوجد لديك رسائل خاصة غير مقروءة
-  activity_user_destroyed: "%{user} تقاعد"
-  activity_user_joined_group: "%{user} انضم لـ %{group_type} %{group}"
-  activity_user_joined_site: "%{user} قام بالإنضمام للمجموعة %{group}"
-  activity_user_left_group: "%{user} ترك %{group_type} %{group}"
-  activity_user_left_site: "%{user} قام بترك %{group}"
-  activity_wall_message: "%{author} كتب لـ %{user}: %{message}"
   asset_version_list_version_heading: إصدار
   created_on: أُنشئ في
   delete_version_confirm: هل أنت متأكد أنك تريد حذف هذه النسخة؟
@@ -821,7 +809,6 @@ ar:
   cant_find_wiki_section: لا يمكن العثور على جزء الويكى %{section}
   changes_made: التعديلات تمت بتاريخ %{when}.
   changes_might_be_overwritten: تعديلاتك قد يتم تغييرها
-  comparing_changes_header: مقارنة تعديلات المستخدم %{user} في %{when} بين %{old_version} و %{new_version}
   diff_link: معرفة الإختلاف
   edit_wiki: تحرير ويكى
   force_save_button: كسر الحماية و الحفظ

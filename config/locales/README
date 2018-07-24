@@ -11,6 +11,8 @@ In order to download translations, you need a config/transifex.netrc file.
 For example:
 machine www.transifex.com login crabgrass password xxxxxxxxxxxxxxxxx
 
+To download translations for all languages:
+rake cg:i18n:download
 
 TRANSIFEX
 ------------------------

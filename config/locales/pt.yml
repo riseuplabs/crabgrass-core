@@ -54,13 +54,13 @@ pt:
   reset_password_mail_warning: Se você não pediu para mudar sua senha, entre em contato conosco.
   reset_password_text: Olá, %{user}. Se você esqueceu sua senha, você pode definir uma nova aqui.
   crabgrass:
-    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> software livre AGPL</a> para organização de redes.
+    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> software livre AGPL</a> para organização de redes
 
       '
     get_involved: Quero colaborar
     help_pages: Páginas de Ajuda de Crabgrass
     help_translate: Ajude a Traduzir
-    powered_by_html: 'Este site usa <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+    powered_by_html: 'Este site usa <a href="https://0xacab.org/riseuplabs/crabgrass">crabgrass</a>%{description}
 
       '
     report_a_bug: Encontrei um problema
@@ -77,6 +77,7 @@ pt:
   cancel: Cancelar
   close_button: Fechar
   confirm: Confirmar
+  create: Criar
   create_a_new_thing: Criar um(a) novo(a) %{thing}
   create_button: Criar
   create_thing: Criar %{thing}
@@ -110,6 +111,9 @@ pt:
   mailer:
     hello: Olá, %{user_name}
     page_histories:
+      change_your_settings_here: 'Mude sua configurações de aviso por email aqui: %{page_link}'
+      daily_digest: "%{site} : Um sumário diário das alterações"
+      page_update: "%{site} : Uma página foi modificada"
       the_page_you_are_watching_description: A página que você está acompanhando "%{page_title}" foi modificada
       we_leave_out_details: Ocultamos alguns detalhes deste e-mail para proteger a informação que talvez você poderá querer manter privada.
       you_can_find_updates_here: 'Você encontrará mais detalhes e uma lista de páginas recentemente alteradas aqui:'
@@ -156,6 +160,7 @@ pt:
   all: Todos
   autocomplete:
     placeholder:
+      enter_name_of_group_or_person: Digite o nome de um grupo ou pessoa
       enter_name_of_group: Digite o nome de um grupo
       enter_name_of_person: Digite o nome de uma pessoa
   go: Ir
@@ -266,7 +271,7 @@ pt:
   members_may_edit_wiki_description: Se não estiver selecionado, apenas os membros do concelho podem editar a wiki do %{group}.
   public_group_wiki: Público
   private_group_wiki: Privado
-  add_members_to_committee: Adiciona o membro de um grupo a este comitê. Para não adicionar pessoas ao grupo base, ao invés disso envie um convite.
+  add_members_to_committee: Adiciona o membro de um grupo a este %{group_type}. Para não adicionar pessoas ao grupo base, ao invés disso envie um convite.
   allow_membership_requests: Permitir Pedidos de Participação
   committee_publicly_visible: Tornar Públicos os Comitês
   committee_publicly_visible_description: Os comitês podem ser vistos por não-membros em %{domain}/yourgroupname
@@ -303,6 +308,7 @@ pt:
   language: Idioma
   message_user_wrote_caption: "%{user} escreveu:"
   message_you_wrote_caption: 'Você escreveu:'
+  my_dashboard: Meu Painel
   notification_select:
     digest: 'Sim: um sumário diário das alterações'
     none: 'Não: não quero receber emails sobre alterações em páginas.'
@@ -597,30 +603,21 @@ pt:
   request_to_join_network_short: Será que o %{group} poderia participar da %{network}?
   request_to_join_our_network_description: O grupo %{group} foi convidado para fazer parte da rede %{network}
   request_to_join_short: Será que %{user} poderia participar do grupo %{group}?
+  request_to_join_us_short: Será que %{user} poderia participar do grupo %{group}?
   request_to_join_us_description: '%{user} foi convidada para fazer parte de %{group}'
   request_to_join_us_via_email_description: '%{email} foi convidada para fazer parte do grupo %{group}'
   request_to_join_us_via_email_short: Será que %{email} poderia participar do grupo %{group}?
   request_to_join_you: Pedir para Participar
   request_to_join_you_description: '%{user} pediu para fazer parte do grupo %{group}'
+  request_to_join_your_network: Pedir para Participar
   request_to_join_your_network_description: '%{group} pediu para fazer parte da rede %{network}'
   request_to_remove_user: Pedir para Retirar Membro
   request_to_remove_user_description: A usuária %{user} propôs que se removess %{member} de %{group_type} %{group}.
   request_to_remove_user_short: Será que %{member} deve ser removida do grupo %{group}?
+  request_to_remove_group_description: A usuária %{user} propôs que o %{group} deve ser removida da %{network}?
+  request_to_remove_group_short: Será que o %{group} deve ser removida da %{network}?
   view_label: Ver
-  activity_contact_created: "%{user} adicionou %{other_user} como contato"
-  activity_group_created: "%{user} criou %{group} %{group_type} "
-  activity_group_destroyed: "%{group} foi eliminado por %{user}"
-  activity_message: "%{author} escreveu: %{message}"
-  activity_message_received: 'Você recebeu %{message_tag} de %{other_user}: %{title}'
   activity_twinkled: '%{user} marcou com estrela sua mensagem "%{post}"'
-  activity_unread: Você tem %{count} [private messages] não lidas.
-  activity_unread_singular: Você tem uma [private message] não lida.
-  activity_user_destroyed: "%{user} retirou-se"
-  activity_user_joined_group: "%{user} uniu-se ao grupo %{group} %{group_type} "
-  activity_user_joined_site: "%{user} uniu-se ao grupo %{group}"
-  activity_user_left_group: "%{user} abandonou o grupo %{group} %{group_type} "
-  activity_user_left_site: "%{user} saiu do grupo %{group}"
-  activity_wall_message: "%{author} escreveu para %{user}: %{message}"
   asset_version_list_version_heading: versão
   created_on: 'Criado em '
   delete_version_confirm: Você tem certeza que deseja apagar essa versão?
@@ -729,7 +726,6 @@ pt:
   cant_find_wiki_section: Não é possível encontrar a seção %{section} da wiki
   changes_made: Alterações feitas em %{when}.
   changes_might_be_overwritten: Suas alterações podem ser sobrescritas.
-  comparing_changes_header: Comparando alterações feitas por %{user} em %{when} de %{old_version} para %{new_version}
   diff_link: ver as alterações
   edit_wiki: Editar Wiki
   force_save_button: Quebrar Bloqueio e Salvar

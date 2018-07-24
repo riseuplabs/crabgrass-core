@@ -53,13 +53,13 @@ cs:
   reset_password_mail_warning: Pokud jste to nebyli vy, kdo o změnu hesla zažádal, prosíme, kontaktujte nás.
   reset_password_text: Dobrý den, %{user}. Pokud jste zapomněli heslo, které používáte k přihlášení, zde si můžete nastavit nové.
   crabgrass:
-    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html">AGPL svobodný software</a> pro organizování se.
+    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html">AGPL svobodný software</a> pro organizování se
 
       '
     get_involved: Zapojte se
     help_pages: Nápověda Crabgrass
     help_translate: Pomozte s překladem
-    powered_by_html: 'Tato stránka funguje na softwaru <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+    powered_by_html: 'Tato stránka funguje na softwaru <a href="https://0xacab.org/riseuplabs/crabgrass">crabgrass</a>%{description}
 
       '
     report_a_bug: Nahlásit chybu
@@ -258,7 +258,6 @@ cs:
   members_may_edit_wiki_description: Pokud je nezaškrntuto, pouze členové rady můžou editovat wiki %{group}.
   public_group_wiki: Veřejné
   private_group_wiki: Soukromé
-  add_members_to_committee: Přidejte člena skupiny do tohoto výboru. Pokud nechcete přidat uživatele do mateřské skupiny, použijte pozvánku.
   allow_membership_requests: Povolit žádosti o členství
   committee_publicly_visible: Učinit výbory veřejně viditelnými
   committee_publicly_visible_description: Výbory jsou viditelné i pro nečleny na %{domain}/nazevskupiny
@@ -580,30 +579,21 @@ cs:
   request_to_join_network_short: Smí se skupina %{group} přidat do sítě %{network}?
   request_to_join_our_network_description: Skupina %{group} byla pozvána k přidání se do sítě %{network}.
   request_to_join_short: Smí se uivatel %{user} připojit ke skupině %{group}?
+  request_to_join_us_short: Smí se uivatel %{user} připojit ke skupině %{group}?
   request_to_join_us_description: Uživatel %{user} byl pozván k přidání se do skupiny %{group}.
   request_to_join_us_via_email_description: Emailová adresa %{email} byla pozvána k přidání se ke skupině %{group}.
   request_to_join_us_via_email_short: Smí se %{email} připojit k %{group}?
   request_to_join_you: Žádost o přidání se
   request_to_join_you_description: Uživatel %{user} požádal o přidání se ke skupině %{group}.
+  request_to_join_your_network: Žádost o přidání se
   request_to_join_your_network_description: Skupina %{group} požádala o přidáni se k síti %{network}.
   request_to_remove_user: Žádost o odstranění člena
   request_to_remove_user_description: Uživatel %{user} navrhnul odebrat uživatele %{member} ze %{group_type} %{group}.
   request_to_remove_user_short: Měl by být uživatel %{member}odebrán z %{group}?
+  request_to_remove_group_description: Uživatel %{user} navrhnul odebrat uživatele %{group} ze %{network}.
+  request_to_remove_group_short: Měl by být uživatele %{group} odebrán ze %{network}?
   view_label: Zobrazit
-  activity_contact_created: "Uživatel/ka %{user} přidal/a %{other_user} jako přítele"
-  activity_group_created: "Uživatel/ka %{user} vytvořil/a %{group_type} %{group}"
-  activity_group_destroyed: "Skupina %{group} byla uživatelem %{user} zrušena"
-  activity_message: "%{author} napsal/a: %{message}"
-  activity_message_received: 'Obdrželi jste %{message_tag} od uživatel/ky %{other_user}: %{title}'
   activity_twinkled: 'Uživatel/ka %{user} dal/a hvězdičku vašemu příspěvku "%{post}"'
-  activity_unread: Máte %{count} nepřečtených [soukromých zpráv]
-  activity_unread_singular: Máte nepřečtenou [soukromou zprávu]
-  activity_user_destroyed: "%{user} je skrytý"
-  activity_user_joined_group: "Uživatel/ka %{user} se přidal/a k %{group_type} %{group}"
-  activity_user_joined_site: "Uživatel/ka %{user} se přidal/a ke skupině %{group}"
-  activity_user_left_group: "Uživatel/ka %{user} opustil/a %{group_type} %{group}"
-  activity_user_left_site: "Uživatel/ka %{user} opustil/a %{group}"
-  activity_wall_message: "%{author} napsal do %{user}: %{message}"
   asset_version_list_version_heading: verze
   created_on: Vytvořeno
   delete_version_confirm: Opravdu chcete odstranit tuto verzi?
@@ -712,7 +702,6 @@ cs:
   cant_find_wiki_section: Nelze nalézt wiki sekci %{section}
   changes_made: Změny učiněné %{when}.
   changes_might_be_overwritten: Vaše změny mohly být přepsány.
-  comparing_changes_header: Porovnávám změny mezi %{old_version} a %{new_version}.
   diff_link: zobrazit změny
   edit_wiki: Upravit Wiki
   force_save_button: Zrušit zámek a uložit
