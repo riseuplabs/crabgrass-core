@@ -54,13 +54,13 @@
   reset_password_mail_warning: Hvis du ikke har bedt om å få passordet ditt endret, vær vennlig å kontakt oss.
   reset_password_text: Hei %{user}. Hvis du har glemt passordet du bruker for å logge inn, så kan du sette et nytt passord her.
   crabgrass:
-    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> AGPL fri programvare</a> for nettverksorganisering.
+    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> AGPL fri programvare</a> for nettverksorganisering
 
       '
     get_involved: Involver deg
     help_pages: Crabgrass-hjelpesider
     help_translate: Hjelp til i oversettelsen
-    powered_by_html: 'Dette nettstedet kjøres ved hjelp av <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+    powered_by_html: 'Dette nettstedet kjøres ved hjelp av <a href="https://0xacab.org/riseuplabs/crabgrass">crabgrass</a>%{description}
 
       '
     report_a_bug: Innrapporter en feil
@@ -271,6 +271,8 @@
   group_membership_count: "%{count} Medlemmer"
   membership_destroy_confirm_message: Er du sikker på at du vil fjerne %{entity} fra %{group}?
   membership_exists_error: '%{member} er allerede medlem'
+  membership_leave_message: Du har blitt fjernet fra %{group}
+  membership_notification: Medlemskapsmerknad
   membership_requests: Forespørsler om medlemskap
   public_groups: Offentlige grupper
   shared_groups: Delte grupper
@@ -282,7 +284,7 @@
   members_may_edit_wiki_description: Dersom denne ikke er krysset av, så kan bare medlemmer av rådet redigere %{group} sin wiki.
   public_group_wiki: Offentlig
   private_group_wiki: Privat
-  add_members_to_committee: Legg et medlem av gruppa til denne komitéen. For å legge til folk som ikke er i gruppa, send en invitasjon i stedet.
+  add_members_to_committee: Legg et gruppemedlem til i denne %{group_type}. For å legge til folk som ikke er i ovennevnte gruppe, send en invitasjon isteden..
   allow_membership_requests: Tillat forespørsler om medlemskap
   committee_publicly_visible: Gjør komitéer synlige for alle
   committee_publicly_visible_description: Komitéer er synlige for ikke-medlemmer på %{domain}/yourgroupname
@@ -331,6 +333,7 @@
   pgp_key_description: 'Eksperimentelt: Last opp din offentlige PGP-nøkkel hvis du ønsker å motta krypterte e-postmerknader (ny funksjon som kommer snart). Du vil bli tilsendt en kryptert bekreftelsese-post.'
   pgp_key_invalid: Nøkkelen du skrev inn kan ikke importeres. Limte du virkelig inn en offentlig PGP-nøkkel?
   pgp_key_expired: PGP-nøkkelen du har skrevet inn er utløpt.
+  pgp_key_placeholder: Skriv inn din offentlige PGP-nøkkel
   private_profile: Privat profil
   remove_image_link: fjern bilde
   save_changes: Lagre endringer
@@ -627,6 +630,9 @@
       request_to_join_you: Forespørsel om å bli medlem
       request_to_join_your_network: Forespørsel om å bli medlem
       request_to_remove_user: Forespørsel om å fjerne medlem
+  request_to_join_our_network:
+    one: Invitasjon til å ta del i
+    other: Invitasjoner til å ta del i
   invitation_to_join:
     one: Deltagelsesinvitasjon
     other: Deltagelsesinvitasjoner
@@ -647,30 +653,22 @@
   request_to_join_our_network_description: Gruppa %{group} ble invitert til å bli medlem i nettverket %{network}.
   request_to_join_short: Skal {user} ta del i %{group}?
   request_to_join_us: Deltagelsesforespørsel
+  request_to_join_us_short: Skal {user} ta del i %{group}?
   request_to_join_us_description: Bruker %{user} ble invitert til å bli medlem av gruppa %{group}.
   request_to_join_us_via_email_description: E-postadressen %{email} ble invitert til å bli medlem i gruppa %{group}.
   request_to_join_us_via_email_short: Skal %{email} bli medlem i %{group}?
   request_to_join_you: Forespørsel om å bli medlem
   request_to_join_you_description: Bruker %{user} har forespurt medlemskap i gruppa %{group}.
+  request_to_join_your_network: Deltagelsesforespørsel
   request_to_join_your_network_description: Gruppa %{group} har forespurt medlemskap i nettverket %{network}.
   request_to_remove_user: Forespørsel om å fjerne medlem
   request_to_remove_user_description: Bruker %{user} har foreslått å fjerne %{member} fra %{group_type} %{group}.
   request_to_remove_user_short: Skal %{member} fjernes fra %{group}?
+  request_to_remove_group: Forespør fjerning av gruppe
+  request_to_remove_group_description: Brukeren %{user} har foreslått å fjerne %{group} fra %{network}.
+  request_to_remove_group_short: Skal %{group} fjernes fra %{network}?
   view_label: Se
-  activity_contact_created: "%{user} la til %{other_user} som venn"
-  activity_group_created: "%{user} opprettet %{group_type} %{group}"
-  activity_group_destroyed: "%{group} ble destruert av %{user}"
-  activity_message: "%{author} skrev: %{message}"
-  activity_message_received: 'Du har mottatt %{message_tag} fra %{other_user}: %{title}'
   activity_twinkled: '%{user} har stjernet ditt innlegg "%{post}"'
-  activity_unread: Du har %{count} uleste [private messages]
-  activity_unread_singular: Du har en ulest [private message]
-  activity_user_destroyed: "%{user} har trukket seg"
-  activity_user_joined_group: "%{user} har blitt medlem i %{group_type} %{group}"
-  activity_user_joined_site: "%{user} har blitt medlem i %{group}"
-  activity_user_left_group: "%{user} har forlatt %{group_type} %{group}"
-  activity_user_left_site: "%{user} har forlatt %{group}"
-  activity_wall_message: "%{author} skrev til %{user}: %{message}"
   asset_version_list_version_heading: versjon
   created_on: Opprettet
   delete_version_confirm: Er du sikker på at du vil slette denne versjonen?
@@ -783,7 +781,6 @@
   cant_find_wiki_section: Finner ikke wikiseksjon %{section}
   changes_made: Endringer gjort %{when}.
   changes_might_be_overwritten: Dine endringer kan bli skrevet over.
-  comparing_changes_header: Sammenligner endringer mellom %{old_version} og %{new_version}.
   diff_link: se endringer
   edit_wiki: Rediger wiki
   force_save_button: Åpne lås og lagre

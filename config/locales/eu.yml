@@ -54,14 +54,14 @@ eu:
   reset_password_mail_warning: Zuk zure pasahitza aldatzerik eskatu ez baduzu, mesedez jarri gurekin harremanetan.
   reset_password_text: Kaixo, %{user}. Izena emateko erabili zenuen pasahitza ahaztu baduzu, hemen berri bat bidal dezakezu.
   crabgrass:
-    description_html: ', sare-antolaketarako <a href="https://www.gnu.org/licenses/agpl.html">AGPL lizentziadun</a> software librea.
+    description_html: ', sare-antolaketarako <a href="https://www.gnu.org/licenses/agpl-3.0.html">AGPL lizentziadun</a> software librea
 
 
       '
     get_involved: Parte hartu
     help_pages: Crabgrass-eko laguntza orrialdeak
     help_translate: Lagundu itzulpenak mantentzen
-    powered_by_html: 'Gune hau <a href="https://we.riseup.net/crabgrass">crabgrass</a>-ekin eginda dago%{description}
+    powered_by_html: 'Gune hau <a href="https://0xacab.org/riseuplabs/crabgrass">crabgrass</a>-ekin eginda dago%{description}
 
       '
     report_a_bug: Akats baten berri eman
@@ -229,7 +229,6 @@ eu:
   members_may_edit_wiki: Kide guztiek editatu dezakete wikia
   public_group_wiki: Publikoa
   private_group_wiki: Pribatua
-  add_members_to_committee: Gehitu talde bat kide bezala batzorde honi. Talde gurasoko kide ez diren pertsonak gehitzeko gonbidapenak bidali.
   allow_membership_requests: Baimendu kide izateko eskaerak
   committee_publicly_visible: Batzordeak publikoki erakutsi
   committee_publicly_visible_description: 'Kide ez direnek batzordeak hemen ikus ditzakete: %{domain}/zuretaldearenizena'
@@ -505,20 +504,18 @@ eu:
   request_to_destroy_our_group_description: '%{user} erabiltzaileak %{group} %{group_type} suntsitzea proposatu du.'
   request_to_friend: Kontaktuak bihurtzeko eskaera
   request_to_join_our_network_description: '%{group} taldeak %{network} sareko kide egiteko gonbidapenak jaso du.'
+  request_to_join_us_short: '%{user} %{group}(r)en kide egin?'
   request_to_join_us_description: '%{user} erabiltzaileak %{group} taldeko kide egiteko gonbidapena jaso du.'
   request_to_join_us_via_email_description: '%{email} e-postal helbideak %{group} taldeko kide egiteko gonbidapena jaso du.'
   request_to_join_us_via_email_short: '%{email} %{group}(r)en kide egin?'
   request_to_join_you: Kide egiteko eskera
   request_to_join_you_description: '%{user} erabiltzaileak %{group} taldeko kide egitea eskatu du.'
+  request_to_join_your_network: Kide egiteko eskera
   request_to_join_your_network_description: '%{group} taldeak %{network} sareko kide egitea eskatu du.'
   request_to_remove_user: Kidea kentzeko eskaera
   request_to_remove_user_description: '%{user} erabiltzaileak %{member} %{group} %{group_type}(e)tik ateratzea proposatu du.'
   request_to_remove_user_short: '%{member} %{group} taldetik atera nahi duzu?'
   view_label: Ikusi
-  activity_group_created: "%{user}(e)k %{group} %{group_type} sortu du"
-  activity_user_joined_group: "%{user} %{group} %{group_type}(e)ko kide egin da"
-  activity_user_joined_site: "%{user} %{group}(r)en kide egin da"
-  activity_user_left_group: "%{user}(e)k %{group} %{group_type}(e)tik atera da"
   asset_version_list_version_heading: Bertsioa
   created_on: 'Noiz sortua:'
   delete_version_confirm: Ziur al zaude bertsio hau ezabatu nahi duzula?
@@ -611,7 +608,6 @@ eu:
   save_wiki_before_adding_image: Mesedez, gorde wiki orrialdea irudi bat gehitu baino lehen.
   cant_find_wiki_section: Wiki orrialdeak ez da %{section} atalik aurkitzen
   changes_made: 'Aldaketak noiz egin dira: %{when}'
-  comparing_changes_header: '%{old_version} eta %{new_version}(r)en arteko aldaketak alderatzen.'
   diff_link: ikusi aldaketak
   edit_wiki: Editatu wiki orrialdea
   formatting_reference_link: Editatzeko laguntza

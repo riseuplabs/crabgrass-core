@@ -54,13 +54,13 @@ es:
   reset_password_mail_warning: Si no has solicitado un cambio de contraseña, por favor, contáctanos.
   reset_password_text: Hola, %{user}. Si has olvidado tu contraseña, puedes crear una nueva aquí.
   crabgrass:
-    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html">AGPL software libre</a> para la organización de la red.
+    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html">AGPL software libre</a> para la organización de la red
 
       '
     get_involved: Participa
     help_pages: Páginas de ayuda de Crabgrass
     help_translate: Ayúdanos a traducir
-    powered_by_html: 'Este sitio es alimentado por <a href="https://we.riseup.net/crabgrass">crabgrass</a> % {description}
+    powered_by_html: 'Este sitio es alimentado por <a href="https://0xacab.org/riseuplabs/crabgrass">crabgrass</a> % {description}
 
       '
     report_a_bug: Infórmanos un fallo
@@ -278,7 +278,7 @@ es:
   members_may_edit_wiki_description: Si desmarca, solo los miembros del consejo pueden editar la wiki %{group}
   public_group_wiki: Publico
   private_group_wiki: Privado
-  add_members_to_committee: Añadir un miembro del grupo a este comité. Para agregar no en el grupo de padres de personas, enviar una invitación en su lugar.
+  add_members_to_committee: Añadir un miembro del grupo a este %{group_type}. Para agregar no en el grupo de padres de personas, enviar una invitación en su lugar.
   allow_membership_requests: Permitir solicitudes de afiliación
   committee_publicly_visible: Hacer comités públicos
   committee_publicly_visible_description: Los comités son visibles a personas no afiliadas a %{domain}/nombredelgrupo
@@ -625,30 +625,21 @@ es:
   request_to_join_our_network_description: grupo %{group} fue invitado a unirse a la red %{network}
   request_to_join_short: ¿Debe %{user} unirse a %{group}?
   request_to_join_us: Pide entrar
+  request_to_join_us_short: ¿Debe %{user} unirse a %{group}?
   request_to_join_us_description: '%{user} fue invitado a unirse %{group}'
   request_to_join_us_via_email_description: '%{email} fue invitado a unirse a %{group}'
   request_to_join_us_via_email_short: ¿Debe %{email} unirse a %{group}?
   request_to_join_you: Pide entrar
   request_to_join_you_description: '%{user} solicito unirse a %{group}'
+  request_to_join_your_network: Pide entrar
   request_to_join_your_network_description: '%{group} solicito unirse a la red %{network}'
   request_to_remove_user: Petición para Remover Miembro
   request_to_remove_user_description: El usuario %{user} ha propuesto borrar %{member} de %{group_type} %{group}.
   request_to_remove_user_short: ¿Debe %{member} ser eliminado de %{group}?
+  request_to_remove_group_description: El usuario %{user} ha propuesto borrar %{group} de %{network}.
+  request_to_remove_group_short: ¿Debe %{group} ser eliminado de %{network}?
   view_label: Ver
-  activity_contact_created: "%{user} agregó a %{other_user} como contacto"
-  activity_group_created: "%{user} creó %{group_type} %{group}"
-  activity_group_destroyed: "%{group} fue borrado por %{user}"
-  activity_message: "%{author} escribió: %{message}"
-  activity_message_received: 'Has recibido %{message_tag} de %{other_user}: %{title}'
   activity_twinkled: '%{user} agregó una estrella a tu post "%{post}"'
-  activity_unread: Tienes %{count} [mensajes privados] sin leer
-  activity_unread_singular: Tienes un [mensaje privado] sin leer
-  activity_user_destroyed: "%{user} se ha retirado"
-  activity_user_joined_group: "%{user} se unió a %{group_type} %{group}"
-  activity_user_joined_site: "%{user} se unió a %{group}"
-  activity_user_left_group: "%{user} ha dejado %{group_type} %{group}"
-  activity_user_left_site: "%{user} ha dejado %{group}"
-  activity_wall_message: "%{author} escribió a %{user}: %{message}"
   asset_version_list_version_heading: versión
   created_on: Creado en
   delete_version_confirm: ¿Quieres eliminar esta versión?
@@ -761,7 +752,6 @@ es:
   cant_find_wiki_section: No se puede encontrar la sección %{section} del wiki
   changes_made: Cambios realizados en %{when}.
   changes_might_be_overwritten: Los cambios serán sobreescritos.
-  comparing_changes_header: Comparando cambios hechos por %{user} en fecha %{when} de %{old_version} a %{new_version}
   diff_link: Ver cambios
   edit_wiki: Editar Wiki
   force_save_button: Romper el bloqueo y guardar

@@ -272,16 +272,6 @@ bg:
   request_to_join_us_via_email_description: '%{email} е поканен/а да се присъедини към %{group}'
   request_to_join_you_description: '%{user} прояви желание да се присъедини към %{group}'
   request_to_join_your_network_description: '%{group} прояви желание да се присъедини към %{network}'
-  activity_contact_created: "%{user} добави %{other_user} като приятел"
-  activity_group_created: "%{user} създаде %{group_type} %{group}"
-  activity_group_destroyed: "%{group} беше унищожена от %{user}"
-  activity_message: "%{author} написа: %{message}"
-  activity_unread: Имате %{count} непрочетени [private messages]
-  activity_unread_singular: Имате непрочетено [private message]
-  activity_user_destroyed: "%{user} се оттегли"
-  activity_user_joined_group: "%{user} се присъедини към %{group_type} %{group}"
-  activity_user_left_group: "%{user} напусна %{group_type} %{group}"
-  activity_wall_message: "%{author} написа на %{user}: %{message}"
   created_on: Създаден на/Created on
   delete_version_confirm: Сигурни ли Сте, че желаете да изтриете тази версия?
   file_size: Размер на документа
@@ -361,7 +351,6 @@ bg:
   redirect_to_foreign_domain: След като сте се регистрирали се опитвате да пренасочите сесията към друг домейн (%{url}). За ваша сигурност премахнахме този параметър от URL адреса.
   view_slideshow: Преглед в slideshow режим
   break_lock_button: Отключете
-  comparing_changes_header: Сравняване на промени от %{user}, направени на %{when} между %{old_version} и %{new_version}
   diff_link: Преглеждане на промените
   formatting_reference_link: Помощ при редактиране
   leave_editing_wiki_page_warning: Ако напуснете страницата без да запазите или откажете промените, другите потребители ще видят, че вие сте заключили това wiki и няма да могат да го редактират. Ако не запазите промените, те ще бъдат загубени.

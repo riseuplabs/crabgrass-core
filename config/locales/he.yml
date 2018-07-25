@@ -44,13 +44,6 @@ he:
   create_page: צרי דף
   rate_many_page_description: הצביעי בעד או נגד כל אפשרות.
   rate_many_page_display: הצבעת אישור
-  activity_contact_created: "%{user} הוספ\\ה %{other_user} כמשתמש\\ת"
-  activity_group_created: "%{user} יצר\\ה %{group_type} %{group}"
-  activity_group_destroyed: "הקבוצה %{group} נמחקה ע\"י %{user}"
-  activity_user_destroyed: "המשתמש\\ת %{user} פרש\\ה"
-  activity_user_joined_group: "המשתמש\\ת %{user} הצטרפ\\ה לקבוצה %{group_type} %{group}"
-  activity_user_left_group: "המשתמש\\ת %{user} עזב\\ה את הקבוצה %{group_type} %{group}"
-  activity_wall_message: "המשתמש\\ת %{author} רשמ\\ה ל%{user}: %{message}"
   created_on: נוצר בתאריך
   delete_version_confirm: האם את\ה בטוח\ה שברצונך למחוק את הגרסה הנ"ל?
   history: הסטוריה
@@ -69,4 +62,3 @@ he:
   edit_gallery: ערכי את הגלריה
   add_tags: הוסיפי תגיות
   add_one_or_more_tags: הוסיפי תווית אחת או יותר, מופרדות באמצעות פסיקים
-  comparing_changes_header: השוואת שינויים על ידי %{user} ב %{when} מ %{old_version} ל %{new_version}

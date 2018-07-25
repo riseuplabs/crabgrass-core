@@ -54,13 +54,13 @@ it:
   reset_password_mail_warning: Se non hai richiesto che la tua password fosse cambiata, contattaci.
   reset_password_text: Ciao, %{user}. Se hai dimenticato la password che uso per effettuare l'accesso, puoi impostarne una nuova qui.
   crabgrass:
-    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> un software libero AGPL </a> organizzarsi in rete.
+    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> un software libero AGPL </a> organizzarsi in rete
 
       '
     get_involved: Partecipa
     help_pages: Pagine di aiuto di Crabgrass
     help_translate: Aiuta a tradurre
-    powered_by_html: 'Questo sito si basa su <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+    powered_by_html: 'Questo sito si basa su <a href="https://0xacab.org/riseuplabs/crabgrass">crabgrass</a>%{description}
 
       '
     report_a_bug: Segnala un bug
@@ -266,7 +266,6 @@ it:
   members_may_edit_wiki_description: Se non marcato, soltanto i membri del consiglio possono modificare la wiki di %{group}.
   public_group_wiki: Pubblico
   private_group_wiki: Privato
-  add_members_to_committee: Aggiungi un membro del gruppo a questo comitati. Per aggiungere persone esterne al gruppo madre devi invece mandare loro un invito.
   allow_membership_requests: Permetti Richieste di Membership
   committee_publicly_visible: Rendi Comitati Visibili Pubblicamente
   committee_publicly_visible_description: I comitati sono visibili dai non-memrbi all'indirizzo %{domain}/nomedeltuogruppo
@@ -599,30 +598,19 @@ it:
   request_to_join_our_network_description: il gruppo %{group} è stato inviato a entrare nella rete %{network}
   request_to_join_short: '%{user} deve aderire a %{group}?'
   request_to_join_us: Richiesta di Adesione
+  request_to_join_us_short: '%{user} deve aderire a %{group}?'
   request_to_join_us_description: '%{user} è stato invitato a entrare nel grupo %{group}'
   request_to_join_us_via_email_description: '%{email} è stato invitato/a a entrare nel gruppo %{group}'
   request_to_join_us_via_email_short: '%{email} deve aderire a %{group}?'
   request_to_join_you: Richiesta di Adesione
   request_to_join_you_description: '%{user} ha richiesto di entrare nel gruppo %{group}'
+  request_to_join_your_network: Richiesta di Adesione
   request_to_join_your_network_description: '%{group} ha richiesto di entrare nella rete %{network}'
   request_to_remove_user: Richiesta di Rimuovere Membro
   request_to_remove_user_description: L'utente %{user} ha proposto di rimuovere %{member} da %{group_type} %{group}.
   request_to_remove_user_short: '%{member} deve essere rimosso da %{group}?'
   view_label: Visualizza
-  activity_contact_created: "%{user} ha aggiunto %{other_user} come contatto"
-  activity_group_created: "%{user} ha creato %{group_type} %{group}"
-  activity_group_destroyed: "%{group} è stato distrutto da %{user}"
-  activity_message: "%{author} ha scritto: %{message}"
-  activity_message_received: 'Hai ricevuto  %{message_tag} da %{other_user}: %{title}'
   activity_twinkled: '%{user} ha messo una stella al tuo post "%{post}"'
-  activity_unread: Hai %{count} [private messages] non letti
-  activity_unread_singular: Hai un [private message] non letto
-  activity_user_destroyed: "%{user} si è congedato"
-  activity_user_joined_group: "%{user} si è unito a %{group_type} %{group}"
-  activity_user_joined_site: "%{user} ha aderito a %{group}"
-  activity_user_left_group: "%{user} ha lasciato %{group_type} %{group}"
-  activity_user_left_site: "%{user} ha lasciato %{group}"
-  activity_wall_message: "%{author}ha scritto a %{user}: %{message}"
   asset_version_list_version_heading: versione
   created_on: Creato il
   delete_version_confirm: Sei sicuro/a di voler eliminare questa versione?
@@ -733,7 +721,6 @@ it:
   cant_find_wiki_section: Non trovo la sezione wiki %{section}
   changes_made: Modifiche effettuate %{when}.
   changes_might_be_overwritten: Le tue modifiche potrebbero venire soprascritte.
-  comparing_changes_header: Confronto dei cambiamenti fatti da %{user} alle %{when} da %{old_version} a %{new_version}
   diff_link: diff
   edit_wiki: Modifica Wiki
   force_save_button: Sblocca e Salva

@@ -1,5 +1,5 @@
 ca:
-  congratulations_you_have_signed_up: ¡Enhorabona! t'has registrat a %{site_title}.
+  congratulations_you_have_signed_up: Enhorabona! Us heu donat d'alta a %{site_title}.
   cookie_disabled_warning: Teniu les cookies inhabilitades. No podreu iniciar sessió fins que activeu les cookies.
   email_verification_body: |-
       Heu sol·licitat l'alta per a %{site_title} (%{host}).
@@ -13,7 +13,7 @@ ca:
       Si no voleu donar-vos d'alta, només cal que ignoreu aquest missatge.
   forgotten_email_address: Quina adreça de correu electrònic vau donar en crear el vostre compte?
   invalid_email_text: La adreça de correu electrònic que has indicat no és vàlida.
-  invalid_token: Codi No Vàlid
+  invalid_token: Codi no vàlid
   invalid_token_text: L'enllaç per restablir la contrasenya no és vàlid. És possible que hagi caducat o que ja s'hagi utilitzat.
   login: Entra
   login_failed: No s'ha pogut iniciar la sessió
@@ -54,13 +54,13 @@ ca:
   reset_password_mail_warning: Si no volíeu canviar la vostra contrasenya, poseu-vos en contacte amb nosaltres.
   reset_password_text: Hola %{user}. Si heu oblidat la vostra contrasenya podeu crear-ne una de nova aquí.
   crabgrass:
-    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> programari lliure AGPL</a> per a l''organització de la xarxa.
+    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> programari lliure AGPL</a> per a l''organització de la xarxa
 
       '
     get_involved: Involucreu-vos
     help_pages: Pàgines d'ajuda de Crabgrass
     help_translate: Ajudeu a traduir
-    powered_by_html: 'Aquest lloc web funciona gràcies a <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+    powered_by_html: 'Aquest lloc web funciona gràcies a <a href="https://0xacab.org/riseuplabs/crabgrass">crabgrass</a>%{description}
 
       '
     report_a_bug: Informeu d'un error
@@ -112,12 +112,17 @@ ca:
   mailer:
     hello: Hola %{user_name}
     pgp_key:
+      key_uploaded: Acabeu de carregar una nova clau. S'utilitzarà per a les notificacions per correu electrònic xifrades (funcionalitat experimental, disponible aviat)
       key_uploaded_subject: Notificacions
     page_histories:
       change_your_settings_here: 'Canvieu les opcions de notificació per correu electrònic aquí: %{page_link}'
       daily_digest: "%{site} : Resum diari dels canvis"
       page_update: "%{site} : Actualització de pàgina"
+      pages_you_are_watching_have_been_modified:
+        one: "Una pàgina que esteu seguint s'ha modificat des de l'última notificació"
+        other: "%{count} pàgines que esteu seguint s'han modificat des de l'última notificació."
       the_page_you_are_watching_description: La pàgina "%{page_title}" que vigileu ha estat modificada
+      upload_your_public_pgp_key: Per rebre actualitzacions més detallades als missatges de correu xifrats, carregueu la vostra clau PGP pública.
       we_leave_out_details: Hem tret els detalls en aquest missatge per protegir la informació que potser preferiu mantenir en privat.
       you_can_find_updates_here: 'Trobareu més detalls i una llista de les pàgines recentment canviades aquí:'
       you_can_turn_off_or_configure_notifications: Desactiveu les notificacions per correu electrònic, rebeu un resum dels canvis, o rebeu un missatge de correu electrònic cada vegada que hi hagi canvis a una pàgina
@@ -168,6 +173,7 @@ ca:
       enter_name_of_group: Introduïu el nom d'un grup
       enter_name_of_person: Introduïu el nom d'una persona
       enter_name_of_contact: Introduïu el nom d'un contacte
+      enter_name_of_peer: Introduïu el nom d'un company
   everybody: Todxs
   go: Vés
   list_things: Llista %{things}
@@ -183,6 +189,7 @@ ca:
   search: Cerca
   see_all_link: Veure-ho tot
   see_more_link: Més
+  sorry: Vaja
   thing_not_found: "%{thing} no trobat"
   total: "%{count} en total"
   unknown: Desconegut
@@ -265,6 +272,8 @@ ca:
   group_membership_count: "%{count} Membres"
   membership_destroy_confirm_message: Esteu segur de voler eliminar %{entity} de %{group}?
   membership_exists_error: L'usuari %{member} ja està donat d'alta
+  membership_leave_message: Heu estat eliminat de %{group}
+  membership_notification: Notificació de pertinença
   membership_requests: Sol·licituds d'alta
   public_groups: Grups públics
   shared_groups: Grups compartits
@@ -276,7 +285,7 @@ ca:
   members_may_edit_wiki_description: Si ho desmarqueu, només els membres del consell podran editar la wiki de %{group}.
   public_group_wiki: Públic
   private_group_wiki: Privat
-  add_members_to_committee: Afegiu un membre del grup a aquest comitè. Per afegir persones que no es troben al grup pare, envieu-los una invitació.
+  add_members_to_committee: Afegiu un membre a aquest %{group_type}. Per afegir gent que no es troba en el grup pare, envieu una invitació.
   allow_membership_requests: Permet sol·licituds d'alta
   committee_publicly_visible: Fes que els comitès siguin visibles públicament
   committee_publicly_visible_description: Els comitès seran visibles pels qui no són membres a %{domain}/elteugrup
@@ -322,8 +331,10 @@ ca:
   or_image_url: o una URL d'imatge
   pgp_key: Clau PGP
   pgp_public_key: Clau pública
+  pgp_key_description: 'Experimental: Carregueu la vostra clau PGP pública si voleu rebre notificacions per correu electrònic xifrades (nova funcionalitat aviat disponible). Us enviarem una confirmació xifrada per correu electrònic.'
   pgp_key_invalid: La clau que heu introduït no es pot importar. Realment heu enganxat una clau PGP pública?
   pgp_key_expired: La clau PGP que heu introduït caducarà.
+  pgp_key_placeholder: Introduïu la vostra clau PGP pública
   private_profile: Perfil privat
   remove_image_link: Elimina la imatge
   save_changes: Desa els canvis
@@ -352,6 +363,7 @@ ca:
   current_video_sources: 'Actualment suportats: youtube, blip.tv, google video, vimeo.'
   video_embed_code_description: Això no és l'adreça del lloc web. És un codi envoltat per < i > que el lloc web de vídeos – youtube, etc – posa a la vostra disposició per incloure el vídeo a altres llocs web.
   video_embed_code_prompt: Codi d'incrustar d'una font externa de vídeo.
+  access_code_expired: El codi %{code} ha caducat o no existeix.
   email_link_expires: Aquest enllaç expirarà en %{days} dies.
   email_notice_access: 'Podeu accedir a aquesta pàgina aquí:'
   email_notice_hello: Hola, %{from} t'ha enviat una pàgina web.
@@ -441,6 +453,7 @@ ca:
   share_already_exists_error: '«%{name}» ja té accés a aquesta pàgina.'
   share_grant_required_error: "%{name} no està autoritzat a veure aquesta pàgina. Abans cal donar-li més permisos."
   share_include_message: Inclou un missatge personalitzat
+  share_include_paranoid_message: Incloeu un missatge personalitzat a l'avís (no a l'email).
   share_page_link: Comparteix %{page_class}
   share_page_recipients: Comparteix la pàgina amb
   share_send_notification: Envia una notificació
@@ -466,6 +479,7 @@ ca:
   asset_page_display: Fitxer
   attachments: Adjunts
   collection_class_description: Pàgines especials que contenen altres pàgines.
+  collection_page_display: Col·lecció
   create_page: Crea una pàgina
   discussion_page_description: Comentar sobre un tema en particular un grups o amb altres usuaris.
   discussion_page_display: Conversa del Grup
@@ -619,6 +633,12 @@ ca:
       request_to_join_you: Sol·licitud per unir-se
       request_to_join_your_network: Sol·licitud per unir-se
       request_to_remove_user: Sol·licitud per eliminar un membre
+  request_to_join_our_network:
+    one: Invitació per unir-se
+    other: Invitacions per unir-se
+  invitation_to_join:
+    one: Invitació per unir-se
+    other: Invitacions per unir-se
   request_to_join_us_via_email:
     one: Invitació per unir-se
     other: Invitacions per unir-se
@@ -636,30 +656,22 @@ ca:
   request_to_join_our_network_description: el grup %{group} ha sigut convidat a formar part de la xarxa %{network}
   request_to_join_short: '%{user} ha d''unir-se a %{group}?'
   request_to_join_us: Sol·licitud per unir-se
+  request_to_join_us_short: '%{user} ha d''unir-se a %{group}?'
   request_to_join_us_description: '%{user} ha sigut convidat a %{group}'
   request_to_join_us_via_email_description: '%{email} ha sigut convidat a %{group}'
   request_to_join_us_via_email_short: '%{email} ha d''unir-se a %{group}?'
   request_to_join_you: Sol·licitud per unir-se
   request_to_join_you_description: '%{user} vol formar part de %{group}'
+  request_to_join_your_network: Sol·licitud per unir-se
   request_to_join_your_network_description: '%{group} vol formar part de la xarxa %{network}'
   request_to_remove_user: Sol·licitud per eliminar un membre
   request_to_remove_user_description: L'usuari %{user} ha proposat eliminar %{member} de %{group_type} %{group}.
   request_to_remove_user_short: '%{member} ha de ser eliminat de %{group}?'
+  request_to_remove_group: Petició per eliminar el grup
+  request_to_remove_group_description: L'usuari %{user} ha proposat eliminar %{group} de %{network}.
+  request_to_remove_group_short: S'ha d'eliminar %{group} de %{network}?
   view_label: Mostra
-  activity_contact_created: "%{user} ha afegit a %{other_user} com amic"
-  activity_group_created: "%{user} ha creat el grup %{group} de tipus %{group_type}"
-  activity_group_destroyed: "El grup %{group} he sigut destruït per %{user}"
-  activity_message: "%{author} ha escrit: %{message}"
-  activity_message_received: 'Heu rebut %{message_tag} de %{other_user}: %{title}'
   activity_twinkled: '%{user} ha marcat la vostra publicació «%{post}»'
-  activity_unread: Tens %{count} [missatges privats] no llegits
-  activity_unread_singular: Tens un missatge privat no llegit
-  activity_user_destroyed: "%{user} s'ha retirat"
-  activity_user_joined_group: "%{user} s'ha afegit al grup %{group} (%{group_type}) "
-  activity_user_joined_site: "%{user} s'ha unit a %{group}"
-  activity_user_left_group: "%{user} ha deixat el grup %{group} (%{group_type})"
-  activity_user_left_site: "%{user} ha marxat de %{group}"
-  activity_wall_message: "%{author} ha escrit a %{user}: %{message}"
   asset_version_list_version_heading: versió
   created_on: 'Creat al '
   delete_version_confirm: Esteu segur que voleu eliminar aquesta versió?
@@ -772,7 +784,6 @@ ca:
   cant_find_wiki_section: No es pot trobar la secció %{section} de la wiki
   changes_made: Canvis fets %{when}.
   changes_might_be_overwritten: Els vostres canvis poden ser sobreescrits.
-  comparing_changes_header: S'estan comparant els canvis entre %{old_version} i %{new_version}.
   diff_link: mostra els canvis
   edit_wiki: Edita la wiki
   force_save_button: Trenca el bloqueig i desa

@@ -56,13 +56,13 @@ pl:
   reset_password_mail_warning: Jeśli nie prosiłeś/łaś o zmiane hasła, proszę skontaktuj się z nami.
   reset_password_text: Cześć, %{user}.Jeśli zapomniałeś/łaś hasła którego uzywasz do rejestracji, możesz ustawić nowe tutaj.
   crabgrass:
-    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html">wolne oprogramowanie AGPL</a> do organizacji sieciowej.
+    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html">wolne oprogramowanie AGPL</a> do organizacji sieciowej
 
       '
     get_involved: Zaangażuj się
     help_pages: Strony pomocy Crabgrassa
     help_translate: Pomóż w tłumaczeniu
-    powered_by_html: 'Stronę napędza <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+    powered_by_html: 'Stronę napędza <a href="https://0xacab.org/riseuplabs/crabgrass">crabgrass</a>%{description}
 
       '
     report_a_bug: Zgłoś błąd
@@ -114,6 +114,7 @@ pl:
     hello: Cześć %{user_name}
     page_histories:
       change_your_settings_here: 'Tutaj możesz zmienić opcje powiadomień e-mail''owych: %{page_link}'
+      daily_digest: "%{site} : Dzienne podsumowanie zmian "
       page_update: "%{site}: Strona została zmodyfikowana"
       the_page_you_are_watching_description: Strona którą pzreglądasz "%{page_title}" została zmieniona
       you_can_turn_off_or_configure_notifications: Możesz wybrać opcję wyłączania powiadomień mejlem, otrzymywać zestawienie zmian, albo otrzymywać mejl za każdym razem gdy strona jest modyfikowana
@@ -122,6 +123,7 @@ pl:
       unauthorized: Proszę zaloguj się aby wykonać tą czynność.
     title:
       forbidden: Odmowa dostępu
+      not_found: "%{thing} nie ma"
       unauthorized: Wymagany login
   add_comment: Dodaj komentarz
   add_images_to_gallery_link: Dodaj grafikę do galerii
@@ -156,6 +158,7 @@ pl:
   all: Wszystko
   autocomplete:
     placeholder:
+      enter_name_of_group_or_person: Wprowadź login osoby lub nazwę grupy
       enter_name_of_group: Wprowadź nazwę grupy
       enter_name_of_person: Wprowadź login osoby
   go: Dajesz!
@@ -259,7 +262,6 @@ pl:
   members_may_edit_wiki_description: Jeśli nie zaznaczone, tylko osoby należące do rady mogą edytować wiki %{group}.
   public_group_wiki: Publiczne
   private_group_wiki: Prywatne
-  add_members_to_committee: Dodaj osoby należące do grupy do tego komitetu. Żeby dodać osoby nie należące do nadrzędnej grupy, wyślij zaproszenie.
   allow_membership_requests: Pozwól na prośby o dołączenie
   committee_publicly_visible: Komitety będą publicznie widoczne
   committee_publicly_visible_description: Komitety będą widoczne dla zalogowanych osób pod adresem %{domain}/nazwatwojejgrupy
@@ -594,30 +596,19 @@ pl:
   request_to_join_network_short: Czy %{group} ma dołączyć do %{network}?
   request_to_join_our_network_description: Grupa %{group} została zaproszona do sieci %{network}
   request_to_join_short: Czy %{user} ma dołączyć do %{group}?
+  request_to_join_us_short: Czy %{user} ma dołączyć do %{group}?
   request_to_join_us_description: '%{user} otrzyma zaproszenie do %{group}'
   request_to_join_us_via_email_description: '%{email} otrzyma zaproszenie do %{group}'
   request_to_join_us_via_email_short: Czy %{email} ma dołączyć do %{group}?
   request_to_join_you: Prośba o dołącznie
   request_to_join_you_description: '%{user} prosi o dodanie do %{group}'
+  request_to_join_your_network: Prośba o dołącznie
   request_to_join_your_network_description: '%{group} prosi o włączenie do sieci %{network}'
   request_to_remove_user: Prośba o usunięcie członka/członkini
   request_to_remove_user_description: '%{user} proponuje usunięcie %{member} z %{group_type} %{group}.'
   request_to_remove_user_short: Usunąć %{member} z %{group}?
   view_label: Widok
-  activity_contact_created: "%{user} dodał/a %{other_user} do swoich kontaktów"
-  activity_group_created: "%{user} stworzył/a %{group_type} %{group}"
-  activity_group_destroyed: "grupa %{group} została usunięta przez %{user}"
-  activity_message: "%{author} napisał/napisała: %{message}"
-  activity_message_received: 'Masz %{message_tag} od %{other_user}: %{title}'
   activity_twinkled: 'twój post "%{post}" został wyróżniony przez %{user}'
-  activity_unread: Masz %{count} nieprzeczytanych [private messages]
-  activity_unread_singular: Masz nieprzeczytaną [private message]
-  activity_user_destroyed: "%{user} idzie na emeryturę"
-  activity_user_joined_group: "%{user} dołączył/a do %{group_type} %{group}"
-  activity_user_joined_site: "%{user} dołącza do %{group}"
-  activity_user_left_group: "%{user} opuścił/a %{group_type} %{group}"
-  activity_user_left_site: "%{user} opuszcza %{group}"
-  activity_wall_message: "%{author} napisał/a do %{user}: %{message}"
   asset_version_list_version_heading: wersja
   created_on: 'Stworzone '
   delete_version_confirm: Czy na pewno chcesz usunąć tą wersję?
@@ -728,7 +719,6 @@ pl:
   cant_find_wiki_section: Nie mogę znaleźć sekcji %{section}
   changes_made: Zmiany dokonano %{when}.
   changes_might_be_overwritten: Nowsza wersja może zastąpić twoje zmiany.
-  comparing_changes_header: Porównanie zmian dokonanych %{when} from %{old_version} przez %{user} z %{new_version}
   diff_link: różnica
   edit_wiki: Edytuj wiki
   force_save_button: Złam blokadę i zapisz.

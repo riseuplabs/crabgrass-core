@@ -54,13 +54,13 @@ fr:
   reset_password_mail_warning: Si vous n'avez pas demandé à réinitialiser votre phrase de passe, merci de nous contacter.
   reset_password_text: Bonjour, %{user}. Si vous avez oublié votre phrase de passe pour vous connecter, vous pouvez en définir une ici.
   crabgrass:
-    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> logiciel libre AGPL</a> pour organiser les réseaux.
+    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> logiciel libre AGPL</a> pour organiser les réseaux
 
       '
     get_involved: S'investir
     help_pages: Page d'aide Crabgrass
     help_translate: Aider aux traductions
-    powered_by_html: 'Ce site est propulsé par <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+    powered_by_html: 'Ce site est propulsé par <a href="https://0xacab.org/riseuplabs/crabgrass">crabgrass</a>%{description}
 
       '
     report_a_bug: Signaler un bogue
@@ -279,7 +279,7 @@ fr:
   members_may_edit_wiki_description: Si décochée, seuls les membres du conseil peuvent éditer le wiki principal.
   public_group_wiki: Public
   private_group_wiki: Privé
-  add_members_to_committee: Ajouter des membres de la structure à cette commission
+  add_members_to_committee: Ajouter des membres de la structure à cette %{group_type}.
   allow_membership_requests: Autoriser les Demandes d'Inscription
   committee_publicly_visible: Publier les commissions
   committee_publicly_visible_description: Les commissions sont visibles aux non-membres à l'adresse %{domain}/nomdestructure
@@ -313,6 +313,7 @@ fr:
   display_name: Nom affiché
   do_you_want_to_receive_email_notifications: Voulez-vous recevoir des notifications par mail sur les modifications des pages que vous 'suivez' ?
   email: Mail
+  fingerprint: Emprunte
   language: Langue
   message_user_wrote_caption: "%{user} a écrit:"
   message_you_wrote_caption: 'Vous avez écrit:'
@@ -324,6 +325,7 @@ fr:
   or_image_url: ou URL de l'image
   pgp_key: Clé PGP
   pgp_public_key: Clé publique
+  pgp_key_expired: La clé GPG renseignée est expirée.
   private_profile: Profile privé
   remove_image_link: retirer image
   save_changes: Sauvegarder les modifications
@@ -619,30 +621,21 @@ fr:
   request_to_join_network_short: '%{group} peut-il rejoindre %{network} ?'
   request_to_join_our_network_description: La structure %{group} a été invitée à rejoindre le réseau %{network}.
   request_to_join_short: '%{user} peut-il ou peut-elle rejoindre %{group} ?'
+  request_to_join_us_short: '%{user} peut-il ou peut-elle rejoindre %{group} ?'
   request_to_join_us_description: '%{user} a été invité·e à rejoindre %{group}'
   request_to_join_us_via_email_description: L'adresse mail %{email} a été invitée à rejoindre %{group}
   request_to_join_us_via_email_short: Autoriser %{email} à rejoindre %{group} ?
   request_to_join_you: Demande d'Inscription
   request_to_join_you_description: '%{user} a demandé à rejoindre la structure %{group}.'
+  request_to_join_your_network: Demande d'Inscription
   request_to_join_your_network_description: Le groupe %{group} a demandé à rejoindre le réseau %{network}.
   request_to_remove_user: Demande de Désinscription de Membre
   request_to_remove_user_description: '%{user} a proposé de retirer %{member} de la structure %{group_type} %{group}.'
   request_to_remove_user_short: Retirer %{member} de %{group} ?
+  request_to_remove_group_description: '%{user} a proposé de retirer %{group} de l''organisation %{network}.'
+  request_to_remove_group_short: '%{group} doit-il ou doit-elle être retirée de %{network} ?'
   view_label: Voir
-  activity_contact_created: "%{user} a ajouté %{other_user} comme ami·e"
-  activity_group_created: "%{user} a créé la structure %{group_type} %{group}"
-  activity_group_destroyed: "%{group} a été détruit par %{user}"
-  activity_message: "%{author} a écrit: %{message}"
-  activity_message_received: 'Vous avez recu %{message_tag} de %{other_user}: %{title}'
   activity_twinkled: '%{user} a étoilé votre message "%{post}"'
-  activity_unread: Vous avez %{count} [private messages] non lus
-  activity_unread_singular: Vous avez un [private message] non lu
-  activity_user_destroyed: "%{user} s'est retiré"
-  activity_user_joined_group: "%{user} a rejoint la structure %{group_type} %{group}"
-  activity_user_joined_site: "%{user} a rejoint %{group}"
-  activity_user_left_group: "%{user} a quitté la structure %{group_type} %{group}"
-  activity_user_left_site: "%{user} a quitté %{group}"
-  activity_wall_message: "%{author} a écrit à %{user}: %{message}"
   asset_version_list_version_heading: Version
   created_on: Créé sur
   delete_version_confirm: Êtes-vous certain·e de vouloir supprimer cette version ?
@@ -755,7 +748,6 @@ fr:
   cant_find_wiki_section: Ne peut trouver la section wiki %{section}
   changes_made: Modifications effectuées %{when}.
   changes_might_be_overwritten: Vos modifications peuvent être écrasées.
-  comparing_changes_header: Comparaison des modifications de %{user} à %{when} de %{old_version} vers %{new_version}
   diff_link: voir les différences
   edit_wiki: Éditer le wiki
   force_save_button: Forcer le verrou et sauvegarder

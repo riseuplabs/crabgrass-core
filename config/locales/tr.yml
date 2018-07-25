@@ -54,13 +54,13 @@ tr:
   reset_password_mail_warning: Eğer şifrenizin değişmesini istemiyorsanız, lütfen bizimle bağlantı kurun
   reset_password_text: Merhaba, %{user}. Eğer girişte kullandığınız şifrenizi unuttuysanız, buradan yeni bir tane ayarlayabilirsiniz.
   crabgrass:
-    description_html: '(<a href="https://www.gnu.org/licenses/agpl-3.0.html">özgür</a> ağ örgütlenmesi yazılımı) var.
+    description_html: '(<a href="https://www.gnu.org/licenses/agpl-3.0.html">özgür</a> ağ örgütlenmesi yazılımı) var
 
       '
     get_involved: Destek Ol
     help_pages: Crabgrass Yardım
     help_translate: Çeviriye Destek Ol
-    powered_by_html: 'Bu sitenin arkasında <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+    powered_by_html: 'Bu sitenin arkasında <a href="https://0xacab.org/riseuplabs/crabgrass">crabgrass</a>%{description}
 
       '
     report_a_bug: Hata Bildir
@@ -369,13 +369,6 @@ tr:
   request_to_join_us_via_email_description: '%{email} , %{group} grubuna katılması için davet edildi'
   request_to_join_you_description: '%{user} adlı kullanıcı %{group} grubuna davet edildi'
   request_to_join_your_network_description: '%{group} grubu, %{network} ağına katılması için davet edildi'
-  activity_contact_created: "%{user} %{other_user}'ı arkadaş olarak ekledi"
-  activity_group_created: "%{user}, %{group_type} %{group} grubunu oluşturdu"
-  activity_group_destroyed: "%{group}, %{user} tarafından kaldırıldı "
-  activity_user_destroyed: "%{user} çıkış yaptı"
-  activity_user_joined_group: "%{user}, %{group_type} %{group} grubuna katıldı"
-  activity_user_left_group: "%{user} %{group_type} %{group} grubundana ayrıldı"
-  activity_wall_message: "%{author} %{user} kullanıcısına yazdı: %{message}"
   created_on: Oluşturuldu
   delete_version_confirm: Bu versiyonu silmek istediğinizden emin misiniz?
   file_size: Dosya boyütü
@@ -452,7 +445,6 @@ tr:
   redirect_to_foreign_domain: Giriş yaptıktan sonra yabancı bir etki alanına (%{url}) yönlenmeye çalışıyorsunuz. Güvenlik sebepleri dolayısıyla URL'den bu parametreyi kaldırdık.
   view_slideshow: Slayt gösterisini görüntüle
   break_lock_button: Kilitlemeyi Kaldır
-  comparing_changes_header: '%{user} tarafından %{when} tarihinde %{old_version} sürümünden %{new_version} sürümüne yapılan değişiklikleri kıyaslıyor'
   diff_link: değişiklikleri incele
   formatting_reference_link: Düzenleme Yardımı
   next_change: Sonraki Değişiklik
