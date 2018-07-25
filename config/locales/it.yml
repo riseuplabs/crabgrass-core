@@ -91,6 +91,7 @@ it:
   destroy_thing: Distruggi %{thing}
   drop_files_here: Deposita qui i file
   edit: Modifica
+  files_pending: File in lavorazione
   loading_progress: Caricando...
   ok_button: OK
   optional: Facoltativo
@@ -113,8 +114,12 @@ it:
     pgp_key:
       key_uploaded_subject: Notifiche
     page_histories:
+      change_your_settings_here: 'Cambia le tue impostazioni per gli avvisi via Email qui: %{page_link}'
       daily_digest: "%{site} : Sommario giornaliero delle modifiche"
       page_update: "%{site} : Una pagina è stata modificata"
+      pages_you_are_watching_have_been_modified:
+        one: "Una pagina che tieni sotto controllo è stata modificata dall'ultimo avviso."
+        other: "%{count} pagine che tieni sotto controllo sono state modificate dall'ultimo avviso."
       the_page_you_are_watching_description: La pagina che tieni sotto controllo "%{page_title}"  è stata modificata
       you_can_turn_off_or_configure_notifications: Puoi decidere di non ricevere avvisi via email, di ricevere dei riassunti delle modifiche avvenute, oppure di ricevere una email per ogni volta che una pagina viene modificata.
   exception:
@@ -266,6 +271,7 @@ it:
   members_may_edit_wiki_description: Se non marcato, soltanto i membri del consiglio possono modificare la wiki di %{group}.
   public_group_wiki: Pubblico
   private_group_wiki: Privato
+  add_members_to_committee: Aggiungi un membro del gruppo a questo %{group_type}. Per aggiungere persone esterne al gruppo madre devi invece mandare loro un invito.
   allow_membership_requests: Permetti Richieste di Membership
   committee_publicly_visible: Rendi Comitati Visibili Pubblicamente
   committee_publicly_visible_description: I comitati sono visibili dai non-memrbi all'indirizzo %{domain}/nomedeltuogruppo
@@ -520,6 +526,7 @@ it:
   survey_select_a_rating_message: Seleziona una valutazione per andare avanti
   survey_skip_next_link: Salta al Prossimo
   survey_thanks_submit_message: Grazie per avere inviato la tua risposta.
+  survey_you_already_rated_response_with_rating_heading: Hai già dato una valutazione per questa risposta - Gli hai dato un %{rating}.
   survey_you_previousely_rated_message: In passato hai dato  per questa risposta una valutazione di %{rating}.
   survey_your_rating_heading: 'La Tua Valutazione:'
   their_answer_goes_here_label: La loro risposta va qui...
@@ -584,6 +591,15 @@ it:
       request_to_join_you: Richiesta di Adesione
       request_to_join_your_network: Richiesta di Adesione
       request_to_remove_user: Richiesta di Rimuovere Membro
+  request_to_join_our_network:
+    one: Invito ad entrare a far parte
+    other: Inviti ad entrare a fare parte
+  invitation_to_join:
+    one: Invito ad entrare a far parte
+    other: Inviti ad entrare a fare parte
+  request_to_join_us_via_email:
+    one: Invito ad entrare a far parte
+    other: Inviti ad entrare a fare parte
   request_to_create_council: Richiesta di Creazione di Consiglio
   request_to_create_council_description: L'utente  %{user} ha proposto di creare un consiglio per %{group_type} %{group}.
   request_to_create_council_short: '%{group} deve avere un consiglio?'
@@ -609,6 +625,8 @@ it:
   request_to_remove_user: Richiesta di Rimuovere Membro
   request_to_remove_user_description: L'utente %{user} ha proposto di rimuovere %{member} da %{group_type} %{group}.
   request_to_remove_user_short: '%{member} deve essere rimosso da %{group}?'
+  request_to_remove_group_description: L'utente %{user} ha proposto di rimuovere %{group} da %{network}.
+  request_to_remove_group_short: '%{group} deve essere rimosso da %{network}?'
   view_label: Visualizza
   activity_twinkled: '%{user} ha messo una stella al tuo post "%{post}"'
   asset_version_list_version_heading: versione
@@ -694,8 +712,10 @@ it:
   size: Dimensione
   video_embed: Inserito
   add_tags: Aggiungi Etichette
+  current_tags: Tag attuali
   no_tags: nessun tag
   popular_tags: Etichette Popolari
+  recent_tags: Tag recenti
   separate_tags: Separa i diversi tag con delle virgole.
   tag: Tag
   tags: Tag

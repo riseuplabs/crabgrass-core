@@ -77,6 +77,7 @@ el:
   cancel: Ακύρωση
   close_button: Κλείσιμο
   confirm: Επιβεβαίωση
+  create: Δημιουργία
   create_a_new_thing: Δημιουργία νέου %{thing}
   create_button: Δημιουργία
   create_thing: Δημιουργία %{thing}
@@ -109,9 +110,15 @@ el:
   upload: Φόρτωση
   mailer:
     hello: Γεια %{user_name}
+    pgp_key:
+      key_uploaded_subject: Ειδοποίηση
     page_histories:
       change_your_settings_here: 'Μπορείτε να αλλάξετε τις ρυθμίσεις των ειδοποιήσεων ηλεκτρονικού ταχυδρομείου εδώ: %{page_link}'
+      daily_digest: "%{site} : μια ημερήσια σύνοψη των αλλαγών "
       page_update: "%{site} : Μια σελίδα έχει τροποποιηθεί"
+      pages_you_are_watching_have_been_modified:
+        one: "Μια σελίδα που παρακολουθείτε έχει τροποποιηθεί από την τελευταία ειδοποίηση."
+        other: "%{count} σελίδες που παρακολουθείτε έχουν τροποποιηθεί από την τελευταία ειδοποίηση."
       the_page_you_are_watching_description: Η σελίδα "%{page_title}" που παρακαολουθείτε έχει τροποποιηθεί
       we_leave_out_details: Σ' αυτό το μήνυμα, έχουμε παραλείψει τις λεπτομέρειες που μπορεί να θέλετε να κρατήσετε εμπιστευτικές.
       you_can_find_updates_here: 'Μπορείτε να βρείτε περισσότερες λεπτομέρειες καθώς και μια λίστα των πρόσφατα τροποποιημένων σελίδεων εδώ:'
@@ -582,6 +589,15 @@ el:
       request_to_join_you: Αίτημα εγγραφής
       request_to_join_your_network: Αίτημα εγγραφής
       request_to_remove_user: Αίτημα αφαίρεσης μέλους
+  request_to_join_our_network:
+    one: 'Πρόσκληση εγγραφής '
+    other: Προσκλήσεις εγγραφής
+  invitation_to_join:
+    one: 'Πρόσκληση εγγραφής '
+    other: Προσκλήσεις εγγραφής
+  request_to_join_us_via_email:
+    one: 'Πρόσκληση εγγραφής '
+    other: Προσκλήσεις εγγραφής
   request_to_create_council: Αίτημα δημιουργίας συμβουλίου
   request_to_create_council_description: Ο/Η χρήστης %{user} πρότεινε τη δημιουργία συμβουλίου για την/το %{group_type} %{group}.
   request_to_create_council_short: Να έχει συμβούλιο η ομάδα %{group};
@@ -591,9 +607,11 @@ el:
   request_to_friend: Αίτημα φιλίας
   request_to_friend_description: Ο/Η χρήστης %{user} ζήτησε να προστεθεί στις επαφές του/της χρήστη %{other_user}.
   request_to_friend_short: Να προστεθεί ο/η %{user} στις επαφές του/της %{other_user};
+  request_to_join: Αίτημα εγγραφής
   request_to_join_network_short: Να ενταχθεί η ομάδα %{group} στο  δίκτυο %{network};
   request_to_join_our_network_description: Η ομάδα %{group} καλέστηκε στο δίκτυο %{network}.
   request_to_join_short: Να ενταχθεί ο/η %{group} στην ομάδα %{group};
+  request_to_join_us: Αίτημα εγγραφής
   request_to_join_us_short: Να ενταχθεί ο/η %{group} στην ομάδα %{group};
   request_to_join_us_description: Ο/Η χρήστης %{user} καλέστηκε στην ομάδα %{group}.
   request_to_join_us_via_email_description: Ο/Η χρήστης με διεύθυνση email %{email} έχει καλεστεί στην ομάδα %{group}.
@@ -681,6 +699,7 @@ el:
   slideshow_delay_input: Ενημέρωση κάθε %{input_field} δευτερόλεπτα
   successful_undelete_image: Επιτυχής αναίρεση διαγραφής της εικόνας.
   successfully_removed_image: Η εικόνα αφαιρέθηκε με επιτυχία! (%{undo_link})
+  upload_images_link: Φόρτωση εικόνας
   you_are_not_allowed_to_do_that: Δεν επιτρέπεται να κάνετε κάτι τέτοιο!
   caption: Λεζάντα
   file: Αρχείο
@@ -691,7 +710,10 @@ el:
   size: Μέγεθος
   video_embed: Ενσωμάτωση
   add_tags: Προσθήκη ετικετών
+  current_tags: Τρέχουσες Ετικέτες
   no_tags: Δεν υπάρχουν ετικέτες
+  popular_tags: Δημοφιλή ετικέτες
+  recent_tags: Πρόσφατες ετικέτες
   separate_tags: Διαχωρίστε τις ετικέτες με ένα κόμμα.
   tag: Ετικέτα
   tags: Ετικέτες

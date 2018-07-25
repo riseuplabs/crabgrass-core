@@ -112,14 +112,22 @@ pl:
   upload: Załaduj
   mailer:
     hello: Cześć %{user_name}
+    pgp_key:
+      key_uploaded_subject: Powiadomienie
     page_histories:
       change_your_settings_here: 'Tutaj możesz zmienić opcje powiadomień e-mail''owych: %{page_link}'
       daily_digest: "%{site} : Dzienne podsumowanie zmian "
       page_update: "%{site}: Strona została zmodyfikowana"
+      pages_you_are_watching_have_been_modified:
+        one: "Strona którą oglądasz została zmodyfikowana od czasu ostatniego powiadomienia."
+        few: "%{count} strony którą oglądasz została zmodyfikowane od czasu ostatniego powiadomienia."
+        many: "%{count} stron które oglądasz zostało zmodyfikowanych od czasu ostatniego powiadomienia."
+        other: "%{count} strony którą oglądasz została zmodyfikowane od czasu ostatniego powiadomienia."
       the_page_you_are_watching_description: Strona którą pzreglądasz "%{page_title}" została zmieniona
       you_can_turn_off_or_configure_notifications: Możesz wybrać opcję wyłączania powiadomień mejlem, otrzymywać zestawienie zmian, albo otrzymywać mejl za każdym razem gdy strona jest modyfikowana
   exception:
     description:
+      forbidden: Przepraszam. Nie posiadasz wystarczających uprawnień do wykonania tej czynności.
       unauthorized: Proszę zaloguj się aby wykonać tą czynność.
     title:
       forbidden: Odmowa dostępu

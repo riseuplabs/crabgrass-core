@@ -76,6 +76,7 @@ cs:
   cancel: Zrušit
   close_button: Zavřít
   confirm: Potvrdit
+  create: Vytvořit
   create_a_new_thing: Vytvořit nové %{thing}
   create_button: Vytvořit
   create_thing: Vytvořit %{thing}
@@ -89,6 +90,7 @@ cs:
   destroy_thing: Zničit %{thing}
   drop_files_here: Sem přetáhněte soubory
   edit: Upravit
+  files_pending: Nenahraných souborů
   loading_progress: Načítá se ...
   ok_button: OK
   optional: Volitelné
@@ -110,6 +112,7 @@ cs:
     hello: Dobrý den, %{username}
     page_histories:
       change_your_settings_here: 'Svoje nastavení emailových upozornění si upravte zde: %{page_link}'
+      daily_digest: "%{site} : denní souhrn změn"
       page_update: "%{site} : Stránka byla upravena"
       the_page_you_are_watching_description: Stránka "%{page_title}" kterou sledujete byla upravena
       we_leave_out_details: Z tohoto emailu vynecháme detaily, které můžete považovat za citlivé.
@@ -151,6 +154,7 @@ cs:
   all: Všechno
   autocomplete:
     placeholder:
+      enter_name_of_group_or_person: Zadejte jméno skupiny nebo osoby
       enter_name_of_group: Zadejte jméno skupiny
       enter_name_of_person: Zadejte jméno osoby
   go: Jít
@@ -258,6 +262,7 @@ cs:
   members_may_edit_wiki_description: Pokud je nezaškrntuto, pouze členové rady můžou editovat wiki %{group}.
   public_group_wiki: Veřejné
   private_group_wiki: Soukromé
+  add_members_to_committee: Přidejte člena skupiny do tohoto %{group_type}. Pokud nechcete přidat uživatele do mateřské skupiny, použijte pozvánku.
   allow_membership_requests: Povolit žádosti o členství
   committee_publicly_visible: Učinit výbory veřejně viditelnými
   committee_publicly_visible_description: Výbory jsou viditelné i pro nečleny na %{domain}/nazevskupiny

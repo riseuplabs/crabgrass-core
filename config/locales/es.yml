@@ -611,6 +611,15 @@ es:
       request_to_join_you: Pide entrar
       request_to_join_your_network: Pide entrar
       request_to_remove_user: Petición para Remover Miembro
+  request_to_join_our_network:
+    one: Invitacion para Unirse
+    other: Invitaciones para Unirse
+  invitation_to_join:
+    one: Invitaciones para Unirse
+    other: Invitaciones para Unirse
+  request_to_join_us_via_email:
+    one: Invitacion para Unirse
+    other: Invitaciones para Unirse
   request_to_create_council: Solicitud para crear un consejo
   request_to_create_council_description: El usuario %{user} ha propuesto crear un consejo para %{group_type} %{group}.
   request_to_create_council_short: ¿Debería %{group} tener un consejo?
