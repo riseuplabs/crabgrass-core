@@ -636,6 +636,9 @@ de:
       request_to_join_you: Anfrage beizutreten
       request_to_join_your_network: Anfrage beizutreten
       request_to_remove_user: Anfrage Mitglied zu entfernen
+  request_to_join_our_network:
+    one: Einladung beizutreten
+    other: Einladungen beizutreten
   invitation_to_join:
     one: Einladung beizutreten
     other: Einladungen beizutreten

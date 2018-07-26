@@ -118,6 +118,9 @@ fr:
       change_your_settings_here: 'Changez la configuration de vos emails de notification ici : %{page_link}'
       daily_digest: "%{site} : Rapport journalier des modifications de pages"
       page_update: "%{site} : Une page à été modifiée"
+      pages_you_are_watching_have_been_modified:
+        one: "Une page que vous surveillez a été modifiée depuis la dernière alerte."
+        other: "%{count} pages que vous surveillez ont été modifiées depuis la dernière alerte."
       the_page_you_are_watching_description: La page que vous suivez "%{page_title}" a été modifiée
       we_leave_out_details: Nous n'incluons pas vos données dans ce courriel dans le cas où vous souhaiteriez les garder privées.
       you_can_find_updates_here: 'Vous trouverez plus d''informations et une liste des pages récemment modifiées ici:'
@@ -609,6 +612,12 @@ fr:
       request_to_join_you: Demande d'Inscription
       request_to_join_your_network: Demande d'Inscription
       request_to_remove_user: Demande de désinscription
+  request_to_join_our_network:
+    one: Invitation
+    other: Invitations
+  request_to_join_us_via_email:
+    one: Invitation
+    other: Invitations
   request_to_create_council: Demande de Création de Conseil
   request_to_create_council_description: '%{user} a proposé de créer un conseil pour la structure %{group_type} %{group}.'
   request_to_create_council_short: '%{group} doit-il avoir un conseil ?'
@@ -618,9 +627,11 @@ fr:
   request_to_friend: Demande de Mise en Contact
   request_to_friend_description: '%{user} aimerait être en contact avec %{other_user}'
   request_to_friend_short: Autoriser %{user} à être mis·e en contact avec %{other_user} ?
+  request_to_join: Demande d'Inscription
   request_to_join_network_short: '%{group} peut-il rejoindre %{network} ?'
   request_to_join_our_network_description: La structure %{group} a été invitée à rejoindre le réseau %{network}.
   request_to_join_short: '%{user} peut-il ou peut-elle rejoindre %{group} ?'
+  request_to_join_us: Demande d'Inscription
   request_to_join_us_short: '%{user} peut-il ou peut-elle rejoindre %{group} ?'
   request_to_join_us_description: '%{user} a été invité·e à rejoindre %{group}'
   request_to_join_us_via_email_description: L'adresse mail %{email} a été invitée à rejoindre %{group}

@@ -91,6 +91,7 @@ pt:
   destroy_thing: Destruir %{thing}
   drop_files_here: Solte os arquivos aqui
   edit: Editar
+  files_pending: Arquivos pendentes
   loading_progress: Carregando...
   ok_button: OK
   optional: Opcional
@@ -114,6 +115,9 @@ pt:
       change_your_settings_here: 'Mude sua configurações de aviso por email aqui: %{page_link}'
       daily_digest: "%{site} : Um sumário diário das alterações"
       page_update: "%{site} : Uma página foi modificada"
+      pages_you_are_watching_have_been_modified:
+        one: "Una página que você acompanhou foi alterada desde a sua última notificação."
+        other: "%{count} páginas que você acompanhou foram alteradas desde a sua última notificação."
       the_page_you_are_watching_description: A página que você está acompanhando "%{page_title}" foi modificada
       we_leave_out_details: Ocultamos alguns detalhes deste e-mail para proteger a informação que talvez você poderá querer manter privada.
       you_can_find_updates_here: 'Você encontrará mais detalhes e uma lista de páginas recentemente alteradas aqui:'
@@ -453,6 +457,7 @@ pt:
   discussion_page_display: 'Discussão em Grupo '
   gallery_description: Carregar múltiplas imagens ou organizar imagens existentes em um conjunto.
   gallery_display: Galeria
+  message_page_display: Mensagem pessoal
   page_added_to_group: Esta página será adicionada ao %{group_type} %{group_name}.
   page_create_owner: Posse da Página
   page_owner_error: Possuidora da página não pode ficar em branco.
@@ -591,6 +596,15 @@ pt:
       request_to_join_you: Pedir para Participar
       request_to_join_your_network: Pedir para Participar
       request_to_remove_user: Pedir para Remover um Membro
+  request_to_join_our_network:
+    one: Convite para Participar
+    other: Convites para Participar
+  invitation_to_join:
+    one: Convite para Participar
+    other: Convites para Participar
+  request_to_join_us_via_email:
+    one: Convite para Participar
+    other: Convites para Participar
   request_to_create_council: Pedir para Criar Concelho
   request_to_create_council_description: A usuária %{user} propôs que se criasse um concelho para %{group_type} %{group}.
   request_to_create_council_short: Será que %{group} poderia ter um concelho?
@@ -600,9 +614,11 @@ pt:
   request_to_friend: Pedir para se Tornarem Contatos
   request_to_friend_description: '%{user} gostaria de ser contato de %{other_user}'
   request_to_friend_short: Será que %{user} poderia se tornar contato de %{other_user}?
+  request_to_join: Pedido para participar
   request_to_join_network_short: Será que o %{group} poderia participar da %{network}?
   request_to_join_our_network_description: O grupo %{group} foi convidado para fazer parte da rede %{network}
   request_to_join_short: Será que %{user} poderia participar do grupo %{group}?
+  request_to_join_us: Pedido para participar
   request_to_join_us_short: Será que %{user} poderia participar do grupo %{group}?
   request_to_join_us_description: '%{user} foi convidada para fazer parte de %{group}'
   request_to_join_us_via_email_description: '%{email} foi convidada para fazer parte do grupo %{group}'
@@ -690,6 +706,7 @@ pt:
   slideshow_delay_input: Atualizar a cada %{input_field} segundos
   successful_undelete_image: A imagem foi recuperada.
   successfully_removed_image: A imagem foi apagada! (%{undo_link})
+  upload_images_link: Carregar imágenes
   you_are_not_allowed_to_do_that: Você não tem permissão de fazer isso!
   caption: Legenda
   file: Arquivo
@@ -700,7 +717,10 @@ pt:
   size: Tamanho
   video_embed: Embutido
   add_tags: Adicionar Etiquetas
+  current_tags: Tags atuais
   no_tags: não há etiquetas
+  popular_tags: Tags populares
+  recent_tags: Tags recentes
   separate_tags: Separe etiquetas usando vírgulas.
   tag: Etiqueta
   tags: Etiquetas
