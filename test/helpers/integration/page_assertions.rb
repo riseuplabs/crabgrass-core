@@ -26,7 +26,7 @@ module PageAssertions
   end
 
   def assert_page_groups(*groups)
-    assert_equal groups.map(&:display_name).join(' '),
+    assert_equal groups.map(&:display_name).join("\n"),
                  find('#groups.names').text
   end
 

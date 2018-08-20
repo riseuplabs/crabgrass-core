@@ -40,7 +40,7 @@ class Group::RequestsControllerTest < ActionController::TestCase
     group = groups(:animals)
     group.update(created_at: Time.now - 1.month)
     user = users(:blue)
-    group.memberships.find_by(user.id).update(created_at: Time.now - 1.month)
+    group.memberships.find_by_user_id(user.id).update(created_at: Time.now - 1.month)
     login_as user
     assert_difference 'RequestToCreateCouncil.count' do
       get :create, group_id: group.to_param, type: 'create_council'

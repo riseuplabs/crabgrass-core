@@ -11,7 +11,7 @@ class DispatchController < ApplicationController
     @_env = request.env
     @_env['action_controller.instance'] = self
     flash.keep
-    find_controller.dispatch(@action, request)
+    find_controller.dispatch(@action, request, _response = ActionDispatch::Response.new)
   end
 
   protected

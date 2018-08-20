@@ -11,8 +11,7 @@ end
 ##
 
 # Rails is the framework we use.
-# use the 4.2 series including all security fixes
-gem 'rails', '~> 4.2.11'
+gem 'rails', '~> 5.0.7'
 
 # Security updates
 # https://github.com/sparklemotion/nokogiri/issues/1785
@@ -51,9 +50,12 @@ gem 'sass'
 # these will be replaced by jquery equivalents at some point:
 ##
 
-# main part of prototype
-# needs special branch for rails 4.2
-gem 'prototype-rails', github: 'rails/prototype-rails', branch: '4.2'
+# does not support rails 5
+# we use the rails 4.2 branch with rails 5.0
+# replace alaias_method_chain with alias_method
+# tests do not pass
+#gem 'prototype-rails', github: 'rails/prototype-rails', branch: '4.2'
+gem 'prototype-rails', path: 'vendor/gems/prototype-rails'
 
 # Full text search for the database
 gem 'thinking-sphinx', '~> 3.4.2'
@@ -61,16 +63,20 @@ gem 'thinking-sphinx', '~> 3.4.2'
 # Enhanced Tagging lib. Used to tag pages
 gem 'acts-as-taggable-on', '~> 4.0'
 
-##
+#
 # security updates
 ##
 #
-# CVE-2018-16471
-# Criticality: Unknown
-# URL:
-# https://groups.google.com/forum/#!topic/ruby-security-ann/NAalCee8n6o
-# Title: Possible XSS vulnerability in Rack
-gem 'rack', '~> 1.6.11'
+# CVE-2018-16468 Criticality: Unknown URL:
+# https://github.com/flavorjones/loofah/issues/154 Title: Loofah XSS
+# Vulnerability
+gem 'loofah', '~> 2.2.3'
+
+# Rails 5 migration
+##
+
+# ActionView::Helpers::RecordTagHelper moved to external gem
+gem 'record_tag_helper', '~> 1.0'
 
 ##
 # Upgrade pending
@@ -95,9 +101,7 @@ gem 'pundit', '~> 1.1'
 # Bcrypt for has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
-#
 gem 'secure_headers', '~> 4.0.2'
-
 
 # ?
 # locking in to latest major to fix API
@@ -144,7 +148,8 @@ gem 'greencloth', require: 'greencloth',
 
 # media upload post processing has it's own repo
 # version is rather strict for now as api may still change.
-gem 'crabgrass_media', '~> 0.2.1', require: 'media'
+gem 'crabgrass_media', '~> 0.3.0', require: 'media',
+                                   path: 'vendor/gems/crabgrass-media'
 
 ##
 ## not required, but a really good idea
@@ -212,7 +217,11 @@ group :test, :ci do
   gem 'factory_bot_rails'
   gem 'faker', '~> 1.0.0'
 
-  gem 'minitest', require: false
+  # temporary fix for minitest 5.11 issue
+  gem 'minitest', '~>5.10.3', require: false
+
+  # contains helper methods like assigns and assert_template
+  gem 'rails-controller-testing'
 
   ##
   ## INTEGRATION TESTS

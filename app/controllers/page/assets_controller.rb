@@ -12,7 +12,7 @@ class Page::AssetsController < Page::SidebarsController
   end
 
   def create
-    @asset = @page.add_attachment! asset_params
+    @asset = @page.add_attachment! asset_params.to_h
     current_user.updated(@page)
   end
 

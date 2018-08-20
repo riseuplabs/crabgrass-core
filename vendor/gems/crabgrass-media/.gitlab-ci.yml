@@ -1,0 +1,29 @@
+image: 0xacab.org:4567/riseuplabs/docker/crabgrass:stretch_amd64
+
+cache:
+  paths:
+    - vendor/ruby
+
+before_script:
+  - ruby -v
+  - which ruby
+  - bundle --version
+  - libreoffice --version
+  - bundle install -j $(nproc) --path vendor "${FLAGS[@]}"
+
+test_stretch:
+  stage: test
+  script: |
+    bundle exec rake
+  artifacts:
+    when: on_failure
+    paths:
+      - log/*.log
+
+bundle_audit:
+  stage: test
+  allow_failure: true
+  script: |
+    sudo gem install bundler-audit
+    bundle-audit update
+    bundle-audit check

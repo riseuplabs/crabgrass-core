@@ -22,7 +22,7 @@ module Page::Comments
   end
 
   def add_post(user, post_attributes)
-    Post.create!(self, user, post_attributes).tap do
+    Post.create!(self, user, post_attributes.to_h).tap do
       user.updated(self)
       save
     end
