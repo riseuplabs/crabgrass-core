@@ -3,8 +3,7 @@ require 'test_helper'
 class Group::NetworkTest < ActiveSupport::TestCase
   def test_creation
     network = Group::Network.create! name: 'robot-federation', initial_member_group: groups(:rainbow)
-
-    assert groups(:rainbow).member_of?(network)
+    assert Group.find_by_name('rainbow').member_of?(network)
   end
 
   def test_creation_without_initial_member_group_doesnt_work

@@ -39,7 +39,6 @@ class Page::CreateController < ApplicationController
     redirect_to page_url(@page)
   end
 
-  hide_action :initialize
   # if the page controller is call by our custom DispatchController,
   # objects which have already been loaded will be passed to the tool
   # via this initialize method.

@@ -40,7 +40,7 @@ class GroupCreationTest < IntegrationTest
     group = groups(:animals)
     group.update(created_at: Time.now - 1.month)
     user = users(:blue)
-    group.memberships.find_by(user.id).update(created_at: Time.now - 1.month)
+    group.memberships.find_by_user_id(user.id).update(created_at: Time.now - 1.month)
     visit '/animals'
     click_on 'Settings'
     click_on 'Structure'

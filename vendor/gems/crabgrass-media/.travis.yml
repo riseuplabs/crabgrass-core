@@ -1,0 +1,20 @@
+language: ruby
+sudo: :required
+rvm:
+  - 1.9.3
+  - 2.1.5
+matrix:
+  fast_finish: true
+addons:
+  apt:
+    packages:
+      - graphicsmagick
+      - inkscape
+before_install:
+  - sudo apt-get install libreoffice-writer
+  - bundle --version
+  - libreoffice --version
+notifications:
+  email: false
+after_script:
+  - "cat log/*.log" # printing all logs to investigate issues on CI

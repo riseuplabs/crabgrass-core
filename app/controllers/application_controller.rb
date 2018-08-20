@@ -3,10 +3,9 @@
 
 class ApplicationController < ActionController::Base
   include Pundit
-  protect_from_forgery
+  protect_from_forgery prepend: true
 
   layout proc { |c| c.request.xhr? ? false : 'application' } # skip layout for ajax
-  hide_action :_layout_from_proc
 
   include_controllers 'common/application'
   include_helpers 'app/helpers/common/*/*.rb'

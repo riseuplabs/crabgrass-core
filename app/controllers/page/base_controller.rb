@@ -38,7 +38,6 @@ class Page::BaseController < ApplicationController
     @group = group  # the group context, if any
     @page  = page   # the page object, if already fetched
   end
-  hide_action :seed
 
   protected
 

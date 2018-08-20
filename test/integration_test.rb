@@ -24,6 +24,7 @@ class IntegrationTest < ActionDispatch::IntegrationTest
 
   def setup
     super
+    Capybara.server = :webrick
     # we reset the defaults during setup because we rely on the
     # driver and the session in the enhanced_logging module.
     # Make sure to call super BEFORE the initialization in subclasses.

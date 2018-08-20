@@ -22,7 +22,7 @@ class ThemeController < ApplicationController
   caches_page :show, if: proc { |ctrl| ctrl.cache_css }
 
   def show
-    if stale?(@theme, file: @file, last_modified: css_last_modified)
+    if stale?(@theme, last_modified: css_last_modified)
       render :show, content_type: 'text/css', formats: [:css]
     end
   rescue Sass::SyntaxError => exc

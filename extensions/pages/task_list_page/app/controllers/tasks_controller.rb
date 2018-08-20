@@ -61,7 +61,7 @@ class TasksController < Page::BaseController
   def task_params
     params.require(:task)
           .reverse_merge(user_ids: [])
-          .permit(:name, :description, user_ids: [])
+      .permit(:name, :description, user_ids: []).to_h
   end
 
   def sort_params
@@ -70,7 +70,7 @@ class TasksController < Page::BaseController
   end
 
   def list_params
-    params.permit sort_list_pending: [], sort_list_completed: []
+    params.permit(sort_list_pending: [], sort_list_completed: []).to_h
   end
 
   def update_participations

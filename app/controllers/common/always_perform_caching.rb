@@ -1,10 +1,6 @@
 module Common::AlwaysPerformCaching
   extend ActiveSupport::Concern
 
-  included do
-    hide_action :perform_caching
-  end
-
   def perform_caching
     true
   end

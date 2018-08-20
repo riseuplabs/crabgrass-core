@@ -145,7 +145,7 @@ class Conf
     end
 
     ## convert enabled_languages into a hash
-    self.enabled_languages_hash = enabled_languages.to_h { |i| [i, true] }
+    self.enabled_languages_hash = Hash[(self.enabled_languages).zip(Array(1..self.enabled_languages.length))]
 
     true
   end
