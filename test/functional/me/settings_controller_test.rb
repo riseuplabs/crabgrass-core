@@ -19,11 +19,11 @@ class Me::SettingsControllerTest < ActionController::TestCase
 
   def test_update
     login_as @user
-    post :update, user: {
+    post :update, params: { user: {
       login: 'new_login',
       password: 'xxxxxxxx',
       password_confirmation: 'xxxxxxx'
-    }
+    } }
     assert_equal @user.password_digest, @user.reload.password_digest,
                  "password can't be changed in settings"
     assert_equal 'new_login', @user.login, 'login should have changed'
@@ -31,6 +31,6 @@ class Me::SettingsControllerTest < ActionController::TestCase
 
   def test_password_fail
     login_as @user
-    post :update, user: { password: 'xxxxxxxx', password_confirmation: 'xxxxxxx' }
+    post :update, params: { user: { password: 'xxxxxxxx', password_confirmation: 'xxxxxxx' } }
   end
 end

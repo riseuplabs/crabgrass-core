@@ -10,8 +10,7 @@ class Group::MembershipRequestsControllerTest < ActionController::TestCase
   def test_request_to_join
     @group.grant_access! public: :view
     assert_difference 'RequestToJoinYou.count' do
-      post :create, group_id: @group.to_param,
-                    type: :join
+      post :create, params: { group_id: @group.to_param, type: :join }
     end
     req = RequestToJoinYou.last
     assert_response :redirect
@@ -37,9 +36,7 @@ class Group::MembershipRequestsControllerTest < ActionController::TestCase
     @remove_me = FactoryBot.create(:user)
     @group.add_user! @remove_me
     assert_difference 'RequestToRemoveUser.count' do
-      post :create, group_id: @group.to_param,
-                    entity: @remove_me.login,
-                    type: :destroy
+      post :create, params: { group_id: @group.to_param, entity: @remove_me.login, type: :destroy }
     end
     req = RequestToRemoveUser.last
     assert_response :redirect
@@ -59,20 +56,20 @@ class Group::MembershipRequestsControllerTest < ActionController::TestCase
                                        created_by: @other
 
     assert_difference '@group.users.count', -1 do
-      put :update, group_id: @group.to_param, id: @req.id, mark: :approve
+      put :update, params: { group_id: @group.to_param, id: @req.id, mark: :approve }
     end
     assert_response :success
   end
 
   def test_display_request_to_join_you
     login_as users(:penguin)
-    get :show, id: requests(:join_animals).id, group_id: :animals
+    get :show, params: { id: requests(:join_animals).id, group_id: :animals }
     assert_response :success
   end
 
   def test_display_request_to_join_us
     login_as users(:penguin)
-    get :show, id: requests(:invite_from_animals).id, group_id: :animals
+    get :show, params: { id: requests(:invite_from_animals).id, group_id: :animals }
     assert_response :success
   end
 end

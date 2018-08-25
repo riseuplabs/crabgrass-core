@@ -14,7 +14,7 @@ class Person::DirectoryControllerTest < ActionController::TestCase
 
   def test_friends
     login_as :blue
-    get :index, path: 'contacts'
+    get :index, params: { path: 'contacts' }
     assert_response :success
     users = assigns(:users)
     assert_equal 2, users.count
@@ -23,7 +23,7 @@ class Person::DirectoryControllerTest < ActionController::TestCase
 
   def test_peers
     login_as :blue
-    get :index, path: 'peers'
+    get :index, params: { path: 'peers' }
     assert_response :success
     users = assigns(:users)
     assert_equal 10, users.count
@@ -35,7 +35,7 @@ class Person::DirectoryControllerTest < ActionController::TestCase
     def @controller.pagination_params
       { page: 4, per_page: 3 }
     end
-    get :index, path: 'peers'
+    get :index, params: { path: 'peers' }
     assert_response :success
     ## FIXME: 'count' doesn't work here, because it loses pagination params.
     on_page = users(:blue).peers.count - 9
@@ -50,7 +50,7 @@ class Person::DirectoryControllerTest < ActionController::TestCase
   def test_autocomplete
     login_as :blue
     # leading spaces should be ignored in the query
-    get :index, query: ' a', path: 'search', format: :json
+    get :index, params: { query: ' a', path: 'search', format: :json }
     assert_equal [users(:aaron)], assigns(:users)
   end
 

@@ -9,7 +9,7 @@ class Group::RequestsControllerTest < ActionController::TestCase
   end
 
   def test_index
-    get :index, group_id: @group.to_param
+    get :index, params: { group_id: @group.to_param }
     assert_response :success
   end
 
@@ -17,13 +17,13 @@ class Group::RequestsControllerTest < ActionController::TestCase
     stranger = FactoryBot.create(:user)
     login_as stranger
     assert_not_found do
-      get :index, group_id: @group.to_param
+      get :index, params: { group_id: @group.to_param }
     end
   end
 
   def test_create
     assert_difference 'RequestToDestroyOurGroup.count' do
-      get :create, group_id: @group.to_param, type: 'destroy_group'
+      get :create, params: { group_id: @group.to_param, type: 'destroy_group' }
     end
     assert_response :redirect
   end
@@ -32,7 +32,7 @@ class Group::RequestsControllerTest < ActionController::TestCase
     stranger = FactoryBot.create(:user)
     login_as stranger
     assert_not_found do
-      get :create, group_id: @group.to_param, type: 'destroy_group'
+      get :create, params: { group_id: @group.to_param, type: 'destroy_group' }
     end
   end
 
@@ -43,7 +43,7 @@ class Group::RequestsControllerTest < ActionController::TestCase
     group.memberships.find_by_user_id(user.id).update(created_at: Time.now - 1.month)
     login_as user
     assert_difference 'RequestToCreateCouncil.count' do
-      get :create, group_id: group.to_param, type: 'create_council'
+      get :create, params: { group_id: group.to_param, type: 'create_council' }
     end
   end
 
@@ -51,7 +51,7 @@ class Group::RequestsControllerTest < ActionController::TestCase
     group = groups(:animals)
     assert_no_difference 'RequestToCreateCouncil.count' do
       assert_permission_denied do
-        get :create, group_id: group.to_param, type: 'create_council'
+        get :create, params: { group_id: group.to_param, type: 'create_council' }
       end
     end
   end
@@ -64,7 +64,7 @@ class Group::RequestsControllerTest < ActionController::TestCase
                                           created_by: @other
 
     assert_difference 'Group::Council.count' do
-      post :update, group_id: @group.to_param, id: @req.id, mark: :approve
+      post :update, params: { group_id: @group.to_param, id: @req.id, mark: :approve }
     end
     assert_response :success
   end

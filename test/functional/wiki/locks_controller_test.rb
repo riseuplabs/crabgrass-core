@@ -38,7 +38,7 @@ class Wiki::LocksControllerTest < ActionController::TestCase
 
   def test_breaking_lock
     login_as @user2
-    put :update, wiki_id: @wiki, break_lock: true
+    put :update, params: { wiki_id: @wiki, break_lock: true }
     assert_response :success
     assert_template :edit
     assert_equal [:document], @wiki.reload.sections_open_for(@user2)
@@ -47,7 +47,7 @@ class Wiki::LocksControllerTest < ActionController::TestCase
 
   def test_cancel_breaking_lock
     login_as @user2
-    put :update, wiki_id: @wiki, cancel: true
+    put :update, params: { wiki_id: @wiki, cancel: true }
     assert_response :success
     assert_template :show
     assert_equal [:document], @wiki.reload.sections_open_for(@user)

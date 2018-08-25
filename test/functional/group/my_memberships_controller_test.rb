@@ -10,7 +10,7 @@ class Group::MyMembershipsControllerTest < ActionController::TestCase
     @group.grant_access! public: %i[join view]
     login_as @user
     assert_difference '@group.users.count' do
-      get :create, group_id: @group.to_param
+      get :create, params: { group_id: @group.to_param }
     end
     assert_response :redirect
   end
@@ -21,7 +21,7 @@ class Group::MyMembershipsControllerTest < ActionController::TestCase
     login_as @user
     membership = @group.memberships.find_by_user_id(@user.id)
     assert_difference '@group.users.count', -1 do
-      delete :destroy, group_id: @group.to_param, id: membership.id
+      delete :destroy, params: { group_id: @group.to_param, id: membership.id }
     end
     assert_response :redirect
   end

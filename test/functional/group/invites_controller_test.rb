@@ -18,7 +18,7 @@ class Group::InvitesControllerTest < ActionController::TestCase
 
   def test_new
     login_as @user
-    get :new, group_id: @group.to_param
+    get :new, params: { group_id: @group.to_param }
     assert_response :success
   end
 
@@ -26,8 +26,7 @@ class Group::InvitesControllerTest < ActionController::TestCase
     login_as @user
     recipient = FactoryBot.create(:user)
     assert_difference 'RequestToJoinUs.count' do
-      post :create, group_id: @group.to_param,
-                    recipients: recipient.name
+      post :create, params: { group_id: @group.to_param, recipients: recipient.name }
     end
     assert_response :redirect
     assert_redirected_to action: :new
@@ -40,8 +39,7 @@ class Group::InvitesControllerTest < ActionController::TestCase
   def test_invite_group_to_network
     login_as @user
     assert_difference 'RequestToJoinOurNetwork.count' do
-      post :create, group_id: @network.to_param,
-                    recipients: @group.name
+      post :create, params: { group_id: @network.to_param, recipients: @group.name }
     end
     assert_response :redirect
     assert_redirected_to action: :new
@@ -51,8 +49,7 @@ class Group::InvitesControllerTest < ActionController::TestCase
     email =  'test@mail.me'
     login_as @user
     assert_difference 'RequestToJoinUsViaEmail.count' do
-      post :create, group_id: @group.to_param,
-                    recipients: email
+      post :create, params: { group_id: @group.to_param, recipients: email }
     end
     assert_response :redirect
     assert_redirected_to action: :new
@@ -67,7 +64,7 @@ class Group::InvitesControllerTest < ActionController::TestCase
     recipient = FactoryBot.create(:user)
 
     assert_notice_for(recipient) do
-      post :create, group_id: @group.to_param, recipients: recipient.name
+      post :create, params: { group_id: @group.to_param, recipients: recipient.name }
     end
   end
 
@@ -77,8 +74,7 @@ class Group::InvitesControllerTest < ActionController::TestCase
 
     # As @user already member of a group it should not be notified
     assert_notice_for recipient, @user_not_in_group do
-      post :create, group_id: @group.to_param,
-                    recipients: "#{recipient.name}, #{@user.name}, #{@user_not_in_group.name}"
+      post :create, params: { group_id: @group.to_param, recipients: "#{recipient.name}, #{@user.name}, #{@user_not_in_group.name}" }
     end
   end
 
@@ -88,7 +84,7 @@ class Group::InvitesControllerTest < ActionController::TestCase
     # @group has only two members, no council
     assert_nil @group.council
     assert_notice_for @user, @user_not_in_network do
-      post :create, group_id: @network.to_param, recipients: @group.name
+      post :create, params: { group_id: @network.to_param, recipients: @group.name }
     end
 
     notice = Notice::RequestNotice.last(2)
@@ -104,7 +100,7 @@ class Group::InvitesControllerTest < ActionController::TestCase
     @group.save
     assert_instance_of Group::Council, @group.council
     assert_notice_for @user_council do
-      post :create, group_id: @network.to_param, recipients: @group.name
+      post :create, params: { group_id: @network.to_param, recipients: @group.name }
     end
   end
 
@@ -112,7 +108,7 @@ class Group::InvitesControllerTest < ActionController::TestCase
     email =  'test@mail.me'
     login_as @user
     assert_no_notice do
-      post :create, group_id: @group.to_param, recipients: email
+      post :create, params: { group_id: @group.to_param, recipients: email }
     end
   end
 

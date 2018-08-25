@@ -13,7 +13,7 @@ class Wiki::AssetsControllerTest < ActionController::TestCase
 
   def test_new
     login_as @user
-    get :new, wiki_id: @wiki.id
+    get :new, params: { wiki_id: @wiki.id }
     assert_response :success
     assert_equal [@old_image], assigns('images')
   end
