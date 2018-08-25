@@ -32,7 +32,7 @@ class CreateAssetPageController < Page::CreateController
   end
 
   def ensure_asset
-    if params[:asset].blank?
+    if params[:asset].blank? || params[:asset][:uploaded_data].blank?
       warning :select_file_to_upload.t
       new
     end

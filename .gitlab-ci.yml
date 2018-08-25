@@ -35,7 +35,8 @@ test:
     bundle exec rake db:test:prepare
     RAILS_ENV=test bundle exec rake db:fixtures:load
     RAILS_ENV=test bundle exec rake ts:index ts:start
-    bundle exec rake
+    bundle exec rails test
+    bundle exec rails test extensions/pages
     bundle exec rake cg:cleanup:all     # test cleanup tasks
   artifacts:
     when: on_failure
@@ -61,7 +62,8 @@ test_stretch:
     bundle exec rake db:test:prepare
     RAILS_ENV=test bundle exec rake db:fixtures:load
     RAILS_ENV=test bundle exec rake ts:index ts:start
-    bundle exec rake
+    bundle exec rails test
+    bundle exec rails test extensions/pages
     bundle exec rake cg:cleanup:all     # test cleanup tasks
   artifacts:
     when: on_failure

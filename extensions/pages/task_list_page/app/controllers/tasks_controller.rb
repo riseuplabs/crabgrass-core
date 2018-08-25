@@ -60,8 +60,8 @@ class TasksController < Page::BaseController
 
   def task_params
     params.require(:task)
-          .reverse_merge(user_ids: [])
       .permit(:name, :description, user_ids: []).to_h
+      .reverse_merge(user_ids: [])
   end
 
   def sort_params
