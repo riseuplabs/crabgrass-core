@@ -1,5 +1,5 @@
 class RateManyPageController < Page::BaseController
-  before_filter :fetch_poll
+  before_action :fetch_poll
 
   def show
     @possibles = @poll ? @poll.possibles.sort_by { |p| p.position || 0 } : []

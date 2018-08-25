@@ -1,5 +1,5 @@
 class CreateAssetPageController < Page::CreateController
-  before_filter :ensure_asset, only: :create
+  before_action :ensure_asset, only: :create
 
   def new
     @form_sections.unshift('file')

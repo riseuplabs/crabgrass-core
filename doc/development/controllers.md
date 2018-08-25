@@ -1,7 +1,7 @@
 ```
 class RobotsController < ApplicationController
 
-  before_filter :login_required       # if you want to require logins
+  before_action :login_required       # if you want to require logins
   after_action :verify_authorized     # ensures authorization happened
 
   def create

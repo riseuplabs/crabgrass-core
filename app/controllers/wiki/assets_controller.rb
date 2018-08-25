@@ -1,5 +1,5 @@
 class Wiki::AssetsController < Wiki::BaseController
-  before_filter :fetch_assets, only: :new
+  before_action :fetch_assets, only: :new
 
   def new
     # FIXME: Authorize needed because BaseController wants us to

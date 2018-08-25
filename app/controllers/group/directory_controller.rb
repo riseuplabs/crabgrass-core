@@ -1,12 +1,12 @@
 class Group::DirectoryController < ApplicationController
-  before_filter :login_required
-  # skip_before_filter :login_required
+  before_action :login_required
+  # skip_before_action :login_required
   # ^^ for now, disable public directories. The old behavior was to require
   #    authentication to browse the directory, so we don't want to change this
   #    unexpectedly without either giving groups some warning or adding an
   #    additional level to the permissions.
 
-  before_filter :set_default_path
+  before_action :set_default_path
 
   helper 'group/directory'
 

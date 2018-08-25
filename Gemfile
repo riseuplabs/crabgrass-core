@@ -11,6 +11,7 @@ end
 ##
 
 # Rails is the framework we use.
+#gem 'rails', '~> 5.1.6'
 gem 'rails', '~> 5.0.7'
 
 # Security updates
@@ -30,7 +31,7 @@ gem 'i18n', '~> 0.7'
 
 # improved gem to access mysql database
 # locking in to latest major to fix API
-gem 'mysql2', '~> 0.3.18'
+gem 'mysql2', '~> 0.5.2'
 
 # parsing and generating JSON
 # locking in to latest major to fix API
@@ -38,8 +39,8 @@ gem 'json', '~> 1.8'
 
 # Markup language that uses indent to indicate nesting
 # locking in to latest major to fix API
-gem 'haml', '~> 4.0'
-gem 'haml-rails', '~> 0.9.0'
+gem 'haml', '~> 5.0'
+gem 'haml-rails', '~> 1.0'
 
 # Extendet scriptable CSS language
 # locking in to latest major to fix API
@@ -56,6 +57,7 @@ gem 'sass'
 # tests do not pass
 #gem 'prototype-rails', github: 'rails/prototype-rails', branch: '4.2'
 gem 'prototype-rails', path: 'vendor/gems/prototype-rails'
+#gem 'prototype-rails', path: '/home/dora/Dev/crabgrass_project/2018/august/prototype-rails-5-1'
 
 # Full text search for the database
 gem 'thinking-sphinx', '~> 3.4.2'
@@ -150,6 +152,9 @@ gem 'greencloth', require: 'greencloth',
 # version is rather strict for now as api may still change.
 gem 'crabgrass_media', '~> 0.3.0', require: 'media',
                                    path: 'vendor/gems/crabgrass-media'
+#gem 'crabgrass_media', '~> 0.4.0', require: 'media',
+#                                    path: '/home/dora/Dev/crabgrass_project/crabgrass-media'
+
 
 ##
 ## not required, but a really good idea

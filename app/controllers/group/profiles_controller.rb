@@ -1,5 +1,5 @@
 class Group::ProfilesController < Group::BaseController
-  before_filter :fetch_profile
+  before_action :fetch_profile
   helper :profile
 
   def edit

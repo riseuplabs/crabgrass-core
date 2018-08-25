@@ -71,7 +71,7 @@ module Common::Application::Authentication
     session[:return_to] = nil
   end
 
-  # When called with before_filter :login_from_cookie will check for an :auth_token
+  # When called with before_action :login_from_cookie will check for an :auth_token
   # cookie and log the user back in if apropriate
   def login_from_cookie
     return unless cookies[:auth_token] && !logged_in?
@@ -85,7 +85,7 @@ module Common::Application::Authentication
   end
 
   # note: this method is not automatically called. if you want to enable HTTP
-  # authentication for some action(s), you must put a prepend_before_filter in
+  # authentication for some action(s), you must put a prepend_before_action in
   # place.
   # however, a user who successfully uses HTTP auth on an action for which it
   # was enabled will stay logged in and can then go and see other things.

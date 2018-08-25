@@ -5,7 +5,7 @@
 class Me::PostsController < Me::BaseController
   include_controllers 'common/posts'
 
-  prepend_before_filter :fetch_data
+  prepend_before_action :fetch_data
   after_action :verify_authorized
 
   # /me/discussions/green/posts

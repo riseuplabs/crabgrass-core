@@ -11,8 +11,9 @@ class JavascriptIntegrationTest < IntegrationTest
   include AjaxPending
   include Autocomplete
 
-  # transactionaly fixtures make js tests fail non deterministicly
-  self.use_transactional_fixtures = false
+  # transactionaly fixtures made js tests fail non deterministicly
+  # since Rails 5.1 they have been replaced by transactional_tests
+  self.use_transactional_tests = false
 
   # only use fixtures required explicitly in the tests
   self.fixture_table_names = []

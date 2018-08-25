@@ -2,7 +2,7 @@ class GalleryImageController < Page::BaseController
   helper 'gallery'
 
   # default_fetch_data is disabled for new in Pages::BaseController
-  prepend_before_filter :fetch_page_for_new, only: :new
+  prepend_before_action :fetch_page_for_new, only: :new
 
   def show
     authorize @page

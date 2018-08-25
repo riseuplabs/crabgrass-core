@@ -39,7 +39,7 @@
 # The needed user_participation and group_partication objects will get saved
 # unless page is modified, in which case they will not get saved.
 # (assuming that page.save will get called eventually, which will then save
-# the new participation objects. BasePageController has an after_filter that
+# the new participation objects. BasePageController has an after_action that
 # auto saves the @page if has been changed.)
 #
 

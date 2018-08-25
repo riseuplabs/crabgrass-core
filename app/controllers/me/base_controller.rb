@@ -2,7 +2,7 @@
 # Abstract super class of all the Me controllers.
 #
 class Me::BaseController < ApplicationController
-  before_filter :login_required, :fetch_user
+  before_action :login_required, :fetch_user
 
   protected
 

@@ -9,7 +9,7 @@
 #
 
 class CronController < ActionController::Base
-  before_filter :allow_only_requests_from_localhost
+  before_action :allow_only_requests_from_localhost
 
   def run
     case params[:id]

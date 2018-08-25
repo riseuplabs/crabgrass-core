@@ -6,7 +6,7 @@
 #
 
 class PicturesController < ApplicationController
-  before_filter :fetch_picture
+  before_action :fetch_picture
 
   #
   # for now, all pictures are public.

@@ -136,7 +136,7 @@ module User::Pages
   # should trigger a notification to page watchers. Also, if a page state changes
   # from pending to resolved, we also update everyone's user participation.
   # The page is not saved here, because it might still get more changes.
-  # An after_filter should finally save the page if it has not already been saved.
+  # An after_action should finally save the page if it has not already been saved.
   #
   # options:
   #  :resolved -- user's participation is resolved with this page

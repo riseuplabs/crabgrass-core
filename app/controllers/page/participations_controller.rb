@@ -11,7 +11,7 @@
 class Page::ParticipationsController < Page::SidebarsController
   helper 'page/participation', 'page/share'
 
-  before_filter :fetch_data
+  before_action :fetch_data
   track_actions :update
 
   # this is used for ajax pagination

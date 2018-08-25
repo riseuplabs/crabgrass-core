@@ -35,7 +35,7 @@ class ThemeController < ApplicationController
 
   # don't cache css if '_refresh' is in the theme or stylesheet name.
   # useful for debugging.
-  prepend_before_filter :get_theme
+  prepend_before_action :get_theme
   def get_theme
     self.cache_css = true
     [params[:name], *params[:file]].each do |param|
