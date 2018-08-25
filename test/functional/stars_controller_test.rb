@@ -10,7 +10,7 @@ class StarsControllerTest < ActionController::TestCase
 
   def test_create
     assert_difference('Star.count') do
-      xhr :post, :create, post_id: @post
+      post :create, params: { post_id: @post }, xhr: true
     end
 
     assert_response :redirect
@@ -24,7 +24,7 @@ class StarsControllerTest < ActionController::TestCase
   def test_destroy
     @post.stars.create!(user: @user)
     assert_difference('Star.count', -1) do
-      xhr :delete, :destroy, post_id: @post
+      delete :destroy, params: { post_id: @post }, xhr: true
     end
     assert_equal 0, @post.reload.stars_count
 

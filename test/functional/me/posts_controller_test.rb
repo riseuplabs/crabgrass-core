@@ -28,7 +28,7 @@ class Me::PostsControllerTest < ActionController::TestCase
     post = Message.send from: me, to: you, body: 'test message'
     login_as me
     assert_difference 'Post.count', -1 do
-      xhr :delete, :destroy, discussion_id: you.login, id: post
+      delete :destroy, params: { discussion_id: you.login, id: post }, xhr: true
       assert_response :success
     end
   end

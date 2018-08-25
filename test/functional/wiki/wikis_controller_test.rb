@@ -12,7 +12,7 @@ class Wiki::WikisControllerTest < ActionController::TestCase
   def test_edit
     @wiki = create_profile_wiki
     login_as @user
-    xhr :get, :edit, id: @wiki.id
+    get :edit, params: { id: @wiki.id }, xhr: true
     assert_response :success
     assert_template 'wiki/wikis/edit'
     assert_equal 'text/javascript', @response.content_type
@@ -26,7 +26,7 @@ class Wiki::WikisControllerTest < ActionController::TestCase
     @wiki = @group2.profiles.private.create_wiki body: 'private'
     login_as @user3
     assert_permission_denied do
-      xhr :get, :edit, id: @wiki.id
+      get :edit, params: { id: @wiki.id }, xhr: true
     end
   end
 
@@ -34,7 +34,7 @@ class Wiki::WikisControllerTest < ActionController::TestCase
     @wiki = create_profile_wiki
     login_as @user2
     assert_permission_denied do
-      xhr :get, :edit, id: @wiki.id
+      get :edit, params: { id: @wiki.id }, xhr: true
     end
   end
 
@@ -43,7 +43,7 @@ class Wiki::WikisControllerTest < ActionController::TestCase
     other_user = FactoryBot.create(:user)
     @wiki.lock! :document, other_user
     login_as @user
-    xhr :get, :edit, id: @wiki.id
+    get :edit, params: { id: @wiki.id }, xhr: true
     assert_response :success
     assert_template 'common/wikis/_locked'
     assert_equal 'text/javascript', @response.content_type
@@ -54,20 +54,14 @@ class Wiki::WikisControllerTest < ActionController::TestCase
   def test_update_group_wiki
     @wiki = create_profile_wiki
     login_as @user
-    xhr :post, :update,
-        id: @wiki.id,
-        wiki: { body: '*updated*', version: 1 },
-        save: true
+    post :update, params: { id: @wiki.id, wiki: { body: "*updated*", version: 1 }, save: true }, xhr: true
     assert_equal '<p><strong>updated</strong></p>', @wiki.reload.body_html
   end
 
   def test_update_page_wiki
     @wiki = create_page_wiki
     login_as @user
-    xhr :post, :update,
-        id: @wiki.id,
-        wiki: { body: '*updated*', version: 1 },
-        save: true
+    post :update, params: { id: @wiki.id, wiki: { body: "*updated*", version: 1 }, save: true }, xhr: true
     assert_equal '<p><strong>updated</strong></p>', @wiki.reload.body_html
     assert_equal @user.login, @wiki.page.updated_by_login
   end
@@ -76,10 +70,7 @@ class Wiki::WikisControllerTest < ActionController::TestCase
     @wiki = create_page_wiki
     login_as @user
     former = @wiki.body_html
-    xhr :post, :update,
-        id: @wiki.id,
-        wiki: { body: '*updated*', version: 1 },
-        cancel: true
+    post :update, params: { id: @wiki.id, wiki: { body: "*updated*", version: 1 }, cancel: true }, xhr: true
     assert_equal former, @wiki.reload.body_html
     assert @user.login != @wiki.page.updated_by_login,
            'cancel should not set updated_by'
@@ -89,7 +80,7 @@ class Wiki::WikisControllerTest < ActionController::TestCase
     @wiki = create_page_wiki
     @page.public = true
     @page.save
-    xhr :get, :show, id: @wiki.id
+    get :show, params: { id: @wiki.id }, xhr: true
     assert_response :success
     assert_equal @wiki, assigns['wiki']
   end
@@ -97,14 +88,14 @@ class Wiki::WikisControllerTest < ActionController::TestCase
   def test_hide_wiki_on_private_page
     @wiki = create_page_wiki
     assert_permission_denied do
-      xhr :get, :show, id: @wiki.id
+      get :show, params: { id: @wiki.id }, xhr: true
     end
   end
 
   def test_show_private_group_wiki
     @wiki = create_profile_wiki(true)
     login_as @user
-    xhr :get, :show, id: @wiki.id
+    get :show, params: { id: @wiki.id }, xhr: true
     assert_response :success
     assert_equal @wiki, assigns['wiki']
   end
@@ -112,7 +103,7 @@ class Wiki::WikisControllerTest < ActionController::TestCase
   def test_show_public_group_wiki_to_stranger
     @wiki = create_profile_wiki
     @group.grant_access! public: :view
-    xhr :get, :show, id: @wiki.id
+    get :show, params: { id: @wiki.id }, xhr: true
     assert_response :success
     assert_equal @wiki, assigns['wiki']
   end
@@ -120,7 +111,7 @@ class Wiki::WikisControllerTest < ActionController::TestCase
   def test_do_not_show_private_group_wiki_to_stranger
     @wiki = create_profile_wiki(true)
     assert_permission_denied do
-      xhr :get, :show, id: @wiki.id
+      get :show, params: { id: @wiki.id }, xhr: true
     end
   end
 
@@ -131,7 +122,7 @@ class Wiki::WikisControllerTest < ActionController::TestCase
   def test_edit_section
     @wiki = create_profile_wiki
     login_as @user
-    xhr :get, :edit, id: @wiki.id, section: 'section-one'
+    get :edit, params: { id: @wiki.id, section: "section-one" }, xhr: true
     assert_response :success
     assert_template 'wikis/_edit'
     assert_equal 'text/javascript', @response.content_type
@@ -157,7 +148,7 @@ class Wiki::WikisControllerTest < ActionController::TestCase
     other_user = FactoryBot.create(:user)
     @wiki.lock! :document, other_user
     login_as @user
-    xhr :get, :edit, id: @wiki.id, section: 'section-one'
+    get :edit, params: { id: @wiki.id, section: "section-one" }, xhr: true
     assert_response :success
     assert_template 'wikis/_locked'
     assert_equal 'text/javascript', @response.content_type
@@ -168,10 +159,7 @@ class Wiki::WikisControllerTest < ActionController::TestCase
   def test_update_section
     @wiki = create_profile_wiki
     login_as @user
-    xhr :post, :update,
-        id: @wiki.id, section: 'section-one',
-        wiki: { body: '*updated*', version: 1 },
-        save: true
+    post :update, params: { id: @wiki.id, section: "section-one", wiki: { body: "*updated*", version: 1 }, save: true }, xhr: true
     # this is an xhr so we just render the wiki in place
     assert_response :success
     changed_body = <<-EOB.strip_heredoc

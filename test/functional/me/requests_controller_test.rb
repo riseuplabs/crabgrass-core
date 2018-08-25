@@ -4,7 +4,7 @@ class Me::RequestsControllerTest < ActionController::TestCase
   def test_destroy
     login_as users(:blue)
     request = RequestToJoinUs.created_by(users(:blue)).first
-    xhr :delete, :destroy, id: request.id
+    delete :destroy, params: { id: request.id }, xhr: true
     assert_message /destroyed/i
   end
 
@@ -43,7 +43,7 @@ class Me::RequestsControllerTest < ActionController::TestCase
     request = RequestToJoinYou.create created_by: requesting,
                                       recipient: @group
     assert_difference 'RequestToJoinYou.count', -1 do
-      xhr :delete, :destroy, id: request.id
+      delete :destroy, params: { id: request.id }, xhr: true
     end
     assert_response :success
   end

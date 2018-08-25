@@ -18,7 +18,7 @@ class Wiki::LockingVersionTest < ActiveSupport::TestCase
     @wiki.update_section!('section-one', @user1, version, "h2. section one\n\n111111111")
     @wiki.update_section!('section-two', @user2, version, "h2. section two\n\n222222222")
     assert_equal @user2, @wiki.user
-    assert_equal version + 2, @wiki.versions(true).size
+    assert_equal version + 2, @wiki.versions.reload.size
     assert_match /h2\. section one\n\n111111111\n\nh2\. section two\n\n222222222/, @wiki.body, 'should save both sections'
   end
 
@@ -28,7 +28,7 @@ class Wiki::LockingVersionTest < ActiveSupport::TestCase
     @wiki.update_section!('section-one', @user1, version, "h2. section one\n\n111111111")
     @wiki.lock! 'section-two', @user1
     @wiki.update_section!('section-two', @user1, version + 1, "h2. section two\n\n222222222")
-    assert_equal version + 1, @wiki.versions(true).size, 'version should increment by 1'
+    assert_equal version + 1, @wiki.versions.reload.size, 'version should increment by 1'
   end
 
   def test_two_users_repeat_save

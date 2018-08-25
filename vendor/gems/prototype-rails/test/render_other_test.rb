@@ -235,17 +235,17 @@ class RenderOtherTest < ActionController::TestCase
   end
 
   def test_should_render_html_formatted_partial_with_rjs
-    xhr :get, :partial_as_rjs
+    get :partial_as_rjs, xhr: true
     assert_equal %(Element.replace("foo", "partial html");), @response.body
   end
 
   def test_should_render_html_formatted_partial_with_rjs_and_js_format
-    xhr :get, :respond_to_partial_as_rjs
+    get :respond_to_partial_as_rjs, xhr: true
     assert_equal %(Element.replace("foo", "partial html");), @response.body
   end
 
   def test_should_render_with_alternate_default_render
-    xhr :get, :render_alternate_default
+    get :render_alternate_default, xhr: true
     assert_equal %(Element.replace("foo", "partial html");), @response.body
   end
 

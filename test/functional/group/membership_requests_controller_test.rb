@@ -24,8 +24,7 @@ class Group::MembershipRequestsControllerTest < ActionController::TestCase
     @req = RequestToJoinYou.create recipient: @group, created_by: @user
     assert_no_difference 'RequestToJoinYou.count' do
       assert_no_difference 'Notice.count' do
-        xhr :post, :create, group_id: @group.to_param,
-                            type: :join
+        post :create, params: { group_id: @group.to_param, type: :join }, xhr: true
       end
     end
     assert_response :redirect

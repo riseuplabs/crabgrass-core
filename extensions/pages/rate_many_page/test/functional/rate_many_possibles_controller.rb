@@ -12,8 +12,7 @@ class RateManyPossiblesControllerTest < ActionController::TestCase
     login_as @user
 
     assert_difference '@page.data.possibles.count' do
-      xhr :post, :create, page_id: @page.id,
-                          possible: { name: 'new option', description: '' }
+      post :create, params: { page_id: @page.id, possible: { name: "new option", description: "" } }, xhr: true
     end
     assert_not_nil assigns(:possible)
   end
@@ -32,7 +31,7 @@ class RateManyPossiblesControllerTest < ActionController::TestCase
     poll = @page.data
     possible = poll.possibles.create name: 'my option', description: 'undescribable'
 
-    xhr :post, :update, page_id: @page.id, id: possible.id, value: '2'
+    post :update, params: { page_id: @page.id, id: possible.id, value: "2" }, xhr: true
 
     assert_equal 1, poll.votes.by_user(@user).for_possible(possible).count
     assert_equal 2, poll.votes.by_user(@user).for_possible(possible).first.value
@@ -44,7 +43,7 @@ class RateManyPossiblesControllerTest < ActionController::TestCase
     stranger = FactoryBot.create :user
 
     login_as stranger
-    xhr :post, :update, page_id: @page.id, id: possible.id, value: '2'
+    post :update, params: { page_id: @page.id, id: possible.id, value: "2" }, xhr: true
 
     assert_equal 0, poll.votes.by_user(stranger).for_possible(possible).count
   end
@@ -57,7 +56,7 @@ class RateManyPossiblesControllerTest < ActionController::TestCase
     assert participant.may?(:edit, @page)
 
     login_as participant
-    xhr :post, :update, page_id: @page.id, id: possible.id, value: '2'
+    post :update, params: { page_id: @page.id, id: possible.id, value: "2" }, xhr: true
 
     assert_equal 1, poll.votes.by_user(participant).for_possible(possible).count
   end

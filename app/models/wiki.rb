@@ -172,7 +172,7 @@ class Wiki < ApplicationRecord
 
   # reload the association
   def reload_versions_and_locks
-    versions(true)
+    versions.reload
     # will clear out obsolete locks (expired or non-existant sections)
     section_locks(true)
   end
