@@ -14,7 +14,7 @@
 #    t.boolean  "private",                  :default => false
 #  end
 
-class SurveyQuestion < ActiveRecord::Base
+class SurveyQuestion < ApplicationRecord
   belongs_to :survey
   serialize :choices, Array
   serialize_default :choices, []

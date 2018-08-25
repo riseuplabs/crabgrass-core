@@ -1,2 +1,2 @@
-class CspReport < ActiveRecord::Base
+class CspReport < ApplicationRecord
 end

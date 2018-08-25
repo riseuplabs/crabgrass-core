@@ -16,7 +16,7 @@
 
 require 'open-uri'
 
-class Avatar < ActiveRecord::Base
+class Avatar < ApplicationRecord
   # This is only used in singular resources and avatar_path.
   # So we use this workaround for form_for paths:
   # https://github.com/rails/rails/issues/1769#issuecomment-41025758

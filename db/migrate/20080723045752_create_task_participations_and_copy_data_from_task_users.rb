@@ -1,4 +1,4 @@
-class TasksUser < ActiveRecord::Base
+class TasksUser < ApplicationRecord
   belongs_to :user
 end
 

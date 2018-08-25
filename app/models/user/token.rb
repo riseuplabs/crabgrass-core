@@ -1,4 +1,4 @@
-class User::Token < ActiveRecord::Base
+class User::Token < ApplicationRecord
   self.table_name = 'tokens'
 
   belongs_to :user

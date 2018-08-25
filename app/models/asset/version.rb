@@ -1,4 +1,4 @@
-class Asset::Version < ActiveRecord::Base
+class Asset::Version < ApplicationRecord
   delegate :page, :public?, :has_access!, to: :asset
 
   def self.policy_class

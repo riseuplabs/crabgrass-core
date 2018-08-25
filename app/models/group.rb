@@ -22,7 +22,7 @@
 #   group.council    => nil or group
 #   group.users      => users
 
-class Group < ActiveRecord::Base
+class Group < ApplicationRecord
   extend RouteInheritance # subclasses use /groups routes
 
   # core group extentions

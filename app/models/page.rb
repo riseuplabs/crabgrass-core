@@ -60,7 +60,7 @@ require 'English'
 #
 #   Yeah, so, there are way too many indices on the pages table.
 
-class Page < ActiveRecord::Base
+class Page < ApplicationRecord
   extend RouteInheritance # subclasses use /pages routes
 
   include Page::Users           # page <> users relationship

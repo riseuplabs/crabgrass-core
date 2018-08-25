@@ -13,7 +13,7 @@
 #
 # add_index "group_participations", ["group_id", "page_id"], :name => "index_group_participations"
 
-class Group::Participation < ActiveRecord::Base
+class Group::Participation < ApplicationRecord
   include Page::ParticipationAccess
 
   belongs_to :page, inverse_of: :group_participations

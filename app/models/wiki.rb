@@ -22,7 +22,7 @@
 # 2. updating body automatically updates html and structure
 # 3. wiki should never get saved with body/body products mismatch
 # 4. loaded wiki should see only the latest body products, if body was updated from outside
-class Wiki < ActiveRecord::Base
+class Wiki < ApplicationRecord
   include Wiki::Locking
   include Wiki::Sections
   include Wiki::Versioning

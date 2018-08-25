@@ -1,4 +1,4 @@
-class Task < ActiveRecord::Base
+class Task < ApplicationRecord
   belongs_to :page
   #  has_and_belongs_to_many :users, :foreign_key => 'task_id'
   has_many :participations,

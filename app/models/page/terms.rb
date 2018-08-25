@@ -37,7 +37,7 @@
 # in a normal page query.
 #
 
-class Page::Terms < ActiveRecord::Base
+class Page::Terms < ApplicationRecord
   include ThinkingSphinx::Scopes
 
   FIELD_WEIGHTS = {

@@ -15,7 +15,7 @@
 #  add_index "memberships", ["user_id", "group_id"], :name => "ug"
 #
 
-class Group::Membership < ActiveRecord::Base
+class Group::Membership < ApplicationRecord
   self.table_name = 'memberships'
 
   belongs_to :user

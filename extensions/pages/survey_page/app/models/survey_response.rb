@@ -8,7 +8,7 @@
 #    t.datetime "created_at"
 #  end
 
-class SurveyResponse < ActiveRecord::Base
+class SurveyResponse < ApplicationRecord
   include ActionView::Helpers::TextHelper # to truncate
 
   belongs_to :user

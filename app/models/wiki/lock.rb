@@ -8,7 +8,7 @@
 # a subsection of :document will appear open to a different user
 # Always use Wiki::Locking methods for manipulating wiki locks
 # since those methods take section hierarchy into account
-class Wiki::Lock < ActiveRecord::Base
+class Wiki::Lock < ApplicationRecord
   belongs_to :wiki
 
   validates_presence_of :wiki

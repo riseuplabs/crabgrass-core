@@ -5,7 +5,7 @@
 #    t.string   "settings"
 #  end
 #
-class Survey < ActiveRecord::Base
+class Survey < ApplicationRecord
   serialize :settings
   serialize_default :settings, edit_may_create: true, edit_may_see_responses: true
 

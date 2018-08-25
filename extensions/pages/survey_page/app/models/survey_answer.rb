@@ -8,7 +8,7 @@
 #    t.integer  "external_video_id", :limit => 11
 #  end
 
-class SurveyAnswer < ActiveRecord::Base
+class SurveyAnswer < ApplicationRecord
   CHOICE_FOR_UNCHECKED = '__UNCHECKED'.freeze
 
   belongs_to :question, class_name: 'SurveyQuestion'
