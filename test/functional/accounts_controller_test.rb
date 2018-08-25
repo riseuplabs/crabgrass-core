@@ -72,7 +72,7 @@ class AccountsControllerTest < ActionController::TestCase
 
     # old_count = User::Token.count
     assert_difference 'User::Token.count' do
-      post :reset_password, email: users(:quentin).email
+      post :reset_password, params: { email: users(:quentin).email }
       assert_response :success
       # assert_message /email has been sent.*reset.*password/i
       # doesn't work becuse flash disappears with render_alert
@@ -84,32 +84,32 @@ class AccountsControllerTest < ActionController::TestCase
     assert_equal 'recovery', token.action
     assert_equal users(:quentin).id, token.user_id
 
-    get :reset_password, token: token.value
+    get :reset_password, params: { token: token.value }
     assert_response :success
 
     assert_difference 'User::Token.count', -1 do
-      post :reset_password, token: token.value, new_password: 'abcdefgh', password_confirmation: 'abcdefgh'
+      post :reset_password, params: { token: token.value, new_password: 'abcdefgh', password_confirmation: 'abcdefgh' }
       assert_response :redirect # test for success message
     end
     assert_equal users(:quentin), User.authenticate('quentin', 'abcdefgh')
   end
 
   def test_forgot_password_invalid_email_should_stay_put
-    post :reset_password, email: 'not rfc822-compliant'
+    post :reset_password, params: { email: 'not rfc822-compliant' }
     assert_response :success
   end
 
   def test_redirect_on_old_or_invalid_token
-    get :reset_password, token: user_tokens(:old_token).value
+    get :reset_password, params: { token: user_tokens(:old_token).value }
     assert_error_message(:invalid_token)
 
-    get :reset_password, token: user_tokens(:strange).value
+    get :reset_password, params: { token: user_tokens(:strange).value }
     assert_error_message(:invalid_token)
 
-    get :reset_password, token: 'invalid'
+    get :reset_password, params: { token: 'invalid' }
     assert_error_message(:invalid_token)
 
-    get :reset_password, token: user_tokens(:tokens_003).value
+    get :reset_password, params: { token: user_tokens(:tokens_003).value }
     assert_response :success
   end
 
@@ -122,7 +122,7 @@ class AccountsControllerTest < ActionController::TestCase
   protected
 
   def post_signup_form(options = {})
-    post(:create, {
+    post(:create, params: {
       user: FactoryBot.attributes_for(:user, options.delete(:user)),
       usage_agreement_accepted: '1'
     }.merge(options))

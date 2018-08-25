@@ -20,28 +20,28 @@ class Group::GroupsControllerTest < ActionController::TestCase
 
   def test_new_committee
     login_as @user
-    get :new, type: 'committee'
+    get :new, params: { type: 'committee' }
     assert_response :success
     assert_template :_choose_parent_group
   end
 
   def test_new_council
     login_as @user
-    get :new, type: 'council'
+    get :new, params: { type: 'council' }
     assert_response :success
     assert_template :_choose_parent_group
   end
 
   def test_new_group
     login_as @user
-    get :new, type: 'group'
+    get :new, params: { type: 'group' }
     assert_response :success
     assert_template 'group/structures/_new_form'
   end
 
   def test_new_network
     login_as @user
-    get :new, type: 'network'
+    get :new, params: { type: 'network' }
     assert_response :success
     assert_template 'group/structures/_new_form'
   end
@@ -49,7 +49,7 @@ class Group::GroupsControllerTest < ActionController::TestCase
   def test_create_group
     login_as @user
     assert_difference 'Group.count' do
-      post :create, group: { name: 'test-create-group', full_name: 'Group for Testing Group Creation!' }
+      post :create, params: { group: { name: 'test-create-group', full_name: 'Group for Testing Group Creation!' } }
       assert_response :redirect
       group = Group.find_by_name 'test-create-group'
       assert_redirected_to group_url(group)
@@ -59,7 +59,7 @@ class Group::GroupsControllerTest < ActionController::TestCase
   def test_create_no_group_without_name
     login_as @user
     assert_no_difference 'Group.count' do
-      post :create, group: { name: '' }
+      post :create, params: { group: { name: '' } }
       assert_error_message
     end
   end
@@ -68,7 +68,7 @@ class Group::GroupsControllerTest < ActionController::TestCase
     FactoryBot.create(:group, name: 'flowers')
     login_as @user
     assert_no_difference 'Group.count' do
-      post :create, group: { name: 'flowers' }
+      post :create, params: { group: { name: 'flowers' } }
       assert_error_message
     end
   end
@@ -78,8 +78,7 @@ class Group::GroupsControllerTest < ActionController::TestCase
     group.add_user! @user
     login_as @user
     assert_difference 'Group::Network.count' do
-      post :create, type: 'network',
-                    group: { name: 'trees', initial_member_group: group.name }
+      post :create, params: { type: 'network', group: { name: 'trees', initial_member_group: group.name } }
     end
     network = Group::Network.last
     assert !@user.direct_member_of?(network),
@@ -93,8 +92,7 @@ class Group::GroupsControllerTest < ActionController::TestCase
     network.add_user! @user
     login_as @user
     assert_no_difference 'Group.count' do
-      post :create, type: 'network',
-                    group: { name: 'trees', initial_member_group: network.name }
+      post :create, params: { type: 'network', group: { name: 'trees', initial_member_group: network.name } }
       assert_error_message
     end
   end
@@ -105,7 +103,7 @@ class Group::GroupsControllerTest < ActionController::TestCase
     group.add_user!(user)
     login_as user
     assert_difference 'Group.count', -1 do
-      delete :destroy, id: group.to_param
+      delete :destroy, params: { id: group.to_param }
     end
   end
 
@@ -114,7 +112,7 @@ class Group::GroupsControllerTest < ActionController::TestCase
     group = FactoryBot.create(:group)
     login_as user
     assert_not_found do
-      delete :destroy, id: group.to_param
+      delete :destroy, params: { id: group.to_param }
     end
   end
 

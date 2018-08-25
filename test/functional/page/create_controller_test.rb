@@ -7,14 +7,14 @@ class Page::CreateControllerTest < ActionController::TestCase
 
   def test_new_page_view
     login_as @user
-    get :new, owner: 'me', type: 'wiki'
+    get :new, params: { owner: 'me', type: 'wiki' }
     # if the owner is the current user we do not set it.
     assert_nil assigns(:owner)
   end
 
   def test_new_group_page_view
     login_as users(:blue)
-    get :new, owner: 'rainbow', type: 'wiki'
+    get :new, params: { owner: 'rainbow', type: 'wiki' }
     # if the owner is the current user we do not set it.
     assert_equal groups(:rainbow), assigns(:owner)
   end
@@ -22,11 +22,7 @@ class Page::CreateControllerTest < ActionController::TestCase
   def test_create_page_for_myself
     login_as @user
     assert_difference 'WikiPage.count' do
-      post :create,
-           owner: 'me',
-           page: { title: 'title' },
-           type: 'wiki',
-           page_type: 'WikiPage'
+      post :create, params: { owner: 'me', page: { title: 'title' }, type: 'wiki', page_type: 'WikiPage' }
     end
     assert_equal @user, Page.last.owner
     assert Page.last.users.include? @user
@@ -37,11 +33,7 @@ class Page::CreateControllerTest < ActionController::TestCase
     @group.add_user! @user
     login_as @user
     assert_difference 'WikiPage.count' do
-      post :create,
-           owner: @group.name,
-           page: { title: 'title' },
-           type: 'wiki',
-           page_type: 'WikiPage'
+      post :create, params: { owner: @group.name, page: { title: 'title' }, type: 'wiki', page_type: 'WikiPage' }
     end
     assert_equal @group, Page.last.owner
     # ensure that there is no user participation
@@ -52,10 +44,10 @@ class Page::CreateControllerTest < ActionController::TestCase
     @not_my_group = FactoryBot.create(:group)
     login_as @user
     post :create,
-         owner: @not_my_group.name,
-         page: { title: 'title' },
-         type: 'wiki',
-         page_type: 'WikiPage'
+          params: { owner: @not_my_group.name,
+                   page: { title: 'title' },
+                   type: 'wiki',
+                   page_type: 'WikiPage' }
     assert Page.last.owner, @user
   end
 
@@ -63,11 +55,7 @@ class Page::CreateControllerTest < ActionController::TestCase
     @group = groups(:public_group)
     login_as @user
     assert_difference 'WikiPage.count' do
-      post :create,
-           owner: @group.name,
-           page: { title: 'title' },
-           type: 'wiki',
-           page_type: 'WikiPage'
+      post :create, params: { owner: @group.name, page: { title: 'title' }, type: 'wiki', page_type: 'WikiPage' }
     end
     assert_equal @group, Page.last.owner
     assert Page.last.users.include? @user
@@ -80,11 +68,7 @@ class Page::CreateControllerTest < ActionController::TestCase
     page_ids = []
     page_urls = []
     3.times do
-      post 'create',
-           owner: @user,
-           page: { title: 'dupe' },
-           type: 'ranked-vote',
-           page_type: 'RankedVotePage'
+      post 'create', params: { owner: @user, page: { title: 'dupe' }, type: 'ranked-vote', page_type: 'RankedVotePage' }
       page = assigns(:page)
 
       assert_equal 'dupe', page.title
@@ -110,9 +94,7 @@ class Page::CreateControllerTest < ActionController::TestCase
     @group = FactoryBot.create(:group)
     @group.add_user! @user
 
-    post 'create', page_id: 'me', type: 'discussion',
-                   page: { title: 'title', summary: '' },
-                   recipients: { @group.name => { access: 'admin' } }
+    post 'create', params: { page_id: 'me', type: 'discussion', page: { title: 'title', summary: '' }, recipients: { @group.name => { access: 'admin' } } }
     assert_equal [@group], assigns(:page).groups,
                  'page should belong to rainbow group'
   end

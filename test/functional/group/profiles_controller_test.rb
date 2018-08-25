@@ -9,7 +9,7 @@ class Group::ProfilesControllerTest < ActionController::TestCase
 
   def test_edit
     login_as @user
-    get :edit, group_id: @group.to_param
+    get :edit, params: { group_id: @group.to_param }
     assert_response :success
   end
 
@@ -17,14 +17,13 @@ class Group::ProfilesControllerTest < ActionController::TestCase
     stranger = FactoryBot.create(:user)
     login_as stranger
     assert_not_found do
-      get :edit, group_id: @group.to_param
+      get :edit, params: { group_id: @group.to_param }
     end
   end
 
   def test_update
     login_as @user
-    post :update, group_id: @group.to_param,
-                  profile: { summary: 'test profile', entity_id: 1 }
+    post :update, params: { group_id: @group.to_param, profile: { summary: 'test profile', entity_id: 1 } }
     assert_response :redirect
     profile = @group.profiles.public.reload
     assert_equal 'test profile', profile.summary
@@ -35,8 +34,7 @@ class Group::ProfilesControllerTest < ActionController::TestCase
     stranger = FactoryBot.create(:user)
     login_as stranger
     assert_not_found do
-      post :update, group_id: @group.to_param,
-                    profile: { summary: 'test profile', entity_id: 1 }
+      post :update, params: { group_id: @group.to_param, profile: { summary: 'test profile', entity_id: 1 } }
     end
   end
 

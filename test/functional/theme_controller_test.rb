@@ -5,7 +5,7 @@ require 'test_helper'
 #
 class ThemeControllerTest < ActionController::TestCase
   def test_show
-    get :show, name: :default, file: :bla
+    get :show, params: { name: :default, file: :bla }
     assert_response :success
   end
 end

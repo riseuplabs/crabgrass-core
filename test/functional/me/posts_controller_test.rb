@@ -7,7 +7,7 @@ class Me::PostsControllerTest < ActionController::TestCase
     login_as me
     Message.send from: me, to: you, body: 'test message'
     discussion = me.discussions.from_user(you).first
-    get :index, discussion_id: you.login
+    get :index, params: { discussion_id: you.login }
     assert_response :success
     assert_equal discussion, assigns(:discussion)
     assert_equal you, assigns(:recipient)
@@ -17,7 +17,7 @@ class Me::PostsControllerTest < ActionController::TestCase
     me = users(:gerrard)
     you = users(:green)
     login_as me
-    get :index, discussion_id: you.login
+    get :index, params: { discussion_id: you.login }
     assert_response :success
     assert_equal [], assigns(:posts)
   end

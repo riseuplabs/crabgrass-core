@@ -15,25 +15,25 @@ class Wiki::VersionsControllerTest < ActionController::TestCase
   end
 
   def test_version_not_found
-    get :show, wiki_id: @wiki.to_param, id: '123'
+    get :show, params: { wiki_id: @wiki.to_param, id: '123' }
     assert_response :redirect
     assert_redirected_to action: :index
   end
 
   def test_show
-    get :show, wiki_id: @wiki.to_param, id: @version.to_param
+    get :show, params: { wiki_id: @wiki.to_param, id: @version.to_param }
     assert_equal @version, assigns['version']
     assert_equal @wiki.versions.first, assigns['former']
   end
 
   def test_index
-    get :index, wiki_id: @wiki.to_param
+    get :index, params: { wiki_id: @wiki.to_param }
     assert_response :success
   end
 
   def test_destroy_not_possible
     assert_raise ActionController::UrlGenerationError do
-      delete :destroy, wiki_id: @wiki.to_param, id: @version.to_param
+      delete :destroy, params: { wiki_id: @wiki.to_param, id: @version.to_param }
     end
   end
 

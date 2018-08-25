@@ -3,7 +3,7 @@ require 'test_helper'
 class Person::HomeControllerTest < ActionController::TestCase
   def test_show
     login_as :blue
-    get :show, person_id: 'blue'
+    get :show, params: { person_id: 'blue' }
     assert_response :success
   end
 
@@ -13,7 +13,7 @@ class Person::HomeControllerTest < ActionController::TestCase
     blue.revoke_access! friends: :view
     blue.revoke_access! peers: :view
     blue.revoke_access! public: :view
-    get :show, person_id: 'blue'
+    get :show, params: { person_id: 'blue' }
     assert_response :success
   end
 
@@ -28,7 +28,7 @@ class Person::HomeControllerTest < ActionController::TestCase
   def test_missing_user
     login_as :blue
     assert_not_found do
-      get :show, person_id: 'missinguserlogin'
+      get :show, params: { person_id: 'missinguserlogin' }
     end
   end
 
@@ -36,7 +36,7 @@ class Person::HomeControllerTest < ActionController::TestCase
     user = FactoryBot.create :user
     user.add_contact! users(:blue), :friend
     login_as :blue
-    get :show, person_id: user.login
+    get :show, params: { person_id: user.login }
     assert_response :success
     assert_equal user, assigns[:user]
   end

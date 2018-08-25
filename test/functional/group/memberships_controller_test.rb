@@ -9,7 +9,7 @@ class Group::MembershipsControllerTest < ActionController::TestCase
 
   def test_index
     login_as @user
-    get :index, group_id: @group.to_param
+    get :index, params: { group_id: @group.to_param }
     assert_response :success
   end
 
@@ -27,8 +27,7 @@ class Group::MembershipsControllerTest < ActionController::TestCase
 
   def test_index_with_links_to_destroy
     login_as users(:blue)
-    get :index, { group_id: groups(:warm) },
-        language_code: 'de'
+    get :index, params: { group_id: groups(:warm) }, session: { language_code: 'de' }
     assert_response :success
   end
 end

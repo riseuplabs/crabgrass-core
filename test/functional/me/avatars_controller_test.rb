@@ -31,6 +31,6 @@ class Me::AvatarsControllerTest < ActionController::TestCase
     file_path = File.join('files', 'photo.jpg')
     file = fixture_file_upload(file_path, 'image/jpeg')
 
-    post :create, avatar: { image_file: file, image_file_url: '' }
+    post :create, params: { avatar: { image_file: file, image_file_url: '' } }
   end
 end

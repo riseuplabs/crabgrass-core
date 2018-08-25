@@ -10,14 +10,14 @@ class Group::PermissionsControllerTest < ActionController::TestCase
 
   def test_index
     login_as @user
-    get :index, group_id: @group.to_param
+    get :index, params: { group_id: @group.to_param }
     assert_response :success
   end
 
   def test_index_no_access
     login_as @other_user
     assert_not_found do
-      get :index, group_id: @group.to_param
+      get :index, params: { group_id: @group.to_param }
     end
   end
 
