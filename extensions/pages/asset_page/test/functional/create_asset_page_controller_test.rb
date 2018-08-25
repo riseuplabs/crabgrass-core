@@ -23,7 +23,7 @@ class CreateAssetPageControllerTest < ActionController::TestCase
         post 'create', page_id: 'me',
                        page: { title: 'test' },
                        asset: { uploaded_data: nil }
-        assert_equal :error, flash[:messages].first[:type],
+        assert_equal :warning, flash[:messages].first[:type],
                      "shouldn't be able to create an asset page with no asset"
       end
     end

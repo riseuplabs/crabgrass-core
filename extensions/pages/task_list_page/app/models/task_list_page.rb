@@ -19,7 +19,7 @@ class TaskListPage < Page
     # For relations we first build the task_ids.
     # Using the relation in the where clause will result in a subselect
     # with a join that makes for a very slow query.
-    task_ids = tasks.respond_to?(:pluck) ? tasks.pluck(:id) : tasks
+    task_ids = tasks.kind_of?(Array) ? tasks :  tasks.pluck(:id)
     includes(:tasks).where(tasks: { id: task_ids })
   end
 end
