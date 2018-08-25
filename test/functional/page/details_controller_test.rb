@@ -4,7 +4,7 @@ class Page::DetailsControllerTest < ActionController::TestCase
   def test_show_details
     page = pages(:blue_page)
     login_as users(:blue)
-    xhr :get, :show, page_id: page.id
+    get :show, params: { page_id: page.id }, xhr: true
     assert_response :success
   end
 
@@ -12,7 +12,7 @@ class Page::DetailsControllerTest < ActionController::TestCase
     page = pages(:blue_page)
     login_as users(:penguin)
     assert_permission_denied do
-      xhr :get, :show, page_id: page.id
+      get :show, params: { page_id: page.id }, xhr: true
     end
   end
 end

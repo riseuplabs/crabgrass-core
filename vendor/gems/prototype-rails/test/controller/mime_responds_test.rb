@@ -178,7 +178,7 @@ class RespondToControllerTest < ActionController::TestCase
   end
 
   def test_xhr
-    xhr :get, :using_defaults
+    get :using_defaults, xhr: true
     assert_equal '$("body").visualEffect("highlight");', @response.body
   end
 end

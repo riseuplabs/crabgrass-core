@@ -21,7 +21,7 @@ class Group::MembershipsControllerTest < ActionController::TestCase
     @group.add_user! other_user
     membership = @group.memberships.find_by_user_id(other_user.id)
     login_as @user
-    xhr :delete, :destroy, group_id: @group.to_param, id: membership.id
+    delete :destroy, params: { group_id: @group.to_param, id: membership.id }, xhr: true
     assert_response :success
   end
 

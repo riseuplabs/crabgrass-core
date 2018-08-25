@@ -14,25 +14,25 @@ class Wiki::LocksControllerTest < ActionController::TestCase
   def test_section_not_found
     @wiki = Wiki.create group: @group
     login_as @user
-    xhr :delete, :destroy, wiki_id: @wiki.id, section: :bla
+    delete :destroy, params: { wiki_id: @wiki.id, section: :bla }, xhr: true
     assert_response :not_found
   end
 
   def test_destroy_own_lock
     login_as @user
-    xhr :delete, :destroy, wiki_id: @wiki.id
+    delete :destroy, params: { wiki_id: @wiki.id }, xhr: true
     assert_nil @wiki.reload.section_edited_by(@user)
   end
 
   def test_cannot_destroy_other_peoples_locks
     login_as @user2
-    xhr :delete, :destroy, wiki_id: @wiki.id
+    delete :destroy, params: { wiki_id: @wiki.id }, xhr: true
     assert_equal :document, @wiki.reload.section_edited_by(@user)
   end
 
   def test_cannot_destroy_locks_when_logged_out
     assert_raises AuthenticationRequired do
-      xhr :delete, :destroy, wiki_id: @wiki
+      delete :destroy, params: { wiki_id: @wiki }, xhr: true
     end
   end
 

@@ -11,7 +11,7 @@ class Page::ParticipationsControllerTest < ActionController::TestCase
 
   def test_star
     assert_difference 'Page::History::AddStar.count' do
-      xhr :post, :update, page_id: @page, id: @upart, star: true
+      post :update, params: { page_id: @page, id: @upart, star: true }, xhr: true
     end
     assert @upart.reload.star
   end
@@ -21,14 +21,14 @@ class Page::ParticipationsControllerTest < ActionController::TestCase
     login_as @other
     @page.update_attribute :public, true
     assert_difference 'User::Participation.count' do
-      xhr :post, :create, page_id: @page, star: true
+      post :create, params: { page_id: @page, star: true }, xhr: true
     end
     assert @other.participations.last.star
   end
 
   def test_watch
     assert_difference 'Page::History::StartWatching.count' do
-      xhr :post, :update, page_id: @page, id: @upart, watch: true
+      post :update, params: { page_id: @page, id: @upart, watch: true }, xhr: true
     end
     assert @upart.reload.watch
   end
@@ -38,7 +38,7 @@ class Page::ParticipationsControllerTest < ActionController::TestCase
     @upart.save
     assert_no_difference 'Page::History.count' do
       assert_permission_denied do
-        xhr :post, :update, page_id: @page, id: @upart, access: :admin
+        post :update, params: { page_id: @page, id: @upart, access: :admin }, xhr: true
       end
     end
     assert_equal :view, @upart.reload.access_sym
@@ -49,7 +49,7 @@ class Page::ParticipationsControllerTest < ActionController::TestCase
     other_upart = @page.add(other_user, access: :view)
     other_upart.save
     assert_difference 'Page::History.count' do
-      xhr :post, :update, page_id: @page, id: other_upart, access: :remove
+      post :update, params: { page_id: @page, id: other_upart, access: :remove }, xhr: true
       assert_response :success
     end
   end
@@ -59,7 +59,7 @@ class Page::ParticipationsControllerTest < ActionController::TestCase
     gpart = @page.add(group, access: :view)
     gpart.save
     assert_difference 'Page::History.count' do
-      xhr :post, :update, page_id: @page, id: gpart, group: true, access: :remove
+      post :update, params: { page_id: @page, id: gpart, group: true, access: :remove }, xhr: true
     end
   end
 end

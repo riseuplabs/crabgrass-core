@@ -10,7 +10,7 @@ class RankedVotePossiblesControllerTest < ActionController::TestCase
 
   def test_add_possible
     assert_difference '@poll.reload.possibles.count' do
-      xhr :post, :create, page_id: @page.id, poll_possible: { name: 'new option', description: '' }
+      post :create, params: { page_id: @page.id, poll_possible: { name: "new option", description: "" } }, xhr: true
     end
   end
 end

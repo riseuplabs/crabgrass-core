@@ -39,8 +39,8 @@ class Group::NetworkTest < ActiveSupport::TestCase
     assert network.groups.include?(group1)
     assert network.groups.include?(group2)
 
-    assert network.groups(true).include?(group1)
-    assert network.groups(true).include?(group2)
+    assert network.groups.reload.include?(group1)
+    assert network.groups.reload.include?(group2)
 
     assert_equal version + 2, network.reload.version
 
@@ -75,7 +75,7 @@ class Group::NetworkTest < ActiveSupport::TestCase
     end
 
     assert !network.groups.include?(group)
-    assert !network.groups(true).include?(group)
+    assert !network.groups.reload.include?(group)
 
     user = User.find(user.id)
     assert !user.member_of?(network), "user should NOT be a member of the network (all group ids = #{user.all_group_id_cache.inspect})"

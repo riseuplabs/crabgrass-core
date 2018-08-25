@@ -35,7 +35,7 @@ class FunctionalFragmentCachingTest < ActionController::TestCase
   end
 
   def test_fragment_caching_in_rjs_partials
-    xhr :get, :js_fragment_cached_with_partial
+    get :js_fragment_cached_with_partial, xhr: true
     assert_response :success
     assert_match(/Old fragment caching in a partial/, @response.body)
     assert_match "Old fragment caching in a partial", @store.instance_variable_get('@data').values.first.value

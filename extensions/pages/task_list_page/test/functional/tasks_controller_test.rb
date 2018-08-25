@@ -14,7 +14,7 @@ class TasksControllerTest < ActionController::TestCase
     assert_equal 2, Task.find(2).position
     assert_equal 3, Task.find(3).position
 
-    xhr :post, :sort, page_id: @page.id, sort_list_pending: %w[3 2 1]
+    post :sort, params: { page_id: @page.id, sort_list_pending: ["3", "2", "1"] }, xhr: true
     assert_response :success
 
     assert_equal 3, Task.find(1).position
@@ -24,8 +24,7 @@ class TasksControllerTest < ActionController::TestCase
 
   def test_create_task
     assert_difference '@page.tasks.count' do
-      xhr :post, :create, page_id: @page.id,
-                          task: { name: 'new task', user_ids: ['5'], description: 'new task description' }
+      post :create, params: { page_id: @page.id, task: { name: "new task", user_ids: ["5"], description: "new task description" } }, xhr: true
     end
   end
 
@@ -33,8 +32,7 @@ class TasksControllerTest < ActionController::TestCase
     task = @page.tasks.create name: 'blue... do something!',
                               user_ids: [@user.id]
     assert_difference '@user.tasks.count', -1 do
-      xhr :put, :update, page_id: @page, id: task.id,
-                         task: { name: 'updated task', description: 'new task description' }
+      put :update, params: { page_id: @page, id: task.id, task: { name: "updated task", description: "new task description" } }, xhr: true
     end
   end
 end
