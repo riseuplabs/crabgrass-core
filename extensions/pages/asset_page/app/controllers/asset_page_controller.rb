@@ -1,5 +1,5 @@
 class AssetPageController < Page::BaseController
-  # before_filter :fetch_asset
+  # before_action :fetch_asset
 
   def show
     redirect_to page_url(@page, action: 'new') if @asset.nil?

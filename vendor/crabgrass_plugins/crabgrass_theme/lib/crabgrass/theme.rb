@@ -30,7 +30,7 @@ module Crabgrass
     @@themes = HashWithIndifferentAccess.new
 
     # for the theme to work, this controller must be set.
-    # crabgrass sets it in a before_filter common to call controllers.
+    # crabgrass sets it in a before_action common to call controllers.
     # TODO: will this be a problem with multiple threads?
     attr_accessor :controller
 

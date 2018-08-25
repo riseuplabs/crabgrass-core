@@ -1,11 +1,11 @@
 class Group::GroupsController < Group::BaseController
   include Common::Tracking::Action
 
-  before_filter :initialize_group, only: %w[new create]
-  before_filter :fetch_group, only: :destroy
-  before_filter :fetch_associations, only: :destroy
+  before_action :initialize_group, only: %w[new create]
+  before_action :fetch_group, only: :destroy
+  before_action :fetch_associations, only: :destroy
 
-  after_filter :notify_former_users, only: :destroy
+  after_action :notify_former_users, only: :destroy
 
 
   def new

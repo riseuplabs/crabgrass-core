@@ -5,8 +5,8 @@
 class Page::BaseController < ApplicationController
   public
 
-  before_filter :login_required, except: :show
-  before_filter :bust_cache, only: :show
+  before_action :login_required, except: :show
+  before_action :bust_cache, only: :show
   after_action :verify_authorized
 
   layout 'page'
@@ -18,16 +18,16 @@ class Page::BaseController < ApplicationController
   ## (the order matters!)
   ##
 
-  prepend_before_filter :default_fetch_data, except: :new
+  prepend_before_action :default_fetch_data, except: :new
 
-  append_before_filter :default_setup_options
-  append_before_filter :load_posts
+  append_before_action :default_setup_options
+  append_before_action :load_posts
 
-  # after_filters are processed the inside out.
+  # after_actions are processed the inside out.
   # So whatever is defined first will be processed last
   # ... after all the others
-  after_filter :save_if_needed, except: :create
-  after_filter :update_viewed, only: :show
+  after_action :save_if_needed, except: :create
+  after_action :update_viewed, only: :show
 
   include Page::BeforeFilters
 

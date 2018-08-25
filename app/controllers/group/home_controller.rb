@@ -1,8 +1,8 @@
 class Group::HomeController < Group::BaseController
-  skip_before_filter :login_required
+  skip_before_action :login_required
 
-  before_filter :fetch_wikis
-  after_filter :track_visit, if: :logged_in?
+  before_action :fetch_wikis
+  after_action :track_visit, if: :logged_in?
 
   layout 'sidecolumn'
   helper 'wikis/base', 'wikis/sections'

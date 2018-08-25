@@ -1,5 +1,5 @@
 class Group::PagesController < Group::BaseController
-  skip_before_filter :login_required
+  skip_before_action :login_required
 
   include_controllers 'common/page_search'
 

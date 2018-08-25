@@ -2,7 +2,7 @@
 
 class RobotsController < ApplicationController
 
-  before_filter :login_required       # if you want to require logins
+  before_action :login_required       # if you want to require logins
   
   permissions :robots                 # will load app/permissions/robots_permissions.rb
   permissions 'robots/cyborgs'        # app/permissions/robots/cyborgs_permissions.rb
@@ -221,7 +221,7 @@ the permission check happens.
 Manual approach
 --------------------
 
-  before_filter :fetch_robot, :login_required
+  before_action :fetch_robot, :login_required
   permissions :robots
 
   protected
@@ -248,7 +248,7 @@ Automatic approach
 
 in app/controllers/robots_controller.rb:
 
-  before_filter :fetch_robot, :login_required
+  before_action :fetch_robot, :login_required
   permissions :robots
 
   def show

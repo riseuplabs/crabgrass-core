@@ -1,6 +1,6 @@
 class TaskListPageController < Page::BaseController
-  before_filter :fetch_user_participation
-  before_filter :setup_second_nav
+  before_action :fetch_user_participation
+  before_action :setup_second_nav
 
   def show
     authorize @page

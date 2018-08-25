@@ -1,6 +1,6 @@
 class Wiki::BaseController < ApplicationController
-  before_filter :fetch_wiki
-  before_filter :login_required
+  before_action :fetch_wiki
+  before_action :login_required
   after_action :verify_authorized
 
   helper 'wikis/base'

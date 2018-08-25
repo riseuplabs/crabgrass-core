@@ -1,5 +1,5 @@
 class Person::FriendRequestsController < Person::BaseController
-  before_filter :login_required
+  before_action :login_required
 
   def new
     @request = RequestToFriend.new recipient: @user, created_by: current_user

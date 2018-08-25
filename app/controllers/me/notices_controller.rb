@@ -1,5 +1,5 @@
 class Me::NoticesController < Me::BaseController
-  before_filter :fetch_notice, only: %i[destroy]
+  before_action :fetch_notice, only: %i[destroy]
 
   def index
     @notices = Notice.for_user(current_user)

@@ -1,8 +1,8 @@
 class AssetsController < ApplicationController
-  before_filter :symlink_public_asset, only: :show
+  before_action :symlink_public_asset, only: :show
   after_action :verify_authorized
 
-  prepend_before_filter :fetch_asset, only: %i[show destroy]
+  prepend_before_action :fetch_asset, only: %i[show destroy]
 
   def show
     authorize @asset

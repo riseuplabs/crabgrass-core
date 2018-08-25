@@ -1,7 +1,7 @@
 class TasksController < Page::BaseController
-  before_filter :fetch_task, only: %i[edit update destroy]
-  before_filter :setup_second_nav
-  after_filter :update_participations, only: %i[create update destroy]
+  before_action :fetch_task, only: %i[edit update destroy]
+  before_action :setup_second_nav
+  after_action :update_participations, only: %i[create update destroy]
 
   def create
     @task = @page.tasks.new task_params.merge created_by: current_user

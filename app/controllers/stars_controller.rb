@@ -23,7 +23,7 @@
 class StarsController < ApplicationController
   include Common::Tracking::Action
 
-  before_filter :fetch_starred
+  before_action :fetch_starred
   track_actions :create
 
   def create
@@ -43,7 +43,7 @@ class StarsController < ApplicationController
     @starred = Post.find(params[:post_id])
     @star = @starred.stars.where(user_id: current_user).first
     # Prevent sending notifcation if the action will result in a noop.
-    # redirects in a before filter skip the action and after_filters.
+    # redirects in a before filter skip the action and after_actions.
     redirect_to @starred if @star.blank? && action?(:destroy)
     redirect_to @starred if @star.present? && action?(:create)
   end

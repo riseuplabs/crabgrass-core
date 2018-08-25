@@ -217,7 +217,7 @@ module Common::Application::RescueErrors
   def render_error_js(exception = nil, options = {})
     error exception if exception.present?
     log_exception(exception)
-    return if performed? # error in after_filter
+    return if performed? # error in after_action
     render template: 'error/alert', locals: { exception: exception },
            status: options[:status]
   end

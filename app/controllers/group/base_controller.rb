@@ -1,8 +1,8 @@
 class Group::BaseController < ApplicationController
-  before_filter :fetch_group
+  before_action :fetch_group
 
   # default permission for all group controllers
-  before_filter :login_required
+  before_action :login_required
   after_action :verify_authorized
 
   helper 'group/links'

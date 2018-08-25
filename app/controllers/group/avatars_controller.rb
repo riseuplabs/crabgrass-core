@@ -1,7 +1,7 @@
 class Group::AvatarsController < Group::BaseController
   include_controllers 'common/avatars'
   include_controllers 'common/always_perform_caching'
-  before_filter :setup
+  before_action :setup
 
   protected
 

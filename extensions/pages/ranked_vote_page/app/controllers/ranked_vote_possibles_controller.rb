@@ -1,6 +1,6 @@
 class RankedVotePossiblesController < Page::BaseController
-  before_filter :fetch_poll
-  before_filter :fetch_possible, only: %i[edit update destroy]
+  before_action :fetch_poll
+  before_action :fetch_possible, only: %i[edit update destroy]
 
   # returns nothing
   # for this to work, there must be a <ul id='sort_list_xxx'> element

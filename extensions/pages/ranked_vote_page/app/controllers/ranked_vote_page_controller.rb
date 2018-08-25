@@ -1,6 +1,6 @@
 class RankedVotePageController < Page::BaseController
-  before_filter :fetch_poll
-  before_filter :find_possibles, only: %i[show edit]
+  before_action :fetch_poll
+  before_action :find_possibles, only: %i[show edit]
 
   def show
     authorize @page
