@@ -1,4 +1,4 @@
-class Notice < ActiveRecord::Base
+class Notice < ApplicationRecord
   belongs_to :user
   belongs_to :noticable, polymorphic: true
   belongs_to :avatar

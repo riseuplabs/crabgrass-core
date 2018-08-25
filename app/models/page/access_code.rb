@@ -18,7 +18,7 @@
 
 require 'password'
 
-class Page::AccessCode < ActiveRecord::Base
+class Page::AccessCode < ApplicationRecord
   self.table_name = 'page_access_codes'
 
   belongs_to :user

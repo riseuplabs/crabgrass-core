@@ -12,7 +12,7 @@
 #    t.boolean "failure"
 #  end
 #
-class Thumbnail < ActiveRecord::Base
+class Thumbnail < ApplicationRecord
   #
   # Our parent could be the main asset, or it could be a *version* of the
   # asset.

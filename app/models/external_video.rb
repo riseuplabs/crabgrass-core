@@ -5,5 +5,5 @@
 # are still around.
 #
 
-class ExternalVideo < ActiveRecord::Base
+class ExternalVideo < ApplicationRecord
 end

@@ -71,7 +71,7 @@
 #   add_index "assets", ["page_terms_id"], :name => "pterms"
 #
 
-class Asset < ActiveRecord::Base
+class Asset < ApplicationRecord
   include Crabgrass::Page::Data
 
   # fields in assets table not in asset_versions

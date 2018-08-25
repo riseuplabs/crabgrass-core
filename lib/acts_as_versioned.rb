@@ -205,7 +205,7 @@ module ActiveRecord #:nodoc:
         #
         # Create the dynamic versioned model
         #
-        const_set(versioned_class_name, Class.new(ActiveRecord::Base)).class_eval do
+        const_set(versioned_class_name, Class.new(ApplicationRecord)).class_eval do
           def self.reloadable?
             false
           end

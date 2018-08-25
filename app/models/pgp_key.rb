@@ -6,7 +6,7 @@
 #
 #
 
-class PgpKey < ActiveRecord::Base
+class PgpKey < ApplicationRecord
 
   belongs_to :user
   before_validation :update_key

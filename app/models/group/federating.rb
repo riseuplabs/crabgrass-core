@@ -17,7 +17,7 @@
 #   t.integer "delegation_id", :limit => 11
 # end
 #
-class Group::Federating < ActiveRecord::Base
+class Group::Federating < ApplicationRecord
   self.table_name = 'federatings'
 
   # required

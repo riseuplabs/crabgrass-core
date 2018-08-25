@@ -11,7 +11,7 @@
 #  add_index "discussions", ["page_id"], :name => "index_discussions_page_id"
 #
 
-class Discussion < ActiveRecord::Base
+class Discussion < ApplicationRecord
   ##
   ## ASSOCIATIONS
   ##

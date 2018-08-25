@@ -27,7 +27,7 @@
 # Anytime an action needs approval, a Request is made.
 # This includes invitations, requests to join, RSVP, etc.
 #
-class Request < ActiveRecord::Base
+class Request < ApplicationRecord
   include AASM
 
   ##

@@ -1,6 +1,6 @@
 # user to user relationship
 
-class User::Relationship < ActiveRecord::Base
+class User::Relationship < ApplicationRecord
   self.table_name = :relationships
 
   belongs_to :user

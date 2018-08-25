@@ -13,7 +13,7 @@
 # attend, :boolean      -- the user will attend event
 #
 
-class User::Participation < ActiveRecord::Base
+class User::Participation < ApplicationRecord
   include Page::ParticipationAccess
 
   belongs_to :page, inverse_of: :user_participations

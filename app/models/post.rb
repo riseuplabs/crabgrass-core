@@ -9,7 +9,7 @@
 #    t.string   "type"
 #  end
 
-class Post < ActiveRecord::Base
+class Post < ApplicationRecord
   ##
   ## ASSOCIATIONS
   ##
