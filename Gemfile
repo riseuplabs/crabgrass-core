@@ -63,7 +63,7 @@ gem 'prototype-rails', path: 'vendor/gems/prototype-rails'
 gem 'thinking-sphinx', '~> 3.4.2'
 
 # Enhanced Tagging lib. Used to tag pages
-gem 'acts-as-taggable-on', '~> 4.0'
+gem 'acts-as-taggable-on', '~> 6.0'
 #gem 'acts-as-taggable-on', '~> 5.0'
 
 #
