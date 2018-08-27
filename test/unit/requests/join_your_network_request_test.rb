@@ -46,6 +46,6 @@ class JoinYourNetworkRequestTest < ActiveSupport::TestCase
     assert_nothing_raised do
       req.approve_by!(@user)
     end
-    assert @network.groups(true).include?(@group)
+    assert @network.groups.reload.include?(@group)
   end
 end

@@ -74,7 +74,7 @@ class Wiki::VersioningTest < ActiveSupport::TestCase
 
     @wiki.revert_to_version!(2, users(:purple))
     assert_equal '2', @wiki.body, 'should revert wiki body'
-    assert_equal 2, @wiki.versions(true).size,
+    assert_equal 2, @wiki.versions.reload.size,
                  'should delete all newer versions'
     assert_equal '2', @wiki.versions.find_by_version(2).body,
                  'should keep version 2'

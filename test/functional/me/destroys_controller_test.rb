@@ -23,7 +23,7 @@ class Me::DestroysControllerTest < ActionController::TestCase
     login_as @user
     post :update, params: { scrub_name: true }
     # we will only have a User::Ghost if we load the user again...
-    assert_nil User.find(@user).read_attribute :display_name
+    assert_nil User.find(@user.id).read_attribute :display_name
   end
 
   def test_notification

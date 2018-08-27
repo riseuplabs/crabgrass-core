@@ -14,9 +14,9 @@ class Page::TermsTest < ActiveSupport::TestCase
   def test_destroy
     user = users(:blue)
     page = DiscussionPage.create! title: 'hi', user: user
-    assert page.page_terms(true)
+    assert page.reload_page_terms
     page.destroy
-    assert_nil page.page_terms(true)
+    assert_nil page.reload_page_terms
   end
 
   def test_tagging_with_odd_characters

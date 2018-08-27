@@ -126,8 +126,7 @@ class Profile < ApplicationRecord
     collections = {
       'websites'  => ::ProfileWebsite
     }
-
-    profile_params.stringify_keys!
+    profile_params.to_h.stringify_keys!
 
     params = profile_params.delete_if { |k, _v| !valid_params.include?(k) && !collections.keys.include?(k) }
     params['summary_html'] = nil if params['summary'] == ''

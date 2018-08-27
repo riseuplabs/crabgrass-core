@@ -42,7 +42,7 @@ class Wiki::LockingTest < ActiveSupport::TestCase
     assert_nothing_raised do
       @wiki.lock! 'section-two', @user
     end
-    assert_nothing_raised("should not raise Wiki::LockedError when locking 'section-two' section again") do
+    assert_nothing_raised do
       @wiki.lock! 'section-two', @user
     end
   end
@@ -140,7 +140,7 @@ class Wiki::LockingTest < ActiveSupport::TestCase
     # release locks
     #
     test_open_sections.each do |section_heading|
-      assert_nothing_raised "should raise no errors when unlocking #{section_heading.inspect} section" do
+      assert_nothing_raised do
         @wiki.release_my_lock! section_heading, @user
       end
     end

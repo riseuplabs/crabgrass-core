@@ -377,8 +377,8 @@ class Request < ApplicationRecord
 
   # destroy all requests relating to this user
   def self.destroy_for_user(user)
-    destroy_all ['created_by_id = ?', user.id]
-    destroy_all ["recipient_id = ? AND recipient_type = 'User'", user.id]
+    where('created_by_id = ?', user.id).
+      or(Request.where("recipient_id = ? AND recipient_type = 'User'", user.id)).destroy_all
   end
 
   # destroy all requests relating to this group
