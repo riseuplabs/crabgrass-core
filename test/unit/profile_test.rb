@@ -80,7 +80,7 @@ class ProfileTest < ActiveSupport::TestCase
                                })
     end
 
-    assert_not_nil profile.picture(true).public_file_path
+    assert_not_nil profile.reload_picture.public_file_path
     assert_equal 'pigeon point', profile.picture.caption
 
     if defined?(ExternalVideo)

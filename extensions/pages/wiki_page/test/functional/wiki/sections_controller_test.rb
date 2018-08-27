@@ -34,7 +34,7 @@ class Wiki::SectionsControllerTest < ActionController::TestCase
     page = WikiPage.create! title: 'problem text', owner: 'blue' do |page|
       page.data = Wiki.new(body: "\n\nh1. hello\n\n** what?\n\nh1. goodbye\n\n 😁")
     end
-    get :show, id: page.data_id
+    get :show, params: { id: page.data_id }
     page = assigns(:page)
     assert_nothing_raised do
       get :edit, params: { id: page.data_id, section: "hello" }, xhr: true

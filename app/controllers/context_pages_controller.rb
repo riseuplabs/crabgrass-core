@@ -76,7 +76,7 @@ class ContextPagesController < DispatchController
   end
 
   def prepare_params_for_not_found
-    env['action_dispatch.exception'] = ErrorNotFound.new(:page)
+    request.env['action_dispatch.exception'] = ErrorNotFound.new(:page)
   end
 
   def new_title

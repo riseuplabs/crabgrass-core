@@ -4,17 +4,17 @@ class WikiPageControllerTest < ActionController::TestCase
   def test_show
     login_as :orange
     # existing page
-    get :show, id: pages(:wiki)
+    get :show, params: { id: pages(:wiki) }
     assert_response :success
   end
 
   def test_not_found_without_login
-    get :show, id: pages(:wiki)
+    get :show, params: { id: pages(:wiki) }
     assert_response 404
   end
 
   def test_show_without_login
-    get :show, id: pages(:public_wiki)
+    get :show, params: { id: pages(:public_wiki) }
     assert_response :success
   end
 

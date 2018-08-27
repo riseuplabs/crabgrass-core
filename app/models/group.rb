@@ -28,8 +28,8 @@ class Group < ApplicationRecord
   # core group extentions
   include Group::Groups     # group <--> group behavior
   include Group::Users      # group <--> user behavior
-  include Group::Featured   # this makes this group's pages featureable
   include Group::Pages      # group <--> page behavior
+  include Group::Featured   # this makes this group's pages featureable
   include Group::Cache      # only versioning so far
 
   acts_as_castle

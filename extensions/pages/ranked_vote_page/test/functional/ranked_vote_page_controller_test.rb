@@ -9,7 +9,7 @@ class RankedVotePageControllerTest < ActionController::TestCase
   end
 
   def test_show_empty_redirects
-    get :show, id: @page.id
+    get :show, params: { id: @page.id }
     assert_response :redirect
     assert_redirected_to @controller.send(:page_url, @page, action: :edit)
   end
@@ -18,13 +18,13 @@ class RankedVotePageControllerTest < ActionController::TestCase
     @poll.possibles.create do |pos|
       pos.name = 'new option'
     end
-    get :show, id: @page.id
+    get :show, params: { id: @page.id }
     assert_response :success
     assert_template 'ranked_vote_page/show'
   end
 
   def test_edit
-    get :edit, id: @page
+    get :edit, params: { id: @page }
     assert_response :success
   end
 

@@ -30,7 +30,7 @@ class Page::AttachmentTest < ActiveSupport::TestCase
     page.public = true
     page.save
 
-    page.assets(true).each do |asset|
+    page.assets.reload.each do |asset|
       assert asset.public?
     end
 

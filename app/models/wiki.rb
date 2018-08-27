@@ -65,10 +65,9 @@ class Wiki < ApplicationRecord
   end
 
   # section locks should never be nil
-  alias existing_section_locks section_locks
-  def section_locks(force_reload = false)
+  def section_locks
     # current section_locks or create a new one if it doesn't exist
-    locks = (existing_section_locks(force_reload) || build_section_locks(wiki: self))
+    locks = (reload_section_locks || build_section_locks(wiki: self))
     # section_locks should always have self as its wiki instance
     # in case self.body is updated (and section names get changed)
     locks.wiki = self
@@ -174,7 +173,7 @@ class Wiki < ApplicationRecord
   def reload_versions_and_locks
     versions.reload
     # will clear out obsolete locks (expired or non-existant sections)
-    section_locks(true)
+    section_locks
   end
 
   ##

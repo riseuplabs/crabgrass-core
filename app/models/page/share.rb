@@ -49,6 +49,8 @@ class Page::Share
   def initialize(page, sender, defaults = {})
     @page = page
     @sender = sender
+    # FIXME: do not permit everything
+    defaults = defaults.permit!.to_h if defaults.class == ActionController::Parameters
     @defaults = defaults.with_indifferent_access
   end
 
@@ -61,6 +63,8 @@ class Page::Share
   protected
 
   def build_recipients(recipient_params)
+    # FIXME: do not permit everything
+    recipient_params = recipient_params.permit!.to_h if recipient_params.class == ActionController::Parameters
     Array(recipient_params).map! do |param|
       Page::Recipients.new(param, page)
     end

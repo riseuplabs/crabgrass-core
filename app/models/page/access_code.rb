@@ -42,7 +42,7 @@ class Page::AccessCode < ApplicationRecord
   end
 
   def self.cleanup_expired
-    delete_all ['expires_at < ?', Time.now.utc]
+    where('expires_at < ?', Time.now.utc).delete_all
   end
 
   def days_left

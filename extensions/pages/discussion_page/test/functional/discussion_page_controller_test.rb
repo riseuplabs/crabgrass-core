@@ -7,7 +7,7 @@ class DiscussionPageControllerTest < ActionController::TestCase
 
   def test_show
     page = DiscussionPage.where(public: true).first
-    get :show, id: page.id
+    get :show, params: { id: page.id }
     assert_response :success
   end
 end

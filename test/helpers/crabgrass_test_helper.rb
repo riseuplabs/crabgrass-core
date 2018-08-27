@@ -13,7 +13,7 @@ module CrabgrassTestHelper
   def check_associations(m)
     @m = m.new
     m.reflect_on_all_associations.each do |assoc|
-      assert_nothing_raised("association '#{assoc.name}' caused an error") do
+      assert_nothing_raised do
         @m.send(assoc.name)
       end
     end

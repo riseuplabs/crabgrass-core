@@ -132,7 +132,7 @@ protected
 
   def updated_page_as(user, time = 1.day.ago)
     page.title = 'new title from ' + user.display_name
-    page.updated_by user
+    page[:updated_by_id] = user.id
     page.save
     Page::History::ChangeTitle.create user: user, page: page, created_at: time
   end
@@ -140,14 +140,14 @@ protected
   def added_comment_as(user, time = 1.day.ago)
     post = FactoryBot.create(:post)
     page.add_post(user, body: post)
-    page.updated_by user
+    page[:updated_by_id] = user.id
     page.save
     assert page.discussion.present?
     Page::History::AddComment.create user: user, page: page, created_at: time, item: post
   end
 
   def updated_wiki_as(user, time = 1.day.ago)
-    page.updated_by user
+    page[:updated_by_id] = user.id
     page.save
     assert page.discussion.present?
     Page::History::UpdatedContent.create user: user, page: page, created_at: time

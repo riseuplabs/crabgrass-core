@@ -50,7 +50,7 @@ class Mailer::PgpSignTest < ActionMailer::TestCase
 
   def updated_page_as(user, time = 1.day.ago)
     page.title = 'new title from ' + user.display_name
-    page.updated_by user
+    page[:updated_by_id] = user.id
     page.save
     Page::History::ChangeTitle.create user: user, page: page, created_at: time
   end

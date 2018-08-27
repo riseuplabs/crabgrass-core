@@ -19,6 +19,6 @@ class Group::MembersTest < ActiveSupport::TestCase
     group.users.each do |user|
       assert users.include?(user) || !user.access?(public: :pester)
     end
-    assert_equal users.uniq, users
+    assert_equal users.distinct, users
   end
 end

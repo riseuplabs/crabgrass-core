@@ -25,7 +25,7 @@ class Wiki::VersionsControllerTest < ActionController::TestCase
     assert_equal 6, wiki.versions.last.version
 
     # find versions
-    get :show, wiki_id: wiki.id, id: 5
+    get :show, params: { wiki_id: wiki.id, id: 5 }
     assert_response :success
     assert_equal 5, assigns(:version).version
     assert_equal 'text from purple for the wiki', assigns(:wiki).body
@@ -39,7 +39,7 @@ class Wiki::VersionsControllerTest < ActionController::TestCase
     wiki.update_section!(:document, users(:purple), 1, 'text for the wiki')
     login_as :orange
     # should fail gracefully for non-existant version
-    get :show, wiki_id: wiki.id, id: 7
+    get :show, params: { wiki_id: wiki.id, id: 7 }
     assert_response :redirect
     assert_redirected_to action: :index
   end

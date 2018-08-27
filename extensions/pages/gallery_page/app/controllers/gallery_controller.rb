@@ -9,7 +9,7 @@ class GalleryController < Page::BaseController
     # @images = @page.images.paginate(page: params[:page])
     # I have disabled pagination on the edit view. If you paginate
     # during edit, then you can't fully reorder the images.
-    @images = @page.images(page: params[:page])
+    @images = @page.images
   end
 
   protected

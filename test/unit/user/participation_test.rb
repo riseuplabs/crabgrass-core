@@ -76,7 +76,7 @@ class User::ParticipationTest < ActiveSupport::TestCase
     page.add(user)
     page.save!
     user.destroy
-    assert page.user_participations(true).none?
+    assert page.user_participations.reload.none?
   end
 
   def test_ids_update
