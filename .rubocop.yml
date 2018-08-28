@@ -19,8 +19,6 @@ Metrics/LineLength:
     - 'config/deploy.rb'
     - 'config/permissions.rb'
     - 'lib/**/*'
-    - 'home/dora/Dev/crabgrass-media/'
-    - 'home/dora/Dev/2018'
 Style/FrozenStringLiteralComment:
   AutoCorrect: false
 

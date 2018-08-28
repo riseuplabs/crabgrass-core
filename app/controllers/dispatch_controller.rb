@@ -18,14 +18,15 @@ class DispatchController < ApplicationController
 
   # create a new instance of a controller, and pass it whatever info regarding
   # current group or user context or page object that we have gathered.
+
   def new_controller(controller_name)
     modify_params controller: controller_name
     class_name = "#{params[:controller].camelcase}Controller"
     klass = class_name.constantize
-    klass.new.tap do |instance|
-      if instance.respond_to?(:seed)
-        instance.seed group: @group, user: @user, page: @page
-      end
+    if klass.method_defined? :seed_instance
+      klass.seed_instance group: @group, user: @user, page: @page
+    else
+      klass.new
     end
   end
 

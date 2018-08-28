@@ -39,7 +39,9 @@ class Page::CreateController < ApplicationController
     redirect_to page_url(@page)
   end
 
-  # if the page controller is call by our custom DispatchController,
+  protected
+
+  # if the page controller is called by our custom DispatchController,
   # objects which have already been loaded will be passed to the tool
   # via this initialize method.
   def initialize(seed = {})
@@ -48,8 +50,6 @@ class Page::CreateController < ApplicationController
     @group = seed[:group]  # the group context, if any
     @page  = seed[:page]   # the page object, if already fetched
   end
-
-  protected
 
   #
   # before filters

@@ -1,15 +1,17 @@
+GIT
+  remote: https://github.com/voxmedia/prototype-rails.git
+  revision: e385756cbabb5608d1eab47b6416cdd49613c73b
+  ref: e385756cbabb5608d1eab47b6416cdd49613c73b
+  specs:
+    prototype-rails (4.1.3)
+      rails (>= 4.2)
+
 PATH
   remote: vendor/gems/crabgrass-media
   specs:
     crabgrass_media (0.3.0)
       activesupport (~> 5.0)
       mime-types (~> 3.1)
-
-PATH
-  remote: vendor/gems/prototype-rails
-  specs:
-    prototype-rails (4.0.0)
-      rails (~> 5.0.7)
 
 PATH
   remote: vendor/gems/riseuplabs-greencloth-0.1
