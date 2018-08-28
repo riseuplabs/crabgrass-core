@@ -48,16 +48,9 @@ gem 'sass'
 
 ##
 # Prototype - yes. we still use it.
-# these will be replaced by jquery equivalents at some point:
-##
-
-# does not support rails 5
-# we use the rails 4.2 branch with rails 5.0
-# replace alaias_method_chain with alias_method
-# tests do not pass
-#gem 'prototype-rails', github: 'rails/prototype-rails', branch: '4.2'
-gem 'prototype-rails', path: 'vendor/gems/prototype-rails'
-#gem 'prototype-rails', path: '/home/dora/Dev/crabgrass_project/2018/august/prototype-rails-5-1'
+# we use a fork which is rails 5.x compatible
+# tests do not pass for this fork
+gem 'prototype-rails', github: 'voxmedia/prototype-rails', ref: 'e385756cbabb5608d1eab47b6416cdd49613c73b'
 
 # Full text search for the database
 gem 'thinking-sphinx', '~> 3.4.2'
@@ -153,9 +146,6 @@ gem 'greencloth', require: 'greencloth',
 # version is rather strict for now as api may still change.
 gem 'crabgrass_media', '~> 0.3.0', require: 'media',
                                    path: 'vendor/gems/crabgrass-media'
-#gem 'crabgrass_media', '~> 0.4.0', require: 'media',
-#                                    path: '/home/dora/Dev/crabgrass_project/crabgrass-media'
-
 
 ##
 ## not required, but a really good idea

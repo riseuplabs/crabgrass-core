@@ -17,19 +17,4 @@ module Common::Application::CurrentSite
     end
   end
 
-  public
-
-  if Rails.env.test?
-
-    # used for testing
-    def disable_current_site
-      @current_site_disabled = true
-    end
-
-    # used for testing
-    def enable_current_site
-      @current_site = nil
-      @current_site_disabled = false
-    end
-  end
 end
