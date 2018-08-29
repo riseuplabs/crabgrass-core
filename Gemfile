@@ -11,8 +11,7 @@ end
 ##
 
 # Rails is the framework we use.
-#gem 'rails', '~> 5.1.6'
-gem 'rails', '~> 5.0.7'
+gem 'rails', '~> 5.1.6'
 
 # Security updates
 # https://github.com/sparklemotion/nokogiri/issues/1785
@@ -144,8 +143,7 @@ gem 'greencloth', require: 'greencloth',
 
 # media upload post processing has it's own repo
 # version is rather strict for now as api may still change.
-gem 'crabgrass_media', '~> 0.3.0', require: 'media',
-                                   path: 'vendor/gems/crabgrass-media'
+gem 'crabgrass_media', '~> 0.3.0', require: 'media'
 
 ##
 ## not required, but a really good idea

@@ -23,7 +23,7 @@ class GalleryImageControllerTest < ActionController::TestCase
   def test_show_not_found
     login_as :blue
     assert @asset.id, 'image should not be nil'
-    xhr :get, :show, id: 111, page_id: @gallery.id
+    get :show, params: { id: 111, page_id: @gallery.id }, xhr: true
     assert_not assigns(:showing)
     assert_response 404
   end

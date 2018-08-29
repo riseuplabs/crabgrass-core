@@ -5,10 +5,11 @@ class Wiki::VersionsControllerTest < ActionController::TestCase
     @user = FactoryBot.create(:user)
     @group = FactoryBot.create(:group)
     @group.add_user!(@user)
-    @wiki = @group.profiles.public.create_wiki body: 'test'
-    @wiki.body = @original_body = 'original wiki body'
+    @wiki = @group.profiles.public.create_wiki body: 'original wiki body'
     @wiki.updated_at = 1.day.ago # force an older timestamp, so that
     # changing the wiki will create a new version.
+    @wiki.save
+    @wiki.body = 'updated wiki body'
     @wiki.save
     @version = @wiki.versions.last
     login_as @user
