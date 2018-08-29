@@ -80,7 +80,7 @@ class Asset < ApplicationRecord
   # This is included here because Asset may take new attachment file data, but
   # Asset::Version and Thumbnail don't need to.
   include Asset::Upload
-  validates_presence_of :filename, unless: 'new_record?'
+  validates_presence_of :filename, unless: :new_record?
 
   ##
   ## ACCESS

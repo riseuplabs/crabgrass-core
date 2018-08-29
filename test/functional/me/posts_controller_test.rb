@@ -39,7 +39,7 @@ class Me::PostsControllerTest < ActionController::TestCase
     post = Message.send from: me, to: you, body: 'test message'
     login_as me
     assert_difference 'Post.count', -1 do
-      delete :destroy, discussion_id: you.login, id: post
+      delete :destroy, params: { discussion_id: you.login, id: post }
       assert_response :redirect
     end
   end
