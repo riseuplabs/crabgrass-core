@@ -55,6 +55,7 @@ class Page::ParticipationsController < Page::SidebarsController
       @part = @page.add(@part.entity, access: params[:access])
       @part.save!
     end
+    @page.save!
   end
 
   ## technically, we should probably not destroy the participations
