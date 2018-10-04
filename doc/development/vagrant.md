@@ -4,28 +4,27 @@ Install using Vagrant
 In case you want an isolated environment with automated installation
 for development or testing with Sphinx running, you could use Vagrant in conjunction Virtualbox.
 
-NOTE: Instructions below are tested on Ubuntu 15.04 (vivid).
+NOTE: Instructions below are tested on Ubuntu 18.04 (bionic).
 
 Install the latest version of Virtualbox
 -----------------------
 
-    sudo sh -c 'echo "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib" >> /etc/apt/sources.list.d/virtualbox.list'
-    cd /tmp/ && wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
-    sudo apt-get update
-    sudo apt-get install virtualbox-5.0
-    sudo apt-get install dkms
+    sudo apt update
+    sudo apt install virtualbox dkms
 
 Install the latest version of Vagrant and guest plugin for it
 -----------------------
+The version of vagrant that comes with ubuntu had [issues](https://github.com/hashicorp/vagrant/issues/9788) for me.
+Instead i used the latest directly from vagrant:
 
-    cd /tmp && wget https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.4_x86_64.deb
-    sudo dpkg -i vagrant_1.7.4_x86_64.deb
+    cd /tmp && wget https://releases.hashicorp.com/vagrant/2.1.5/vagrant_2.1.5_x86_64.deb
+    sudo dpkg -i vagrant_2.1.5_x86_64.deb
     vagrant plugin install vagrant-vbguest
 
 Install NFS for folders and code synchronization
 -----------------------
 
-    sudo apt-get install nfs-kernel-server nfs-common portmap
+    sudo apt-get install nfs-kernel-server nfs-common rpcbind
 
 Clone the Crabgrass repository or your own fork (cd to your development folder first)
 -----------------------

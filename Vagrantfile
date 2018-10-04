@@ -121,7 +121,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       echo -e '\nTo run the server:\n'
       echo -e '\n vagrant ssh\n'
       echo -e '\n cd /vagrant/\n'
-      echo -e '\n BOOST=1 bundle exec rails server thin\n'
+      echo -e '\n bin/rails server -b 0.0.0.0\n'
+      echo -e '\n(Binding to 0.0.0.0 makes it reachable from the host)\n'
   SHELL
 
   config.vbguest.auto_reboot = true
