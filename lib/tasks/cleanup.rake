@@ -266,4 +266,18 @@ namespace :cg do
       EOSQL
     end
   end
+  namespace :cleanup_once do
+    # Expensive task which should not run too often
+    desc 'Fix access_ids in page_terms'
+      task(fix_access_ids: :environment) do
+        count = 0
+        Page.find_each do |page|
+          if page.page_terms.access_ids != page.access_ids
+            page.page_terms.update_attribute :access_ids, page.access_ids
+            count += 1
+          end
+        end
+        puts "Fixed #{count} outdated access_ids in page terms"
+      end
+  end
 end

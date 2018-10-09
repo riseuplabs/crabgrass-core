@@ -65,6 +65,10 @@ class PageSidebarTest < JavascriptIntegrationTest
     assert_page_users users(:blue), users(:red)
     change_access_to 'No Access'
     assert_page_users users(:blue)
+    logout
+    @user = users(:red)
+    login
+    assert_no_content @page.title
   end
 
   def test_change_user_access
