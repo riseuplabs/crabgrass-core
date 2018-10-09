@@ -152,8 +152,7 @@ gem 'delayed_job_active_record', '~> 4.0'
 gem 'daemons'
 
 # unpack file uploads
-# needs to be at least 1.2.1 to avoid directory traversal issues
-gem 'rubyzip', '~> 1.2.1', require: false
+gem 'rubyzip', '~> 1.2.2', require: false
 
 # load new rubyzip, but with the old API.
 # TODO: use the new zip api and remove gem zip-zip
@@ -162,10 +161,6 @@ gem 'zip-zip', require: 'zip'
 # gnupg for email encryption
 #
 gem 'mail-gpg', '~> 0.3.3'
-
-# https://groups.google.com/forum/#!topic/ruby-security-ann/2S9Pwz2i16k
-# not available in rails 4.2 yet
-gem 'sprockets', '~> 3.7.2'
 
 ##
 # Environment specific

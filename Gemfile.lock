@@ -96,7 +96,7 @@ GEM
       railties (>= 3.0.0)
     faker (1.0.1)
       i18n (~> 0.4)
-    ffi (1.9.17)
+    ffi (1.9.25)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     gpgme (2.0.16)
@@ -182,7 +182,7 @@ GEM
     riddle (2.2.2)
     ruby_parser (3.8.4)
       sexp_processor (~> 4.1)
-    rubyzip (1.2.1)
+    rubyzip (1.2.2)
     sass (3.4.23)
     sdoc (0.4.2)
       json (~> 1.7, >= 1.7.7)
@@ -278,7 +278,7 @@ DEPENDENCIES
   pundit (~> 1.1)
   rails (~> 4.2.10)
   rake (~> 10.0)
-  rubyzip (~> 1.2.1)
+  rubyzip (~> 1.2.2)
   sass
   sdoc
   secure_headers (~> 4.0.2)
