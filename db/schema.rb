@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180515155729) do
+ActiveRecord::Schema.define(version: 20181011090946) do
 
   create_table "asset_versions", force: :cascade do |t|
     t.integer  "asset_id",       limit: 4
@@ -129,32 +129,6 @@ ActiveRecord::Schema.define(version: 20180515155729) do
   end
 
   add_index "discussions", ["page_id"], :name => "index_discussions_page_id"
-
-  create_table "event_recurrencies", force: :cascade do |t|
-    t.integer  "event_id",          limit: 4
-    t.datetime "start"
-    t.datetime "end"
-    t.string   "type",              limit: 255
-    t.string   "day_of_the_week",   limit: 255
-    t.string   "day_of_the_month",  limit: 255
-    t.string   "month_of_the_year", limit: 255
-    t.datetime "created_at",                    null: false
-  end
-
-  create_table "events", force: :cascade do |t|
-    t.text     "description",      limit: 16777215
-    t.text     "description_html", limit: 16777215
-    t.boolean  "is_all_day",                        default: false
-    t.boolean  "is_cancelled",                      default: false
-    t.boolean  "is_tentative",                      default: true
-    t.string   "location",         limit: 255
-    t.datetime "starts_at"
-    t.datetime "ends_at"
-    t.integer  "owner_code",       limit: 4
-  end
-
-  add_index "events", ["starts_at"], :name => "index_events_on_starts_at"
-  add_index "events", ["ends_at"], :name => "index_events_on_ends_at"
 
   create_table "external_videos", force: :cascade do |t|
     t.string   "media_key",           limit: 255
