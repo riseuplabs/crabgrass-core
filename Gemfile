@@ -14,10 +14,9 @@ end
 # use the 4.2 series including all security fixes
 gem 'rails', '~> 4.2.10'
 
-# Security updates for dependencies not updated in rails 4.2 yet
-# https://github.com/sharesight/help.sharesight.com/pull/17
-gem 'nokogiri', '~> 1.8.3'
-gem 'sprockets', '~> 3.7.2'
+# Security updates
+# https://github.com/sparklemotion/nokogiri/issues/1785
+gem 'nokogiri', '~> 1.8.5'
 
 # Rake is rubys make... performing tasks
 # locking in to latest major to fix API
