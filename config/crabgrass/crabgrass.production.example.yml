@@ -47,7 +47,6 @@ available_page_types:
   - AssetPage
   - DiscussionPage
   - WikiPage
-#  - EventPage #removing for mvs https://labs.riseup.net/code/issues/3349
   - RateManyPage
   - TaskListPage
   - RankedVotePage

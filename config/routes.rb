@@ -72,7 +72,6 @@ Crabgrass::Application.routes.draw do
     resources :permissions, only: %i[index update]
     resource  :profile, controller: 'profile', only: %i[edit update]
     resources :requests, only: %i[index update destroy show]
-    # resources :events, only: [:index]
     resource :avatar, only: %i[create edit update destroy]
     resources :tasks, only: [:index]
   end
