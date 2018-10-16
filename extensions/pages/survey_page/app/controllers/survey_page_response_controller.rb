@@ -16,8 +16,7 @@ class SurveyPageResponseController < Page::BaseController
 
   def index
     authorize @page, permission_level
-    @responses = @survey.responses.paginate(include: %w[answers ratings],
-                                            page: params[:page])
+    @responses = @survey.responses.paginate(page: params[:page])
   end
 
   protected
