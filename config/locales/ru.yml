@@ -261,9 +261,6 @@ ru:
   group_successfully_created: Группа была успешно создана.
   join_group_confirmation: Вы уверены, что хотите присоединиться к этой %{group_type}?
   join_group_link: Вступить в %{group_type}
-  leave_group_confirmation: 'Вы уверены, что хотите покинуть страницу %{group_type}?
-
-     '
   leave_group_link: Покинуть %{group_type}
   link_name_description: 'Это название служит для указания на эту группу в ссылках и URL. Оно должно содержать только цифры и буквы, без пробелов. '
   request_exists: Ваш запрос ожидает подтверждения.

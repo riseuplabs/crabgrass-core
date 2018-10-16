@@ -283,7 +283,6 @@ el:
   group_successfully_created: Η ομάδα δημιουργήθηκε επιτυχώς.
   join_group_confirmation: Είστε σίγουροι ότι θέλετε να γραφτείτε στην/στο %{group_type};
   join_group_link: Εγγραφή στην/στο %{group_type}
-  leave_group_confirmation: Είστε σίγουροι ότι θέλετε να αποχωρήστε από την/το %{group_type};
   leave_group_link: Αποχώρηση από την/το %{group_type}
   link_name_description: Αυτό το όνομα θα χρησιμοποιηθεί για αναφορά σε αυτή την ομάδα σε συνδέσμους και διευθύνσεις URL. Πρέπει να περιέχει μόνο αλφαριθμητικούς χαρακτήρες, χωρίς κενά.
   network_initial_member: Επιλέξτε μια οργάνωση που θα είναι αρχικό μέλος αυτού του δικτύου.

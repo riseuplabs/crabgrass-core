@@ -284,7 +284,6 @@ it:
   group_successfully_created: Gruppo creato con successo.
   join_group_confirmation: Sei sicuro di volere aderire a questo %{group_type}?
   join_group_link: Entra in %{group_type}
-  leave_group_confirmation: Sei sicuro di volere abbandonare questo %{group_type}?
   leave_group_link: Abbandona %{group_type}
   link_name_description: Questo è il nome con cui ti riferirai a questo gruppo nei link e negli URL. Può contenere solamente lettere e numeri, e non sono ammessi spazi.
   network_initial_member: Scegli una organizzazione per entrare a far parte di questa rete.

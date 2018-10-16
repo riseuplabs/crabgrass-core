@@ -301,7 +301,7 @@ de:
   group_successfully_created: Die Gruppe wurde erfolgreich angelegt.
   join_group_confirmation: Bist du sicher, dass du dieser %{group_type} beitreten willst?
   join_group_link: '%{group_type} beitreten'
-  leave_group_confirmation: Bist du sicher, dass du diese %{group_type} verlassen möchtest?
+  leave_group_confirmation: Bist du sicher, dass du diese %{group_type} verlassen möchtest? Danach hast du keinen Zugriff mehr auf die Seiten der/des %{group_type}.
   leave_group_link: Verlasse %{group_type}
   link_name_description: Dieser Name dient als Bezeichner der Gruppe in Links und URLs. Es dürfen nur alphanumerische Zeichen und keine Leerzeichen enthalten sein.
   network_initial_member: Wähle eine Organisation als Gründungsgruppe für dieses Netzwerk aus.

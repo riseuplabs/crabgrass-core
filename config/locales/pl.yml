@@ -282,7 +282,6 @@ pl:
   group_successfully_created: Grupa została utworzona.
   join_group_confirmation: Czy na pewno chcesz dołączyć do %{group_type}?
   join_group_link: Dołącz %{group_type}
-  leave_group_confirmation: Czy na pewno chcesz opuścić %{group_type}?
   leave_group_link: Opuść %{group_type}
   link_name_description: Ta nazwa pokazywać będzie w jaki sposób będziesz się odnosić/ła do tej grupy w linkach i URL. Może zawierać jedynie alfanumeryczne litery, bez jakichkolwiek spacji.
   network_initial_member: Wybierz organizację która będzie pierwszym członkiem tej sieci.

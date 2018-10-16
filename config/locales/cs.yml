@@ -275,7 +275,6 @@ cs:
   group_successfully_created: Skupina byla úspěšně vytvořena.
   join_group_confirmation: Jste si jistí, že se chcete přidat k %{group_type}?
   join_group_link: Připojit se k %{group_type}
-  leave_group_confirmation: Určitě chcete opustit tuto %{group_type}?
   leave_group_link: Opustit %{group_type}
   link_name_description: Toto jméno odkazuje na název skupiny v odkazech a URL adresách. Může obsahovat pouze čísla a písmena, žádné mezery.
   network_initial_member: Vybrat organizaci jako úvodního člena této sítě.
