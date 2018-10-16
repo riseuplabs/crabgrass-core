@@ -1,4 +1,6 @@
 sv:
+  congratulations_you_have_signed_up: Grattis! Du har anmält dig för %{site_title}.
+  cookie_disabled_warning: Du har kakor inaktiverade. Du kommer inte att kunna logga tills du aktiverar kakor.
   forgotten_email_address: Vad för e-postadress gav du oss när du skapade ditt konto?
   invalid_email_text: E-postadressen du angivit är ogiltig.
   invalid_token: Ogiltig symbol
@@ -8,6 +10,12 @@ sv:
   login_failure_reason: Användarnamnet eller lösenordet stämmer inte.
   logout_success: Hejdå
   logout_success_message: Du är utloggad.
+  signup_button: Bli Medlem
+  signup_email_info: 'Frivilligt: använd om du glömmer ditt lösenord'
+  signup_link: Skapa Ny Användare
+  signup_success: Registrering lyckad
+  signup_success_message: Tack för att du anmält dig!
+  signup_title: Skapa Ditt Konto
   confirm_new_password: Bekräfta det nya lösenordet
   forgot_password_link: Jag har glömt mitt lösenord
   forgot_password_mail_expiry: 'Den här länken kommer att fungera i 24 timmar. Om du behöver
@@ -17,7 +25,17 @@ sv:
     lösenord igen och begära en ny länk.'
   forgot_password_mail_greeting: "%{user}, för att återställa lösenordet kan du besöka"
   forgot_password_text: Om du har glömt lösenordet du använder för att logga in, kan vi skicka ett e-brev med en länk som gör att du kan skapa ett nytt.
+  new_password: Ny Lösenord
   password: Lösenord
+  password_reset: Återställning av Lösenord
+  password_reset_ok_text: Ditt lösenord har återställts. Du kan nu logga in med ditt nyligen ändrade lösenord.
+  password_was_reset: Ditt lösenord har återställts
+  requested_forgot_password: Du har begärt ett byte av lösenord
+  reset_password: Återställ Lösenord
+  reset_password_email_sent: Om den e-postadressen är associerad med ett användarnamn, då har ett e-postmeddelande skickats innehållande instruktioner för att återställa ditt lösenord.
+  reset_password_mail_greeting: "%{user}, ditt lösenord har återställts enligt din begäran."
+  reset_password_mail_warning: Om du inte begärde att ditt lösenord skulle ändras, kontakta oss gärna.
+  reset_password_text: Hallå, %{user}. Om du har glömt lösenordet du använder för att logga in, du kan skriva upp ett nytt här.
   add_button: Lägg till
   approve: bifall
   approved: bifallen

@@ -306,7 +306,6 @@ ar:
   group_successfully_created: تم إنشاء المجموعة بنجاح
   join_group_confirmation: هل ترغب فى الأنضمام ل%{group_type} ؟
   join_group_link: انضم ل%{group_type}
-  leave_group_confirmation: هل تريد إلغاء الإنضمام لهذه %{group_type}؟
   leave_group_link: اترك %{group_type}
   link_name_description: هذا الإسم سيشير إلى المجموعة في الروابط و عناوين الانترنت. يجب أن يحتوي على أرقام أو حروف ولا يُسمح بوجود الفراغات
   network_initial_member: إختار منظمة لتكون عضو مبدئى فى هذِه الشبكة

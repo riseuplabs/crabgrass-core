@@ -297,7 +297,6 @@
   group_successfully_created: Gruppen er opprettet
   join_group_confirmation: Er du sikker på at du vil bli medlem i %{group_type}?
   join_group_link: Bli medlem i %{group_type}
-  leave_group_confirmation: Er du sikker på at du vil forlate %{group_type}?
   leave_group_link: Forlat %{group_type}
   link_name_description: Dette navnet er hvordan gruppa refereres til i lenker og URLer. Det kan bare inneholde bokstaver og tall, mellomrom er ikke tillatt.
   network_initial_member: Velg en organisasjon til å være første medlem av dette nettverket.

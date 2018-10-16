@@ -288,7 +288,6 @@ pt:
   group_successfully_created: O novo grupo foi criado.
   join_group_confirmation: Tem certeza que gostaria de participar deste %{group_type}?
   join_group_link: Participar do/a %{group_type}
-  leave_group_confirmation: Tem certeza que deseja sair deste %{group_type}?
   leave_group_link: Sair do/a %{group_type}
   link_name_description: Este é o nome por meio do qual você vai se referir a este grupo nos links e URLs. Use apenas caracteres alfanuméricos, os espaços não são permitidos.
   network_initial_member: Escolha uma organização para ser o membro inicial desta rede.

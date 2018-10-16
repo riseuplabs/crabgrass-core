@@ -295,7 +295,6 @@ fr:
   group_successfully_created: Le groupe est créé avec succès.
   join_group_confirmation: Êtes-vous certain·e de vouloir rejoindre cette structure ?
   join_group_link: Rejoindre %{group_type}
-  leave_group_confirmation: Êtes-vous certain·e de vouloir quitter cette structure ?
   leave_group_link: Quitter %{group_type}
   link_name_description: C'est ce nom qui sera utilisé pour identifier cette structure dans les liens et les URLs. Il ne doit contenir que des caractères alphanumériques non accentués, sans espace.
   network_initial_member: Choisissez un groupe comme membre initial de ce réseau.

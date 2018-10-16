@@ -291,7 +291,6 @@ es:
   group_successfully_created: 'El grupo ha sido creado con éxito. '
   join_group_confirmation: ¿Estás segur@ que deseas ingresar a este %{group_type}?
   join_group_link: Unirse a %{group_type}
-  leave_group_confirmation: ¿Estás segur@ que deseas abandonar este %{group_type}?
   leave_group_link: Dejar %{group_type}
   link_name_description: Este nombre es cómo va a referirse a este grupo en los enlaces y direcciones URL. Debe tener sólo caracteres alfanuméricos, no se permite espacios.
   network_initial_member: Elija una organización para ser un miembro inicial de esta red.

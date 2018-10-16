@@ -240,7 +240,6 @@ eu:
   group_successfully_created: Taldea ondo sortu da.
   join_group_confirmation: Ziur al zaude %{group_type}(e)n kide egin nahi zarela?
   join_group_link: '%{group_type}(e)n kide egin'
-  leave_group_confirmation: Ziur al zaude %{group_type} utzi nahi duzula?
   leave_group_link: Utzi %{group_type}
   link_name_description: Izen honek taldea esteketan eta URLetan nola aipatuko duzun adierazten du. Hizkiak eta zenbakiak bakarrik izan ditzake, hutsunerik gabe.
   network_initial_member: Hautatu erakunde bat sare honetako lehen kidea izateko.
