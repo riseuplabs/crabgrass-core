@@ -265,7 +265,7 @@ es:
   network_description: Las redes son grupos que pueden tener organizaciones como miembros. Una red se puede utilizar como una asociación de múltiples organizaciones, o un lugar para dos organizaciones a colaborar.
   networks_may_not_join_networks: Las redes pueden no unirse a otras redes.
   group_membership_count: "%{count} personas"
-  membership_destroy_confirm_message: ¿Tienes la certeza de que quieres retirar a '%{user}' de %{group_type}?
+  membership_destroy_confirm_message: ¿Tienes la certeza de que quieres retirar a '%{entity}' de %{group_type}?
   membership_exists_error: Ya %{member} tiene una afiliación
   membership_requests: Las solicitudes de afiliación
   public_groups: Grupos públicos
