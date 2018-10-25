@@ -108,6 +108,19 @@ class GroupExpellTest < IntegrationTest
     end
   end
 
+  def test_do_not_list_committee_pages_after_expel
+    page = create_page(owner: groups(:cold), title: 'cold colors secrets')
+    page.add(users(:penguin), star: true, access: :admin)
+    page.save!
+    @user = users(:penguin)
+    login
+    visit '/me'
+    assert_content 'cold colors secrets'
+    groups(:cold).remove_user! users(:penguin)
+    visit '/me'
+    assert_no_content 'cold colors secrets'
+  end
+
   protected
 
   def create_page(options = {})
