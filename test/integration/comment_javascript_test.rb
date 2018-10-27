@@ -1,6 +1,10 @@
-require 'integration_test'
+# encoding: utf-8
+require 'javascript_integration_test'
 
-class CommentTest < IntegrationTest
+class CommentJavascriptTest < JavascriptIntegrationTest
+
+  fixtures :users, :groups
+
   def setup
     super
     @blue = users(:blue)
@@ -29,23 +33,16 @@ class CommentTest < IntegrationTest
   def test_edit_comment
     login @blue
     visit "/pages/#{@page.name_url}"
-    within_comment(@blue_comment) do
-      click_on 'Edit'
-    end
-    fill_in :post_body, with: 'edited comment by blue'
-    click_on 'Save'
-    assert_content 'edited comment by blue'
+    edit_comment(@blue_comment, 'edited by blue')
+    assert_content 'edited by blue'
   end
 
   def test_delete_comment
     login @blue
     visit "/pages/#{@page.name_url}"
-    within_comment(@blue_comment) do
-      click_on 'Edit'
-    end
-    click_on 'Delete'
-    assert_content 'test comment by red that already existed'
+    delete_comment(@blue_comment)
     assert_no_content 'test comment by blue that already existed'
+    assert_content 'test comment by red that already existed'
   end
 
   protected
@@ -60,15 +57,33 @@ class CommentTest < IntegrationTest
     end
   end
 
+  def edit_comment(comment, text)
+    within_comment(comment) do
+      find('a.icon.pencil_16', visible: false).click
+      fill_in :post_body, with: text
+      click_on 'Save'
+    end
+  end
+
+  def delete_comment(comment)
+    within_comment(comment) do
+      find('a.icon.pencil_16', visible: false).click
+      click_on 'Delete'
+      sleep 1
+    end
+  end
+
   def star_comment(comment)
     within_comment(comment) do
-      find('.shy_parent a.shy.star_plus_16', visible: false).click
+      find('a.star_plus_16', visible: false).click
+      sleep 1
     end
   end
 
   def unstar_comment(comment)
     within_comment(comment) do
-      find('.shy_parent a.shy.star_minus_16', visible: false).click
+      find('a.star_minus_16', visible: false).click
+      sleep 1
     end
   end
 

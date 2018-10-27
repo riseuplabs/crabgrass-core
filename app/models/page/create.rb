@@ -53,7 +53,7 @@ module Page::Create
         attributes[:created_by] ||= user
         attributes[:updated_by] ||= user
         if attributes[:tag_list]
-          attributes[:tag_list] = attributes[:tag_list].downcase # TODO: find a better solution 
+          attributes[:tag_list] = attributes[:tag_list].downcase # TODO: find a better solution
         end
         Page.transaction do
           page = new(attributes)

@@ -17,14 +17,21 @@ module Common::Posts
 
   def update
     authorize @post
-    @post.update_attribute('body', params[:post][:body]) if params[:save]
-    redirect_to action: :show
+    if params[:destroy]
+      destroy
+    else
+      @post.update_attribute('body', params[:post][:body]) if params[:save]
+      redirect_to action: :show
+    end
   end
 
   def destroy
     authorize @post
     @post.destroy
-    render template: 'common/posts/destroy'
+    respond_to do |format|
+      format.js { render template: 'common/posts/destroy' }
+      format.html { redirect_to page_url(@page) }
+    end
   end
 
 end
