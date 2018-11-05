@@ -62,6 +62,15 @@ gem 'thinking-sphinx', '~> 3.4.2'
 gem 'acts-as-taggable-on', '~> 4.0'
 
 ##
+# security updates
+##
+#
+# CVE-2018-16468 Criticality: Unknown URL:
+# https://github.com/flavorjones/loofah/issues/154 Title: Loofah XSS
+# Vulnerability
+gem 'loofah', '~> 2.2.3'
+
+##
 # Upgrade pending
 ##
 
