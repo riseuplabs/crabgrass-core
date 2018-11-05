@@ -80,11 +80,18 @@ class Page::CreateController < ApplicationController
   def set_owner
     # owner from form
     owner_param = params[:page].delete(:owner) if params[:page].present?
-
     # owner from context
     owner_param ||= params[:owner]
-
-    @owner = Group.find_by_name(owner_param) if owner_param.present?
+    case owner_param
+    when 'me'
+    when current_user.login
+      @owner = current_user
+    else
+      group_from_param  = Group.find_by_name(owner_param)
+      if current_user.may?(:edit, group_from_param) or group_from_param.try.access?(public: :view)
+        @owner = group_from_param
+      end
+    end
   end
 
   def track_action
