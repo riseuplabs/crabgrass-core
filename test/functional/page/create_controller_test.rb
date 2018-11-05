@@ -44,19 +44,19 @@ class Page::CreateControllerTest < ActionController::TestCase
            page_type: 'WikiPage'
     end
     assert_equal @group, Page.last.owner
-    assert Page.last.users.include? @user
+    # ensure that there is no user participation
+    assert_not Page.last.users.include? @user
   end
 
-  def test_create_page_for_group_as_nonmember
-    @group = FactoryBot.create(:group)
+  def test_current_user_is_default_owner
+    @not_my_group = FactoryBot.create(:group)
     login_as @user
-    assert_permission_denied do
-      post :create,
-           owner: @group.name,
-           page: { title: 'title' },
-           type: 'wiki',
-           page_type: 'WikiPage'
-    end
+    post :create,
+         owner: @not_my_group.name,
+         page: { title: 'title' },
+         type: 'wiki',
+         page_type: 'WikiPage'
+    assert Page.last.owner, @user
   end
 
   def test_create_page_for_public_group

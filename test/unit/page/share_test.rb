@@ -60,7 +60,7 @@ class Page::ShareTest < ActiveSupport::TestCase
     creator = users(:kangaroo)
     red = users(:red)
     rainbow = groups(:rainbow)
-    page = Page.create!(title: 'title', user: creator,
+    page = Page.create!(title: 'title', user: creator, owner: creator,
                         share_with: { 'rainbow' => { 'access' => 'admin' }, 'red' => { 'access' => 'admin' } },
                         access: :view)
     assert rainbow.may?(:admin, page)
