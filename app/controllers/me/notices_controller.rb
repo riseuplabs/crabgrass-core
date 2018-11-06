@@ -22,7 +22,7 @@ class Me::NoticesController < Me::BaseController
     notices = Notice.for_user(current_user).dismissed(false).each &:dismiss!
 
     respond_to do |format|
-      format.html { redirect_to :back }
+      format.html { redirect_to me_home_url }
       format.js
     end
   end

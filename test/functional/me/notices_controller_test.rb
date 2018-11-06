@@ -23,10 +23,9 @@ class Me::NoticesControllerTest < ActionController::TestCase
   end
 
   def test_destroy_all_html
-    request.env['HTTP_REFERER'] = 'http://0.0.0.0:3000/me'
     delete :destroy_all
     assert_empty @blue.notices.where(dismissed: false)
-    assert_redirected_to :back
+    assert_redirected_to me_home_url
   end
 
   def test_destroy_all_ajax
