@@ -53,7 +53,7 @@ module Page::Create
         attributes[:created_by] ||= user
         attributes[:updated_by] ||= user
         if attributes[:tag_list]
-          attributes[:tag_list] = attributes[:tag_list].downcase # TODO: find a better solution 
+          attributes[:tag_list] = attributes[:tag_list].downcase # TODO: find a better solution
         end
         Page.transaction do
           page = new(attributes)
@@ -71,12 +71,14 @@ module Page::Create
             # with notification.
             # Please note that at this point the participation only exists
             # in memory. So do not try to use where(user_id: ...) here.
-            participation = page.user_participations.select do |part|
-              part.user == user
-            end.first
-            participation ||= page.user_participations.build(user_id: user.id)
-            participation.access = ACCESS[:admin]
-            participation.changed_at = Time.now
+            if page.owner.is_a? User or (page.owner.is_a? Group and page.owner.public? and !user.member_of? page.owner)
+              participation = page.user_participations.select do |part|
+                part.user == user
+              end.first
+              participation ||= page.user_participations.build(user_id: user.id)
+              participation.access = ACCESS[:admin]
+              participation.changed_at = Time.now
+            end
           end
           page
         end

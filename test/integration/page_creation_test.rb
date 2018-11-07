@@ -42,6 +42,15 @@ class PageCreationTest < JavascriptIntegrationTest
     assert_page_users user
   end
 
+  def test_user_is_owner_after_share_with_group
+    login users(:red)
+    prepare_page :discussion_page
+    select 'red', from: :page_owner
+    add_recipients groups(:animals), autocomplete: true
+    click_on :create.t
+    find('#banner_content').assert_text 'Red!'
+  end
+
   def test_add_tags
     login users(:red)
     prepare_page :discussion_page
