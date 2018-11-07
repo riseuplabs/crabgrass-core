@@ -149,7 +149,7 @@ GEM
     public_suffix (2.0.5)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
-    rack (1.6.10)
+    rack (1.6.11)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.10)
@@ -277,6 +277,7 @@ DEPENDENCIES
   poltergeist (~> 1.5)
   prototype-rails!
   pundit (~> 1.1)
+  rack (~> 1.6.11)
   rails (~> 4.2.10)
   rake (~> 10.0)
   rubyzip (~> 1.2.2)

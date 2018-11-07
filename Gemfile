@@ -70,6 +70,13 @@ gem 'acts-as-taggable-on', '~> 4.0'
 # Vulnerability
 gem 'loofah', '~> 2.2.3'
 
+# CVE-2018-16471
+# Criticality: Unknown
+# URL:
+# https://groups.google.com/forum/#!topic/ruby-security-ann/NAalCee8n6o
+# Title: Possible XSS vulnerability in Rack
+gem 'rack', '~> 1.6.11'
+
 ##
 # Upgrade pending
 ##
