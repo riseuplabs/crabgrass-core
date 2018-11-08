@@ -265,7 +265,7 @@ es:
   network_description: Las redes son grupos que pueden tener organizaciones como miembros. Una red se puede utilizar como una asociación de múltiples organizaciones, o un lugar para dos organizaciones a colaborar.
   networks_may_not_join_networks: Las redes pueden no unirse a otras redes.
   group_membership_count: "%{count} personas"
-  membership_destroy_confirm_message: ¿Tienes la certeza de que quieres retirar a '%{entity}' de %{group_type}?
+  membership_destroy_confirm_message: ¿Tienes la certeza de que quieres retirar a '%{entity}' de %{group}?
   membership_exists_error: Ya %{member} tiene una afiliación
   membership_requests: Las solicitudes de afiliación
   public_groups: Grupos públicos
@@ -460,14 +460,12 @@ es:
   create_page: Crear Página
   discussion_page_description: Debate sobre un tema en particular.
   discussion_page_display: Debate de Grupo
-  event_page_display: Evento
   folder_display: Carpeta
   gallery_description: Subir múltiples imágenes u organizar las existentes en un conjunto.
   gallery_display: Galería
   message_page_display: Mensaje personal
   page_added_to_group: Esta página se añadirá a %{group_type} %{group_name}.
   page_create_owner: Propietario de página
-  page_group_event: Evento
   page_owner_error: No puede dejarse sin propietario la página.
   ranked_vote_page_description: 'Posibilidades clasificadas en orden de preferencia.
 

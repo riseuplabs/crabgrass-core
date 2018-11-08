@@ -487,7 +487,6 @@ de:
   discussion_page_description: Diskutiere ein bestimmtes Thema mit Gruppen oder anderen Nutzer_innen.
   discussion_page_display: Gruppendiskussion
   event_page_description: Ein Kalender-Veranstaltung
-  event_page_display: Veranstaltung
   external_video_page_description: Zeige ein Video, dass von einer externen Webseite gehostet wird.
   external_video_page_display: Externes Video
   folder_class_description: Erstelle einen Ordner um andere Seiten zu organisieren.
@@ -498,7 +497,6 @@ de:
   message_page_display: Persönliche Nachricht
   page_added_to_group: Diese Seite wird %{group_type} %{group_name} hinzugefügt.
   page_create_owner: Seitenbesitzer_in
-  page_group_event: Veranstaltung
   page_owner_error: Seitenbesitzer_in kann nicht leer sein
   ranked_vote_page_description: Erstelle eine Liste von Möglichkeiten, die Leute nach ihrer Präferenz ordnen können.
   ranked_vote_page_display: Abgestufte Abstimmung

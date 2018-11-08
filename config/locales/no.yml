@@ -480,7 +480,6 @@
   discussion_page_description: Diskuter et tema med grupper eller andre brukere.
   discussion_page_display: Gruppediskusjon
   event_page_description: En kalenderhendelse.
-  event_page_display: Hendelse
   external_video_page_description: Vis en video fra en annen nettside.
   external_video_page_display: Ekstern video
   folder_class_description: Opprett ei mappe for å organisere andre sider.
@@ -491,7 +490,6 @@
   message_page_display: Personlig melding
   page_added_to_group: Denne siden vil bli lagt til %{group_type} %{group_name}.
   page_create_owner: Sideeier
-  page_group_event: Hendelse
   page_owner_error: Sideeier må fylles ut.
   ranked_vote_page_description: Lag en liste med valg som folk kan rangere etter sine preferanser.
   ranked_vote_page_display: Rangert avstemning
