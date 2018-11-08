@@ -68,11 +68,11 @@ module Page::BeforeFilters
 
   def load_posts
     if @options.show_posts and request.get? and !@page.nil?
-      # use params[:posts] for pagination
-      @posts = @page.posts(page: params[:posts])
+      @posts = @page.posts(page: page_number)
       @post = Post.new if @options.show_reply
     end
   end
+
 
   # ensure the page will be reloaded when navigated to in browser history
   # why? because we use a bunch of ajax on the pages - for example when
@@ -100,6 +100,14 @@ module Page::BeforeFilters
     @upart.save if @upart and !@upart.new_record? and @upart.changed? and !@upart.readonly?
     @page.save if @page and !@page.new_record? and @page.changed? and !@page.readonly?
     true
+  end
+
+  private
+
+  def page_number
+    # use params[:posts] for pagination
+    page_number = params[:posts].to_i
+    page_number if page_number > 0
   end
 
 end
