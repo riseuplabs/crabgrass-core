@@ -490,7 +490,6 @@ ar:
   discussion_page_description: ناقش موضوعا معينا في مجموعة أو مع مستخدمين آخرين.
   discussion_page_display: مناقشة جماعية
   event_page_description: حدث فى التقويم.
-  event_page_display: حَدَث
   external_video_page_description: عرض مقاطع ڨيديو متواجدة على مواقع ويب خارجية.
   external_video_page_display: ڤيديو خارجى
   folder_class_description: إنشاء حافظة لتنظيم الصفحات.
@@ -501,7 +500,6 @@ ar:
   message_page_display: رسالة شخصية
   page_added_to_group: هذه الصفحة سيتم إضافتها لِ%{group_type} %{group_name}.
   page_create_owner: مالك الصفحة
-  page_group_event: حدَث
   page_owner_error: يجب كتابة إسم مالك الصفحة
   ranked_vote_page_description: أنشىء قائمة من الخيارات المتاحة للأشخاص للتصنيف حسب الأفضلية.
   ranked_vote_page_display: صوت مصنف

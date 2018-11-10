@@ -483,7 +483,6 @@ ca:
   discussion_page_description: Comentar sobre un tema en particular un grups o amb altres usuaris.
   discussion_page_display: Conversa del Grup
   event_page_description: Esdeveniment del calendari
-  event_page_display: Esdeveniment
   external_video_page_description: Mostra un vídeo allotjat en un lloc web extern.
   external_video_page_display: Vídeo extern
   folder_class_description: Crea una carpeta per organitzar altres pàgines.
@@ -494,7 +493,6 @@ ca:
   message_page_display: Missatge personal
   page_added_to_group: S'afegirà aquesta pàgina a %{group_type} %{group_name}.
   page_create_owner: Propietari de la pàgina
-  page_group_event: Esdeveniment
   page_owner_error: Ha d'haver-hi un propietari de pàgina.
   ranked_vote_page_description: Crea una llista d'opcions per a que la gent pugui ordenar les seves preferències.
   ranked_vote_page_display: Vot en Preferència
