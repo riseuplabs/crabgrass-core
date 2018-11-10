@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181011090946) do
+ActiveRecord::Schema.define(version: 20181110102842) do
 
   create_table "asset_versions", force: :cascade do |t|
     t.integer  "asset_id",       limit: 4
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(version: 20181011090946) do
   end
 
   add_index "group_participations", ["group_id", "page_id"], :name => "index_group_participations"
+  add_index "group_participations", ["page_id"], :name => "index_group_participations_on_page_id"
 
   create_table "groups", force: :cascade do |t|
     t.string   "name",                limit: 255
@@ -218,6 +219,7 @@ ActiveRecord::Schema.define(version: 20181011090946) do
   end
 
   add_index "notices", ["user_id"], :name => "index_notices_on_user_id"
+  add_index "notices", ["noticable_type", "noticable_id"], :name => "index_notices_on_noticable_type_and_noticable_id"
 
   create_table "page_access_codes", force: :cascade do |t|
     t.string   "code",       limit: 10
