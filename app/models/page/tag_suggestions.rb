@@ -42,7 +42,28 @@ class Page::TagSuggestions
       .most_used(SUGGESTION_COUNT)
   end
 
+
   protected
+
+  # TODO: find a better place for this function which is used in rake task
+   def self.split_tags(str, max, res)
+     if str.length <= max
+       res << str
+       return res
+     else
+       res << self.prefix(str, max)
+       new_str = str[res.last.length..str.length]
+       split_tags(new_str, max, res)
+     end
+   end
+
+   def self.prefix(str, max)
+     str = str[0..max]
+     to = str.rindex(" ")
+     to ||= str.rindex(',')
+     to ||= str.rindex('_')
+     (to != nil and str[0..to]) ? str[0..to] : str
+   end
 
   attr_reader :page, :current_user
 
@@ -113,4 +134,5 @@ class Page::TagSuggestions
       Page::Terms.access_filter_for(group, :public)
     end
   end
+
 end

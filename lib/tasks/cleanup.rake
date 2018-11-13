@@ -141,6 +141,33 @@ namespace :cg do
       puts "Removed #{count} posts with a blank user"
     end
 
+    desc 'Split long tags in two parts'
+    task(split_long_tags: :environment) do
+      MAX = 190
+      long_tags = ActsAsTaggableOn::Tag.where("LENGTH(name) > #{MAX}")
+      puts "Splitting #{long_tags.size} tags"
+      count = 0
+      long_tags.each do |tag|
+        splitted = Page::TagSuggestions.split_tags(tag.name, MAX, Array.new)
+        if splitted
+          pages = Page.tagged_with(tag)
+          pages.each do |page|
+            splitted.each do |newtag|
+              page.tag_list.add(newtag.strip)
+            end
+            page.tag_list.remove(tag.name)
+            page.save
+            count = count + 1
+          end
+        else
+          puts "Could not split tag #{tag}"
+        end
+      end
+      puts "Removed #{count} taggings"
+      long_tags = ActsAsTaggableOn::Tag.where("LENGTH(name) > #{MAX}")
+      puts "#{long_tags.size} long tags left" if long_tags
+    end
+
     desc 'Remove dead taggings'
     task(remove_dead_taggings: :environment) do
       count = ActsAsTaggableOn::Tagging.where(taggable_id: nil).delete_all
@@ -183,6 +210,7 @@ namespace :cg do
       count = ActsAsTaggableOn::Tagging.where(id: dups).delete_all
       puts "Removed #{count} duplicate taggings"
     end
+
 
     desc 'Clear all invalid email addresses'
     task(clear_invalid_email_addresses: :environment) do
