@@ -144,13 +144,14 @@ namespace :cg do
     desc 'Split long tags in two parts'
     task(split_long_tags: :environment) do
       MAX = 190
-      long_tags = ActsAsTaggableOn::Tag.where("LENGTH(name) > #{MAX}")
+      long_tags = ActsAsTaggableOn::Tag.where("CHAR_LENGTH(name) > #{MAX}")
       puts "Splitting #{long_tags.size} tags"
       count = 0
       long_tags.each do |tag|
         splitted = Page::TagSuggestions.split_tags(tag.name, MAX, Array.new)
         if splitted
-          pages = Page.tagged_with(tag)
+          page_ids = ActsAsTaggableOn::Tagging.where(tag_id: tag.id).pluck(:taggable_id)
+          pages = Page.where(id: page_ids)
           pages.each do |page|
             splitted.each do |newtag|
               page.tag_list.add(newtag.strip)
@@ -164,7 +165,7 @@ namespace :cg do
         end
       end
       puts "Removed #{count} taggings"
-      long_tags = ActsAsTaggableOn::Tag.where("LENGTH(name) > #{MAX}")
+      long_tags = ActsAsTaggableOn::Tag.where("CHAR_LENGTH(name) > #{MAX}")
       puts "#{long_tags.size} long tags left" if long_tags
     end
 

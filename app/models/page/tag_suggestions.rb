@@ -58,7 +58,7 @@ class Page::TagSuggestions
    end
 
    def self.prefix(str, max)
-     str = str[0..max]
+     str = str[0..max-1]
      to = str.rindex(" ")
      to ||= str.rindex(',')
      to ||= str.rindex('_')
