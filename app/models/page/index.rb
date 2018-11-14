@@ -135,6 +135,7 @@ module Page::Index
 
     # text
     terms.title     = title.capitalize + ' ' + tag_list.join(' ')
+    terms.title = terms.title[0..189]
     # ^^ start with capital letter for sorting
     terms.tags      = Page.searchable_tag_list(tag_list).join(' ')
     terms.body      = summary_terms + ' ' + body_terms

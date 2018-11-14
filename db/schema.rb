@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181110102842) do
+ActiveRecord::Schema.define(version: 20181113131003) do
 
   create_table "asset_versions", force: :cascade do |t|
     t.integer  "asset_id",       limit: 4
@@ -256,7 +256,7 @@ ActiveRecord::Schema.define(version: 20181110102842) do
     t.text     "access_ids",         limit: 16777215
     t.text     "body",               limit: 16777215
     t.text     "comments",           limit: 16777215
-    t.string   "tags",               limit: 255
+    t.text     "tags",               limit: 65535
     t.string   "title",              limit: 255
     t.boolean  "resolved"
     t.integer  "rating",             limit: 4

@@ -122,6 +122,26 @@ class PageSidebarTest < JavascriptIntegrationTest
     assert_no_page_tags 'a.tag'
   end
 
+  def test_long_tags
+    tags = ["number one: this is a long tag -  we will have many of them to make sure that we can deal with them.",
+            "number two: this is a long tag -  we will have many of them to make sure that we can deal with them.",
+            "number three: this is a long tag - we will have many of them to make sure that we can deal with them.",
+            "number four: this is a long tag - we will have many of them to make sure that we can deal with them.",
+            "number five: this is a long tag - we will have many of them to make sure that we can deal with them.",
+            "number six: this is a long tag - we will have many of them to make sure that we can deal with them."]
+    tag_page tags
+    sleep 1
+    assert_page_tags 'number three: this is a long tag'
+  end
+
+  def test_too_long_tag
+    long_tag = ["this is a very long tag which is far too long - a tag should not exceed 190 characters in the future and this string is definitely longer. if people use longer tags there will be an error message. this string is exactly 258 characters long which is too long"]
+    tag_page long_tag
+    sleep 1
+    assert_no_page_tags 'this is a very long tag which is far too long'
+    assert_content "Changes could not be saved" # FIXME: Wrong error message displayed: Tag can't be blank
+  end
+
   def test_attach_file
     assert_no_selector '#attachments a.attachment'
     attach_file_to_page
