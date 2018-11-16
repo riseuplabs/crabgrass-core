@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181113131003) do
+ActiveRecord::Schema.define(version: 20181114101916) do
 
   create_table "asset_versions", force: :cascade do |t|
     t.integer  "asset_id",       limit: 4
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 20181113131003) do
 
   create_table "castle_gates_keys", force: :cascade do |t|
     t.integer "castle_id",     limit: 4
-    t.string  "castle_type",   limit: 255
+    t.string  "castle_type",   limit: 191
     t.integer "holder_code",   limit: 4
     t.integer "gate_bitfield", limit: 4,   default: 1
   end
@@ -168,7 +168,7 @@ ActiveRecord::Schema.define(version: 20181113131003) do
   add_index "group_participations", ["page_id"], :name => "index_group_participations_on_page_id"
 
   create_table "groups", force: :cascade do |t|
-    t.string   "name",                limit: 255
+    t.string   "name",                limit: 191
     t.string   "full_name",           limit: 255
     t.string   "url",                 limit: 255
     t.string   "type",                limit: 255
@@ -211,7 +211,7 @@ ActiveRecord::Schema.define(version: 20181113131003) do
     t.integer  "avatar_id",      limit: 4
     t.text     "data",           limit: 16777215
     t.integer  "noticable_id",   limit: 4
-    t.string   "noticable_type", limit: 255
+    t.string   "noticable_type", limit: 191
     t.boolean  "dismissed",                       default: false
     t.datetime "dismissed_at"
     t.datetime "created_at",                                      null: false
@@ -297,12 +297,12 @@ ActiveRecord::Schema.define(version: 20181113131003) do
     t.integer  "created_by_id",      limit: 4
     t.integer  "updated_by_id",      limit: 4
     t.text     "summary",            limit: 16777215
-    t.string   "type",               limit: 255
+    t.string   "type",               limit: 191
     t.integer  "message_count",      limit: 4,        default: 0
     t.integer  "data_id",            limit: 4
-    t.string   "data_type",          limit: 255
+    t.string   "data_type",          limit: 191
     t.integer  "contributors_count", limit: 4,        default: 0
-    t.string   "name",               limit: 255
+    t.string   "name",               limit: 191
     t.string   "updated_by_login",   limit: 255
     t.string   "created_by_login",   limit: 255
     t.integer  "flow",               limit: 4,        default: 0
@@ -383,7 +383,7 @@ ActiveRecord::Schema.define(version: 20181113131003) do
 
   create_table "profiles", force: :cascade do |t|
     t.integer  "entity_id",           limit: 4
-    t.string   "entity_type",         limit: 255
+    t.string   "entity_type",         limit: 191
     t.boolean  "stranger",                          default: false, null: false
     t.boolean  "peer",                              default: false, null: false
     t.boolean  "friend",                            default: false, null: false
@@ -535,11 +535,11 @@ ActiveRecord::Schema.define(version: 20181113131003) do
   create_table "taggings", force: :cascade do |t|
     t.integer  "taggable_id",   limit: 4
     t.integer  "tag_id",        limit: 4
-    t.string   "taggable_type", limit: 255
+    t.string   "taggable_type", limit: 191
     t.datetime "created_at"
     t.string   "context",       limit: 128
     t.integer  "tagger_id",     limit: 4
-    t.string   "tagger_type",   limit: 255
+    t.string   "tagger_type",   limit: 191
   end
 
   add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], :name => "taggings_idx", :unique => true
@@ -553,7 +553,7 @@ ActiveRecord::Schema.define(version: 20181113131003) do
   add_index "taggings", ["taggable_id", "taggable_type", "tagger_id", "context"], :name => "taggings_idy"
 
   create_table "tags", force: :cascade do |t|
-    t.string  "name",           limit: 255
+    t.string  "name",           limit: 191
     t.integer "taggings_count", limit: 4,   default: 0
   end
 
@@ -587,7 +587,7 @@ ActiveRecord::Schema.define(version: 20181113131003) do
 
   create_table "thumbnails", force: :cascade do |t|
     t.integer "parent_id",    limit: 8
-    t.string  "parent_type",  limit: 255
+    t.string  "parent_type",  limit: 191
     t.string  "content_type", limit: 255
     t.string  "filename",     limit: 255
     t.string  "name",         limit: 255
@@ -636,7 +636,7 @@ ActiveRecord::Schema.define(version: 20181113131003) do
   add_index "user_participations", ["user_id", "changed_at"], :name => "recent_changes"
 
   create_table "users", force: :cascade do |t|
-    t.string   "login",                     limit: 255
+    t.string   "login",                     limit: 191
     t.string   "email",                     limit: 255
     t.string   "crypted_password",          limit: 40
     t.string   "salt",                      limit: 40
