@@ -14,7 +14,9 @@
 %>
 
 development:
-  encoding: utf8
+  encoding: utf8mb4
+  charset: utf8mb4
+  collation: utf8mb4_unicode_ci
   adapter: mysql2
   database: <%=db_name%>_development
   username: root
@@ -22,7 +24,9 @@ development:
   host: <%= ENV['MYSQL_HOST'] || 'localhost' %>
 
 test:
-  encoding: utf8
+  encoding: utf8mb4
+  charset: utf8mb4
+  collation: utf8mb4_unicode_ci
   adapter: mysql2
   database: <%=db_name%>_test
   username: root
@@ -34,7 +38,9 @@ test:
   pool: 10
 
 production:
-  encoding: utf8
+  encoding: utf8mb4
+  charset: utf8mb4
+  collation: utf8mb4_unicode_ci
   adapter: mysql2
   database: <%=db_name%>
   username: root

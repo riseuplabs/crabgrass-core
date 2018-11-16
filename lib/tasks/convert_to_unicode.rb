@@ -1,21 +1,31 @@
 #
-# Even though database.yml and the migrations and schema.rb say utf8, this
-# forced convert to unicode seems to be required to get certain languages to work
-# (like multi-byte languages).
+# Even though database.yml sais utf8, the existing tables in production
+# still need to be migrated.
 #
-# This task should only need to be run once. However, running it again won't hurt.
+# This forced convert to unicode seems to be required to get certain
+# languages to work # (like multi-byte languages).
+# The mb4 extension is required to get 4 byte utf8 chars to work -
+# in particular utf8 emoticons.
+#
+# This task should only need to be run once.
+# However, running it again will be slow as it rebuilds all indexes but won't hurt.
 #
 #
 
 namespace :cg do
-  desc 'converts mysql tables to use unicode. specifying utf8 in database.yml is not enough.'
+  desc 'converts mysql tables to use unicode. specifying utf8mb4 in database.yml is not enough.'
   task(convert_to_unicode: :environment) do
-    charset = 'utf8'
-    collation = 'utf8_general_ci'
+    charset = 'utf8mb4'
+    collation = 'utf8mb4_unicode_ci'
     @connection = ActiveRecord::Base.connection
     @connection.execute "ALTER DATABASE `#{@connection.current_database}` CHARACTER SET #{charset} COLLATE #{collation}"
     @connection.tables.each do |table|
-      @connection.execute "ALTER TABLE `#{table}` CONVERT TO CHARACTER SET #{charset} COLLATE #{collation}"
+    next if table == 'schema_migrations'
+      if table == 'tags' # tags need a binary collation
+        @connection.execute "ALTER TABLE `#{table}` CONVERT TO CHARACTER SET #{charset} COLLATE utf8mb4_bin"
+      else
+        @connection.execute "ALTER TABLE `#{table}` CONVERT TO CHARACTER SET #{charset} COLLATE #{collation}"
+      end
     end
   end
 end

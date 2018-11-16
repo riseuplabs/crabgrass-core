@@ -13,4 +13,12 @@ class Page::CommentsTest < ActiveSupport::TestCase
     assert_equal 1, @page.discussion.posts_count
     assert @page.page_terms.comments.include? text
   end
+
+  def test_posting_comment_with_emoji
+    @page.add_post(@user, body: '😀')
+    assert @page.discussion.present?
+    assert_equal 1, @page.discussion.posts_count
+    assert @page.page_terms.comments.include? '😀'
+  end
+
 end
