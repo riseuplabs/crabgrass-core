@@ -5,6 +5,7 @@ class ReduceVarcharLengthForIndexedColumns < ActiveRecord::Migration
     change_column :pages, :type, :string, limit: 191
     change_column :pages, :data_type, :string, limit: 191
     change_column :pages, :name, :string, limit: 191
+    change_column :pages, :owner_name, :string, limit: 191
     change_column :profiles, :entity_type, :string, limit: 191
     change_column :thumbnails, :parent_type, :string, limit: 191
     change_column :users, :login, :string, limit: 191
@@ -20,6 +21,7 @@ class ReduceVarcharLengthForIndexedColumns < ActiveRecord::Migration
     change_column :pages, :type, :string, limit: 255
     change_column :pages, :data_type, :string, limit: 255
     change_column :pages, :name, :string, limit: 255
+    change_column :pages, :owner_name, :string, limit: 255
     change_column :profiles, :entity_type, :string, limit: 255
     change_column :thumbnails, :parent_type, :string, limit: 255
     change_column :users, :login, :string, limit: 255

@@ -309,7 +309,7 @@ ActiveRecord::Schema.define(version: 20181114101916) do
     t.integer  "stars_count",        limit: 4,        default: 0
     t.integer  "owner_id",           limit: 4
     t.string   "owner_type",         limit: 255
-    t.string   "owner_name",         limit: 255
+    t.string   "owner_name",         limit: 191
     t.boolean  "is_image"
     t.boolean  "is_audio"
     t.boolean  "is_video"
