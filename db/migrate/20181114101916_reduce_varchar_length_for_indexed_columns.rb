@@ -10,7 +10,7 @@ class ReduceVarcharLengthForIndexedColumns < ActiveRecord::Migration
     change_column :users, :login, :string, limit: 191
     change_column :taggings, :taggable_type, :string, limit: 191
     change_column :taggings, :tagger_type, :string, limit: 191
-    change_column :tags, :name, :string, limit: 191
+    ActiveRecord::Base.connection.execute "ALTER TABLE tags MODIFY name varchar(191) CHARACTER SET utf8 COLLATE utf8_bin;"
     change_column :notices, :noticable_type, :string, limit: 191
   end
 
@@ -25,7 +25,7 @@ class ReduceVarcharLengthForIndexedColumns < ActiveRecord::Migration
     change_column :users, :login, :string, limit: 255
     change_column :taggings, :taggable_type, :string, limit: 255
     change_column :taggings, :tagger_type, :string, limit: 255
-    change_column :tags, :name, :string, limit: 255
+    ActiveRecord::Base.connection.execute "ALTER TABLE tags MODIFY name varchar(255) CHARACTER SET utf8 COLLATE utf8_bin;"
     change_column :notices, :noticable_type, :string, limit: 255
   end
 end
