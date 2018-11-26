@@ -24,6 +24,7 @@ namespace :cg do
       :remove_dead_memberships,
       :remove_empty_posts,
       :remove_dead_posts,
+      :remove_dead_page_terms,
       :remove_unused_tags,
       :merge_duplicate_tags,
       :remove_duplicate_taggings,
@@ -139,6 +140,12 @@ namespace :cg do
     task(remove_dead_posts: :environment) do
       count = Post.where(dead_entity_sql('user')).delete_all
       puts "Removed #{count} posts with a blank user"
+    end
+
+    desc 'Remove page terms of pages that do not exist anymore'
+    task(remove_dead_page_terms: :environment) do
+      count = Page::Term.where(dead_entity_sql('page')).delete_all
+      puts "Removed #{count} page terms with a blank page"
     end
 
     desc 'Split long tags in two parts'
