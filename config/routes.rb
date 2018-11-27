@@ -59,7 +59,7 @@ Crabgrass::Application.routes.draw do
       to: 'notices#destroy_all',
       as: 'notices_destroy_all'
     resources :notices, only: %i[index destroy]
-    get '', to: 'notices#index', as: 'home'
+    get '', to: 'home#index', as: 'home'
     # resource  :page, only: [:new, :create]
     resources :recent_pages, only: [:index]
     match 'pages(/*path)', to: 'pages#index', as: 'pages', via: %i[get post]

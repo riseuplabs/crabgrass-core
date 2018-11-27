@@ -7,8 +7,6 @@ class Me::NoticesController < Me::BaseController
                      .includes(:noticable)
                      .order('created_at DESC')
                      .paginate(pagination_params)
-
-    @pages = Page.paginate_by_path '', options_for_me, pagination_params
   end
 
   #

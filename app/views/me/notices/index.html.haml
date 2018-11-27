@@ -1,13 +1,3 @@
-- groups = current_user.groups.recently_active
-- if groups.any?
-  - content_for(:left_column) do
-    .margin-bottom
-      = link_to :create_page.t, new_page_path, icon: 'plus'
-    %h2.space-ui-bottom.first=:groups.t
-    = render 'groups/list_with_committees',
-      groups: groups,
-        more: groups_directory_path
-
 %h2.space-ui-bottom.first
   = :notices.t
   - if @notices.any?
@@ -18,10 +8,3 @@
     = render partial: 'notice', collection: @notices
   .notices-pagination-wrapper
     = pagination_links @notices
-- else
-  %ul.shaded
-    %li= :none.t
-
-= render 'layouts/section/heading_with_info', section: :recent_pages
-= render 'common/pages/list', style: 'table'
-
