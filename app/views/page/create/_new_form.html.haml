@@ -9,7 +9,7 @@
   .h2.first
     .small= :create_a_new_thing.t(thing: :page.t.downcase)
     = page_type.class_display_name
-- if @owner.present?
+- if @owner.present? and @owner.is_a? Group
   %p= :page_added_to_group.t(group_type: @owner.group_type.downcase, group_name: content_tag(:b,@owner.name)).html_safe
 %hr
 
