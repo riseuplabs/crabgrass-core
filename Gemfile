@@ -12,7 +12,7 @@ end
 
 # Rails is the framework we use.
 # use the 4.2 series including all security fixes
-gem 'rails', '~> 4.2.10'
+gem 'rails', '~> 4.2.11'
 
 # Security updates
 # https://github.com/sparklemotion/nokogiri/issues/1785
@@ -65,11 +65,6 @@ gem 'acts-as-taggable-on', '~> 4.0'
 # security updates
 ##
 #
-# CVE-2018-16468 Criticality: Unknown URL:
-# https://github.com/flavorjones/loofah/issues/154 Title: Loofah XSS
-# Vulnerability
-gem 'loofah', '~> 2.2.3'
-
 # CVE-2018-16471
 # Criticality: Unknown
 # URL:
