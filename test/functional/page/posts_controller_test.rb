@@ -22,6 +22,12 @@ class Page::PostsControllerTest < ActionController::TestCase
     assert_equal post, assigns[:post]
   end
 
+  def test_create_post_with_emoji
+    assert_nothing_raised do
+      @post = Post.create! @page, users(:blue), body: '😀'
+   end
+  end
+
   def test_post_on_public_page
     public_page = FactoryBot.create(:page, public: true)
     login_as users(:blue)

@@ -32,7 +32,7 @@ class Wiki::SectionsControllerTest < ActionController::TestCase
     ##
 
     page = WikiPage.create! title: 'problem text', owner: 'blue' do |page|
-      page.data = Wiki.new(body: "\n\nh1. hello\n\n** what?\n\nh1. goodbye\n\n")
+      page.data = Wiki.new(body: "\n\nh1. hello\n\n** what?\n\nh1. goodbye\n\n 😁")
     end
     get :show, id: page.data_id
     page = assigns(:page)

@@ -98,6 +98,7 @@ This will also set up your test database. Prior to running the `rake db:create` 
     cp config/database.yml.example config/database.yml
     rake db:create
     rake db:schema:load
+    rake cg:convert_to_unicode
     rake db:fixtures:load
 
 ### Run the server
