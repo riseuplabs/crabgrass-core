@@ -39,11 +39,11 @@ module Page::SidebarHelper
   ##
 
   def sidebar_checkbox(text, checked, url, options = {})
-    icon = checked ? 'check_on' : 'check_off'
-    link_to(text, url,
+    icon = checked ? 'check_on_16' : 'check_off_16'
+    button_to(text, url,
       remote: true,
       method: options[:method],
-      icon: icon,
+      class: 'btn-link icon ' + icon,
       id: options[:id],
       title: options[:title])
   end
@@ -95,21 +95,22 @@ module Page::SidebarHelper
   def star_line
     if may_show? @page
       if @upart and @upart.star?
-        icon = 'star'
+        icon = 'star_16'
         add = false
         label = I18n.t(:remove_star_link, star_count: @page.stars_count)
       else
-        icon = 'star_empty_dark'
+        icon = 'star_empty_dark_16'
         add = true
         label = I18n.t(:add_star_link, star_count: @page.stars_count)
       end
       url = page_participations_path(@page, star: add.inspect)
       content_tag :li, id: 'star_li' do
-        link_to(label, url,
+        button_to(label, url,
           remote: true,
           method: 'post',
           id: 'star',
-          icon: icon)
+          class: 'icon btn-link ' + icon
+          )
       end
     end
   end
