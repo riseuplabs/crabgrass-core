@@ -60,11 +60,15 @@ module PageActions
   end
 
   def make_page_public
-    find('.check_off_16', text: 'Public').click
+    within '#public_li' do
+      find('.check_off_16').click
+    end
   end
 
   def make_page_private
-    find('.check_on_16', text: 'Public').click
+    within '#public_li' do
+      find('.check_on_16').click
+    end
   end
 
   def unwatch_page

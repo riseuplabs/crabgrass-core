@@ -39,11 +39,15 @@ module PageAssertions
   end
 
   def assert_page_public
-    assert_selector '.check_on_16', text: 'Public'
+    within '#public_li' do
+      assert_selector '.check_on_16'
+    end
   end
 
   def assert_page_private
-    assert_selector '.check_off_16', text: 'Public'
+    within '#public_li' do
+      assert_selector '.check_off_16'
+    end
   end
 
   def assert_page_watched

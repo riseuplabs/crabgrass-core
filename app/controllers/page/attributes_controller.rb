@@ -14,6 +14,10 @@ class Page::AttributesController < Page::SidebarsController
       @page.public = params[:public]
       @page.updated_by = current_user
       @page.save!
+      respond_to do |format|
+        format.html { redirect_to @page }
+        format.js { render action: :update }
+      end
     elsif owner
       @page.owner = owner
       @page.save!

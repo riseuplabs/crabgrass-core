@@ -21,6 +21,25 @@ class Page::ParticipationsController < Page::SidebarsController
 
   def update
     authorize @page, :show?
+    create_or_update
+    respond_to do |format|
+      format.html { redirect_to @page }
+      format.js
+    end
+  end
+
+  def create
+    authorize @page, :show?
+    create_or_update
+    respond_to do |format|
+      format.html { redirect_to @page }
+      format.js { render action: :update }
+    end
+  end
+
+  protected
+
+  def create_or_update
     if params[:access]
       access
     elsif params[:watch]
@@ -29,13 +48,6 @@ class Page::ParticipationsController < Page::SidebarsController
       star
     end
   end
-
-  def create
-    update
-    render action: :update
-  end
-
-  protected
 
   def watch
     @upart = @page.add(current_user, watch: params[:watch])
