@@ -6,7 +6,7 @@ class GalleryImageController < Page::BaseController
 
   def show
     authorize @page
-    @showing = @page.showings.includes(:asset).find_by_asset_id(params[:id])
+    @showing = @page.try.showings.includes(:asset).find_by_asset_id(params[:id])
     raise ErrorNotFound, :file unless @showing
     @image = @showing.asset
     # position sometimes starts at 0 and sometimes at 1?
