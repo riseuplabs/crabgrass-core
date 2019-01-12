@@ -23,6 +23,43 @@ class GroupExpellTest < IntegrationTest
     end
   end
 
+  def test_expell_other_member_second_try
+    # ensure everyone is a longterm member
+    Time.stub(:now, 2.weeks.from_now) do
+      @user = users(:blue)
+      login
+      visit '/animals'
+      click_on 'Members'
+      assert first('tr.even').has_content? 'Kangaroo!'
+      first('tr.even').click_on 'Remove'
+      logout
+      @user = users(:penguin)
+      login
+      visit '/animals'
+      click_on 'Members'
+      click_on 'Request to Remove Member is pending'
+      click_on 'Reject'
+      click_on 'Members'
+      assert_content 'Kangaroo!'
+      logout
+      @user = users(:blue)
+      login
+      visit '/animals'
+      click_on 'Members'
+      assert first('tr.even').has_content? 'Kangaroo!'
+      first('tr.even').click_on 'Remove'
+      logout
+      @user = users(:iguana)
+      login
+      visit '/animals'
+      click_on 'Members'
+      click_on 'Request to Remove Member is pending'
+      click_on 'Approve'
+      click_on 'Members'
+      assert_no_content 'Kangaroo!'
+    end
+  end
+
 
   def test_add_expelled_member
     # ensure everyone is a longterm member

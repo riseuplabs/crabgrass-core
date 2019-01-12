@@ -18,7 +18,7 @@ class RequestToRemoveGroup < Request
   end
 
   def self.for_membership(membership)
-    with_requestable(membership.group).for_recipient(membership.network)
+    with_requestable(membership.group).for_recipient(membership.network).where.not(state: 'rejected')
   end
 
   #
