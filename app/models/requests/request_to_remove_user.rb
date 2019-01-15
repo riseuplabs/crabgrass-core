@@ -18,7 +18,7 @@ class RequestToRemoveUser < Request
   end
 
   def self.for_membership(membership)
-    with_requestable(membership.user).for_recipient(membership.group)
+    with_requestable(membership.user).for_recipient(membership.group).where.not(state: 'rejected')
   end
 
   #
