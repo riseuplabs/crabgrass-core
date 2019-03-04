@@ -22,5 +22,5 @@
     containment: ['sort_list_voted', 'sort_list_unvoted'],
     url: sort_ranked_vote_possibles_url(page_id: @page)
   = sortable_element 'sort_list_unvoted', handle: 'handle',
-    containment: ['sort_list_voted'],
+    containment: ['sort_list_voted', 'sort_list_unvoted'],
     url: sort_ranked_vote_possibles_url(page_id: @page)
