@@ -1,8 +1,5 @@
 image: 0xacab.org:4567/riseuplabs/docker/crabgrass:latest
 
-services:
-  - mysql:5.5
-
 variables:
   MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
   MYSQL_HOST: 'mysql'
@@ -27,6 +24,8 @@ bundle_audit:
 
 test:
   stage: test
+  services:
+    - mysql:5.5
   script: |
     bundle exec rake create_a_secret
     cp config/database.yml.example config/database.yml
@@ -49,6 +48,10 @@ test:
 test_stretch:
   image: 0xacab.org:4567/riseuplabs/docker/crabgrass:stretch_amd64
   stage: test
+  services:
+    - mariadb:10.1
+  variables:
+    MYSQL_HOST: 'mariadb'
   script: |
     bundle exec rake create_a_secret
     cp config/database.yml.example config/database.yml
