@@ -61,12 +61,11 @@ end
 require 'fileutils'
 
 dirs.each do |dir|
-  unless File.directory?(dir)
-    if File.exist?(dir)
-      msg = 'ERROR: %s is supposed to be a directory, but file already exists'
-      raise format(msg, dir)
-    else
-      FileUtils.mkdir_p(dir)
-    end
+  resolved = File.symlink?(dir) ? File.readlink(dir) : dir
+  next if File.directory?(resolved)
+  if File.exist?(resolved)
+    msg = 'ERROR: %s is supposed to be a directory, but file already exists'
+    raise format(msg, resolved)
   end
+  FileUtils.mkdir_p(resolved)
 end
