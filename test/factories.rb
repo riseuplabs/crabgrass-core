@@ -19,15 +19,15 @@ FactoryBot.define do
   sequence(:caption)      { |_n| Faker::Lorem.sentence }
 
   factory :site do
-    domain       'localhost'
-    email_sender 'robot@$current_host'
+    domain       { 'localhost' }
+    email_sender { 'robot@$current_host' }
   end
 
   factory :user do
     login
     email
-    password 'foobarbaz'
-    password_confirmation 'foobarbaz'
+    password { 'foobarbaz' }
+    password_confirmation { 'foobarbaz' }
   end
 
   factory :group do
@@ -47,7 +47,7 @@ FactoryBot.define do
   factory :page, class: DiscussionPage do
     title
     summary
-    stars_count 0
+    stars_count { 0 }
     created_at  { generate(:created_date) }
     updated_at  { generate(:updated_date) }
     resolved    { generate(:boolean) }
@@ -66,7 +66,7 @@ FactoryBot.define do
     created_at    { generate(:created_date) }
     updated_at    { generate(:updated_date) }
     caption
-    version 1
+    version { 1 }
     # association :parent_page, factory: :asset_page
 
     factory :image_asset, class: Asset::Image do
@@ -90,16 +90,16 @@ FactoryBot.define do
   end
 
   factory 'user_participation', class: User::Participation do
-    access 1
-    watch false
+    access { 1 }
+    watch { false }
   end
 
   factory 'group_participation', class: Group::Participation do
-    access 1
+    access { 1 }
   end
 
   factory :wiki do
-    version 1
+    version { 1 }
     sequence(:body) { |_n| Faker::Lorem.paragraphs(10).join "\n" }
   end
 
@@ -117,11 +117,11 @@ FactoryBot.define do
 
   factory :profile do
     factory :public_profile do
-      stranger true
+      stranger { true }
     end
 
     factory :private_profile do
-      friend true
+      friend { true }
     end
   end
 
