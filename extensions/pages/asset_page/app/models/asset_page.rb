@@ -37,7 +37,7 @@ class AssetPage < Page
     thumbnail = asset.thumbnail(:txt)
     thumbnail.generate unless File.exist?(thumbnail.private_filename)
     begin
-      File.open(thumbnail.private_filename).read
+      File.open(thumbnail.private_filename, encoding: 'iso-8859-1').read
     rescue
       ''
     end
