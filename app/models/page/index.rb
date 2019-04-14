@@ -156,7 +156,16 @@ module Page::Index
     # additional hook for subclasses
     custom_page_terms(terms)
 
-    terms.save! if !new_record? and terms.changed?
+    begin
+      terms.save! if !new_record? and terms.changed?
+    rescue => exception
+      # page terms sometimes cause mysql exceptions
+      # We still need the surrounding context to continue to work.
+      # So we won't reraise here.
+      Rails.logger.error "ERROR - investigate me!"
+      Rails.logger.error "Failed to update page terms: #{terms.id} for page: #{id}."
+      Rails.logger.error exception
+    end
   end
 
   # :nodoc:
