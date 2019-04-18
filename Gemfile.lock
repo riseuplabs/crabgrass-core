@@ -76,7 +76,7 @@ GEM
     chronic (0.10.2)
     cliver (0.3.2)
     concurrent-ruby (1.1.5)
-    crabgrass_media (0.2.0)
+    crabgrass_media (0.2.1)
       activesupport (~> 4.2)
       mime-types (~> 3.1)
     crass (1.0.4)
@@ -256,7 +256,7 @@ DEPENDENCIES
   bundler-audit
   byebug
   capybara
-  crabgrass_media (~> 0.2.0)
+  crabgrass_media (~> 0.2.1)
   daemons
   delayed_job_active_record (~> 4.0)
   factory_bot_rails
@@ -297,4 +297,4 @@ DEPENDENCIES
   zip-zip
 
 BUNDLED WITH
-   1.16.6
+   1.17.3
