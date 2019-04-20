@@ -56,7 +56,6 @@ eu:
   crabgrass:
     description_html: ', sare-antolaketarako <a href="https://www.gnu.org/licenses/agpl-3.0.html">AGPL lizentziadun</a> software librea
 
-
       '
     get_involved: Parte hartu
     help_pages: Crabgrass-eko laguntza orrialdeak
@@ -67,6 +66,8 @@ eu:
     report_a_bug: Akats baten berri eman
     request_a_feature: Eskatu funtzionaltasun bat
   actions:
+    possible:
+      add: Gehitu Aukera berria
     task:
       add: Gehitu ataza berria
   add_button: Gehitu
@@ -76,6 +77,7 @@ eu:
   cancel: Utzi
   close_button: Itxi
   confirm: Baieztatu
+  create: Sortu
   create_a_new_thing: Sortu %{thing} berri bat
   create_button: Sortu
   create_thing: Sortu %{thing}
@@ -89,6 +91,7 @@ eu:
   destroy_thing: Suntsitu %{thing}
   drop_files_here: Jaregin fitxategiak hemen
   edit: Editatu
+  files_pending: Fitxategiak zain daude
   loading_progress: Kargatzen...
   ok_button: Ados
   optional: Hautazkoa
@@ -108,6 +111,11 @@ eu:
   upload: Igo
   mailer:
     hello: Kaixo %{user_name}
+    pgp_key:
+      key_uploaded: Igo berri duzun gakoa mezu elektronikoen jakinarazpenak zifratzeko erabiliko da (eginbide esperimentala, laster erabilgarria).
+      key_uploaded_subject: Jakinarazpena
+    page_histories:
+      change_your_settings_here: 'Aldatu posta elektroniko bidezko jakinarazpenen ezarpenak: %{page_link}'
   exception:
     description:
       forbidden: Barkatu, ez daukazu eragiketa hau egiteko baimenik.
@@ -131,6 +139,7 @@ eu:
   upload_new_image: Igo irudi berria
   upload_zip_file_link: Igo Zip fitxategi bat
   approved_by_entity: '%{entity}(e)k onartua'
+  friends: Lagunak
   name: Izena
   owner: Jabea
   people: Jendea
@@ -145,6 +154,7 @@ eu:
     placeholder:
       enter_name_of_group: Sartu talde baten izena
       enter_name_of_person: Sartu pertsona baten izena
+  everybody: Edonork
   go: Aurrera
   list_things: Zerrendatu %{things}(e)ak
   modified: aldatuta
@@ -164,6 +174,7 @@ eu:
   unknown: Ezezaguna
   contacts: Kontaktuak
   member_groups_of_network: Kideak diren taldeak
+  my_contacts: Nire kontaktuak
   action_cannot_be_undone: Ekintza hau ezin da desegin.
   administration: Administrazioa
   back: Atzera
@@ -262,11 +273,16 @@ eu:
   language: Hizkuntza
   message_user_wrote_caption: "%{user}(e)k idatzi zuen:"
   message_you_wrote_caption: 'Idatzi zenuen:'
+  my_dashboard: Nire arbela
   notification_select:
     digest: 'Bai: aldaketen laburpen bat egunean'
     none: 'Ez: e-postarik ez aldaketekin'
     single: 'Bai: e-posta bat aldaketa bakoitzeko'
   or_image_url: edo irudiaren URL-a
+  pgp_key: PGP gakoa
+  pgp_public_key: Gako publikoa
+  pgp_key_placeholder: Sartu zure PGP gako publikoa
+  private_profile: Profil pribatua
   remove_image_link: kendu irudia
   save_changes: Gorde aldaketak
   select_image_file: hautatu irudiaren fitxategia
@@ -390,18 +406,23 @@ eu:
   send_email: Bidali e-posta
   name_or_email_not_found: '"%{name}" ez dator bat ezein erabiltzaile edo talde izenekin eta ez da baliozko e-posta helbide bat.'
   additional_page_access: Sarrera-maila gehigarria
+  article_page_display: Artikulua
   asset_page_description: Igo ezazu irudi, dokumentu, kalkulu-orri, aurkezpen edo beste edozein fitxategi.
   asset_page_display: Fitxategia
   attachments: Eranskinak
+  collection_page_display: Bilduma
   create_page: Sortu orrialdea
   discussion_page_description: Eztabaidatu gai zehatz bat taldeetan edo beste erabiltzaileekin.
   discussion_page_display: Talde eztabaida
+  folder_display: Karpeta
   gallery_description: Igo itzazu hainbat irudi edo antola itzazu jada igotakoak bilduma batean.
   gallery_display: Galeria
+  message_page_display: Mezu pertsonala
   page_added_to_group: Orrialde hau %{group_name} %{group_type}(e)ra gehituko da.
   page_create_owner: Orrialdearen jabea
   page_owner_error: Orrialdeko jabea ezin da hutsik egon.
   select_file_to_upload: Hautatu fitxategi bat igotzeko.
+  survey_page_display: Inkesta
   task_list_page_description: Sortu ezazu egin beharrekoen zerrenda bat eta esleitu atazak zure buruari edo besteei.
   task_list_page_display: Ataza zerrenda
   wiki_page_description: Sortu ezazu formatu libreko testua duen dokumentu editagarri bat.
@@ -433,6 +454,7 @@ eu:
   each_line_is_a_choice_caption: "(lerro bakoitza aukera posible bat da)"
   no_data_uploaded_label: Ez da daturik igo
   private_question_label: 'Galdera pribatua:'
+  save_survey_button: Gorde inkesta
   see_whole_response_link: ikusi erantzun osoa
   survey_introduction_tab: Sarrera
   survey_list_all_tab: Zerrendatu erantzunak
@@ -473,6 +495,7 @@ eu:
   incoming: Sarrerakoak
   outgoing: Irteerakoak
   request: Eskaera
+  request_pending: "%{request}egin gabe dago"
   requests: Eskaerak
   send_request_button: Bidali eskaera
   try_again: Saiatu berriro
@@ -502,14 +525,16 @@ eu:
   request_to_destroy_our_group: Taldea suntsitzeko eskaera
   request_to_destroy_our_group_description: '%{user} erabiltzaileak %{group} %{group_type} suntsitzea proposatu du.'
   request_to_friend: Kontaktuak bihurtzeko eskaera
+  request_to_join: Eskatu kide egitea
   request_to_join_our_network_description: '%{group} taldeak %{network} sareko kide egiteko gonbidapenak jaso du.'
+  request_to_join_us: Eskatu kide egitea
   request_to_join_us_short: '%{user} %{group}(r)en kide egin?'
   request_to_join_us_description: '%{user} erabiltzaileak %{group} taldeko kide egiteko gonbidapena jaso du.'
   request_to_join_us_via_email_description: '%{email} e-postal helbideak %{group} taldeko kide egiteko gonbidapena jaso du.'
   request_to_join_us_via_email_short: '%{email} %{group}(r)en kide egin?'
   request_to_join_you: Kide egiteko eskera
   request_to_join_you_description: '%{user} erabiltzaileak %{group} taldeko kide egitea eskatu du.'
-  request_to_join_your_network: Kide egiteko eskera
+  request_to_join_your_network: Eskatu kide egitea
   request_to_join_your_network_description: '%{group} taldeak %{network} sareko kide egitea eskatu du.'
   request_to_remove_user: Kidea kentzeko eskaera
   request_to_remove_user_description: '%{user} erabiltzaileak %{member} %{group} %{group_type}(e)tik ateratzea proposatu du.'
@@ -590,7 +615,10 @@ eu:
   size: Tamaina
   video_embed: Kapsulatu
   add_tags: Gehitu etiketak
+  current_tags: Egungo etiketak
   no_tags: ez dago etiketarik
+  popular_tags: Etiketak erabilienak
+  recent_tags: Azken etiketak
   separate_tags: Banatu etiketak komak erabiliz.
   tag: Etiketa
   tags: Etiketak

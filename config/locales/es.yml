@@ -112,6 +112,7 @@ es:
   mailer:
     hello: Hola %{user_name}
     pgp_key:
+      key_uploaded: Acabas de subir una nueva llave. Será usada para cifrar notificaciones de correo (función experimental, viene pronto).
       key_uploaded_subject: Notificación
     page_histories:
       change_your_settings_here: 'Cambia tus ajustes de notificaciones por correo electrónico aquí: %{page_link}'
@@ -121,6 +122,8 @@ es:
         one: "Una página que estás observando ha sido modificada."
         other: "%{count} páginas que estás observando han sido modificadas desde la última notificación."
       the_page_you_are_watching_description: La página que estás observando "%{page_title}" ha sido modificada
+      upload_your_public_pgp_key: Para recibir actualizaciones más detalladas en correos cifrado, por favor sube tu llave publica PGP.
+      we_leave_out_details: Dejamos fuera los detalles de este correo para proteger información que tal vez quieras que permanezca privada.
       you_can_find_updates_here: 'Encontrarás más detalles y una lista de páginas con cambios recientes aquí:'
       you_can_turn_off_or_configure_notifications: Desactivar las notificaciones por correo, recibir un resumen de cambios, o recibir un correo cada vez que la página es cambiada
   exception:
@@ -147,6 +150,7 @@ es:
   upload_new_image: cargar nueva imagen
   upload_zip_file_link: Subir un archivo Zip
   approved_by_entity: Aprobado por %{entity}
+  friends: Amigxs
   name: Nombre
   owner: Propietario
   people: Gente
@@ -185,6 +189,7 @@ es:
   search: Buscar
   see_all_link: Ver Todos
   see_more_link: Más
+  sorry: Lo sentimos
   thing_not_found: "%{thing} no se encuentra"
   total: "%{count} en total"
   unknown: desconocido
@@ -267,6 +272,8 @@ es:
   group_membership_count: "%{count} personas"
   membership_destroy_confirm_message: ¿Tienes la certeza de que quieres retirar a '%{entity}' de %{group}?
   membership_exists_error: Ya %{member} tiene una afiliación
+  membership_leave_message: Has sido removido de %{group}
+  membership_notification: Notificación de membresía
   membership_requests: Las solicitudes de afiliación
   public_groups: Grupos públicos
   shared_groups: Grupos compartidos
@@ -291,6 +298,7 @@ es:
   group_successfully_created: 'El grupo ha sido creado con éxito. '
   join_group_confirmation: ¿Estás segur@ que deseas ingresar a este %{group_type}?
   join_group_link: Unirse a %{group_type}
+  leave_group_confirmation: Estas seguro que quieres dejar este%{group_type}? Perderás acceso a todas las páginas propiedad de este %{group_type}.
   leave_group_link: Dejar %{group_type}
   link_name_description: Este nombre es cómo va a referirse a este grupo en los enlaces y direcciones URL. Debe tener sólo caracteres alfanuméricos, no se permite espacios.
   network_initial_member: Elija una organización para ser un miembro inicial de esta red.
@@ -311,6 +319,7 @@ es:
   display_name: Nombre mostrado
   do_you_want_to_receive_email_notifications: ¿Deseas recibir notificaciones por correo electrónico de cambios a las páginas que estás observando?
   email: 'Correo electrónico '
+  fingerprint: Huella digital
   language: Idioma
   message_user_wrote_caption: "%{user} escribió:"
   message_you_wrote_caption: 'Tu escribiste:'
@@ -321,6 +330,12 @@ es:
     single: 'Sí: un correo electrónico por cada cambio'
   or_image_url: o URL de la foto
   pgp_key: PGP llave
+  pgp_public_key: Llave Pública
+  pgp_key_description: 'Experimental: Sube tu llave pública GPG si quieres recibir notificaciones por correo cifradas (nueva función que viene pronto). Te enviaremos una confirmación por correo cifrado.'
+  pgp_key_invalid: La llave que introdujiste no se puede importar. De verdad pegaste tu llave GPG pública?
+  pgp_key_expired: La llave GPG que has introducido ha expirado.
+  pgp_key_placeholder: Introduce tu llave pública GPG.
+  private_profile: Perfil Privado
   remove_image_link: eliminar imagen
   save_changes: Guardar Cambios
   select_image_file: seleccionar archivo de foto
@@ -350,6 +365,7 @@ es:
     '
   video_embed_code_description: Esta no es la dirección del sitio. Es un código rodeado por < y > que el sitio del video - youtube, etc. - pone a tu disposición para empotrar el video en otros sitios.
   video_embed_code_prompt: Código incrustado en el video procedente de fuente externa
+  access_code_expired: El código %{code}ha expirado o no existe.
   email_link_expires: Este enlace expirará en %{days} días.
   email_notice_access: 'Puedes acceder a esta página en:'
   email_notice_hello: Hola, %{from} te ha enviado una página web.
@@ -421,6 +437,7 @@ es:
   destroy_page_via_trash_info: Esto movera la página a la papelera, de donde puede ser recuperada.
   information: Información
   page_details_link: "%{page_class} Detalles"
+  page_is_public: Esta página es pública.
   participation: Participación
   public_checkbox_help: Si se selecciona, cualquiera puede ver esta página.
   remove_access_error: El acceso a esta página no puede ser eliminado. No puedes retirar el acceso a quien es propietario(a), o un acceso que necesitas para administrar la página.
@@ -438,6 +455,7 @@ es:
   share_already_exists_error: '"%{name}" ya tiene acceso a esta página'
   share_grant_required_error: "%{name} no tiene permitido ver esta página. Se les debe autorizar mayores permisos primero."
   share_include_message: Incluir un mensaje personalizado
+  share_include_paranoid_message: Incluye un mensaje personalizado en el Aviso (no en el correo).
   share_page_link: Compartir %{page_class}
   share_page_recipients: Compartir esta %{page_class} con
   share_send_notification: Enviar notificación
@@ -454,15 +472,27 @@ es:
   send_email: Enviar Correo
   name_or_email_not_found: '"%{name}" no coincide con el nombre de ninguna persona o grupo y no es una dirección válida de email.'
   additional_page_access: Acceso Adicional
+  announcement_page_description: Un aviso.
+  announcement_page_display: Aviso
+  announcements_page_display: Avisos
+  article_page_description: Crea una entrada de blog o artículo de noticias.
+  article_page_display: Artículo
   asset_page_description: Subir una imagen, documento, hoja de cálculo, presentación, o cualquier archivo.
   asset_page_display: Archivo
   attachments: Archivos adjuntos
+  collection_class_description: Páginas especiales que sujetan otras páginas.
+  collection_page_display: Colección
   create_page: Crear Página
   discussion_page_description: Debate sobre un tema en particular.
   discussion_page_display: Debate de Grupo
+  event_page_description: Un evento de calendario.
+  external_video_page_description: Muestra un video alojado en un sitio web externo.
+  external_video_page_display: Video Externo
+  folder_class_description: Crea una carpeta para organizar otras páginas.
   folder_display: Carpeta
   gallery_description: Subir múltiples imágenes u organizar las existentes en un conjunto.
   gallery_display: Galería
+  message_page_description: Envía una mensaje personal a recipientes individuales.
   message_page_display: Mensaje personal
   page_added_to_group: Esta página se añadirá a %{group_type} %{group_name}.
   page_create_owner: Propietario de página
@@ -474,6 +504,7 @@ es:
   rate_many_page_description: Crear una lista de opciones para que la gente apruebe o desapruebe.
   rate_many_page_display: Encuesta de Aprobación
   select_file_to_upload: Seleccione un archivo para cargar.
+  survey_page_description: Crea una serie de preguntas para que personas las respondan.
   survey_page_display: Encuestas
   task_list_page_description: Una lista de las cosas pendientes.
   task_list_page_display: Lista de tareas
@@ -642,6 +673,7 @@ es:
   request_to_remove_user: Petición para Remover Miembro
   request_to_remove_user_description: El usuario %{user} ha propuesto borrar %{member} de %{group_type} %{group}.
   request_to_remove_user_short: ¿Debe %{member} ser eliminado de %{group}?
+  request_to_remove_group: Solicitud para Remover Grupo
   request_to_remove_group_description: El usuario %{user} ha propuesto borrar %{group} de %{network}.
   request_to_remove_group_short: ¿Debe %{group} ser eliminado de %{network}?
   view_label: Ver

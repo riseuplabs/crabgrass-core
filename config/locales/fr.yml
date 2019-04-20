@@ -122,6 +122,7 @@ fr:
         one: "Une page que vous surveillez a été modifiée depuis la dernière alerte."
         other: "%{count} pages que vous surveillez ont été modifiées depuis la dernière alerte."
       the_page_you_are_watching_description: La page que vous suivez "%{page_title}" a été modifiée
+      upload_your_public_pgp_key: Pour recevoir des mises à jour plus détaillées sous forme d’e-mails cryptés, veuillez télécharger votre clé publique pgp.
       we_leave_out_details: Nous n'incluons pas vos données dans ce courriel dans le cas où vous souhaiteriez les garder privées.
       you_can_find_updates_here: 'Vous trouverez plus d''informations et une liste des pages récemment modifiées ici:'
       you_can_turn_off_or_configure_notifications: Ne plus recevoir d'alertes courriels, obtenir une liste des modifications ou recevoir un courriel chaque fois que la page est transformée
@@ -188,6 +189,7 @@ fr:
   search: Rechercher
   see_all_link: Tout afficher
   see_more_link: Plus
+  sorry: Pardon
   thing_not_found: "%{thing} non trouvé·e"
   total: "%{count} au total"
   unknown: Inconnu
@@ -271,6 +273,8 @@ fr:
   group_membership_count: "%{count} Membres"
   membership_destroy_confirm_message: Êtes-vous certain·e de vouloir retirer '%{entity}' de %{group} ?
   membership_exists_error: Une inscription existe déjà pour %{member}
+  membership_leave_message: Vous avez été retiré de %{group}
+  membership_notification: Notification d'adhésion
   membership_requests: Demande d'Inscription
   public_groups: Structures Publiques
   shared_groups: Structures Partagées
@@ -295,6 +299,7 @@ fr:
   group_successfully_created: Le groupe est créé avec succès.
   join_group_confirmation: Êtes-vous certain·e de vouloir rejoindre cette structure ?
   join_group_link: Rejoindre %{group_type}
+  leave_group_confirmation: Êtes-vous sûr de vouloir quitter ce %{group_type}? Vous perdrez l'accès à toutes les pages appartenant à %{group_type}.
   leave_group_link: Quitter %{group_type}
   link_name_description: C'est ce nom qui sera utilisé pour identifier cette structure dans les liens et les URLs. Il ne doit contenir que des caractères alphanumériques non accentués, sans espace.
   network_initial_member: Choisissez un groupe comme membre initial de ce réseau.
@@ -327,7 +332,10 @@ fr:
   or_image_url: ou URL de l'image
   pgp_key: Clé PGP
   pgp_public_key: Clé publique
+  pgp_key_description: 'Expérimental: Téléchargez votre clé publique PGP si vous souhaitez recevoir des notifications par courrier électronique cryptées (nouvelle fonctionnalité à venir). Nous vous enverrons un email de confirmation crypté.'
+  pgp_key_invalid: La clé que vous avez entrée ne peut pas être importée. Avez-vous vraiment collé une clé publique PGP?
   pgp_key_expired: La clé GPG renseignée est expirée.
+  pgp_key_placeholder: Entrez votre clé publique PGP
   private_profile: Profile privé
   remove_image_link: retirer image
   save_changes: Sauvegarder les modifications
@@ -356,6 +364,7 @@ fr:
   current_video_sources: 'Actuellement supportés: youtube, blip.tv, google video et vimeo.'
   video_embed_code_description: Ce n'est pas l'adresse du site web. C'est un code délimité par < et > que le site vidéo – youtube, etc. – met à disposition pour afficher la vidéo sur d'autres sites.
   video_embed_code_prompt: Code importé depuis une source vidéo extérieure.
+  access_code_expired: Le code %{code}a expiré ou n'existe pas.
   email_link_expires: Ce lien expirera dans %{days} jours.
   email_notice_access: 'Vous pouvez accéder à cette page ici :'
   email_notice_hello: Bonjour, %{from} vous a envoyé une page web.
@@ -445,6 +454,7 @@ fr:
   share_already_exists_error: '"%{name}" a déjà accès à cette page.'
   share_grant_required_error: "%{name} n'est pas autorisé·e à voir cette page. Un accès lui est nécessaire auparavant pour ce faire."
   share_include_message: Ajouter un message personnalisé
+  share_include_paranoid_message: Inclure un message personnalisé dans Notice (pas dans Email).
   share_page_link: Partager la %{page_class}
   share_page_recipients: 'Partager cette %{page_class} avec '
   share_send_notification: Envoyer une notification
@@ -464,15 +474,25 @@ fr:
   announcement_page_description: Une annonce
   announcement_page_display: Annonce
   announcements_page_display: Annonces
+  article_page_description: Créez un article de blog ou un article de presse.
+  article_page_display: Article
   asset_page_description: Envoyer une image, un document, une présentation, ou tout autre fichier.
   asset_page_display: Fichier
   attachments: Fichiers joints
+  collection_class_description: Pages spéciales contenant d'autres pages.
+  collection_page_display: Collection
   create_page: Créer une Page
   discussion_page_description: Discuter d'un sujet particulier avec des structures ou d'autres personnes.
   discussion_page_display: Discussion de groupe
+  event_page_description: Un événement de calendrier.
+  external_video_page_description: Afficher une vidéo hébergée sur un site Web externe.
+  external_video_page_display: Vidéo externe
+  folder_class_description: Créez un dossier pour organiser d'autres pages.
   folder_display: Répertoire
   gallery_description: Envoyer des images ou organiser les images existantes.
   gallery_display: Galerie
+  message_page_description: Envoyer un message personnel à des destinataires individuels.
+  message_page_display: Message personnel
   page_added_to_group: Cette page sera ajoutée à la structure %{group_type} %{group_name}.
   page_create_owner: Propriétaire de la Page
   page_owner_error: Propriétaire de la page ne peut pas être laissé en blanc
@@ -481,6 +501,7 @@ fr:
   rate_many_page_description: Créer une liste de choix à approuver ou infirmer.
   rate_many_page_display: Vote d'Approbation
   select_file_to_upload: Choisir un fichier à téléverser
+  survey_page_description: Créez une série de questions auxquelles les gens pourront répondre.
   survey_page_display: Enquête
   task_list_page_description: Créer une liste de choses à faire et à assigner à vous-même ou à d'autres.
   task_list_page_display: Liste de Tâches
@@ -614,6 +635,9 @@ fr:
   request_to_join_our_network:
     one: Invitation
     other: Invitations
+  invitation_to_join:
+    one: Invitation à rejoindre
+    other: Invitations à rejoindre
   request_to_join_us_via_email:
     one: Invitation
     other: Invitations
@@ -642,6 +666,7 @@ fr:
   request_to_remove_user: Demande de Désinscription de Membre
   request_to_remove_user_description: '%{user} a proposé de retirer %{member} de la structure %{group_type} %{group}.'
   request_to_remove_user_short: Retirer %{member} de %{group} ?
+  request_to_remove_group: Demande de suppression de groupe
   request_to_remove_group_description: '%{user} a proposé de retirer %{group} de l''organisation %{network}.'
   request_to_remove_group_short: '%{group} doit-il ou doit-elle être retirée de %{network} ?'
   view_label: Voir
