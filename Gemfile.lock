@@ -289,7 +289,6 @@ DEPENDENCIES
   http_accept_language (~> 2.0)
   i18n (~> 0.7)
   json (~> 1.8)
-  loofah (~> 2.2.3)
   mail-gpg (~> 0.3.3)
   mime-types
   minitest (~> 5.10.3)
