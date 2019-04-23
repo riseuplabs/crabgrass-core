@@ -1,4 +1,4 @@
-if @task.previous_changes.keys.include? 'completed_at'
+if @task.completed?
   # the list the task was just moved into
   list = @task.completed? ? 'sort_list_completed' : 'sort_list_pending'
   page.remove dom_id(@task)
