@@ -30,6 +30,7 @@ class TasksController < Page::BaseController
     state = params[:task].try.delete(:state)
     if state.present?
       @task.state = state
+      @task.save!
       @task.move_to_bottom
     else
       @task.update_attributes task_params
