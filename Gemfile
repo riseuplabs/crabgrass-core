@@ -56,16 +56,6 @@ gem 'thinking-sphinx', '~> 3.4.2'
 
 # Enhanced Tagging lib. Used to tag pages
 gem 'acts-as-taggable-on', '~> 6.0'
-#gem 'acts-as-taggable-on', '~> 5.0'
-
-#
-# security updates
-##
-#
-# CVE-2018-16468 Criticality: Unknown URL:
-# https://github.com/flavorjones/loofah/issues/154 Title: Loofah XSS
-# Vulnerability
-gem 'loofah', '~> 2.2.3'
 
 # Rails 5 migration
 ##
