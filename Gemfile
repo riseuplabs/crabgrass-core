@@ -14,8 +14,8 @@ end
 gem 'rails', '~> 5.1.6'
 
 # Security updates
-# https://github.com/sparklemotion/nokogiri/issues/1785
-gem 'nokogiri', '~> 1.8.5'
+#https://github.com/sparklemotion/nokogiri/issues/1892
+gem 'nokogiri', '~> 1.10.3'
 
 # Rake is rubys make... performing tasks
 # locking in to latest major to fix API
