@@ -69,7 +69,7 @@ define_theme do
   end
 
   link do
-    standard_color '#00e'
+    standard_color '#2a5183'
     visited_color '#551a8b'
     active_color '#e00'
     underline false
