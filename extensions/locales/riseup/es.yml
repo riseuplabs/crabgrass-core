@@ -12,6 +12,6 @@ es:
     riseup_black: "Riseup Negro"
     riseup_red: "Riseup Rojo"
     accounts_note: >
-        NOTA: las cuentas de usuario de este sitio son independientes de otros servicios
+        NOTA: Las cuentas de usuario de este sitio son independientes de otros servicios
         de riseup.net. Es decir, no puedes usar tu cuenta %{riseup_black} o %{riseup_red}
         para entrar en este sitio.

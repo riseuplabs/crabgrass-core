@@ -1,10 +1,17 @@
 pl:
   riseup:
     run_by_html: "Strona prowadzona przez %{provider}%{description}"
-    description: ", przyjacielski wolnościowy kolektyw techniczny działający od 1999."
-    privacy_policy: "polityka prywatności"
-    about_us: "o nas"
-    email_accounts: "konta pocztowe"
-    mailing_lists: "listy mejlingowe"
-    system_status: "stan systemów"
-    donate: "wesprzyj riseup"
+    description: "przyjazny wolnościowy kolektyw techniczny działający od 1999."
+    privacy_policy: "Polityka prywatności"
+    terms_of_service: "Warunki usługi"
+    about_us: "O nas"
+    email_accounts: "Konta pocztowe"
+    mailing_lists: "Listy mejlingowe"
+    system_status: "Stan systemów"
+    donate: "Wesprzyj Riseup"
+    riseup_black: "Riseup Black"
+    riseup_red: "Riseup Red"
+    accounts_note: >
+        UWAGA: Konta użytkowników na tej stronie są oddzielne od innych usług riseup.net.
+        Inaczej mówiąc, nie możesz tu użyć swoich kont %{riseup_black}czy %{riseup_red},
+        żeby się zalogować.
