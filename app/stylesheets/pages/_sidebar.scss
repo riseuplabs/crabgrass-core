@@ -87,7 +87,7 @@
 ul.side_list {
   @include list-unstyled;
   clear: both;
-  a, & .a {
+  a, & .a, .btn-link {
     display: block;
     padding-top: 4px;
     padding-bottom: 4px;
