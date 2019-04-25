@@ -7,7 +7,7 @@ class GalleryImageController < Page::BaseController
   def show
     authorize @page
     @showing = @page.try.showings.includes(:asset).find_by_asset_id(params[:id])
-    raise ErrorNotFound, :file unless @showing
+    raise ErrorNotFound, :file unless @showing.try.asset
     @image = @showing.asset
     # position sometimes starts at 0 and sometimes at 1?
     @image_index = @page.images.index(@image).next
