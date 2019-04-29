@@ -8,8 +8,9 @@
 - pages = local_assigns[:pages] ||= @pages.select{|page| page.owner_id and page.owner_name != 'none'}
 - paginate = false # pages.respond_to?(:total_entries)
 - paginate_options ||= {}
+- classes = ['page_list', ('table-responsive' if style == 'table'), (style if style != 'table')]
 
-%section{class: "page_list #{style}"}
+%section{class: classes}
   = render "/common/pages/list_as_#{style}", local_assigns
   - if paginate
     = pagination_links( pages, paginate_options )

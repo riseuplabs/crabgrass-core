@@ -22,7 +22,7 @@
 
 - center_span = center_span_class(@local_layout)
 - side_span   = side_span_class(@local_layout)
-- classes = [@local_layout]
+- classes = [@local_layout, 'row']
 - if @navigation[:local].present?
   - content_for(:left_column) do
     = render 'layouts/local/side_navigation'
@@ -42,7 +42,7 @@
       = yield :right_column
 
 - else
-  - center_class = "col-xs-#{current_theme['local_single_width']}"
+  - center_class = "col-md-#{current_theme['local_single_width']}"
   #local.full_width{class: classes}
     #column_center{class: center_class}
       = render 'layouts/local/content'

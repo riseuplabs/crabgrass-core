@@ -39,9 +39,9 @@ $ui-margin: $margin_ui;
 //
 // Bootstrap uses $line-height-computed for top margin of headings.
 //
-// default value: 20px;
+// default value: 20px ($margin_gap);
 //
-$gap-margin: $margin_gap;
+$gap-margin: 30px;
 
 //
 // UTILITY CLASSES
