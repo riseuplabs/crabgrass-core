@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# exit if any of the commands has a non zero return code
+set -o errexit
+
+# err out if trying to use undefined variables
+set -o nounset
+
+# enable to see each command that is being called
+# set -o xtrace
+
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+rake="${dir}/../bin/rake"
+
+if [ "${1:-}" = "status" ]
+then
+  ${rake} ts:${1} | grep 'is currently running'
+  exit
+fi
+
+if [ "${1:-}" = "start" ] \
+  || [ "${1:-}" = "stop" ] \
+  || [ "${1:-}" = "restart" ]
+then
+  ${rake} ts:${1}
+  exit
+fi
+
+echo "${0} <command>"
+echo "commands: [status|start|stop|restart]"
