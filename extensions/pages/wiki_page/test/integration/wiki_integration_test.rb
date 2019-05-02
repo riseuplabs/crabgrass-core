@@ -69,6 +69,22 @@ class WikiIntegrationTest < JavascriptIntegrationTest
     assert_selector 'li.toc1'
   end
 
+  def test_wiki_toc_multiline_heading
+    visit_page
+    content = update_wiki <<-EOWIKI.strip_heredoc
+      [[toc]]
+
+      h1. test table of content
+      *and more*
+
+      h2. with nested section
+
+      and some content
+    EOWIKI
+    assert_content 'table of content'
+    assert_selector 'li.toc1'
+  end
+
   def test_section_editing
     visit_page
     content = update_wiki <<-EOWIKI.strip_heredoc
