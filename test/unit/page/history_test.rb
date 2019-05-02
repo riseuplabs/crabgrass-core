@@ -73,6 +73,15 @@ class Page::HistoryTest < ActiveSupport::TestCase
     assert_equal 'Nice title', page_history.details[:to]
   end
 
+  def test_change_title_saves_old_and_new_value
+    page = FactoryBot.create(:page, title: 'Bad title')
+    page.update_attribute :title, 'Nice title which is far too long and has to be truncated to be saved. We had to truncate the title, because there were titles which did not fit into the database'
+    Tracking::Action.track :update_title, user: @user, page: page
+    page_history = Page::History::ChangeTitle.where(page_id: page).first
+    assert_equal 'Bad title', page_history.details[:from]
+    assert_equal 'Nice title which is far too long and has to be truncated to be saved. We had to truncate the...', page_history.details[:to]
+  end
+
   def test_recipients_for_single_notifications
     user   = FactoryBot.create(:user, receive_notifications: nil)
     user_a = FactoryBot.create(:user, receive_notifications: 'Digest')

@@ -114,8 +114,8 @@ class Page::History::ChangeTitle < Page::History
 
   def details_from_page
     {
-      from: page.previous_changes['title'].first,
-      to: page.title
+      from: page.previous_changes['title'].first.try.truncate(100, separator: ' '),
+      to: page.title.try.truncate(100, separator: ' ')
     }
   end
 end
