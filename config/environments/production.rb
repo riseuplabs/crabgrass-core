@@ -7,6 +7,9 @@ Crabgrass::Application.configure do
   config.cache_classes = true
   config.action_controller.perform_caching = true
 
+  # Do not log partial rendering times
+  config.action_view.logger = nil
+
   # Compress JavaScripts and CSS
   config.assets.js_compressor = :uglifier
 
