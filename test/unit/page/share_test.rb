@@ -23,12 +23,12 @@ class Page::ShareTest < ActiveSupport::TestCase
     page = Page.create(title: 'x', user: user, access: :admin)
 
     share = Page::Share.new page, user,
-                            'send_notice' => true,
-                            'send_message' => 'hello red',
-                            'send_email' => true,
-                            'mailer_options' =>  { site: Site.new,
-                                                   page: page,
-                                                   current_user: user }
+      send_notice: true,
+      send_message: 'hello red',
+      send_email: true,
+      mailer_options:  { site: Site.new,
+                         page: page,
+                         current_user: user }
     share.with 'red' => { access: 'edit' }
     assert user2.may?(:edit, page)
     assert !user2.may?(:admin, page)
@@ -40,7 +40,10 @@ class Page::ShareTest < ActiveSupport::TestCase
     creator = users(:kangaroo)
     red = users(:red)
     rainbow = groups(:rainbow)
-    page = Page.create!(title: 'title', user: creator, share_with: %w[red rainbow animals], access: :admin)
+    page = Page.create! title: 'title',
+      user: creator,
+      share_with: %w[red rainbow animals],
+      access: :admin
 
     share = Page::Share.new page, creator,
                             send_notice: true,
@@ -61,14 +64,14 @@ class Page::ShareTest < ActiveSupport::TestCase
     red = users(:red)
     rainbow = groups(:rainbow)
     page = Page.create!(title: 'title', user: creator, owner: creator,
-                        share_with: { 'rainbow' => { 'access' => 'admin' }, 'red' => { 'access' => 'admin' } },
+                        share_with: { 'rainbow' => { access: 'admin' }, 'red' => { access: 'admin' } },
                         access: :view)
     assert rainbow.may?(:admin, page)
 
     share = Page::Share.new page, creator,
-                            'send_notice' => true,
-                            'send_message' => '',
-                            'send_email' => false
+      send_notice: true,
+      send_message: '',
+      send_email: false
     share.with 'rainbow' => '1', 'red' => '1', ':contributors' => '0'
 
     page.save!
@@ -90,7 +93,7 @@ class Page::ShareTest < ActiveSupport::TestCase
 
     # send notice to participants
     assert_difference('Notice::PageNotice.count', 4) do
-      share.with ':participants'
+      share.with({':participants' => "1"})
     end
 
     # send notice to contributors
@@ -99,7 +102,7 @@ class Page::ShareTest < ActiveSupport::TestCase
     page.save!
     assert_not_nil page.user_participations.find_by_user_id(users(:kangaroo).id).changed_at
     assert_difference('Notice::PageNotice.count', 2) do
-      share.with ':contributors'
+      share.with({':contributors' => "1"})
     end
   end
 

@@ -49,9 +49,7 @@ class Page::Share
   def initialize(page, sender, defaults = {})
     @page = page
     @sender = sender
-    # FIXME: do not permit everything
-    defaults = defaults.permit!.to_h if defaults.class == ActionController::Parameters
-    @defaults = defaults.with_indifferent_access
+    @defaults = defaults
   end
 
   def with(recipient_params)
@@ -63,11 +61,13 @@ class Page::Share
   protected
 
   def build_recipients(recipient_params)
-    # FIXME: do not permit everything
-    recipient_params = recipient_params.permit!.to_h if recipient_params.class == ActionController::Parameters
-    Array(recipient_params).map! do |param|
-      Page::Recipients.new(param, page)
+    recipients = []
+    recipient_params = [recipient_params] unless recipient_params.respond_to?(:each)
+    recipient_params.each do |name, options|
+      options = options.permit(:access) if options.respond_to?(:permit)
+      recipients.push Page::Recipients.new([name, options], page)
     end
+    recipients
   end
 
   def share_and_email(recipients)
