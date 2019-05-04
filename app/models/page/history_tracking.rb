@@ -9,10 +9,10 @@ module Page::HistoryTracking
   end
 
   def marked_as_public?
-    public_changed? && public == true
+    public_previously_changed? && public == true
   end
 
   def marked_as_private?
-    public_changed? && public == false
+    public_previously_changed? && public == false
   end
 end
