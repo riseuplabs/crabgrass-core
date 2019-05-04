@@ -76,7 +76,7 @@ module PageRecords
   end
 
   def save_and_index(page)
-    page.save if page.new_record?
+    page.save! if page.new_record?
     page
   end
 end

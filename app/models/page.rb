@@ -117,10 +117,10 @@ class Page < ApplicationRecord
 
   validate :unique_name_in_context
   def unique_name_in_context
-    if (name_changed? or owner_id_changed? or groups_changed) and name_taken?
+    if (will_save_change_to_name? or will_save_change_to_owner_id? or groups_changed) and name_taken?
       context = owner || created_by
       errors.add 'name', "is already used for another page by #{context.display_name}"
-    elsif name_changed? and name.present?
+    elsif will_save_change_to_name? and name.present?
       errors.add 'name', 'name is invalid' if name != name.nameize
     end
   end
