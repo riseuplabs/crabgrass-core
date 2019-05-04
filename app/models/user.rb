@@ -110,7 +110,7 @@ class User < ApplicationRecord
 
   after_save :update_name
   def update_name
-    if login_changed? and !login_was.nil?
+    if saved_change_to_login? and !login_before_last_save.nil?
       pages_owned.update_all(owner_name: login)
       pages_created.update_all(created_by_login: login)
       pages_updated.update_all(updated_by_login: login)

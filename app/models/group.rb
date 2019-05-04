@@ -304,7 +304,7 @@ class Group < ApplicationRecord
   # if our name has changed, ensure that denormalized references
   # to it also get changed
   def update_name_copies
-    if name_changed? and !name_was.nil?
+    if saved_change_to_name? and !name_before_last_save.nil?
       pages_owned.update_all(owner_name: name)
       Wiki.clear_all_html(self) # in case there were links using the old name
       # update all committees (this will also trigger the after_save of committees)
