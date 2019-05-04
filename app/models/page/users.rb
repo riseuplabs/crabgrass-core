@@ -59,7 +59,7 @@ module Page::Users
 
   # denormalize hack follows:
   def denormalize
-    if updated_by_id_changed?
+    if will_save_change_to_updated_by_id?
       self.updated_by_login = (updated_by.login if updated_by)
     end
     true

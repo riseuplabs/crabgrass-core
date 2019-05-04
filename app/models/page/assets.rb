@@ -26,8 +26,8 @@ module Page::Assets
       has_many   :assets, dependent: :destroy
       belongs_to :cover, class_name: 'Asset'
 
-      before_save :update_media_flags, if: :data_id_changed?
-      after_save :update_attachment_access, if: :public_changed?
+      before_save :update_media_flags, if: :will_save_change_to_data_id?
+      after_save :update_attachment_access, if: :saved_change_to_public?
     end
   end
 
@@ -60,7 +60,7 @@ module Page::Assets
 
     if persisted?
       assets.reset
-      save! if cover_id_changed?
+      save! if will_save_change_to_cover_id?
     end
 
     asset
