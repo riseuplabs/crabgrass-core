@@ -14,6 +14,7 @@ class PostPolicy < ApplicationPolicy
   def twinkle?
     post.discussion.page and
       page_policy.show? and
+      user.id and
       user.id != post.user_id
   end
 
