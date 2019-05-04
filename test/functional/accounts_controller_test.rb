@@ -84,7 +84,7 @@ class AccountsControllerTest < ActionController::TestCase
     assert_equal 'recovery', token.action
     assert_equal users(:quentin).id, token.user_id
 
-    get :reset_password, params: { token: token.value }
+    get :reset_password, params: { token: token.value, bla: :blub }
     assert_response :success
 
     assert_difference 'User::Token.count', -1 do
