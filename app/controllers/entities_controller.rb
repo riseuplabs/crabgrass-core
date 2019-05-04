@@ -35,7 +35,7 @@ class EntitiesController < ApplicationController
   #
   def members
     group = Group.find_by_name(params[:group])
-    logger.error params[:group]
+    Rails.logger.error params[:group]
     if current_user.may?(:see_members, group)
       if preload?
         group.users
