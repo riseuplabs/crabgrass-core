@@ -10,7 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181114101916) do
+ActiveRecord::Schema.define(version: 20190125142906) do
+
+  create_table "archive_versions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    t.integer "archive_id"
+    t.integer "version"
+    t.string "filename"
+    t.string "state", limit: 10, default: "pending"
+    t.integer "created_by_id"
+    t.integer "updated_by_id"
+    t.boolean "singlepage"
+    t.integer "group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["archive_id"], name: "index_archive_versions_on_archive_id"
+  end
 
   create_table "asset_versions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.integer "asset_id"
@@ -145,6 +159,19 @@ ActiveRecord::Schema.define(version: 20181114101916) do
     t.datetime "created_at"
     t.index ["group_id", "network_id"], name: "gn"
     t.index ["network_id", "group_id"], name: "ng"
+  end
+
+  create_table "group_archives", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    t.string "filename"
+    t.string "state", limit: 10, default: "pending"
+    t.integer "version", default: 0
+    t.integer "created_by_id"
+    t.integer "updated_by_id"
+    t.boolean "singlepage"
+    t.integer "group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_group_archives_on_group_id"
   end
 
   create_table "group_participations", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
