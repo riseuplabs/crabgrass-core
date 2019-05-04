@@ -134,9 +134,7 @@ class AccountsController < ApplicationController
   # confirms that the token is valid, returns false otherwise.
   #
   def confirm_token
-    # FIXME: rather permit less
-    params.permit!.to_h if params
-    @token = User::Token.to_recover.active.find_by_param(params[:token])
+    @token = User::Token.to_recover.active.find_by_param(params.fetch(:token))
     if @token.present?
       @user = @token.user
     else
