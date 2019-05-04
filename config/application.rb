@@ -16,7 +16,7 @@ module Crabgrass
   class Application < Rails::Application
     info 'LOAD CONFIG BLOCK'
 
-#    config.load_defaults 5.1
+#    config.load_defaults 5.2
 
     config.autoload_paths << "#{Rails.root}/lib"
     config.autoload_paths << "#{Rails.root}/app/models"

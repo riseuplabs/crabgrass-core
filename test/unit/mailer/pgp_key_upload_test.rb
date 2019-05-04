@@ -12,7 +12,7 @@ class Mailer::PgpKeyUploadTest < ActionMailer::TestCase
 
   def test_forever_key
     user = users(:blue)
-    mail = mailer_class.key_uploaded_mail(user).deliver
+    mail = mailer_class.key_uploaded_mail(user).deliver_now
     assert_includes mail.body, 'You just uploaded a new key'
     assert mailer_class.deliveries.present?
     assert mailer_class.deliveries.first.encrypted?
@@ -20,7 +20,7 @@ class Mailer::PgpKeyUploadTest < ActionMailer::TestCase
 
   def test_valid_to_2050_key
     user = users(:dolphin)
-    mail = mailer_class.key_uploaded_mail(user).deliver
+    mail = mailer_class.key_uploaded_mail(user).deliver_now
     assert_includes mail.body, 'You just uploaded a new key'
     assert mailer_class.deliveries.present?
     assert mailer_class.deliveries.first.encrypted?
@@ -30,7 +30,7 @@ class Mailer::PgpKeyUploadTest < ActionMailer::TestCase
   def test_expired_key
     user = users(:green)
     assert_raises Mail::Gpg::MissingKeysError do
-      mail = mailer_class.key_uploaded_mail(user).deliver
+      mail = mailer_class.key_uploaded_mail(user).deliver_now
     end
   end
 
@@ -39,7 +39,7 @@ class Mailer::PgpKeyUploadTest < ActionMailer::TestCase
   def test_broken_key
     user = users(:red)
     assert_raises Mail::Gpg::MissingKeysError do
-      mail = mailer_class.key_uploaded_mail(user).deliver
+      mail = mailer_class.key_uploaded_mail(user).deliver_now
     end
   end
 
