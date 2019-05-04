@@ -33,9 +33,6 @@ module Common::Ui::LinkToIconHelper
                      end
       add_icon_class(html_options) if html_options
       m = ActionView::Helpers::UrlHelper.instance_method(:link_to).bind(self)
-      # FIXME: we do not want to permit! everything
-      args[0] = args[0].permit!.to_h if (args[0]&.class == ActionController::Parameters)
-      args[1] = args[1].permit!.to_h if (args[1]&.class == ActionController::Parameters)
       m.call(*args, &block)
   end
 

@@ -77,9 +77,9 @@ class Page::SharesController < Page::SidebarsController
   protected
 
   def share_options
-    options = params[:notification] || HashWithIndifferentAccess.new
+    options = params.fetch(:notification, {}).permit(:send_email, :send_message)
     convert_checkbox_boolean(options)
-    options[:send_notice] ||= params[:notify_button].present?
+    options[:send_notice] ||= params.fetch(:notify_button, false)
     options.reverse_merge mailer_options: mailer_options
   end
 
