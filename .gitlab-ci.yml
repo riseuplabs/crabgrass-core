@@ -39,6 +39,7 @@ test:
     bundle exec rails test
     bundle exec rails test extensions/pages
     bundle exec rake cg:cleanup:all     # test cleanup tasks
+    grep DEPRECATION log/test.log | wc -l
   artifacts:
     when: on_failure
     paths:
