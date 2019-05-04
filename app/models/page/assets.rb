@@ -49,7 +49,7 @@ module Page::Assets
   # - :filename -- if set, rename the asset using this filename
   #
   def add_attachment!(asset, options = {})
-    asset = Asset.build(asset) if asset.is_a? Hash
+    asset = Asset.build(asset) unless asset.is_a? Asset
     asset.parent_page = self
 
     assets << asset
