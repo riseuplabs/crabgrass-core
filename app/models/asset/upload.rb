@@ -50,9 +50,9 @@ module Asset::Upload
           asset = create_from_params uploaded_data: FileData.new(tmp_file)
           assets << asset if asset
         rescue => exc
-          logger.fatal("Error while extracting asset #{tmp_file} from ZIP Archive: #{exc.message}")
+          Rails.logger.fatal("Error while extracting asset #{tmp_file} from ZIP Archive: #{exc.message}")
           exc.backtrace.each do |bt|
-            logger.fatal(bt)
+            Rails.logger.fatal(bt)
           end
           begin
             failures << entry.name

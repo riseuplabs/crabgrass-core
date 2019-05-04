@@ -113,7 +113,7 @@ module Page::Index
         # fire off background task
         MiddleMan.worker(:indexing_worker).async_update_page_terms(arg: id)
       rescue BackgrounDRb::NoServerAvailable => err
-        logger.error "Warning: #{err}; performing synchronous update of page index"
+        Rails.logger.error "Warning: #{err}; performing synchronous update of page index"
         update_page_terms
       end
     else

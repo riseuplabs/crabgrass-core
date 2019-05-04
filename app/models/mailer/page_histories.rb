@@ -68,8 +68,8 @@ class Mailer::PageHistories < ActionMailer::Base
     begin
       GPGME::Key.import File.open(ENV['GPGKEY'])
     rescue => e
-      logger.error 'Error: ' + e.message
-      logger.error e.backtrace.join("\n")
+      Rails.logger.error 'Error: ' + e.message
+      Rails.logger.error e.backtrace.join("\n")
     end
     # TODO: email address should be configurable
     gpg_options.merge sign_as: "robot@riseup.net"

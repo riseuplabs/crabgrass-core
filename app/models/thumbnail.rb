@@ -120,7 +120,7 @@ class Thumbnail < ActiveRecord::Base
   def thumbdef
     definition = parent.thumbdefs[name.to_sym]
     if definition.blank?
-      logger.error "Error: No thumbnail definition found for #{name} #{id}"
+      Rails.logger.error "Error: No thumbnail definition found for #{name} #{id}"
     end
     definition
   end

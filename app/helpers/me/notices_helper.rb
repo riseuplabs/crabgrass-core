@@ -10,8 +10,8 @@ module Me::NoticesHelper
   def noticable_url(notice)
     send(notice.redirect_path, notice.redirect_object)
   rescue NoMethodError => e
-    logger.error 'Error: ' + e.message
-    logger.error e.backtrace.join("\n")
+    Rails.logger.error 'Error: ' + e.message
+    Rails.logger.error e.backtrace.join("\n")
     return nil
   end
 end
