@@ -24,8 +24,6 @@ bundle_audit:
 
 test:
   stage: test
-  tags:
-    - large-richard
   services:
     - mariadb:10.1
   variables:
