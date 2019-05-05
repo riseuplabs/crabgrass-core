@@ -102,7 +102,7 @@ class User < ApplicationRecord
   before_save :display_name_update
 
   def display_name_update
-    if display_name_changed?
+    if will_save_change_to_display_name?
       increment :version
       Group.increment_version(group_ids)
     end
