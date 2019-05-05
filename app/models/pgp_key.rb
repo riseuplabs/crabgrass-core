@@ -10,7 +10,7 @@ class PgpKey < ApplicationRecord
 
   belongs_to :user
   before_validation :update_key
-  after_save :notify_user, if: :key_changed?
+  after_save :notify_user, if: :saved_change_to_key?
 
   def expired?
     return false if self.expires == nil # valid forever
@@ -20,7 +20,7 @@ class PgpKey < ApplicationRecord
   protected
 
   def update_key
-    if self.key_changed?
+    if self.will_save_change_to_key?
       PgpKey.create_fresh_gpg_directory
       import_key
     end
@@ -48,7 +48,7 @@ class PgpKey < ApplicationRecord
 
   def notify_user
     begin
-      Mailer::PgpKeyUploadMailer.key_uploaded_mail(self.user).deliver
+      Mailer::PgpKeyUploadMailer.key_uploaded_mail(self.user).deliver_now
     rescue Mail::Gpg::MissingKeysError => e
     end
   end
