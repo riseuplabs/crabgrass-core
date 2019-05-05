@@ -11,7 +11,7 @@ end
 ##
 
 # Rails is the framework we use.
-gem 'rails', '~> 5.1.6'
+gem 'rails', '~> 5.2.3'
 
 # Security updates
 #https://github.com/sparklemotion/nokogiri/issues/1892
