@@ -96,11 +96,11 @@ class Page::ShareTest < ActiveSupport::TestCase
       share.with({':participants' => "1"})
     end
 
-    # send notice to contributors
-    page.add(users(:penguin), changed_at: Time.now) # simulate contribution
+    # simulate contribution
+    page.add(users(:penguin), changed_at: Time.now)
     page.add(users(:kangaroo), changed_at: Time.now)
     page.save!
-    assert_not_nil page.user_participations.find_by_user_id(users(:kangaroo).id).changed_at
+    # send notice to contributors
     assert_difference('Notice::PageNotice.count', 2) do
       share.with({':contributors' => "1"})
     end

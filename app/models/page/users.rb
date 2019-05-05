@@ -14,7 +14,8 @@ module Page::Users
       has_many :user_participations,
                class_name: 'User::Participation',
                dependent: :destroy,
-               inverse_of: :page
+               inverse_of: :page,
+               autosave: true
       has_many :users, through: :user_participations do
         def with_access
           where('access IS NOT NULL')
