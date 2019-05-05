@@ -117,7 +117,7 @@ class Page < ApplicationRecord
 
   validate :unique_name_in_context
   def unique_name_in_context
-    if (will_save_change_to_name? or will_save_change_to_owner_id? or groups_changed) and name_taken?
+    if (will_save_change_to_name? or will_save_change_to_owner_id?) and name_taken?
       context = owner || created_by
       errors.add 'name', "is already used for another page by #{context.display_name}"
     elsif will_save_change_to_name? and name.present?
@@ -233,29 +233,6 @@ class Page < ApplicationRecord
     end
     self.resolved = value
     save
-  end
-
-  def association_will_change(assn)
-    (@associations_to_save ||= []) << assn
-  end
-
-  def association_changed?
-    @associations_to_save.any?
-  end
-
-  after_save :save_associations
-  def save_associations
-    return true unless @associations_to_save
-    @associations_to_save.uniq.each do |assn|
-      if assn == :posts
-        discussion.posts.each { |post| post.save! if post.changed? }
-      elsif assn == :users
-        user_participations.each { |up| up.save! if up.changed? }
-      elsif assn == :groups
-        group_participations.each { |gp| gp.save! if gp.changed? }
-      end
-    end
-    true
   end
 
   ##

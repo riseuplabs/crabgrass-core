@@ -8,10 +8,9 @@ module Page::Groups
       has_many :group_participations,
                class_name: 'Group::Participation',
                dependent: :destroy,
-               inverse_of: :page
+               inverse_of: :page,
+               autosave: true
       has_many :groups, through: :group_participations
-
-      attr_accessor :groups_changed # set to true of group_participations has changed.
     end
   end
 

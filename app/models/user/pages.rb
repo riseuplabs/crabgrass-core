@@ -108,7 +108,6 @@ module User::Pages
     unless participation.changed_at or page.created_by != self
       participation.changed_at = Time.now
     end
-    page.association_will_change(:users)
     participation
   end
 
@@ -119,7 +118,6 @@ module User::Pages
   def remove_page(page)
     page.users.delete(self)
     page.updated_by_id_will_change!
-    page.association_will_change(:users)
     page.user_participations.reset
   end
 
