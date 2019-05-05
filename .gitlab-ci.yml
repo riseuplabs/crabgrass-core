@@ -30,6 +30,7 @@ test:
     - mariadb:10.1
   variables:
     MYSQL_HOST: 'mariadb'
+    RAILS_ENV: 'test'
   script: |
     cp config/database.yml.example config/database.yml
     bundle exec rake db:create
