@@ -198,8 +198,7 @@ module User::Cache
     # Exclude large groups from calculating peer relationships
     group_ids -= Group.large.pluck(:id)
     ids = User.joins(:memberships)
-              .where(memberships: { group_id: group_ids })
-              .pluck('DISTINCT users.id')
+      .where(memberships: { group_id: group_ids }).distinct.pluck(:id)
     ids - [id]
   end
 
