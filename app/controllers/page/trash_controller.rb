@@ -1,5 +1,4 @@
 class Page::TrashController < Page::SidebarsController
-  helper 'page/trash'
   track_actions :update
 
   # loads popup
