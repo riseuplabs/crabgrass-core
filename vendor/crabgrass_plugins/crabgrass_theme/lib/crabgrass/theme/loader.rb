@@ -65,6 +65,7 @@ module Crabgrass::Theme::Loader
   #
   # used in init.rb to define custom theme styles
   # DEPRECATED
+  # FIXME: removing this method results in failing tests
   #
   def style(str)
     @style = str

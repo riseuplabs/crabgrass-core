@@ -11,9 +11,6 @@ APP_ROOT = Pathname.new(File.dirname(__FILE__)) + '..'
 
 dirs << CRABGRASS_CONFIG_DIRECTORY = APP_ROOT + 'config/crabgrass'
 
-# DEPRECATED. For new secrets use config/secrets.yml instead.
-CRABGRASS_SECRET_FILE              = CRABGRASS_CONFIG_DIRECTORY + 'secret.txt'
-
 # extensions
 
 dirs << EXTENSION_DIRECTORY       = APP_ROOT + 'extensions'
