@@ -86,16 +86,6 @@ module Common::Application::RescueErrors
 
   protected
 
-  #  # allows us to set a new path for the rescue templates
-  #  def rescues_path(template_name)
-  #    file = "#{Rails.root}/app/views/rescues/#{template_name}.erb"
-  #    if File.exists?(file)
-  #      return file
-  #    else
-  #      return super(template_name)
-  #    end
-  #  end
-
   #
   # handles suspected "cross-site request forgery" errors
   #
@@ -145,31 +135,6 @@ module Common::Application::RescueErrors
   def render_alert
     render template: 'error/alert', layout: 'notice'
   end
-
-  #
-  # override the default 'rescue_action_locally' so that we can print an error
-  # message when the request is an ajax one.
-  #
-  # How is this different than 'render_error' with format.js?
-  #
-  #  def rescue_action_locally_with_js(exception)
-  #    respond_to do |format|
-  #      format.html do
-  #        if Rails.env.production? or Rails.env.development?
-  #          rescue_action_locally_without_js(exception)
-  #        else
-  #          render plain: exception
-  #         end
-  #      end
-  #      format.js do
-  #        add_variables_to_assigns
-  #        @template.instance_variable_set("@exception", exception)
-  #        @template.instance_variable_set("@rescues_path", File.dirname(rescues_path("stub")))
-  #        @template.send!(:assign_variables_from_controller)
-  #        render :template => 'rescues/diagnostics.rjs', :layout => false
-  #      end
-  #    end
-  #  end
 
   private
 
@@ -230,17 +195,4 @@ module Common::Application::RescueErrors
     end
   end
 
-  # def flash_auth_error(mode)
-  #  if mode == :now
-  #    flsh = flash.now
-  #  else
-  #    flsh = flash
-  #  end
-  #
-  #  if logged_in?
-  #    add_flash_message(flsh, :title => I18n.t(:permission_denied), :error => I18n.t(:permission_denied_description))
-  #  else
-  #    add_flash_message(flsh, :title => I18n.t(:login_required), :type => 'info', :text => I18n.t(:login_required_description))
-  #  end
-  # end
 end

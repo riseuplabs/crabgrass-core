@@ -1,27 +1,3 @@
-# create_table "groups", :force => true do |t|
-#   t.string   "name"
-#   t.string   "full_name"
-#   t.string   "summary"
-#   t.string   "url"
-#   t.string   "type"
-#   t.integer  "parent_id",  :limit => 11
-#   t.integer  "council_id", :limit => 11
-#   t.datetime "created_at"
-#   t.datetime "updated_at"
-#   t.integer  "avatar_id",  :limit => 11
-#   t.string   "style"
-#   t.string   "language",   :limit => 5
-#   t.integer  "version",    :limit => 11, :default => 0
-#   t.integer  "min_stars",  :limit => 11, :default => 1
-#   t.integer  "site_id",    :limit => 11
-# end
-#
-#   associations:
-#   group.children   => groups
-#   group.parent     => group
-#   group.council    => nil or group
-#   group.users      => users
-
 class Group < ApplicationRecord
   extend RouteInheritance # subclasses use /groups routes
 

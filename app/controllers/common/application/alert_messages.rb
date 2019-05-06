@@ -215,26 +215,4 @@ module Common::Application::AlertMessages
     I18n.t key, scope: scope, thing: thing, cascade: true
   end
 
-  #  def exception_detailed_message(exception=nil)
-  #    return "Warning: Trying to get detailed message but no exception given." unless exception
-  #    message = exception.clean_message
-  #    file, line = exception.backtrace.first.split(":")[0, 2]
-  #    if File.exists?(file)
-  #      message << "\n\n"
-  #      code = File.readlines(file)
-  #      line = line.to_i
-  #      min = [line - 2, 0].max
-  #      max = line + 2
-  #      (min..max).each do |n|
-  #        if n == line
-  #          message << "=> "
-  #        else
-  #          message << "   "
-  #        end
-  #        message << ("%4d" % n)
-  #        message << code[n].to_s
-  #      end
-  #    end
-  #    message
-  #  end
 end

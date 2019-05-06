@@ -8,7 +8,6 @@
 #
 
 class Me::DiscussionsController < Me::BaseController
-  # helper 'autocomplete', 'javascript'
 
   # GET /me/messages
   # we currently lack pagination and filtering for unread
@@ -19,27 +18,6 @@ class Me::DiscussionsController < Me::BaseController
                  .order('created_at DESC')
                  .includes(:discussion)
   end
-
-  # GET /me/messages/penguin
-  # def show
-  #  @other_user = User.find_by_login(params[:id])
-  #  @discussion = current_user.discussions.from_user(@other_user).first
-  #  @discussion.mark!(:read, current_user)
-  #  @posts = @discussion.posts.paginate(post_pagination_params)
-  # rescue exc
-  #  render_error exc
-  # end
-
-  # PUT /me/messages/penguin
-  # def update
-  #  @other_user = User.find_by_login(params[:id])
-  #  @discussion = current_user.discussions.from_user(@user_user).first
-  #  if params[:state]
-  #    @discussion.mark!(params[:state], current_user)
-  #  end
-  # rescue exc
-  #  render_error exc
-  # end
 
   protected
 

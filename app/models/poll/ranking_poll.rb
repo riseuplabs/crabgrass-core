@@ -14,10 +14,6 @@ class Poll::RankingPoll < Poll
     end
   end
 
-  # delegate :winners, :rank, :ranked_candidates, :to => :results
-
-  # TODO: uncomment in rails2.3. still not working in rails 2.3.11
-  # delegate :winners, :rank, ... :to => :results
   def ranked_candidates
     @results.ranked_candidates
   end

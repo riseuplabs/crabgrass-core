@@ -68,6 +68,8 @@ module Page::Groups
       !participation_for_group(site.try.network).nil?
   end
 
+  # FIXME: remove method as elijah suggests
+  #
   # returns all the groups with a particular access level
   # - use option :all for all the accesslevels
   # --
@@ -82,6 +84,7 @@ module Page::Groups
   #
   #   -elijah
   # --
+  #
   def groups_with_access(access)
     group_participations.collect do |gpart|
       if access == :all

@@ -77,10 +77,6 @@ module Common::Utility::TimeHelper
     date.strftime('%A %d/%b/%Y')
   end
 
-  #  def to_local(time)
-  #    Time.zone.utc_to_local(time)
-  #  end
-
   def to_utc(time)
     Time.zone.local_to_utc(time)
   end

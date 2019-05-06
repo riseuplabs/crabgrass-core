@@ -1,11 +1,6 @@
 #
 # Avatar -- the little icons for users and groups
 #
-#  create_table "avatars", :force => true do |t|
-#    t.binary  "image_file_data"
-#    t.boolean "public",          :default => false
-#  end
-#
 # also defined:
 #
 #   avatar.image_file
