@@ -1,4 +1,3 @@
--# remote_form_for(:page, @page, url: page_title_path(@page), before: show_spinner('save_title'), html: {method: :get}) do
 = form_for @page, url: page_title_path(@page), remote: true,
   html: {method: :put, onsubmit: show_spinner('save_title')} do
   = formy(:simple_form) do |f|

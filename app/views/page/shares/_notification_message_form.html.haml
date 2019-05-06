@@ -3,7 +3,6 @@
 - send_notice     = false if send_notice.nil?
 - include_message = false if include_message.nil?
 - send_email      = false if send_email.nil?
-- #include_email_option = (@current_site && @current_site.never_pester_users) ? false : true
 - include_email_option = true
 - check_box_options = {checked: send_notice, onclick: "checkboxToggle(this, 'notification_details');" + resize_modal}
 - if forced_send

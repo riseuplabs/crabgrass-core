@@ -1,9 +1,2 @@
 standard_update(page)
 page.replace('request-comments', :partial => 'common/requests/comments')
-
-#
-# request were once a split panel. the code looked like this:
-# page.call 'activatePanelRow'
-# page.hide left_id(@req)
-# page.hide right_id(@req)
-#
