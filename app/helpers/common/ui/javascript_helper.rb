@@ -16,31 +16,6 @@ module Common::Ui::JavascriptHelper
   end
 
   ##
-  ## dynamic styles
-  ##
-
-  #
-  # set_style -- dynamically alter a global css rule
-  #
-  # most of the time it makes sense to alter the class or style of a particular
-  # element when you want it to change. however, there are cases where you to
-  # create or alter a global css rule dynamically via javascript.
-  #
-  # this is currently used by the page searching system.
-  #
-  # requires crabgrass's javascript class 'Style'
-  #
-  # def set_style(selector, css)
-  #  id = selector.downcase.gsub(' ','_').gsub(/[^a-z0-9_]/,'') + '_dynamic_style'
-  #  "Style.set('%s','%s {%s}');" % [id, selector, css]
-  # end
-  #
-  # def clear_style(selector)
-  #  id = selector.downcase.gsub(' ','_').gsub(/[^a-z0-9_]/,'') + '_dynamic_style'
-  #  "Style.clear('%s');" % id
-  # end
-
-  ##
   ## request queueing
   ##
 
@@ -156,14 +131,7 @@ module Common::Ui::JavascriptHelper
   # called when a user clicks on a row in a 'sliding list'
   # sliding list is currently deprecated
   #
-
   def activate_sliding_row(url)
-    # left_domid = 'content'
-    # right_domid = 'sliding-item'
-    # right_path = url
-    # "activateSlidingRow({domid:'%s',path:window.location.pathname}, {domid:'%s',path:'%s'})" %
-    #  [left_domid, right_domid, right_path]
-
     format("window.location.href = '%s'", url)
   end
 
@@ -254,9 +222,4 @@ module Common::Ui::JavascriptHelper
     javascript_tag "Form.focusFirstElement('#{id}');"
   end
 
-  # toggle all checkboxes off and then toggle a subset of them on
-  # selectors are css expressions
-  # def checkboxes_subset_function(all_selector, subset_selector)
-  #  "toggleAllCheckboxes(false, '#{all_selector}'); toggleAllCheckboxes(true, '#{subset_selector}')"
-  # end
 end

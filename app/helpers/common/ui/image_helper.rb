@@ -21,10 +21,6 @@ module Common::Ui::ImageHelper
     content_tag :i, ' ', class: "small_icon #{icon}_#{size}", title: title
   end
 
-  #  def pushable_icon_tag(icon, size = 16, id = nil)
-  #    content_tag :button, '', :class => "icon_#{size} #{icon}_#{size}", :style=>'cursor:pointer', :id => id
-  #  end
-
   ##
   ## PAGES
   ##
@@ -196,8 +192,6 @@ module Common::Ui::ImageHelper
     options[:title] ||= asset.filename
     options[:style]   = "height:#{target_height}px;width:#{target_width}px"
     url = options[:url] || asset.url
-    # options[:method] ||= 'get'
-    # span = content_tag(:span, asset.filename)
     link_to img, url, options.slice(:class, :title, :style, :method, :remote)
   end
 

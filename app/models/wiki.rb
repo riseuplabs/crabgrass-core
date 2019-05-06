@@ -1,21 +1,6 @@
 #  This is a generic versioned wiki, primarily used by the WikiPage,
 #  but also used directly sometimes by other classes (like for Group's
 #  landing page wiki's).
-#
-#
-#     create_table "wikis", :force => true do |t|
-#       t.text     "body"
-#       t.text     "body_html"
-#       t.datetime "updated_at"
-#       t.integer  "user_id",       :limit => 11
-#       t.integer  "version",       :limit => 11
-#       t.text     "raw_structure"
-#     end
-#
-#     add_index "wikis", ["user_id"], :name => "index_wikis_user_id"
-#
-
-##
 
 # requirements/ideas:
 # 1. nothing should get saved until we say save!

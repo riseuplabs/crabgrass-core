@@ -83,10 +83,4 @@ class ContextPagesController < DispatchController
     params[:id].sub(/\+\d*/, '').split('+').join(' ').humanize
   end
 
-  # def controller_for_list_of_pages(name)
-  #  params[:action] = 'index'
-  #  params[:search] = {:text => name}
-  #  params[:controller] = 'search'
-  #  SearchController.new()
-  # end
 end

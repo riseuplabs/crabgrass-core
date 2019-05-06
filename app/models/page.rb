@@ -5,60 +5,6 @@ require 'English'
 #
 # A Page is the main content class. All actual content is a subclass of this class.
 #
-# denormalization
-# ---------------
-#
-#   * updated_by_login
-#   * created_by_login
-#   * owner_name
-#
-# Upon further investigation, I am not sure that these are needed.
-#
-# schema
-# --------
-#
-#   create_table "pages", :force => true do |t|
-#     t.string   "title"
-#     t.datetime "created_at"
-#     t.datetime "updated_at"
-#     t.boolean  "resolved",                         :default => true
-#     t.boolean  "public"
-#     t.integer  "created_by_id",      :limit => 11
-#     t.integer  "updated_by_id",      :limit => 11
-#     t.text     "summary"
-#     t.string   "type"
-#     t.integer  "message_count",      :limit => 11, :default => 0
-#     t.integer  "data_id",            :limit => 11
-#     t.string   "data_type"
-#     t.integer  "contributors_count", :limit => 11, :default => 0
-#     t.string   "name"
-#     t.string   "updated_by_login"
-#     t.string   "created_by_login"
-#     t.integer  "flow",               :limit => 11
-#     t.integer  "stars_count",              :limit => 11, :default => 0
-#     t.integer  "owner_id",           :limit => 11
-#     t.string   "owner_type"
-#     t.string   "owner_name"
-#     t.boolean  "is_image"
-#     t.boolean  "is_audio"
-#     t.boolean  "is_video"
-#     t.boolean  "is_document"
-#     t.integer  "site_id",            :limit => 11
-#     t.datetime "happens_at"
-#   end
-#
-#   add_index "pages", ["name","owner_id"], :name => "index_pages_on_name"
-#   add_index "pages", ["created_by_id"], :name => "index_page_created_by_id"
-#   add_index "pages", ["updated_by_id"], :name => "index_page_updated_by_id"
-#   add_index "pages", ["type"], :name => "index_pages_on_type"
-#   add_index "pages", ["flow"], :name => "index_pages_on_flow"
-#   add_index "pages", ["public"], :name => "index_pages_on_public"
-#   add_index "pages", ["resolved"], :name => "index_pages_on_resolved"
-#   add_index "pages", ["created_at"], :name => "index_pages_on_created_at"
-#   add_index "pages", ["updated_at"], :name => "index_pages_on_updated_at"
-#   execute "CREATE INDEX owner_name_4 ON pages (owner_name(4))"
-#
-#   Yeah, so, there are way too many indices on the pages table.
 
 class Page < ApplicationRecord
   extend RouteInheritance # subclasses use /pages routes

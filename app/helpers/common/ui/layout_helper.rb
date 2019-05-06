@@ -130,46 +130,6 @@ module Common::Ui::LayoutHelper
   end
 
   ##
-  ## BANNER
-  ##
-
-  # banner stuff
-  # def banner_style
-  #  "background: #{@banner_style.background_color}; color: #{@banner_style.color};" if @banner_style
-  # end
-  # def banner_background
-  #  @banner_style.background_color if @banner_style
-  # end
-  # def banner_foreground
-  #  @banner_style.color if @banner_style
-  # end
-
-  ##
-  ## CONTEXT STYLES
-  ##
-
-  # def background_color
-  #  "#ccc"
-  # end
-  # def background
-  #  #'url(/images/test/grey-to-light-grey.jpg) repeat-x;'
-  #  'url(/images/background/grey.png) repeat-x;'
-  # end
-
-  # return all the custom css which might apply just to this one group
-  #  def context_styles
-  #    style = []
-  #     if @banner
-  #       style << '#banner {%s}' % banner_style
-  #       style << '#banner a.name_link {color: %s; text-decoration: none;}' %
-  #                banner_foreground
-  #       style << '#topmenu li.selected span a {background: %s; color: %s}' %
-  #                [banner_background, banner_foreground]
-  #     end
-  #    style.join("\n")
-  #  end
-
-  ##
   ## LAYOUT STRUCTURE
   ##
 
@@ -276,22 +236,6 @@ module Common::Ui::LayoutHelper
   def comma_join(*args)
     args.select(&:present?).join(', ')
   end
-
-  #
-  # *NEWUI
-  #
-  # provides a block for main container
-  #
-  # content_starts_here do
-  #   %h1 my page
-  #
-  # def content_starts_here(&block)
-  #  capture_haml do
-  #    haml_tag :div, :id =>'main-content' do
-  #      haml_concat capture_haml(&block)
-  #    end
-  #  end
-  # end
 
   ##
   ## declare strings used for logins
