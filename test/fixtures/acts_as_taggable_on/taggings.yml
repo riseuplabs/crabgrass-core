@@ -4,13 +4,12 @@
   ##%>
 ---
 <%
-  srand(314159265359)
   page_count = 10
   tags = %w(joy trust fear surprise sadness disgust anger happiness love anticipation)
+  tags += tags.reverse
 %>
 <% page_count.times do |page_id| %>
-<% 2.times do %>
-<% tag = tags.sample %>
+<% tags.each do |tag| %>
 <%= "#{tag}_#{page_id}" %>:
   tag: <%= tag %>
   taggable_id: <%= page_id %>
