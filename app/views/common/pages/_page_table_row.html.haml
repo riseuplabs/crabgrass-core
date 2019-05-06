@@ -14,12 +14,3 @@
       = friendly_date(page.updated_at)
     %td.contributors.hidden-xs
       = page.contributors_count
-  -# we hide the details for now with .shy
-  -# TODO: bring them back in a good looking non cluttered way.
-  -# %tr.lower.shy
-  -#   %td{colspan:4}
-  -#     = page.summary.try(:truncate, 75)
-  -#   %td.owner.icon.title.updated_by.updated_at
-  -#     - # This is a little hack.
-  -#     - # If any of the first upper five colums is hidden this one should be too.
-  -#     - # This way the last column still fits in nicely.

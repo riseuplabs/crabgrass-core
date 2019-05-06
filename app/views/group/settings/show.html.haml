@@ -1,7 +1,6 @@
 
 = form_tag(group_settings_path(@group), method: 'put') do
   = formy(:horizontal_form) do |f|
-    -# f.label :display.t
     - f.row do |r|
       - r.label :name.t
       - r.input text_field('group', 'name', size: 40, maxlength: 40, class: 'form-control')

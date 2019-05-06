@@ -4,14 +4,4 @@
 - content_for :title do
   .h1= link_to_user(@recipient, avatar: 'medium')
 
--# %ul.breadcrumb
--#   %li
--#     = link_to :me.t, me_path
--#     %span.divider /
--#   %li
--#     = link_to :messages.t, me_discussions_path
--#     %span.divider /
--#   %li
--#     = link_to_user(@recipient, avatar: 'tiny')
-
 = render 'common/posts/list', posts: @posts
