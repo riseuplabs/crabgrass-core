@@ -42,29 +42,6 @@ Crabgrass::Application.configure do
   # because of the secure cookies
   config.force_ssl = Conf.enforce_ssl
 
-  ##
-  ## LOGGING
-  ## use syslog if available, trying gems 'logging' and 'SyslogLogger'
-  ##
-
-  # try gem 'logging'
-  begin
-    require 'logging'
-    config.logger = Logging::Logger['main'].tap do |l|
-      l.add_appenders(Logging::Appenders::Syslog.new('crabgrass'))
-      l.level = config.log_level
-    end
-  rescue LoadError => exc
-    # try gem 'SyslogLogger'
-    # i am not sure how to turn down the verbosity with syslog.
-    # even with config.log_level = :warn, it does debug logging.
-    begin
-      require 'syslog_logger'
-      config.logger = SyslogLogger.new('crabgrass')
-    rescue LoadError => exc
-    end
-  end
-
   # we filter almost everything. Logs are only detailed for performance
   # analysis.
   # For debugging having the ids of the records should suffice.
