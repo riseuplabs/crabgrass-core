@@ -9,8 +9,7 @@ class TaskListPage < Page
 
   # Return string of all tasks, for the full text search index
   def body_terms
-    # no need to instantiate all the tasks. Using sql to build the string.
-    tasks.pluck('CONCAT(name,"\t",description)').join "\n"
+    tasks.collect { |task| "#{task.name}\t#{task.description}" }.join "\n"
   end
 
   # Fetch the pages that for the given tasks and include the tasks
