@@ -42,7 +42,7 @@ class Page::PostsControllerTest < ActionController::TestCase
   end
 
   def assert_successfully_posted_to(page)
-    assert_response :redirect
+    assert_response :success
     assert_equal 1, page.reload.posts.count
     assert_equal body, page.posts.first.body
     assert_equal users(:blue), page.updated_by

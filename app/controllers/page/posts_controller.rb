@@ -11,13 +11,6 @@ class Page::PostsController < ApplicationController
 
   track_actions :create, :update, :destroy
 
-  # js action to rerender the posts
-  def index
-    authorize @page, :show?
-    @posts = @page.posts(pagination_params)
-    @post = Post.new
-  end
-
   def show
     authorize @page
     respond_to do |format|
@@ -30,7 +23,7 @@ class Page::PostsController < ApplicationController
     authorize @page, :show?
     if @post = @page.add_post(current_user, post_params)
       respond_to do |format|
-        format.js   { redirect_to action: :index }
+        format.js   { @posts = @page.posts(pagination_params) }
         format.html { redirect_to page_url(@page) + "#post-#{@post.id}" }
       end
       authorize @post

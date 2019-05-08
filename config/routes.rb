@@ -186,7 +186,7 @@ Crabgrass::Application.routes.draw do
     # resources :changes
     resources :assets, only: %i[index update create]
     resources :tags, only: %i[index create destroy show], :constraints => { :id => /.*/ }
-    resources :posts, except: [:new]
+    resources :posts, except: [:index, :new]
 
     # page sidebar/popup controllers:
     resource :sidebar,    only: [:show]
