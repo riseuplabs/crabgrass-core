@@ -20,6 +20,9 @@ class PicturesController < ApplicationController
       @picture.render(@geometry)
     end
     send_file(@picture.private_file_path(@geometry), type: @picture.content_type, disposition: 'inline')
+  rescue ErrorMessage => e
+    Rails.logger.warn e
+    render nothing: true, status: 404
   end
 
   protected
