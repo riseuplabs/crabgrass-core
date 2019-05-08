@@ -18,6 +18,15 @@ module Crabgrass
 
 #    config.load_defaults 5.2
 
+    # Rails 5.2 migration
+    #
+    # TODO: remove to use the new default
+    # Rails now embeds the expiry information also in encrypted
+    # or signed cookies value.
+    # This new embed information make those cookies incompatible with
+    # versions of Rails older than 5.2.
+    config.action_dispatch.use_authenticated_cookie_encryption = false
+
     config.autoload_paths << "#{Rails.root}/lib"
     config.autoload_paths << "#{Rails.root}/app/models"
 

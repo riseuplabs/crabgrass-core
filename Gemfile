@@ -1,10 +1,7 @@
 source 'https://rubygems.org'
 
 # ensure github urls use https rather than insecure git protocol.
-git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
-  "https://github.com/#{repo_name}.git"
-end
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ##
 #  Core components
@@ -24,7 +21,9 @@ gem 'rake', '~> 10.0', require: false
 # Application preloader for faster start time
 gem 'spring', group: :development
 
-# translating strings for the user interface
+# reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', '>= 1.1.0', require: false
+
 # locking in to latest major to fix API
 gem 'i18n', '~> 0.7'
 
@@ -170,6 +169,7 @@ group :production do
   # runs independendly - so no version restriction for now
   # TODO: check if we want this or nodejs
   gem 'therubyracer'
+  # gem 'mini_racer', platforms: :ruby # new default in Rails 5.2
 end
 
 group :production, :development do
@@ -192,6 +192,8 @@ end
 group :test, :development do
   gem 'byebug'
 end
+
+gem 'web-console', group: :development
 
 group :test, :ci do
   ##
