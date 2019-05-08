@@ -60,7 +60,7 @@ de:
     get_involved: Bring Dich mit ein
     help_pages: Anleitung für Crabgrass
     help_translate: Beim Übersetzen helfen
-    powered_by_html: 'Diese Site wurde mit <a href="https://0xacab.org/riseuplabs/crabgrass">crabgrass</a> erstellt. %{description}
+    powered_by_html: 'Diese Site wurde mit <a href="https://0xacab.org/riseuplabs/crabgrass">crabgrass</a> erstellt %{description}
 
       '
     report_a_bug: Fehler berichten
@@ -117,7 +117,7 @@ de:
     page_histories:
       change_your_settings_here: 'Hier kannst du deine Einstellungen für E-Mail-Benachrichtigungen ändern: %{page_link}'
       daily_digest: "Ja, ich möchte eine tägliche Zusammenfassung aller Änderungen von %{site} bekommen."
-      page_update: "%{site}"
+      page_update: "%{site}: Eine Seite wurde geändert."
       pages_you_are_watching_have_been_modified:
         one: "Eine Seite, die du beobachtest, wurde seit der letzten Benachrichtigung bearbeitet."
         other: "%{count} der Seiten, die du beobachtest, wurden seit der letzten Benachrichtigung verändert."
@@ -334,7 +334,7 @@ de:
   or_image_url: oder URL zum Bild
   pgp_key: PGP Schlüssel
   pgp_public_key: Öffentlicher Schlüssel
-  pgp_key_description: 'Experimentier-Modus: Lade deinen öffentlichen PGP Schlüssel hoch, wenn du verschlüsselte Email Benachrichtigungen bekommen willst. Dir wird eine verschlüsselte Bestätigungs-Mail gesendet.'
+  pgp_key_description: 'Experimentier-Modus: Lade deinen öffentlichen PGP-Schlüssel hoch, wenn du verschlüsselte Email-Benachrichtigungen bekommen willst. Dir wird eine verschlüsselte Bestätigungs-Mail gesendet.'
   pgp_key_invalid: Der eingegebene Schlüssel kann nicht importiert werden. Bist du dir sicher, dass es ein öffentlicher PGP Schlüssel ist?
   pgp_key_expired: Der von dir eingegebene PGP Key ist abgelaufen.
   pgp_key_placeholder: Füge deinen öffentlichen PGP-Schlüssel ein
@@ -467,7 +467,7 @@ de:
   notify_contribution: "<b>Mitwirkende:</b> Benachrichtige Leute, die an dieser Seite <b>mitgewirkt</b> haben."
   notify_current_access: "<b>Teilnehmer_innen:</b> benachrichtige Andere, die bereits Zugang zu dieser Seite haben."
   notify_no_access_error: Sorry, "%{name}" hat auf diese Seite keinen Zugriff.
-  notify_page_link: Schicke Eine Benachrichtigung
+  notify_page_link: Schicke eine Benachrichtigung
   notify_success: Du hast erfolgreich Benachrichtigungen verschickt.
   send_only_with_encryption: Nur senden, wenn verschlüsselte Auslieferung möglich ist
   send_email: Sende E-Mail
