@@ -9,7 +9,7 @@ class Me::PagesController < Me::BaseController
     if request.xhr?
       # note: pagination_params is used just for defaults,
       #       normal pagination is done through @path.
-      @pages = Page.paginate_by_path(@path, options_for_me(method: :sphinx), pagination_params)
+      @pages = Page.paginate_by_path(@path, options_for_me(method: :sphinx), pagination_params).compact
     end
     render template: 'common/pages/search/index', locals: { columns: :updated_with_owner }
   end
