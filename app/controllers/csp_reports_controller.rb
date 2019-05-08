@@ -1,6 +1,5 @@
 class CspReportsController < ApplicationController
   skip_before_action :verify_authenticity_token
-  skip_before_action :require_user_signed_in
 
   def create
     report = JSON.parse(request.body.read)['csp-report']
