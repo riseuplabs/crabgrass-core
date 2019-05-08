@@ -68,6 +68,9 @@ GEM
       public_suffix (>= 2.0.2, < 4.0)
     arel (9.0.0)
     bcrypt (3.1.12)
+    bindex (0.7.0)
+    bootsnap (1.4.4)
+      msgpack (~> 1.0)
     builder (3.2.3)
     bundler-audit (0.6.1)
       bundler (>= 1.2.0, < 3)
@@ -128,8 +131,8 @@ GEM
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     innertube (1.1.0)
-    joiner (0.3.4)
-      activerecord (>= 4.1.0)
+    joiner (0.4.2)
+      activerecord (>= 5.2.beta1)
     json (1.8.6)
     libv8 (3.16.14.19)
     loofah (2.2.3)
@@ -151,6 +154,7 @@ GEM
     mini_mime (1.0.1)
     mini_portile2 (2.4.0)
     minitest (5.10.3)
+    msgpack (1.2.10)
     mysql2 (0.5.2)
     nio4r (2.3.1)
     nokogiri (1.10.3)
@@ -232,7 +236,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.0)
+    sqlite3 (1.4.1)
     sys-uname (0.9.0)
       ffi (>= 1.0.0)
     temple (0.8.1)
@@ -262,6 +266,11 @@ GEM
       activesupport
     validates_email_format_of (1.6.3)
       i18n
+    web-console (3.7.0)
+      actionview (>= 5.0)
+      activemodel (>= 5.0)
+      bindex (>= 0.4.0)
+      railties (>= 5.0)
     websocket-driver (0.7.0)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.3)
@@ -283,6 +292,7 @@ DEPENDENCIES
   acts-as-taggable-on (~> 6.0)
   acts_as_list (~> 0.4)
   bcrypt (~> 3.1.7)
+  bootsnap (>= 1.1.0)
   bundler-audit
   byebug
   capybara
@@ -323,6 +333,7 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   utf8-cleaner
   validates_email_format_of (~> 1.6)
+  web-console
   whenever
   will_paginate (~> 3.1)
   zip-zip
