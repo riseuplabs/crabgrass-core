@@ -297,7 +297,7 @@ eu:
   back_to_page: Itzuli orrialdera
   home: Etxea
   menu_admin: Admin
-  menu_link_logout: Itxi %[user] saioa
+  menu_link_logout: Itxi %{user} saioa
   profile: Profila
   access: Sarrera-maila
   action: Ekintza
