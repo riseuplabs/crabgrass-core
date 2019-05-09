@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181114101916) do
+ActiveRecord::Schema.define(version: 20190509111135) do
 
   create_table "asset_versions", force: :cascade do |t|
     t.integer  "asset_id",       limit: 4
@@ -249,6 +249,7 @@ ActiveRecord::Schema.define(version: 20181114101916) do
 
   add_index "page_histories", ["user_id"], :name => "index_page_histories_on_user_id"
   add_index "page_histories", ["page_id"], :name => "index_page_histories_on_page_id"
+  add_index "page_histories", ["notification_digest_sent_at"], :name => "index_page_histories_on_notification_digest_sent_at"
 
   create_table "page_terms", force: :cascade do |t|
     t.integer  "page_id",            limit: 8
