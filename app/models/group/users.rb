@@ -154,7 +154,10 @@ module Group::Users
   #
   def remove_user!(user)
     membership = memberships.find_by_user_id(user.id)
-    raise ErrorMessage.new('no such membership') unless membership
+    unless membership
+      raise ErrorMessage,
+        I18n.t(:no_such_membership_error, group: self.name, user: user.name)
+    end
 
     # removing all participations (makes the stars disappear - not sure
     # if we want this)

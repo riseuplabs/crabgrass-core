@@ -36,7 +36,7 @@ class Me::RequestsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_dup_group_request
+  def test_dup_group_join_request
     user = FactoryBot.create(:user)
     group = FactoryBot.create(:group)
     group.add_user! user
@@ -46,10 +46,10 @@ class Me::RequestsControllerTest < ActionController::TestCase
                                       recipient: group
     group.add_user! requesting
     xhr :post, :update, id: request.id, mark: 'approve'
-    assert_response :success
+    assert_response :conflict
   end
 
-  def test_remove_from_group_request
+  def test_dup_remove_from_group_request
     user = FactoryBot.create(:user)
     requesting = FactoryBot.create(:user)
     remove_me = FactoryBot.create(:user)
@@ -63,7 +63,7 @@ class Me::RequestsControllerTest < ActionController::TestCase
     login_as user
     group.remove_user! remove_me
     xhr :post, :update, id: request.id, mark: 'approve'
-    assert_response :success
+    assert_response :conflict
   end
 
   def test_destroy_group_request
