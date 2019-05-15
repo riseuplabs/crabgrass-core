@@ -50,6 +50,8 @@ class RequestToRemoveUser < Request
 
   def after_approval
     group.remove_user!(user)
+  rescue ErrorMessage => e
+    raise PointlessAction, e.message
   end
 
   def description

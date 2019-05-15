@@ -10,6 +10,8 @@ class MembershipRequest < Request
 
   def after_approval
     group.add_user! user
+  rescue AssociationError => e
+    raise PointlessAction, e.message
   end
 
   def event
