@@ -39,7 +39,7 @@ test:
     RAILS_ENV=test bundle exec rake ts:index ts:start
     bundle exec rails test
     bundle exec rails test extensions/pages
-    bundle exec rake cg:cleanup:all     # test cleanup tasks
+    echo 'Number of deprecations in the test logs:'
     grep DEPRECATION log/test.log | wc -l
   artifacts:
     when: on_failure
