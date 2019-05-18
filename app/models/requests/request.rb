@@ -5,6 +5,12 @@
 class Request < ApplicationRecord
   include AASM
 
+  # Raised when approving a Request to do something
+  # that does not have any consequences.
+  # (Such as removing a user from a group who is not a member)
+  class PointlessAction < CrabgrassException
+  end
+
   ##
   ## ASSOCIATIONS
   ##

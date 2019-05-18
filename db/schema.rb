@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_14_101916) do
+ActiveRecord::Schema.define(version: 2019_05_09_111135) do
 
   create_table "asset_versions", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "asset_id"
@@ -233,6 +233,7 @@ ActiveRecord::Schema.define(version: 2018_11_14_101916) do
     t.datetime "notification_sent_at"
     t.datetime "notification_digest_sent_at"
     t.string "details"
+    t.index ["notification_digest_sent_at"], name: "index_page_histories_on_notification_digest_sent_at"
     t.index ["page_id"], name: "index_page_histories_on_page_id"
     t.index ["user_id"], name: "index_page_histories_on_user_id"
   end
