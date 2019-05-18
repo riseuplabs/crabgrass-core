@@ -20,7 +20,8 @@ class Me::RequestsControllerTest < ActionController::TestCase
     request = RequestToFriend.create created_by: requesting,
                                      recipient: user
     login_as user
-    xhr :post, :update, id: request.id, mark: 'approve'
+    post :update, params: {id: request.id, mark: 'approve'},
+      xhr: true
     assert_response :success
   end
 
@@ -32,7 +33,8 @@ class Me::RequestsControllerTest < ActionController::TestCase
     requesting = FactoryBot.create(:user)
     request = RequestToJoinYou.create created_by: requesting,
                                       recipient: group
-    xhr :post, :update, id: request.id, mark: 'approve'
+    post :update, params: {id: request.id, mark: 'approve'},
+      xhr: true
     assert_response :success
   end
 
@@ -45,7 +47,8 @@ class Me::RequestsControllerTest < ActionController::TestCase
     request = RequestToJoinYou.create created_by: requesting,
                                       recipient: group
     group.add_user! requesting
-    xhr :post, :update, id: request.id, mark: 'approve'
+    post :update, params: {id: request.id, mark: 'approve'},
+      xhr: true
     assert_response :conflict
   end
 
@@ -62,7 +65,8 @@ class Me::RequestsControllerTest < ActionController::TestCase
       requestable: remove_me
     login_as user
     group.remove_user! remove_me
-    xhr :post, :update, id: request.id, mark: 'approve'
+    post :update, params: {id: request.id, mark: 'approve'},
+      xhr: true
     assert_response :conflict
   end
 
