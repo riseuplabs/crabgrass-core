@@ -86,6 +86,8 @@ module Common::Requests
     if params[:code] && @req.recipient != current_user
       @req.try.redeem_code!(current_user)
     end
+  rescue ActiveRecord::RecordNotFound => e
+    render_not_found(e)
   end
 
   def request_context

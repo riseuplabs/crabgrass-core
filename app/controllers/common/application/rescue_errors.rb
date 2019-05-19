@@ -43,7 +43,7 @@ module Common::Application::RescueErrors
       # Use the ExceptionApp with ExceptionsController for these:
       # ( this is the default for errors that do not inherit from
       #   one of the above)
-      rescue_from ErrorNotFound,               with: :raise
+      rescue_from ErrorNotFound,               with: :render_not_found
       rescue_from AuthenticationRequired,      with: :raise
       rescue_from PermissionDenied,            with: :raise
       rescue_from Pundit::NotAuthorizedError,  with: :log_and_permission_denied
@@ -111,6 +111,24 @@ module Common::Application::RescueErrors
       end
       format.js do
         render_error_js(exception, options)
+      end
+    end
+  end
+
+  #
+  # shows a generic not found page or error message, customized
+  # by any message in the exception.
+  #
+  def render_not_found(exception=nil)
+    # Claim something was not found when people may not access it
+    # exception = ErrorNotFound.new(:page.t) if exception.is_a? PermissionDenied
+    respond_to do |format|
+      format.html do
+        @exception = exception || ErrorNotFound.new(:page.t)
+        render 'exceptions/show', status: 404, layout: (!request.xhr? && 'notice')
+      end
+      format.js do
+        render_error_js(exception)
       end
     end
   end

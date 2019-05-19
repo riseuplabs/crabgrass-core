@@ -13,22 +13,24 @@ class ContextsController < DispatchController
 
   def find_controller
     name = params[:id]
-    controller_for_group(name)
-  rescue ActiveRecord::RecordNotFound
-    controller_for_person(name)
+    controller_for_group(name) ||
+      controller_for_person(name) ||
+      not_found
   end
 
   def controller_for_group(name)
     # we are dealing with a committee!
     name.sub!(' ', '+') if name =~ /\ /
 
-    @group = Group.where(name: name).first!
+    @group = Group.where(name: name).first
+    return unless @group
     params[:group_id] = params[:id]
     new_controller 'group/home'
   end
 
   def controller_for_person(login)
-    @user = User.where(login: login).first!
+    @user = User.where(login: login).first
+    return unless @user
     params[:person_id] = params[:id]
     new_controller 'person/home'
   end
