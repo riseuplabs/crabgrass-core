@@ -87,7 +87,7 @@ module Common::Requests
       @req.try.redeem_code!(current_user)
     end
   rescue ActiveRecord::RecordNotFound => e
-    render_not_found(e)
+    raise_not_found
   end
 
   def request_context

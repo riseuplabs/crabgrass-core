@@ -9,7 +9,7 @@ class Person::BaseController < ApplicationController
   def fetch_person
     # person might be preloaded by DispatchController
     @user ||= User.where(login: (params[:person_id] || params[:id])).first
-    render_not_found unless @user && policy(@user).show?
+    raise_not_found unless @user && policy(@user).show?
   end
 
   def setup_context

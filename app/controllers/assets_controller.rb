@@ -11,7 +11,7 @@ class AssetsController < ApplicationController
               type: file.content_type,
               disposition: disposition(file)
   rescue ActionController::MissingFile
-    raise_not_found
+    raise_not_found :file
   end
 
   def destroy
@@ -33,7 +33,7 @@ class AssetsController < ApplicationController
 
   def fetch_asset
     @asset = Asset.find(params[:id]).version_or_self(params[:version])
-    raise ErrorNotFound, :file unless @asset
+    raise_not_found :file unless @asset
     @page = @asset.page
     true
   end
@@ -55,7 +55,7 @@ class AssetsController < ApplicationController
   def file_to_send
     if thumb_name
       thumb = @asset.thumbnail(thumb_name)
-      raise ErrorNotFound, :file unless thumb
+      raise_not_found :file unless thumb
       thumb.generate
       thumb
     else
@@ -63,7 +63,7 @@ class AssetsController < ApplicationController
     end
   rescue Errno::ENOENT => e
     Rails.logger.warn "WARNING: Asset not found: #{thumb_name}"
-    raise ErrorNotFound, :file
+    raise_not_found :file
   end
 
   #
