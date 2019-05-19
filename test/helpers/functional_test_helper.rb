@@ -21,13 +21,8 @@ module FunctionalTestHelper
   ].freeze
 
   def assert_not_found
-    if block_given?
-      assert_raises(*NOT_FOUND_ERRORS) do
-        yield
-      end
-    else
-      assert_response :not_found
-    end
+    yield if block_given?
+    assert_response :not_found
   end
 
   # can pass either a regexp of the flash error string,
