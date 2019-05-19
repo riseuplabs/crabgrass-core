@@ -119,16 +119,20 @@ module Common::Application::RescueErrors
   # shows a generic not found page or error message, customized
   # by any message in the exception.
   #
+  # Please do not call this directly but rather use
+  # `raise_not_found :file`
+  #
   def render_not_found(exception=nil)
-    # Claim something was not found when people may not access it
-    # exception = ErrorNotFound.new(:page.t) if exception.is_a? PermissionDenied
     respond_to do |format|
       format.html do
-        @exception = exception || ErrorNotFound.new(:page.t)
+        @exception = exception || ErrorNotFound.new(:page)
         render 'exceptions/show', status: 404, layout: (!request.xhr? && 'notice')
       end
       format.js do
-        render_error_js(exception)
+        render_error_js exception, status: 404
+      end
+      format.any do
+        render status: 404, body: nil
       end
     end
   end

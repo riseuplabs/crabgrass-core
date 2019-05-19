@@ -96,17 +96,17 @@ module Common::Application::AlertMessages
   end
 
   #
-  # We use the default rails error to trigger the ErrorApp middleware.
-  # This will then in turn call ExceptionsController#show as defined in
-  # config.exceptions_app
+  # Use this function with a symbol for the thing you are missing:
+  #   `raise_not_found :file`
   #
-  # Why?
-  # Because we need to get rid of all Controller state.
-  #  * Instance variables may leak information.
-  #  * Controller functions like setup_navigation may crash.
+  # It will wrap the thing in an exception.
+  # `Common::Application::RescueErrors` will `rescue_from` this exception
+  # with `render_not_found`.
   #
-  # At the same time redirect would alter the url in the users browser.
-  # Maybe they just typed it wrong. So we better leave it there.
+  # `render_not_found` in turn will use `translate_exception`
+  # as defined below to find the right translation for the error
+  # message.
+  #
   #
   def raise_not_found(thing = nil)
     raise ErrorNotFound.new(thing)
