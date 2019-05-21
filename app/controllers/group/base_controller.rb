@@ -3,6 +3,7 @@ class Group::BaseController < ApplicationController
 
   # default permission for all group controllers
   before_action :login_required
+  before_action :setup_context
   after_action :verify_authorized
 
   helper 'group/links'

@@ -16,7 +16,7 @@ class Page::CreateController < ApplicationController
   include Common::Tracking::Action
 
   before_action :login_required
-  before_action :init_options, :set_owner, :catch_cancel
+  before_action :init_options, :set_owner, :setup_context, :catch_cancel
   after_action :verify_authorized, only: :create
   helper 'page/share', 'page/owner', 'page/creation'
   track_actions :create

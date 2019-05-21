@@ -44,7 +44,7 @@ module Common::Application::RescueErrors
       # ( this is the default for errors that do not inherit from
       #   one of the above)
       rescue_from ErrorNotFound,               with: :render_not_found
-      rescue_from AuthenticationRequired,      with: :raise
+      rescue_from AuthenticationRequired,      with: :render_exception
       rescue_from PermissionDenied,            with: :raise
       rescue_from Pundit::NotAuthorizedError,  with: :log_and_permission_denied
 
@@ -123,16 +123,21 @@ module Common::Application::RescueErrors
   # `raise_not_found :file`
   #
   def render_not_found(exception=nil)
+    render_exception exception || ErrorNotFound.new(:page)
+  end
+
+  def render_exception(exception)
+    @exception = exception
+    status = status_for_exception(exception)
     respond_to do |format|
       format.html do
-        @exception = exception || ErrorNotFound.new(:page)
-        render 'exceptions/show', status: 404, layout: (!request.xhr? && 'notice')
+        render 'exceptions/show', status: status, layout: (!request.xhr? && 'notice')
       end
       format.js do
-        render_error_js exception, status: 404
+        render_error_js exception, status: status
       end
       format.any do
-        render status: 404, body: nil
+        render status: status, body: nil
       end
     end
   end

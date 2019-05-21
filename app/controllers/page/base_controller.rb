@@ -7,6 +7,7 @@ class Page::BaseController < ApplicationController
 
   before_action :login_required, except: :show
   before_action :bust_cache, only: :show
+  before_action :setup_context
   after_action :verify_authorized
 
   layout 'page'

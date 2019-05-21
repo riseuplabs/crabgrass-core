@@ -1,5 +1,6 @@
 class Person::BaseController < ApplicationController
   before_action :fetch_person
+  before_action :setup_context
   after_action :verify_authorized
 
   helper 'people/base'

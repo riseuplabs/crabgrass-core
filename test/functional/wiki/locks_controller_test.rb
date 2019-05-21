@@ -31,7 +31,7 @@ class Wiki::LocksControllerTest < ActionController::TestCase
   end
 
   def test_cannot_destroy_locks_when_logged_out
-    assert_raises AuthenticationRequired do
+    assert_login_required do
       delete :destroy, params: { wiki_id: @wiki }, xhr: true
     end
   end
