@@ -45,7 +45,7 @@ module Common::Application::RescueErrors
       #   one of the above)
       rescue_from ErrorNotFound,               with: :render_not_found
       rescue_from AuthenticationRequired,      with: :render_exception
-      rescue_from PermissionDenied,            with: :raise
+      rescue_from PermissionDenied,            with: :render_exception
       rescue_from Pundit::NotAuthorizedError,  with: :log_and_permission_denied
 
     end
@@ -145,7 +145,7 @@ module Common::Application::RescueErrors
   def log_and_permission_denied(exception)
     Rails.logger.info exception
     Rails.logger.info "User id: #{current_user.id}"
-    raise PermissionDenied
+    render_exception PermissionDenied.new
   end
 
   def status_for_exception(exception)
