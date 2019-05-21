@@ -16,9 +16,8 @@ class Group::ProfilesControllerTest < ActionController::TestCase
   def test_edit_not_allowed
     stranger = FactoryBot.create(:user)
     login_as stranger
-    assert_not_found do
-      get :edit, params: { group_id: @group.to_param }
-    end
+    get :edit, params: { group_id: @group.to_param }
+    assert_not_found
   end
 
   def test_update
@@ -33,9 +32,8 @@ class Group::ProfilesControllerTest < ActionController::TestCase
   def test_update
     stranger = FactoryBot.create(:user)
     login_as stranger
-    assert_not_found do
-      post :update, params: { group_id: @group.to_param, profile: { summary: 'test profile', entity_id: 1 } }
-    end
+    post :update, params: { group_id: @group.to_param, profile: { summary: 'test profile', entity_id: 1 } }
+    assert_not_found
   end
 
 end

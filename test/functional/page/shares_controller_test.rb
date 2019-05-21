@@ -16,9 +16,8 @@ class Page::SharesControllerTest < ActionController::TestCase
   def test_show_share_popup_not_allowed
     login_as @recipient
     page = FactoryBot.create :page, created_by: @owner
-    assert_permission_denied do
-      get :show, params: { page_id: page.id, mode: "share" }, xhr: true
-    end
+    get :show, params: { page_id: page.id, mode: "share" }, xhr: true
+    assert_permission_denied
   end
 
   def test_show_notify_popup
@@ -70,8 +69,7 @@ class Page::SharesControllerTest < ActionController::TestCase
     page = FactoryBot.create :page, created_by: @owner
     login_as @recipient
     admin = { access: 'admin' }
-    assert_permission_denied do
-      post :update, params: { share_button: true, recipients: { blue: admin }, page_id: page.id, mode: "share", format: :js }, xhr: true
-    end
+    post :update, params: { share_button: true, recipients: { blue: admin }, page_id: page.id, mode: "share", format: :js }, xhr: true
+    assert_permission_denied
   end
 end

@@ -24,9 +24,8 @@ class Group::StructuresControllerTest < ActionController::TestCase
   def test_create_committee_not_allowed
     stranger = FactoryBot.create(:user)
     login_as stranger
-    assert_not_found do
-      get :create, params: { group_id: @group.to_param, type: 'committee', group: committee_attributes }
-    end
+    get :create, params: { group_id: @group.to_param, type: 'committee', group: committee_attributes }
+    assert_not_found
   end
 
   def test_create_committee_namespace
@@ -61,9 +60,8 @@ class Group::StructuresControllerTest < ActionController::TestCase
   def test_create_council_not_allowed
     stranger = FactoryBot.create(:user)
     login_as stranger
-    assert_not_found do
-      get :create, params: { group_id: @group.to_param, type: 'council', group: committee_attributes }
-    end
+    get :create, params: { group_id: @group.to_param, type: 'council', group: committee_attributes }
+    assert_not_found
   end
 
   def committee_attributes(attrs = {})

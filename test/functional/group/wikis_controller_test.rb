@@ -17,9 +17,8 @@ class Group::WikisControllerTest < ActionController::TestCase
 
   def test_show_wiki_settings_no_member
     login_as @user2
-    assert_permission_denied do
-      get :index, params: { group_id: @group.to_param }, xhr: true
-    end
+    get :index, params: { group_id: @group.to_param }, xhr: true
+    assert_permission_denied
   end
 
   # TODO: maybe another test wich proves that
@@ -28,9 +27,8 @@ class Group::WikisControllerTest < ActionController::TestCase
   # group wiki
   def test_show_wiki_settings_no_council_member
     login_as @user3
-    assert_permission_denied do
-      get :index, params: { group_id: @group2.to_param }, xhr: true
-    end
+    get :index, params: { group_id: @group2.to_param }, xhr: true
+    assert_permission_denied
   end
 
   def test_create_private_wiki
@@ -46,9 +44,8 @@ class Group::WikisControllerTest < ActionController::TestCase
 
   def test_create_private_wiki_not_allowed
     login_as @user2
-    assert_permission_denied do
-      post :create, params: { group_id: @group.to_param, profile: :private }, xhr: true
-    end
+    post :create, params: { group_id: @group.to_param, profile: :private }, xhr: true
+    assert_permission_denied
   end
 
   def test_new_private_with_existing_public_wiki

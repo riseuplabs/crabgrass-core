@@ -17,9 +17,8 @@ class Page::TrashControllerTest < ActionController::TestCase
 
   def test_edit_no_allowed
     login_as users(:blue)
-    assert_permission_denied do
-      get :edit, params: { page_id: @page }, xhr: true
-    end
+    get :edit, params: { page_id: @page }, xhr: true
+    assert_permission_denied
   end
 
   def test_destroy
@@ -31,9 +30,8 @@ class Page::TrashControllerTest < ActionController::TestCase
 
   def test_destroy_not_allowed
     login_as users(:blue)
-    assert_permission_denied do
-      post :update, params: { page_id: @page.id, type: :destroy }, xhr: true
-    end
+    post :update, params: { page_id: @page.id, type: :destroy }, xhr: true
+    assert_permission_denied
     assert_equal 1, Page.where(id: @page.id).count
   end
 

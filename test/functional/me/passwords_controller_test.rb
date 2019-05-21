@@ -6,9 +6,8 @@ class Me::PasswordsControllerTest < ActionController::TestCase
   end
 
   def test_not_logged_in
-    assert_login_required do
-      get :edit
-    end
+    get :edit
+    assert_login_required
   end
 
   def test_edit
