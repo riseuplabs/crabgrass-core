@@ -12,7 +12,8 @@ module FunctionalTestHelper
   end
 
   def assert_login_required(&block)
-    assert_raises AuthenticationRequired, &block
+    yield
+    assert_response 401
   end
 
   NOT_FOUND_ERRORS = [
