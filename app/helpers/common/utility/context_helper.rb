@@ -24,8 +24,6 @@ module Common::Utility::ContextHelper
           navigation[:local] = navigation[:context].currently_active_item
         end
       end
-      # allow controller change to modify @navigation
-      navigation = setup_navigation(navigation)
       navigation
     end
   end
