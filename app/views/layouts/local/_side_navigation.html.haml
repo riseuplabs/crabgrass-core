@@ -6,8 +6,10 @@
 -# the navigation elements from other ul, li, and <a>'s that might be around in the sidebar.
 -#
 
+- items = local_assigns[:items] || @navigation[:local]
+
 %ul.nav.nav-pills.nav-stacked
-  - @navigation[:local].each do |item|
+  - items.each do |item|
     - next unless item[:visible]
     - active = item[:active] ? 'active' : ''
     %li{class: [active]}
