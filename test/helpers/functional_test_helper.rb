@@ -1,14 +1,10 @@
 module FunctionalTestHelper
   def assert_permission_denied
-    if block_given?
-      begin
-        yield
-      rescue PermissionDenied
-        return true
-      end
-    end
+    yield if block_given?
     errors = flash_messages :warning
-    assert_includes message_text(errors), 'Permission Denied'
+    content = errors.present? ? message_text(errors) : @response.body
+    assert_includes content, 'Permission Denied'
+    assert_response 403
   end
 
   def assert_login_required(&block)
