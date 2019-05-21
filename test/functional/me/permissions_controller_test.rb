@@ -6,9 +6,8 @@ class Me::PermissionsControllerTest < ActionController::TestCase
   end
 
   def test_not_logged_in
-    assert_login_required do
-      get :index
-    end
+    get :index
+    assert_login_required
   end
 
   def test_default_list

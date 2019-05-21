@@ -28,8 +28,7 @@ class Person::FriendRequestsControllerTest < ActionController::TestCase
     recipient  = users(:yellow)
     login_as requesting
 
-    assert_permission_denied do
-      post :create, params: { person_id: recipient.login }, xhr: true
-    end
+    post :create, params: { person_id: recipient.login }, xhr: true
+    assert_permission_denied
   end
 end

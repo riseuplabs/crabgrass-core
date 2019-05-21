@@ -6,9 +6,8 @@ class Group::GroupsControllerTest < ActionController::TestCase
   end
 
   def test_new_group_requires_login
-    assert_login_required do
-      get :new
-    end
+    get :new
+    assert_login_required
   end
 
   def test_choose_group_type
@@ -111,9 +110,8 @@ class Group::GroupsControllerTest < ActionController::TestCase
     user = FactoryBot.create(:user)
     group = FactoryBot.create(:group)
     login_as user
-    assert_not_found do
-      delete :destroy, params: { id: group.to_param }
-    end
+    delete :destroy, params: { id: group.to_param }
+    assert_not_found
   end
 
 end

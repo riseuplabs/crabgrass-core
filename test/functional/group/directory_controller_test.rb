@@ -6,9 +6,8 @@ class Group::DirectoryControllerTest < ActionController::TestCase
   end
 
   def test_index_requires_login
-    assert_login_required do
-      get :index
-    end
+    get :index
+    assert_login_required
   end
 
   def test_index

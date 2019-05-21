@@ -25,17 +25,15 @@ class Wiki::WikisControllerTest < ActionController::TestCase
   def test_edit_without_council_powers_not_allowed
     @wiki = @group2.profiles.private.create_wiki body: 'private'
     login_as @user3
-    assert_permission_denied do
-      get :edit, params: { id: @wiki.id }, xhr: true
-    end
+    get :edit, params: { id: @wiki.id }, xhr: true
+    assert_permission_denied
   end
 
   def test_edit_as_non_member_not_allowed
     @wiki = create_profile_wiki
     login_as @user2
-    assert_permission_denied do
-      get :edit, params: { id: @wiki.id }, xhr: true
-    end
+    get :edit, params: { id: @wiki.id }, xhr: true
+    assert_permission_denied
   end
 
   def test_edit_locked
@@ -87,9 +85,8 @@ class Wiki::WikisControllerTest < ActionController::TestCase
 
   def test_hide_wiki_on_private_page
     @wiki = create_page_wiki
-    assert_permission_denied do
-      get :show, params: { id: @wiki.id }, xhr: true
-    end
+    get :show, params: { id: @wiki.id }, xhr: true
+    assert_permission_denied
   end
 
   def test_show_private_group_wiki
@@ -110,9 +107,8 @@ class Wiki::WikisControllerTest < ActionController::TestCase
 
   def test_do_not_show_private_group_wiki_to_stranger
     @wiki = create_profile_wiki(true)
-    assert_permission_denied do
-      get :show, params: { id: @wiki.id }, xhr: true
-    end
+    get :show, params: { id: @wiki.id }, xhr: true
+    assert_permission_denied
   end
 
   ##
