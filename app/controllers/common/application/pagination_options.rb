@@ -40,11 +40,7 @@ module Common::Application::PaginationOptions
   #
   def pagination_link_renderer
     if defined? page_search_path
-      if xhr_page_search?
-        LinkRenderer::AjaxPages
-      else
-        LinkRenderer::Pages
-      end
+      LinkRenderer::AjaxPages
     elsif request.xhr?
       request.format == :html ?
         LinkRenderer::ModalAjax :
