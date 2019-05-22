@@ -20,7 +20,6 @@ addons:
 before_install:
   - "bundle --version"
 before_script:
-  - "bundle exec rake create_a_secret"
   - "cp config/database.yml.example config/database.yml"
   - "bundle exec rake db:create"
   - "bundle exec rake db:schema:load"
