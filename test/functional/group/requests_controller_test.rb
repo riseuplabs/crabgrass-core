@@ -16,9 +16,8 @@ class Group::RequestsControllerTest < ActionController::TestCase
   def test_index_not_allowed
     stranger = FactoryBot.create(:user)
     login_as stranger
-    assert_not_found do
-      get :index, params: { group_id: @group.to_param }
-    end
+    get :index, params: { group_id: @group.to_param }
+    assert_not_found
   end
 
   def test_create
@@ -31,9 +30,8 @@ class Group::RequestsControllerTest < ActionController::TestCase
   def test_create_not_allowed
     stranger = FactoryBot.create(:user)
     login_as stranger
-    assert_not_found do
-      get :create, params: { group_id: @group.to_param, type: 'destroy_group' }
-    end
+    get :create, params: { group_id: @group.to_param, type: 'destroy_group' }
+    assert_not_found
   end
 
   def test_request_to_create_council
@@ -50,9 +48,8 @@ class Group::RequestsControllerTest < ActionController::TestCase
   def test_request_to_create_council_not_allowed
     group = groups(:animals)
     assert_no_difference 'RequestToCreateCouncil.count' do
-      assert_permission_denied do
-        get :create, params: { group_id: group.to_param, type: 'create_council' }
-      end
+      get :create, params: { group_id: group.to_param, type: 'create_council' }
+      assert_permission_denied
     end
   end
 

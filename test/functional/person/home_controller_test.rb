@@ -22,14 +22,13 @@ class Person::HomeControllerTest < ActionController::TestCase
     login_as :blue
     assert !users(:blue).may?(:view, user)
     assert users(:blue).may?(:pester, user)
-    assert users(:blue).may?(:request_contact, user) # TODO: this is not a controller test. Either replace by integration test or find another way of testing it in the controller. 
+    assert users(:blue).may?(:request_contact, user) # TODO: this is not a controller test. Either replace by integration test or find another way of testing it in the controller.
   end
 
   def test_missing_user
     login_as :blue
-    assert_not_found do
-      get :show, params: { person_id: 'missinguserlogin' }
-    end
+    get :show, params: { person_id: 'missinguserlogin' }
+    assert_not_found
   end
 
   def test_new_user_visible_to_friends

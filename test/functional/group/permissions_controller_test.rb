@@ -16,9 +16,8 @@ class Group::PermissionsControllerTest < ActionController::TestCase
 
   def test_index_no_access
     login_as @other_user
-    assert_not_found do
-      get :index, params: { group_id: @group.to_param }
-    end
+    get :index, params: { group_id: @group.to_param }
+    assert_not_found
   end
 
   def test_update

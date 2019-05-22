@@ -16,17 +16,15 @@ class Group::SettingsControllerTest < ActionController::TestCase
   end
 
   def test_not_logged_in
-    assert_login_required do
-      get :show, params: { group_id: @group.to_param }
-    end
+    get :show, params: { group_id: @group.to_param }
+    assert_login_required
   end
 
   def test_not_a_member
     stranger = FactoryBot.create(:user)
     login_as stranger
-    assert_permission_denied do
-      get :show, params: { group_id: @group.to_param }
-    end
+    get :show, params: { group_id: @group.to_param }
+    assert_permission_denied
   end
 
   def test_member_can_see_private
@@ -47,9 +45,8 @@ class Group::SettingsControllerTest < ActionController::TestCase
   def test_update_not_allowed
     stranger = FactoryBot.create(:user)
     login_as stranger
-    assert_permission_denied do
-      post :update, params: { group: { full_name: 'full name' }, group_id: @group.to_param }
-    end
+    post :update, params: { group: { full_name: 'full name' }, group_id: @group.to_param }
+    assert_permission_denied
   end
 
 end

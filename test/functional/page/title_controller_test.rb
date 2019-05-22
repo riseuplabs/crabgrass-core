@@ -17,9 +17,8 @@ class Page::TitleControllerTest < ActionController::TestCase
 
   def test_edit_title_not_allowed
     login_as users(:blue)
-    assert_permission_denied do
-      get :edit, params: { page_id: @page.id }, xhr: true
-    end
+    get :edit, params: { page_id: @page.id }, xhr: true
+    assert_permission_denied
   end
 
   def test_update_title
@@ -31,9 +30,8 @@ class Page::TitleControllerTest < ActionController::TestCase
 
   def test_update_title_not_allowed
     login_as users(:blue)
-    assert_permission_denied do
-      put :update, params: { page_id: @page.id, page: { title: "sunset" } }, xhr: true
-    end
+    put :update, params: { page_id: @page.id, page: { title: "sunset" } }, xhr: true
+    assert_permission_denied
   end
 
   def test_update_summary_and_name

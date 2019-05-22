@@ -43,9 +43,9 @@ module Common::Application::RescueErrors
       # Use the ExceptionApp with ExceptionsController for these:
       # ( this is the default for errors that do not inherit from
       #   one of the above)
-      rescue_from ErrorNotFound,               with: :raise
-      rescue_from AuthenticationRequired,      with: :raise
-      rescue_from PermissionDenied,            with: :raise
+      rescue_from ErrorNotFound,               with: :render_not_found
+      rescue_from AuthenticationRequired,      with: :render_exception
+      rescue_from PermissionDenied,            with: :render_exception
       rescue_from Pundit::NotAuthorizedError,  with: :log_and_permission_denied
 
     end
@@ -115,10 +115,37 @@ module Common::Application::RescueErrors
     end
   end
 
+  #
+  # shows a generic not found page or error message, customized
+  # by any message in the exception.
+  #
+  # Please do not call this directly but rather use
+  # `raise_not_found :file`
+  #
+  def render_not_found(exception=nil)
+    render_exception exception || ErrorNotFound.new(:page)
+  end
+
+  def render_exception(exception)
+    @exception = exception
+    status = status_for_exception(exception)
+    respond_to do |format|
+      format.html do
+        render 'exceptions/show', status: status, layout: (!request.xhr? && 'notice')
+      end
+      format.js do
+        render_error_js exception, status: status
+      end
+      format.any do
+        render status: status, body: nil
+      end
+    end
+  end
+
   def log_and_permission_denied(exception)
     Rails.logger.info exception
     Rails.logger.info "User id: #{current_user.id}"
-    raise PermissionDenied
+    render_exception PermissionDenied.new
   end
 
   def status_for_exception(exception)

@@ -30,6 +30,15 @@ class DispatchController < ApplicationController
     end
   end
 
+  def not_found
+    prepare_params_for_not_found
+    new_controller 'exceptions'
+  end
+
+  def prepare_params_for_not_found
+    request.env['action_dispatch.exception'] = ErrorNotFound.new(:page)
+  end
+
   # We want the modification to also apply to the newly instantiated controller.
   # So we have to modify the request - not just the Parameters instance.
   def modify_params(options = {})

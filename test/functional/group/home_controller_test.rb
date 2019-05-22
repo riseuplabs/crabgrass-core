@@ -37,8 +37,7 @@ class Group::HomeControllerTest < ActionController::TestCase
   def test_may_not_show
     login_as FactoryBot.create(:user)
     @group.revoke_access! public: :view
-    assert_not_found do
-      get :show, params: { group_id: @group.to_param }
-    end
+    get :show, params: { group_id: @group.to_param }
+    assert_not_found
   end
 end

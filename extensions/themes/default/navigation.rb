@@ -111,7 +111,7 @@ define_navigation do
   global_section :people do
     label  { :people.t }
     url    controller: 'person/directory'
-    active { controller?('person/') or (context?(:user) && visible_context?) }
+    active { controller?('person/directory') || (context?(:user) && visible_context?)}
     html partial: '/layouts/global/nav/people_menu'
 
     context_section :no_context do
@@ -163,7 +163,7 @@ define_navigation do
   global_section :group do
     label  { :groups.t }
     url    { groups_directory_path }
-    active { controller?('group/') or (context?(:group) && visible_context?) }
+    active { controller?('group/directory') || ( context?(:group) && visible_context? ) }
     html partial: '/layouts/global/nav/groups_menu'
 
     context_section :directory do

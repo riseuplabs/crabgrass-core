@@ -19,12 +19,13 @@ class ErrorFlowTest < IntegrationTest
     fill_in 'password', with: 'blue'
     click_button :sign_in.t
     assert_equal '/me/pages', current_path
+    assert_no_content 'Login Required'
   end
 
 
   def test_not_found_but_exists
     visit '/private_group'
-    assert_content 'Not Found'
+    assert_content 'Page Not Found'
     assert_no_content 'private_group'
     assert_equal '/private_group', current_path
     fill_in 'login', with: 'blue'
@@ -36,7 +37,7 @@ class ErrorFlowTest < IntegrationTest
 
   def test_not_found
     visit '/asdfswera'
-    assert_content 'Not Found'
+    assert_content 'Page Not Found'
     assert_equal '/asdfswera', current_path
     fill_in 'login', with: 'blue'
     fill_in 'password', with: 'blue'

@@ -2,7 +2,6 @@ module Common::Application::RenderWithViewSetup
 
   def render(*args)
     setup_theme
-    setup_context
     super(*args)
   end
 

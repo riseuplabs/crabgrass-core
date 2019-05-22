@@ -3,6 +3,7 @@ class Group::BaseController < ApplicationController
 
   # default permission for all group controllers
   before_action :login_required
+  before_action :setup_context
   after_action :verify_authorized
 
   helper 'group/links'
@@ -12,7 +13,7 @@ class Group::BaseController < ApplicationController
   def fetch_group
     # group might be preloaded by DispatchController
     @group ||= Group.find_by_name(params[:group_id] || params[:id])
-    raise_not_found if @group.nil? || !policy(@group).show?
+    raise_not_found(:page) if @group.nil? || !policy(@group).show?
     @membership = Group::Membership.where(group: @group, user: current_user).
       first_or_initialize
   end

@@ -16,9 +16,8 @@ class AssetsControllerTest < ActionController::TestCase
   def test_get_permissions
     page = FactoryBot.create :page
     asset = FactoryBot.create :image_asset, parent_page: page
-    assert_permission_denied do
-      get :show, params: { id: asset.id, path: asset.basename }
-    end
+    get :show, params: { id: asset.id, path: asset.basename }
+    assert_permission_denied
   end
 
   def test_get_with_escaped_chars
@@ -66,9 +65,8 @@ class AssetsControllerTest < ActionController::TestCase
     asset = page.add_attachment! uploaded_data: upload_data('photo.jpg')
     user.updated(page)
     login_as user
-    assert_permission_denied do
-      delete :destroy, params: { id: asset.id, page_id: page.id }
-    end
+    delete :destroy, params: { id: asset.id, page_id: page.id }
+    assert_permission_denied
   end
 
   private

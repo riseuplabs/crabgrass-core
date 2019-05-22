@@ -47,17 +47,15 @@ class Page::PostsControllerTest < ActionController::TestCase
   def test_edit_not_allowed
     post = Post.create! @page, users(:blue), body: 'Test Content'
     login_as users(:red)
-    assert_permission_denied do
-      get :edit, params: { page_id: @page.id, id: post.id }, xhr: true
-    end
+    get :edit, params: { page_id: @page.id, id: post.id }, xhr: true
+    assert_permission_denied
   end
 
   def test_destroy_not_allowed
     post = Post.create! @page, users(:blue), body: 'Test Content'
     login_as users(:red)
-    assert_permission_denied do
-      get :update, params: { page_id: @page.id, id: post.id, type: :destroy }, xhr: true
-    end
+    get :update, params: { page_id: @page.id, id: post.id, type: :destroy }, xhr: true
+    assert_permission_denied
   end
 
   def assert_history_tracked(subclass_string, item = nil)

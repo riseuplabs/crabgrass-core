@@ -87,8 +87,7 @@ class Me::RequestsControllerTest < ActionController::TestCase
   def test_other_requests_hidden
     user = FactoryBot.create(:user)
     login_as user
-    assert_not_found do
-      get :show, params: { id: Request.last }
-    end
+    get :show, params: { id: Request.last }
+    assert_not_found
   end
 end

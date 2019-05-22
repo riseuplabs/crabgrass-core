@@ -37,9 +37,8 @@ class Page::ParticipationsControllerTest < ActionController::TestCase
     @upart.access = :view
     @upart.save
     assert_no_difference 'Page::History.count' do
-      assert_permission_denied do
-        post :update, params: { page_id: @page, id: @upart, access: :admin }, xhr: true
-      end
+      post :update, params: { page_id: @page, id: @upart, access: :admin }, xhr: true
+      assert_permission_denied
     end
     assert_equal :view, @upart.reload.access_sym
   end
