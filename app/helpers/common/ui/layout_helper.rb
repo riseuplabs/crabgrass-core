@@ -163,37 +163,6 @@ module Common::Ui::LayoutHelper
     lines.join("\n").html_safe
   end
 
-  ##
-  ## PARTIALS
-  ##
-
-  def dialog_page(options = {}, &block)
-    block_to_partial('common/dialog_page', options, &block)
-  end
-
-  # from http://www.igvita.com/2007/03/15/block-helpers-and-dry-views-in-rails/
-  # Only need this helper once, it will provide an interface to convert a block into a partial.
-  # 1. Capture is a Rails helper which will 'capture' the output of a block into a variable
-  # 2. Merge the 'body' variable into our options hash
-  # 3. Render the partial with the given options hash. Just like calling the partial directly.
-  def block_to_partial(partial_name, options = {}, &block)
-    options[:body] = capture(&block)
-    concat(render(partial: partial_name, locals: options))
-  end
-
-  ##
-  ## MISC. LAYOUT HELPERS
-  ##
-
-  #
-  # takes an array of objects and splits it into two even halves. If the count
-  # is odd, the first half has one more than the second.
-  #
-  def even_split(arry)
-    cutoff = (arry.count + 1) / 2
-    [arry[0..cutoff - 1], arry[cutoff..-1]]
-  end
-
   #
   # acts like haml_tag, capture_haml, or haml_concat, depending on how it is called.
   #
