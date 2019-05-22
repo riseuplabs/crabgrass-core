@@ -70,16 +70,6 @@ module Common::Ui::JavascriptHelper
   end
 
   ##
-  ## dom basics
-  ##
-
-  def dom_loaded
-    concat "document.observe('dom:loaded',function(){"
-    yield
-    concat '});'
-  end
-
-  ##
   ## visibility
   ##
 
@@ -114,87 +104,9 @@ module Common::Ui::JavascriptHelper
     format("$('%s').show();", spinner_id(id))
   end
 
-  def activate_panel_row(item, load_url_function)
-    loader = case load_url_function
-             when String
-               load_url_function
-             when Proc
-               url = load_url_function.call(item)
-               remote_function(url: url, method: :get) + ";\n"
-             else
-               ''
-             end
-    loader + "activatePanelRow('#{dom_id(item)}');".html_safe
-  end
-
-  #
-  # called when a user clicks on a row in a 'sliding list'
-  # sliding list is currently deprecated
-  #
-  def activate_sliding_row(url)
-    format("window.location.href = '%s'", url)
-  end
-
-  #
-  # returns a string that will get a prototype extended dom element.
-  #
-  def get_dom_element(identifier, context = nil)
-    case identifier
-    when ActiveRecord::Base
-      "$('#{dom_id(identifier, context)}')"
-    when nil
-      '$(this)'
-    when /^\$\(/ # already uses prototype
-      identifier
-    when String
-      "$('#{identifier}')"
-    end
-  end
-
-  ##
-  ## classes
-  ##
-
-  def replace_class_name(element_id, old_class, new_class)
-    if element_id.is_a? String
-      element_id = "$('" + element_id + "')" if element_id != 'this'
-    else
-      element_id = "$('" + dom_id(element_id) + "')"
-    end
-    "replaceClassName(#{element_id}, '#{old_class}', '#{new_class}');"
-  end
-
-  def add_class_name(element_id, class_name)
-    element_id = dom_id(element_id) unless element_id.is_a? String
-    format("$('%s').addClassName('%s');", element_id, class_name)
-  end
-
-  def remove_class_name(element_id, class_name)
-    element_id = dom_id(element_id) unless element_id.is_a? String
-    format("$('%s').removeClassName('%s');", element_id, class_name)
-  end
-
   ##
   ## MISC
   ##
-
-  def replace_html(element_id, html)
-    element_id = dom_id(element_id) unless element_id.is_a?(String)
-    format(%[$('%s').update(%s);], element_id, html.inspect)
-  end
-
-  def dom_loaded_javascript_tag(javascript)
-    javascript_tag %[
-      document.observe('dom:loaded', function() {
-        #{javascript}
-      })
-    ]
-  end
-
-  def reset_form(id)
-    "$('#{id}').reset();"
-    # "Form.getInputs($('#{id}'), 'submit').each(function(x){x.disabled=false}.bind(this));"
-  end
 
   # submits the named formed and eats the event.
   # e.g. :onkeydown => submit_form(x)
@@ -206,16 +118,6 @@ module Common::Ui::JavascriptHelper
   # to keep Enter key from submiting the form
   def eat_enter
     'return(!enterPressed(event));'
-  end
-
-  # used with text input elements that have some value set which acts like help text
-  # it disappears when user focues on the input
-  def show_default_value
-    "if(this.value=='') this.value=this.defaultValue;"
-  end
-
-  def hide_default_value
-    "if(this.value==this.defaultValue) this.value='';"
   end
 
   def focus_form(id)
