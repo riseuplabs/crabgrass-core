@@ -37,10 +37,15 @@ module Common::Requests
     # uses model permissions.
     skip_authorization
     if mark
-      @req.mark!(mark, current_user)
-      success I18n.t(@req.name), success_message
+      begin
+        @req.mark!(mark, current_user)
+        success I18n.t(@req.name), success_message
+      rescue Request::PointlessAction => e
+        status = 409
+        notice I18n.t(@req.name), e.message
+      end
     end
-    render template: 'common/requests/update'
+    render template: 'common/requests/update', status: status
   end
 
   #

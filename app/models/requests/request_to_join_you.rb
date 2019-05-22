@@ -36,6 +36,8 @@ class RequestToJoinYou < MembershipRequest
 
   def after_approval
     group.add_user! created_by
+  rescue AssociationError => e
+    raise PointlessAction, e.message
   end
 
   def description

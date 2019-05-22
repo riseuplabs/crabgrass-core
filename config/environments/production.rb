@@ -33,7 +33,7 @@ Crabgrass::Application.configure do
   ## set them in config/crabgrass/*_config.rb
 
   # fall back to rails3 default - rails4 has debug
-  config.log_level = :info
+  config.log_level = Conf.log_level || :info
   config.consider_all_requests_local = Conf.show_exceptions
 
   # Force all access to the app over TLS, use Strict-Transport-Security,
