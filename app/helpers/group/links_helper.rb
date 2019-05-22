@@ -6,20 +6,6 @@ module Group::LinksHelper
   protected
 
   ##
-  ## HOME LINKS
-  ##
-
-  def more_info_link
-    link_to('More Info', '#')
-  end
-
-  def edit_group_profile_link
-    if may_admin?(@group)
-      link_to :edit_profile_link.t, edit_group_profile_path(@group)
-    end
-  end
-
-  ##
   ## MY MEMBERSHIP
   ##
 
@@ -62,24 +48,6 @@ module Group::LinksHelper
     end
   end
 
-  ##
-  ## MEMBERSHIPS
-  ##
-
-  def list_memberships_link
-    if policy(@group).may_list_memberships?
-      link_to(:see_all_link.t, group_memberships_path(@group))
-    end
-  end
-
-  def invite_link
-    link_to(:send_invites.t, new_group_invite_path(@group)) if may_admin?(@group)
-  end
-
-  def requests_link
-    link_to(:view_requests.t, group_requests_path(@group)) if may_admin?(@group)
-  end
-
   def destroy_group_link
     if logged_in?
       if RequestToDestroyOurGroup.already_exists?(group: @group)
@@ -101,12 +69,6 @@ module Group::LinksHelper
 
   def request_to_destroy_group
     RequestToDestroyOurGroup.new(recipient: @group, requestable: @group)
-  end
-
-  def create_committee_link
-    if policy(@group).may_create_committee?
-      link_to :create_button.t, new_group_committee_path(@group)
-    end
   end
 
   def create_council_link
@@ -163,31 +125,5 @@ module Group::LinksHelper
       RequestToRemoveGroup :
       RequestToRemoveUser
     klass.for_membership(membership).first_or_initialize
-  end
-
-  ##
-  ## AVATARS
-  ##
-
-  def edit_avatar_link
-    url = @group.avatar ? edit_group_avatar_path(@group, @group.avatar) : new_group_avatar_path(@group)
-    link_to_modal :upload_image.t, url, icon: 'picture_edit'
-  end
-
-  ##
-  ## TAGGING
-  ##
-
-  def link_to_group_tag(tag, options)
-    options[:class] ||= ''
-    path = (params[:path] || []).dup
-    name = tag.name.tr(' ', '+')
-    if path.delete(name)
-      options[:class] += ' invert'
-    else
-      path << name
-    end
-    options[:title] = tag.name
-    link_to tag.name, groups_url(action: 'tags') + '/' + path.join('/'), options
   end
 end
