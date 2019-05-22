@@ -46,7 +46,7 @@ module Common::Application::PaginationOptions
         LinkRenderer::ModalAjax :
         LinkRenderer::Ajax
     else
-      LinkRenderer::Dispatch
+      LinkRenderer::Page
     end
   end
 end
