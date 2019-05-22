@@ -27,12 +27,4 @@ module Wikis::VersionsHelper
       "<span class='btn btn-default disabled icon right_16 right'>#{:previous.t}</span>".html_safe
     end
   end
-
-  def version_user_link(version)
-    if version.user
-      link_to_user(version.user)
-    else
-      ''
-    end
-  end
 end

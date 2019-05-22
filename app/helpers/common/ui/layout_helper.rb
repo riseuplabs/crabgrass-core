@@ -215,21 +215,4 @@ module Common::Ui::LayoutHelper
   def comma_join(*args)
     args.select(&:present?).join(', ')
   end
-
-  ##
-  ## declare strings used for logins
-  ##
-  def login_context
-    @login_context ||= {
-      strings: {
-        login: I18n.t(:login),
-        username: I18n.t(:username),
-        password: I18n.t(:password),
-        forgot_password: I18n.t(:forgot_password_link),
-        create_account: I18n.t(:signup_link),
-        redirect: params[:redirect] || request.request_uri,
-        token: form_authenticity_token
-      }
-    }
-  end
 end
