@@ -91,6 +91,10 @@ class Page < ApplicationRecord
   # used for caching access
   alias to_s friendly_url
 
+  def to_partial_path
+    'common/pages/page'
+  end
+
   # using only knowledge of this page, returns
   # best guess uri string, sans protocol/host/port.
   # ie /rainbows/what-a-fine-page+5234
