@@ -26,8 +26,9 @@ class Person::DirectoryControllerTest < ActionController::TestCase
     get :index, params: { path: 'peers' }
     assert_response :success
     users = assigns(:users)
-    assert_equal 10, users.count
-    assert_right_order users(:blue).peers, users
+    assert_equal 10, users.total_entries
+    assert_equal 5, users.length
+    assert_right_order users(:blue).peers.limit(5), users
   end
 
   def test_pagination
@@ -37,7 +38,6 @@ class Person::DirectoryControllerTest < ActionController::TestCase
     end
     get :index, params: { path: 'peers' }
     assert_response :success
-    ## FIXME: 'count' doesn't work here, because it loses pagination params.
     on_page = users(:blue).peers.count - 9
     on_page = 3 if on_page > 9
     assert_equal on_page, assigns(:users).length
