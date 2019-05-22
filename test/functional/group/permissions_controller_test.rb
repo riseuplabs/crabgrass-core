@@ -14,6 +14,12 @@ class Group::PermissionsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_index_with_council
+    login_as users(:blue)
+    get :index, params: { group_id: groups(:groupwithcouncil) }
+    assert_response :success
+  end
+
   def test_index_no_access
     login_as @other_user
     get :index, params: { group_id: @group.to_param }

@@ -21,6 +21,7 @@ module Common::Ui::LinkHelper
     content_tag(:div, links.compact.join(char).html_safe, class: 'link_line')
   end
 
+  # TODO: TESTME - used only in survey helper right now.
   def link_span(*links)
     char = content_tag(:em, link_char(links))
     content_tag(:span, links.compact.join(char).html_safe, class: 'link_line')
