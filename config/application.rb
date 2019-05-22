@@ -27,6 +27,10 @@ module Crabgrass
     # versions of Rails older than 5.2.
     config.action_dispatch.use_authenticated_cookie_encryption = false
 
+    # we use namespaced controllers but still want to be able to do
+    # render @pages
+    config.action_view.prefix_partial_path_with_controller_namespace = false
+
     config.autoload_paths << "#{Rails.root}/lib"
     config.autoload_paths << "#{Rails.root}/app/models"
 

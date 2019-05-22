@@ -1,16 +1,10 @@
 -# locals:
 -#
--#  style -- one of table, rows, grid, blog. if not set, we use @path to
--#           which one to use.
+-#  style -- one of table or mini (used for recent pages in me menu)
 
-- style_from_path = case @path.try(:arg_for, 'view'); when 'compact' then 'table'; when 'detailed' then 'rows'; when 'grid' then 'grid'; end
-- style = local_assigns[:style] || style_from_path || 'table'
+- style = local_assigns[:style] || 'table'
 - pages = local_assigns[:pages] ||= @pages.select{|page| page.owner_id and page.owner_name != 'none'}
-- paginate = false # pages.respond_to?(:total_entries)
-- paginate_options ||= {}
-- classes = ['page_list', ('table-responsive' if style == 'table'), (style if style != 'table')]
+- classes = ['page_list', (style == 'table' ? 'table-responsive' : style)]
 
 %section{class: classes}
   = render "/common/pages/list_as_#{style}", local_assigns
-  - if paginate
-    = pagination_links( pages, paginate_options )

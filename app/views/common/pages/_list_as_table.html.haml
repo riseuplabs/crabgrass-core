@@ -1,17 +1,13 @@
 - ##
 - ## displays a list of pages in a table (ie, using rows and columns).
 - ##
--
--  heading = true if heading.nil?
--  sortable = false
 
 %table.table.table-striped
   - if pages.empty?
     %tr
       %td= :no_search_results.t
   - else
-    - if heading
-      = render 'common/pages/table_header'
-    = render_pages pages, style: :table_row
+    = render 'common/pages/table_header'
+    = render pages, style: :table_row
 
 = pagination_links(@pages)
