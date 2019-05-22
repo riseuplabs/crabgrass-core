@@ -99,12 +99,15 @@ module Common::Ui::LayoutHelper
     lines << javascript_include_tag('shims')
     lines << '<![endif]-->'
 
+    lines << '<script type="text/javascript">'
+    lines << localize_modalbox_strings
+
     # inline script code
     if content_for?(:script)
-      lines << '<script type="text/javascript">'
       lines << content_for(:script)
-      lines << '</script>'
     end
+
+    lines << '</script>'
 
     # Autocomplete caches results in sessionStorage. After logging out, the session storage should be cleared.
     unless logged_in?
