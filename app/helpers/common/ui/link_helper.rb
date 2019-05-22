@@ -4,23 +4,6 @@
 
 module Common::Ui::LinkHelper
 
-  ##
-  ## FORMS
-  ##
-
-  def submit_link(label, options = {})
-    name = options.delete(:name) || 'commit'
-    value = options.delete(:value) || label
-    accesskey = shortcut_key label
-    onclick = %<submitForm(this, "#{name}", "#{value}");>
-    if options[:confirm]
-      onclick = %<if(confirm("#{options[:confirm]}")){#{onclick};}else{return
- false;}>
-    end
-    %(<span class='#{options[:class]}'><a href='#' onclick='#{onclick}' style
-='#{options[:style]}' class='#{options[:class]}' accesskey='#{accesskey}'>#{label}</a></span>).html_safe
-  end
-
   # looks like a link but is a form so people with no-script can still
   # logout.
   def logout_link
@@ -110,11 +93,6 @@ module Common::Ui::LinkHelper
   end
 
   private
-
-  def shortcut_key(label)
-    label.gsub!(/\[(.)\]/, '<u>\1</u>')
-    /<u>(.)<\/u>/.match(label).to_a[1]
-  end
 
   def link_char(links)
     if links.first.is_a? Symbol
