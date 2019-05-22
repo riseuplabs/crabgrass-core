@@ -37,5 +37,5 @@ purple_orange:
   commentable_type: "User"
 <% end %>
 
-
-
+committee_page:
+  page_id: 1001
