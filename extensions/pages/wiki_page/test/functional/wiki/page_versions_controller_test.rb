@@ -1,6 +1,7 @@
 require 'test_helper'
 
-class Wiki::VersionsControllerTest < ActionController::TestCase
+class Wiki::PageVersionsControllerTest < ActionController::TestCase
+  tests Wiki::VersionsController
   fixtures :pages, :users, 'user/participations', :wikis, :groups
 
   def setup
