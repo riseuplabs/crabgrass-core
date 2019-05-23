@@ -39,14 +39,6 @@ class SurveyPageResponseController < Page::BaseController
     @show_posts = action?(:list)
   end
 
-  def next_four_responses(survey)
-    responses = survey.responses.unrated_by(current_user, 4)
-    if responses.size < 4
-      responses += survey.responses.rated_by(current_user, 4 - responses.size)
-    end
-    responses
-  end
-
   # gets the next or previous response id in the list.
   def get_jump_id
     index = @survey.response_ids.find_index(params[:id].to_i)
