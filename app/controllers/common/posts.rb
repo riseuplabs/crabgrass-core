@@ -30,7 +30,17 @@ module Common::Posts
     @post.destroy
     respond_to do |format|
       format.js { render template: 'common/posts/destroy' }
-      format.html { redirect_to page_url(@page) }
+      format.html { redirect_to parent_redirect }
+    end
+  end
+
+  protected
+
+  def parent_redirect
+    if @page.present?
+      page_url(@page)
+    else
+      {action: :index}
     end
   end
 

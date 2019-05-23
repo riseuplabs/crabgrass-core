@@ -32,4 +32,15 @@ class Me::PostsControllerTest < ActionController::TestCase
       assert_response :success
     end
   end
+
+  def test_delete_post_without_js
+    me = users(:blue)
+    you = users(:red)
+    post = Message.send from: me, to: you, body: 'test message'
+    login_as me
+    assert_difference 'Post.count', -1 do
+      delete :destroy, params: { discussion_id: you.login, id: post }
+      assert_response :redirect
+    end
+  end
 end
