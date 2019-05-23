@@ -1,28 +1,4 @@
 module Common::Utility::GeneralHelper
-  ##
-  ## GENERAL UTILITY
-  ##
-
-  #
-  # just like content_tag, but skips the tag if passed empty content.
-  #
-  def content_tag_if_any(name, content_or_options_with_block = nil, options = nil, escape = true, &block)
-    content = nil
-    opts = nil
-    if block
-      opts = content_or_options_with_block
-      content = yield block
-    else
-      opts = options
-      content = content_or_options_with_block
-    end
-    if content.present?
-      return content_tag(name, content, opts, escape)
-    else
-      return ''
-    end
-  end
-
   #
   # create ul list by calling block repeatedly for each item.
   #
@@ -74,7 +50,7 @@ module Common::Utility::GeneralHelper
     args.last
   end
 
-  ## converts bytes into something more readable
+  # converts bytes into something more readable
   def friendly_size(bytes)
     return unless bytes
     if bytes > 1.megabyte
@@ -111,38 +87,5 @@ module Common::Utility::GeneralHelper
   #
   def first(key)
     once?(key) ? 'first' : ''
-  end
-
-  def logged_in_since
-    session[:logged_in_since] || Time.now
-  end
-
-  #
-  # if method is a proc or a symbol for a defined method, then it is called.
-  # otherwise, nothing happens.
-  #
-  def safe_call(method, *args)
-    if method.is_a? Proc
-      method.call(*args)
-    elsif method.is_a?(Symbol) && respond_to?(method, true)
-      send(method, *args)
-    else
-      false
-    end
-  end
-
-  # from http://www.igvita.com/2007/03/15/block-helpers-and-dry-views-in-rails/
-  # Only need this helper once, it will provide an interface to convert a block into a partial.
-  # 1. Capture is a Rails helper which will 'capture' the output of a block into a variable
-  # 2. Merge the 'body' variable into our options hash
-  # 3. Render the partial with the given options hash. Just like calling the partial directly.
-  def block_to_partial(partial_name, options = {}, &block)
-    options[:body] = capture(&block)
-    concat(render(partial: partial_name, locals: options))
-  end
-
-  def browser_is_ie?
-    user_agent = request.env['HTTP_USER_AGENT'].try.downcase
-    user_agent =~ /msie/ and user_agent !~ /opera/
   end
 end

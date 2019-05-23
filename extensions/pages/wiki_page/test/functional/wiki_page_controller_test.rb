@@ -8,6 +8,13 @@ class WikiPageControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_print
+    login_as :orange
+    # existing page
+    get :print, params: { id: pages(:wiki) }
+    assert_response :success
+  end
+
   def test_not_found_without_login
     get :show, params: { id: pages(:wiki) }
     assert_response 404

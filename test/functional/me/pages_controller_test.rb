@@ -11,6 +11,7 @@ class Me::PagesControllerTest < ActionController::TestCase
     login_as users(:blue)
     post :index, xhr: true
     assert !assigns(:pages).empty?, 'blue should have some pages to render'
+    assert_respond_to assigns(:pages), :total_entries
     assert_response :success
   end
 

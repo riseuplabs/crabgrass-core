@@ -5,7 +5,6 @@
 module Common::PageSearch
   def self.included(base)
     base.class_eval do
-      helper_method :xhr_page_search?
       helper_method :page_search_path
       helper_method :show_filter?
     end
@@ -39,14 +38,6 @@ module Common::PageSearch
   #
   def parsed_path
     parse_filter_path(params[:path] || params[:filter] || [])
-  end
-
-  #
-  # controllers that include this mixin should redefine this to true if they
-  # want the page search to not be ajax based.
-  #
-  def xhr_page_search?
-    true
   end
 
   #

@@ -1,3 +1,0 @@
-standard_update(page)
-page.replace_html dom_id(@new, :panel_right), :partial => '/wikis/diffs/show'
-page << "activatePanelRow('#{dom_id(@new)}')"

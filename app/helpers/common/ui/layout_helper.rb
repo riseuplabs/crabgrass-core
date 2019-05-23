@@ -99,12 +99,15 @@ module Common::Ui::LayoutHelper
     lines << javascript_include_tag('shims')
     lines << '<![endif]-->'
 
+    lines << '<script type="text/javascript">'
+    lines << localize_modalbox_strings
+
     # inline script code
     if content_for?(:script)
-      lines << '<script type="text/javascript">'
       lines << content_for(:script)
-      lines << '</script>'
     end
+
+    lines << '</script>'
 
     # Autocomplete caches results in sessionStorage. After logging out, the session storage should be cleared.
     unless logged_in?
@@ -163,27 +166,6 @@ module Common::Ui::LayoutHelper
     lines.join("\n").html_safe
   end
 
-  ##
-  ## PARTIALS
-  ##
-
-  def dialog_page(options = {}, &block)
-    block_to_partial('common/dialog_page', options, &block)
-  end
-
-  ##
-  ## MISC. LAYOUT HELPERS
-  ##
-
-  #
-  # takes an array of objects and splits it into two even halves. If the count
-  # is odd, the first half has one more than the second.
-  #
-  def even_split(arry)
-    cutoff = (arry.count + 1) / 2
-    [arry[0..cutoff - 1], arry[cutoff..-1]]
-  end
-
   #
   # acts like haml_tag, capture_haml, or haml_concat, depending on how it is called.
   #
@@ -235,22 +217,5 @@ module Common::Ui::LayoutHelper
   #
   def comma_join(*args)
     args.select(&:present?).join(', ')
-  end
-
-  ##
-  ## declare strings used for logins
-  ##
-  def login_context
-    @login_context ||= {
-      strings: {
-        login: I18n.t(:login),
-        username: I18n.t(:username),
-        password: I18n.t(:password),
-        forgot_password: I18n.t(:forgot_password_link),
-        create_account: I18n.t(:signup_link),
-        redirect: params[:redirect] || request.request_uri,
-        token: form_authenticity_token
-      }
-    }
   end
 end

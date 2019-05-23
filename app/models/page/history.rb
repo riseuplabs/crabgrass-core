@@ -26,7 +26,7 @@ class Page::History < ApplicationRecord
 
   # all subclasses use the same partial
   def to_partial_path
-    'page_histories/page_history'
+    'page/history/history'
   end
 
   def self.recipients_for_page(page)

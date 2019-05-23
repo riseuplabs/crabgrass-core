@@ -87,10 +87,6 @@ Alternatively you can install bundler with your package manager.
     cd crabgrass
     bundle install
 
-Create a secret
-
-    rake create_a_secret
-
 ### Create the database
 
 This will also set up your test database. Prior to running the `rake db:create` command, you will need to set up the `crabgrass_development` and `crabgrass_test` databases and configure them in the database.yml file according to your mysql or mariadb set up. In addition, I needed	 to set up my databases with mariadb with `utf8` encoding. [See here.](https://stackoverflow.com/questions/11644804/rails-creating-schema-migrations-mysql2error-specified-key-was-too-long#13143985)

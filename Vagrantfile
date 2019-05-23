@@ -68,7 +68,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision 'Install project dependencies', type: 'shell', privileged: false, inline: <<-SHELL
     cd /vagrant/
     bundle install
-    rake create_a_secret
   SHELL
 
   config.vm.provision 'Connect MySQL DB', type: 'shell', privileged: false, inline: <<-SHELL

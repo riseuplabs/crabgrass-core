@@ -71,13 +71,6 @@ module Common::Utility::ContextHelper
     end
   end
 
-  def context_picture_url(geometry)
-    if banner_picture
-      banner_picture.add_geometry(geometry)
-      picture.url(geometry)
-    end
-  end
-
   #
   # we used to do fancy things to calculate this, but now we just hard code the geometry and
   # let the css expand or shrink the banner as needed.

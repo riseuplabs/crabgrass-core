@@ -5,6 +5,23 @@ gerrard_to_blue:
   body: "Hi Blue, Just testing messages."
   body_html: "Hi Blue, Just testing messages."
   type: "PublicPost"
-<% updated = created = rand(46080) %>
+  updated_at: "<%= 10.minutes.ago.to_s(:db) %>"
+  created_at: "<%= 10.minutes.ago.to_s(:db) %>"
+
+blue_on_committee_page:
+  user_id: 4
+  discussion: committee_page
+  body: "Hi Committee, Just testing comments."
+  body_html: "Hi Committee, Just testing comments."
+  type: "Post"
+  updated_at: "<%= 100.minutes.ago.to_s(:db) %>"
+  created_at: "<%= 200.minutes.ago.to_s(:db) %>"
+
+red_on_committee_page:
+  user_id: 8
+  discussion: committee_page
+  body: "Hi Committee, This is red"
+  body_html: "Hi Committee, This is red"
+  type: "Post"
   updated_at: "<%= 10.minutes.ago.to_s(:db) %>"
   created_at: "<%= 10.minutes.ago.to_s(:db) %>"

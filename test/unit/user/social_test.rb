@@ -7,45 +7,45 @@ class User::SocialTest < ActiveSupport::TestCase
 
   def test_peers
     group = groups(:animals)
-    u1 = users(:red)
+    u1 = users(:orange)
     u2 = users(:kangaroo)
 
     assert !u1.peer_of?(u2),
-      'red and kangaroo should not be peers'
+      'orange and kangaroo should not be peers'
     assert !u2.peer_of?(u1),
-      'red and kangaroo should not be peers'
+      'orange and kangaroo should not be peers'
 
     group.add_user! u1
     u1.reload; u2.reload
 
     assert u1.peer_of?(u2),
-      'user red should have gained peer (kangaroo).'
+      'user orange should have gained peer (kangaroo).'
     assert u2.peer_of?(u1),
-      'other user (kangaroo) should have gained peer (red).'
+      'other user (kangaroo) should have gained peer (orange).'
 
     group.remove_user! u1
     u1.reload; u2.reload
 
     assert !u1.peer_of?(u2),
-      'red and kangaroo should not be peers'
+      'orange and kangaroo should not be peers'
     assert !u2.peer_of?(u1),
-      'red and kangaroo should not be peers'
+      'orange and kangaroo should not be peers'
 
     group.add_user! u1
     u1.reload; u2.reload
 
     assert u1.peer_of?(u2),
-      'user (red) should have gained kangaroo as a peer'
+      'user (orange) should have gained kangaroo as a peer'
     assert u2.peer_of?(u1),
-      'other user (kangaroo) should gained red as a peer.'
+      'other user (kangaroo) should gained orange as a peer.'
 
     group.remove_user! u1
     u1.reload; u2.reload
 
     assert !u1.peer_of?(u2),
-      'red and kangaroo should not be peers'
+      'orange and kangaroo should not be peers'
     assert !u2.peer_of?(u1),
-      'red and kangaroo should not be peers'
+      'orange and kangaroo should not be peers'
   end
 
   def test_associations
@@ -55,7 +55,7 @@ class User::SocialTest < ActiveSupport::TestCase
   def test_pestering
     green = users(:green)
     kangaroo = users(:kangaroo)
-    red = users(:red)
+    orange = users(:orange)
     green.revoke_access! public: :pester
 
     assert kangaroo.stranger_to?(green),
@@ -63,9 +63,9 @@ class User::SocialTest < ActiveSupport::TestCase
     assert !kangaroo.may?(:pester, green),
       'strangers should be not be able to pester'
 
-    assert red.peer_of?(green),
+    assert orange.peer_of?(green),
       'must be peers'
-    assert red.may?(:pester, green),
+    assert orange.may?(:pester, green),
       'peers should always be able to pester'
 
     # users(:green).profiles.public.may_pester = true

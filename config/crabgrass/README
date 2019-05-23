@@ -2,11 +2,12 @@
 
 There are three required configuration files:
 
-* config/secret.txt
+* config/secrets.yml
 * config/database.yml
 * config/crabgrass.[production|development|test].yml
 
-The file secret.txt can be created by running <tt>rake create_a_secret</tt>.
+secrets.yml comes with useful defaults for test and development environment.
+For production you need to set the SECRET_KEY_BASE environment variable.
 
 Configuring database.yml is covered in INSTALL[link:files/doc/INSTALL.html] and PRODUCTION[link:files/doc/PRODUCTION.html].
 
