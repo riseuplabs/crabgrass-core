@@ -31,4 +31,5 @@ production:
   morphology: stem_en
   quiet_deltas: true
   bin_path: '/usr/bin'
+  pid_file: "tmp/pids/thinking_sphinx.pid"
 
