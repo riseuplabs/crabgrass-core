@@ -29,6 +29,7 @@ test:
   variables:
     MYSQL_HOST: 'mariadb'
     RAILS_ENV: 'test'
+    COVERAGE: 'true'
   script: |
     cp config/database.yml.example config/database.yml
     bundle exec rake db:create
@@ -37,8 +38,7 @@ test:
     bundle exec rake db:test:prepare
     RAILS_ENV=test bundle exec rake db:fixtures:load
     RAILS_ENV=test bundle exec rake ts:index ts:start
-    bundle exec rails test
-    bundle exec rails test extensions/pages
+    bundle exec rails test test/functional test/unit test/integration extensions/pages
     echo 'Number of deprecations in the test logs:'
     grep DEPRECATION log/test.log | wc -l
   artifacts:
