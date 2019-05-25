@@ -2,6 +2,11 @@ require 'integration_test'
 
 class GroupExpellTest < IntegrationTest
 
+  def teardown
+    reset_page_terms_from_fixtures
+    super
+  end
+
   def test_expell_other_member
     # ensure everyone is a longterm member
     Time.stub(:now, 2.weeks.from_now) do
