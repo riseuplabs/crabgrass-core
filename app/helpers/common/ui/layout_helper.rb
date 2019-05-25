@@ -23,98 +23,12 @@ module Common::Ui::LayoutHelper
     end
   end
 
-  ##
-  ## STYLESHEET
-  ##
-
-  # as needed stylesheets:
-  # rather than include every stylesheet in every request, some stylesheets are
-  # only included if they are needed. See Application#stylesheet()
-
-  def optional_stylesheets
-    stylesheet = controller.class.stylesheets || {}
-    [stylesheet[:all], @stylesheet, stylesheet[params[:action].to_sym]].flatten.compact.collect { |i| "as_needed/#{i}" }
-  end
-
-  # crabgrass_stylesheets()
-  # this is the main helper that is in charge of returning all the needed style
-  # elements for HTML>HEAD.
-
-  def crabgrass_stylesheets
-    lines = []
-
-    lines << stylesheet_link_tag(current_theme.stylesheet_url('screen'))
-    lines << stylesheet_link_tag('icon_png')
-    lines << optional_stylesheets.collect do |sheet|
-      stylesheet_link_tag(current_theme.stylesheet_url(sheet))
-    end
-    # we currently do not ship the right to left css
-    # if language_direction == "rtl"
-    #   lines << stylesheet_link_tag( current_theme.stylesheet_url('rtl') )
-    # end
-    lines.join("\n").html_safe
-  end
-
   def favicon_link
     if current_theme[:favicon_png] and current_theme[:favicon_ico]
       format('<link rel="shortcut icon" href="%s" type="image/x-icon" /><link rel="icon" href="%s" type="image/x-icon" />', current_theme.url(:favicon_ico), current_theme.url(:favicon_png))
     elsif current_theme[:favicon]
       format('<link rel="icon" href="%s" type="image/x-icon" />', current_theme.url(:favicon))
     end.html_safe
-  end
-
-  ##
-  ## JAVASCRIPT
-  ##
-
-  SPROCKETS_PREFIX = '/static/'.freeze
-
-  #
-  # Includes the correct javascript tags for the current request.
-  # See ApplicationController#javascript for details.
-  #
-  def javascript_include_tags
-    scripts = controller.class.javascripts || {}
-    files = [:application] # asset pipeline js
-    files += [scripts[:all], scripts[params[:action].to_sym]].flatten.compact.collect { |i| "as_needed/#{i}" }
-
-    includes = []
-    files.each do |file|
-      includes << javascript_include_tag(file.to_s)
-    end
-    includes
-  end
-
-  def crabgrass_javascripts
-    lines = javascript_include_tags
-
-    # run firebug lite in dev mode for ie
-    if Rails.env == 'development'
-      lines << '<!--[if IE]>'
-      lines << "<script type='text/javascript' src='http://getfirebug.com/firebug-lite-beta.js'></script>"
-      lines << '<![endif]-->'
-    end
-
-    lines << '<!--[if IE]>'
-    lines << javascript_include_tag('shims')
-    lines << '<![endif]-->'
-
-    lines << '<script type="text/javascript">'
-    lines << localize_modalbox_strings
-
-    # inline script code
-    if content_for?(:script)
-      lines << content_for(:script)
-    end
-
-    lines << '</script>'
-
-    # Autocomplete caches results in sessionStorage. After logging out, the session storage should be cleared.
-    unless logged_in?
-      lines.push('<script type="text/javascript">if(sessionStorage.length > 0) sessionStorage.clear();</script>')
-    end
-
-    lines.join("\n").html_safe
   end
 
   ##
