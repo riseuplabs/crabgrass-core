@@ -1,8 +1,6 @@
 require 'javascript_integration_test'
 
 class PageTrashTest < JavascriptIntegrationTest
-  fixtures :all
-
   def setup
     super
     @user = users(:blue)

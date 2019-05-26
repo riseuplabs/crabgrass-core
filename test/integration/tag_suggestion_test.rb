@@ -4,8 +4,6 @@ require 'javascript_integration_test'
 
 class TagSuggestionTest < JavascriptIntegrationTest
 
-  fixtures :all
-
   def test_tag_from_user_suggestion
     create_user_page tag_list: %w[summer winter],
       created_by: users(:dolphin)

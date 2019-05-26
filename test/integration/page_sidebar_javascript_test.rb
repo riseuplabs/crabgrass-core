@@ -3,9 +3,6 @@
 require 'javascript_integration_test'
 
 class PageSidebarJavascriptTest < JavascriptIntegrationTest
-
-  fixtures :users, :groups, 'group/memberships', :pages
-
   def setup
     super
     @user = users(:blue)

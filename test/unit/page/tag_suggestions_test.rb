@@ -2,8 +2,6 @@ require 'test_helper'
 
 class Page::TagSuggestionsTest < ActiveSupport::TestCase
 
-  fixtures :all
-
   def test_empty
     assert_equal [], suggest_tags(nil, users(:blue))
   end

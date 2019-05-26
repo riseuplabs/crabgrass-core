@@ -2,9 +2,6 @@
 require 'javascript_integration_test'
 
 class CommentJavascriptTest < JavascriptIntegrationTest
-
-  fixtures :users, :groups
-
   def setup
     super
     @blue = users(:blue)
