@@ -91,22 +91,6 @@ function linkToggle(link, element, functn) {
   }
 }
 
-// Finds all elements with the selector and removes the
-// 'disabled' class.
-// Options:
-// * selector: selects the elements to apply on
-// * disable: if set class 'disabled' will be set instead
-// function enableAll(selector, disable) {
-//   var affectedElements = $$(selector);
-//   affectedElements.each(function(e) {
-//     if (disable) {
-//       e.addClassName('disabled');
-//     } else {
-//       e.removeClassName('disabled');
-//     }
-//   });
-// }
-
 //
 // Checks if this element is in an disabled part of the DOM
 // Can be used as a condition for onclick actions that should

@@ -5,17 +5,29 @@
 %meta(charset="UTF-8")
 %meta(name="referrer" content="same-origin")
 = favicon_link
+
 / begin styling
-= crabgrass_stylesheets
+= stylesheet_link_tag(current_theme.stylesheet_url('screen'))
+= stylesheet_link_tag('icon_png')
 / end styling
+
 / begin scripts
-= crabgrass_javascripts
-/ end scripts
+= javascript_include_tag :application
+:javascript
+  #{ localize_modalbox_strings }
+
+  // Autocomplete caches results in sessionStorage.
+  // After logging out, the session storage should be cleared.
+  #{ "if(sessionStorage.length > 0) sessionStorage.clear();" unless logged_in? }
+
 - if content_for?(:dom_loaded)
   :javascript
     document.observe("dom:loaded",function(){
       #{content_for(:dom_loaded)}
     });
+
+/ end scripts
+
 = csrf_meta_tag
 - if context_banner_style || @content_for_style
   :css
