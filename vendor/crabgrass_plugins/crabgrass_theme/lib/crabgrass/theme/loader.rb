@@ -217,9 +217,10 @@ module Crabgrass::Theme::Loader
 
   # ensures the directory exists
   def ensure_dir(dir)
-    FileUtils.mkdir_p(dir) unless File.exist?(dir)
-    unless File.directory?(dir)
-      raise format('For the theme to work, "%s" must be a directory.', dir)
+    resolved = File.symlink?(dir) ? File.readlink(dir) : dir
+    FileUtils.mkdir_p(resolved) unless File.exist?(resolved)
+    unless File.directory?(resolved)
+      raise format('For the theme to work, "%s" must be a directory.', resolved)
     end
   end
 end
