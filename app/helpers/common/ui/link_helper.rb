@@ -32,10 +32,8 @@ module Common::Ui::LinkHelper
   ##
 
   # just like link_to, but sets the <a> tag to have class 'active'
-  # if last argument is true or if the url is in the form of a hash
-  # and the current params match this hash.
+  # if active is true
   def link_to_active(link_label, url_hash, active = nil, html_options = {})
-    active ||= url_active?(url_hash)
     selected_class = active ? 'active' : ''
     classes = [selected_class, html_options[:class]]
     html_options[:class] = classes.join(' ')
