@@ -54,7 +54,6 @@ module Common::Application::BeforeFilters
   #   skip_before_action :login_required
   #
   def login_required
-    process_login
     raise AuthenticationRequired unless logged_in?
   end
 
