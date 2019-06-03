@@ -6,9 +6,9 @@ class RankedVoteTest < JavascriptIntegrationTest
 
   def setup
     super
-    own_page :ranked_vote_page
     login
-    click_link own_page.title
+    prepare_page :ranked_vote_page
+    click_on :create.t
   end
 
   def test_initial_option

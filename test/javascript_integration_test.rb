@@ -12,6 +12,7 @@ class JavascriptIntegrationTest < IntegrationTest
   include Autocomplete
 
   Capybara.javascript_driver = :poltergeist
+  self.use_transactional_tests = false
 
   def setup
     super

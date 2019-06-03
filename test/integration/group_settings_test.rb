@@ -1,6 +1,7 @@
 require 'javascript_integration_test'
 
 class GroupSettingsTest < JavascriptIntegrationTest
+
   def setup
     super
     @user = users(:blue)
