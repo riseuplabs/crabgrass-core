@@ -3,8 +3,7 @@ class SurveyPageController < Page::BaseController
 
   def show
     authorize @page
-    @survey.responses(true)
-    # ^^ there is no good reason why this is necessary, but it seems to be the case.
+    @survey.responses
   end
 
   protected

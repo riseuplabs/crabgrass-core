@@ -1,3 +1,5 @@
+require 'borda_vote'
+
 class Poll::RankingPoll < Poll
   has_many :votes,
            foreign_key: :votable_id,
