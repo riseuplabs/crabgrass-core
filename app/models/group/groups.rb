@@ -50,7 +50,7 @@ module Group::Groups
       ids = [ids] unless ids.is_a? Array
       return [] unless ids.any?
       parentids = parent_ids(ids)
-      (ids + parentids + committee_ids(ids + parentids)).flatten.uniq
+      (ids + parentids + committee_ids(ids + parentids)).flatten.uniq.compact
     end
 
     # returns an array of committee ids given an array of group ids.
@@ -59,7 +59,7 @@ module Group::Groups
     end
 
     def parent_ids(ids)
-      Group.where(id: ids).pluck(:parent_id)
+      Group.where(id: ids).pluck(:parent_id).compact
     end
 
     def can_have_committees?
