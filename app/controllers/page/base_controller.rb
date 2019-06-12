@@ -30,13 +30,7 @@ class Page::BaseController < ApplicationController
   after_action :save_if_needed, except: :create
   after_action :update_viewed, only: :show
 
-  def self.seed_instance(args)
-    new.seed(args)
-  end
-
   include Page::BeforeFilters
-
-  protected
 
   # if the page controller is initialized by our custom DispatchController,
   # objects which have already been loaded will be passed in via this
@@ -45,6 +39,8 @@ class Page::BaseController < ApplicationController
     @group = group  # the group context, if any
     @page  = page   # the page object, if already fetched
   end
+
+  private
 
   # to be overridden by subclasses
   def fetch_data; end

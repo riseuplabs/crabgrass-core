@@ -23,11 +23,11 @@ class DispatchController < ApplicationController
     modify_params controller: controller_name
     class_name = "#{params[:controller].camelcase}Controller"
     klass = class_name.constantize
-    if klass.method_defined? :seed_instance
-      klass.seed_instance group: @group, user: @user, page: @page
-    else
-      klass.new
+    instance = klass.new
+    if instance.respond_to? :seed
+      instance.seed group: @group, user: @user, page: @page
     end
+    return instance
   end
 
   def not_found
