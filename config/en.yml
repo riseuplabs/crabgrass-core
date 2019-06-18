@@ -397,8 +397,7 @@ en:
   group_successfully_created: Group was successfully created.
   join_group_confirmation: Are you sure you want to join this %{group_type}?
   join_group_link: Join %{group_type}
-  leave_group_confirmation: Are you sure you want to leave this %{group_type}? You will
-    loose access to all pages owned by this %{group_type}.
+  leave_group_confirmation: Are you sure you want to leave this %{group_type}?
   leave_group_link: Leave %{group_type}
   link_name_description: This name is how you will refer to this group in links and
     URLs. It must only contain alphanumeric characters, no spaces allowed.

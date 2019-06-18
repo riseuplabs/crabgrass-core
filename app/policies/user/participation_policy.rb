@@ -11,11 +11,7 @@ class User::ParticipationPolicy < ApplicationPolicy
     elsif participation.user_id == page.owner_id and page.owner_type == 'User'
       false
     else
-      # FIXME: this is too restrictive, users should be able to remove
-      # themselves from pages if they are not page owners (which is
-      # tested above)
-      # user.may_admin_page_without?(page, participation)
-      true
+      user.may_admin_page_without?(page, participation)
     end
   end
 
