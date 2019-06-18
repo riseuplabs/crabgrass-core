@@ -152,7 +152,7 @@ class Page < ApplicationRecord
   before_save :clear_tag_cache
 
   def clear_tag_cache
-    User.clear_tag_cache(user_ids) if @tags_changed
+    User.clear_tag_cache(user_participations.map(&:user_id)) if @tags_changed
   end
 
   #
