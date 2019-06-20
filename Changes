@@ -1,8 +1,23 @@
-Changes in Crabgrass 0.7.0
+Changes in Crabgrass 0.6.4
 --------------------------
 
+Last stop before ruby 2.3 and then rails 5.2
+This is the last release that will work with ruby 2.1 (the native ruby
+on debian jessie).
 
+We moved to a more continuous development model without releases in the
+last years. For details about all the changes see the git history.
 
+One particular focus of this release has been security and i18n improvements
+developed by digitaria and cognata and sponsored by the prototype fund.
+In particular users can now upload their OpenPGP public key to receive
+encrypted notification messages. Content Security Policies have been
+added and the usability in the tor browser has been improved.
+Translations have been cleaned up and updated.
+
+We also moved from our own permission system to pundit. The tracking
+system was collecting stats that we were not exposing anywhere in the
+UI. So it has been removed just like other unused code.
 
 
 Changes in Crabgrass 0.6.3
