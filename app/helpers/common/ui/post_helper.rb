@@ -35,6 +35,20 @@ module Common::Ui::PostHelper
     end
   end
 
+  #
+  # display the edit link for this post.
+  # sometimes, posts are not really posts. in this case, we skip the edit link.
+  #
+  def delete_post_action(post)
+    if post.is_a?(Post) && may_destroy?(post)
+      link_to :delete.t, post_path(post),
+        remote: true,
+        method: 'delete',
+        class: 'shy',
+        icon: 'trash'
+    end
+  end
+
   def star_post_action(post)
     return unless may_twinkle?(post)
     if !post.starred_by?(current_user)

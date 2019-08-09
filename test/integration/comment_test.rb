@@ -48,6 +48,20 @@ class CommentTest < IntegrationTest
     assert_no_content 'test comment by blue that already existed'
   end
 
+  def test_delete_visitor_comment
+    visitor = users(:penguin)
+    @page.public = true
+    visitor_comment = @page.add_post visitor,
+      body: 'test comment by penguin on public page'
+    login @blue
+    visit "/pages/#{@page.name_url}"
+    within_comment(visitor_comment) do
+      click_on 'Delete'
+    end
+    assert_content 'test comment by blue that already existed'
+    assert_no_content 'test comment by penguin on public page'
+  end
+
   protected
 
   def may_star?(comment, value)

@@ -5,20 +5,32 @@ class PostPolicy < ApplicationPolicy
   end
 
   def update?
-    post and
+    post &&
       post.user_id == user.id
   end
 
-  alias destroy? update?
+  def destroy?
+    update? || (admin? && comment_by_visitor_on_public_page?)
+  end
 
   def twinkle?
-    post.discussion.page and
-      page_policy.show? and
-      user.id and
+    page &&
+      page_policy.show? &&
+      user.id &&
       user.id != post.user_id
   end
 
   protected
+
+  def admin?
+    page_policy.admin?
+  end
+
+  def comment_by_visitor_on_public_page?
+    page &&
+      page.public? &&
+      !post.user.may?(:view, page)
+  end
 
   def page_policy
     Pundit.policy!(user, page)
