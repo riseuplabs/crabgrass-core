@@ -7,6 +7,6 @@
 %td.post_body.shy_parent{stars_for(post)}
   .post_body{id: post.body_id, style: "z-index: 100;"}
     .float_right
-      = edit_post_link(post)
+      = edit_post_link(post) || delete_post_action(post)
       = star_post_action(post)
     = post.body_html
