@@ -21,13 +21,12 @@ class Page::PostsController < ApplicationController
 
   def create
     authorize @page, :show?
-    if @post = @page.add_post(current_user, post_params)
-      respond_to do |format|
-        format.js   { @posts = @page.posts(pagination_params) }
-        format.html { redirect_to page_url(@page) + "#post-#{@post.id}" }
-      end
-      authorize @post
+    @post = @page.add_post(current_user, post_params)
+    respond_to do |format|
+      format.html { redirect_to page_url(@page) + "#post-#{@post.id}" }
+      format.js { @posts = @page.posts(pagination_params) }
     end
+    authorize @post
   end
 
   protected

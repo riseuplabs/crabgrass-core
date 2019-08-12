@@ -5,7 +5,7 @@
 %td.post_author
   = render 'ui/author', author: current_user
 %td.post_body
-  = form_for @post, url: posts_path, remote: true, authenticity_token: true,
+  = form_for Post.new, url: posts_path, remote: true, authenticity_token: true,
     html: {onsubmit: show_spinner('post')} do |f|
     = f.text_area :body, rows: 8, class: 'form-control'
     .buttons-right
