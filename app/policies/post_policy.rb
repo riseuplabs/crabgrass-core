@@ -23,7 +23,7 @@ class PostPolicy < ApplicationPolicy
   protected
 
   def admin?
-    page_policy.admin?
+    page && page_policy.admin?
   end
 
   def comment_by_visitor_on_public_page?
