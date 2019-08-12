@@ -68,6 +68,7 @@ class Post < ActiveRecord::Base
   format_attribute :body
   validates_presence_of :user, :body
   validate :in_reply_to_matches_recipient
+  validate :no_spam
 
   alias created_by user
 
@@ -222,5 +223,12 @@ class Post < ActiveRecord::Base
       errors.add :in_reply_to,
                  "Ugh. The user and the post you are replying to don't match."
     end
+  end
+
+  def no_spam
+    page = discussion.try.page
+    return unless page.try.public? && with_link?
+    return if user.may?(:view, page)
+    errors.add :body, I18n.t(:spam_comment_detected)
   end
 end

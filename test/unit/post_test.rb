@@ -15,4 +15,27 @@ class PostTest < ActiveSupport::TestCase
 
   end
 
+  def test_prevent_creation_of_spam
+    page = pages(:public_wiki)
+    user = users(:penguin)
+    assert_raises ActiveRecord::RecordInvalid do
+      post = page.add_post(user, body: posts(:auto_link).body)
+    end
+  end
+
+  def test_visitor_comment_without_link
+    page = pages(:public_wiki)
+    user = users(:penguin)
+    post = page.add_post(user, body: posts(:no_link).body)
+    assert_empty post.errors
+    assert_predicate post, :persisted?
+  end
+
+  def test_allow_authorized_comment_with_link
+    page = pages(:public_wiki)
+    user = users(:gerrard)
+    post = page.add_post(user, body: posts(:auto_link).body)
+    assert_empty post.errors
+    assert_predicate post, :persisted?
+  end
 end

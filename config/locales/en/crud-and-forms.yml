@@ -46,6 +46,9 @@ en:
   select_files: "Select files"
   send_button: Send
   show_thing: "Show %{thing}"
+  spam_comment_detected: |
+    looks like spam we have been seeing lately.
+    It will probably work if you remove the links.
   thing_destroyed: "%{thing} destroyed"
   thing_required: "%{thing} Required"
   updated: Updated
