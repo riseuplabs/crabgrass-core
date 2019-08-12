@@ -229,6 +229,8 @@ class Post < ActiveRecord::Base
     page = discussion.try.page
     return unless page.try.public? && with_link?
     return if user.may?(:view, page)
+    Rails.logger.info 'Detected possible SPAM:'
+    Rails.logger.info body
     errors.add :body, I18n.t(:spam_comment_detected)
   end
 end
