@@ -37,5 +37,7 @@ purple_orange:
   commentable_type: "User"
 <% end %>
 
-
+on_blues_page:
+  commentable_id: 1002
+  commentable_type: "Page"
 

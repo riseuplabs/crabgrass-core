@@ -8,3 +8,29 @@ gerrard_to_blue:
 <% updated = created = rand(46080) %>
   updated_at: "<%= 10.minutes.ago.to_s(:db) %>"
   created_at: "<%= 10.minutes.ago.to_s(:db) %>"
+
+html_link:
+  user_id: 4
+  discussion: on_blues_page
+  body: |
+    Post with a html link
+    <a href="http://crabgrass.example">link</a>
+
+auto_link:
+  user_id: 4
+  discussion: on_blues_page
+  body: |
+    Post with an automatic link:
+    https://crabgrass.example
+
+greencloth_link:
+  user_id: 4
+  discussion: on_blues_page
+  body: |
+    Post with a [greencloth link]
+
+no_link:
+  user_id: 4
+  discussion: on_blues_page
+  body: |
+    Post without any link

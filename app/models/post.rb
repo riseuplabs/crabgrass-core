@@ -194,6 +194,12 @@ class Post < ActiveRecord::Base
     "post_#{id}_body"
   end
 
+  def with_link?
+    format_body
+    body_html.gsub(/<(\/*)a\s([^>]*?)>/) { |_m| return true }
+    return false
+  end
+
   protected
 
   def post_created
