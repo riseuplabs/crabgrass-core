@@ -27,6 +27,9 @@ module Common::Posts
 
   def destroy
     authorize @post
+    if @post.user != current_user
+      Rails.logger.info "Page admin removed comment from '#{@post.user.login}' - maybe SPAM."
+    end
     @post.destroy
     respond_to do |format|
       format.js { render template: 'common/posts/destroy' }
