@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Page::PostsControllerTest < ActionController::TestCase
   def setup
-    @page = pages(:blue_page)
+    @page = pages(:rainbow_page)
   end
 
   def test_create_post
