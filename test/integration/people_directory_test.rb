@@ -1,7 +1,6 @@
 require 'javascript_integration_test'
 
 class PeopleDirectoryTest < JavascriptIntegrationTest
-  fixtures :users, 'castle_gates/keys'
 
   def setup
     super

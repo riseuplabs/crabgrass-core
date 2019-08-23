@@ -1,18 +1,4 @@
-#
-#  create_table "thumbnails", :force => true do |t|
-#    t.integer "parent_id",    :limit => 11
-#    t.string  "parent_type"
-#    t.string  "content_type"
-#    t.string  "filename"
-#    t.string  "name"
-#    t.integer "size",         :limit => 11
-#    t.integer "width",        :limit => 11
-#    t.integer "height",       :limit => 11
-#    t.integer "job_id",
-#    t.boolean "failure"
-#  end
-#
-class Thumbnail < ActiveRecord::Base
+class Thumbnail < ApplicationRecord
   #
   # Our parent could be the main asset, or it could be a *version* of the
   # asset.

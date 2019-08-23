@@ -101,7 +101,7 @@ class AccountsController < ApplicationController
     user = User.find_by_email params[:email]
     if user
       token = User::Token.to_recover.create(user: user)
-      Mailer.forgot_password(token, mailer_options).deliver
+      Mailer.forgot_password(token, mailer_options).deliver_now
     end
 
     # this gives success even if there is no user, to not confirm that an email is in db
@@ -120,7 +120,7 @@ class AccountsController < ApplicationController
     @user.password              = params[:new_password]
     @user.password_confirmation = params[:password_confirmation]
     if @user.save
-      Mailer.reset_password(@user, mailer_options).deliver
+      Mailer.reset_password(@user, mailer_options).deliver_now
       @token.destroy
       success :password_reset.t, :password_reset_ok_text.t, :nofade
       redirect_to root_path
@@ -134,7 +134,7 @@ class AccountsController < ApplicationController
   # confirms that the token is valid, returns false otherwise.
   #
   def confirm_token
-    @token = User::Token.to_recover.active.find_by_param(params[:token])
+    @token = User::Token.to_recover.active.find_by_param(params.fetch(:token))
     if @token.present?
       @user = @token.user
     else

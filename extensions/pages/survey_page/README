@@ -1,8 +1,12 @@
-Provides the ability to:
+DEPRECATED !
 
-(1) for page coordinators to design surveys 
+The survey page is in maintainance mode.
+
+We still display existing pages but you cannot create new ones anymore.
+In addition you can also not change the existing ones.
+
+Back in the days the survey page provided the ability to:
+
+(1) for page coordinators to design surveys
 (2) for page participants or viewers to take the surveys
 (3) for some people to rate the responses
-
-This tool depends on the external_video_tool.
-

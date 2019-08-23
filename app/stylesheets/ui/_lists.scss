@@ -91,7 +91,7 @@ ul.list_as_cols {
 //
 
 ul.clickable {
-  @extend ul.shaded;
+  @extend ul, .shaded;
   @extend .round;
   @extend .list-unstyled;
   margin-bottom: 20px;

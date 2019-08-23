@@ -81,7 +81,6 @@ class DiscussionTest < ActiveSupport::TestCase
     end
     assert_equal post, discussion.last_post
     assert post.updated_at - discussion.replied_at < 1
-    assert post.updated_at > discussion.replied_at
     assert_equal post.user, discussion.replied_by
   end
 end

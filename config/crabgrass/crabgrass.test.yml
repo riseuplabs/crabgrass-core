@@ -13,3 +13,4 @@ title: "Crabgrass Testing"
 
 raise_i18n_exceptions: true
 enforce_ssl: false
+pagination_size: 5

@@ -17,7 +17,7 @@ module Page::BeforeFilters
   #
   def default_fetch_data
     @page ||= Page.find(params[:page_id] || params[:id])
-    raise ErrorNotFound, :page unless @page && policy(@page).show?
+    raise_not_found unless @page && policy(@page).show?
 
     if logged_in?
       # grab the current user's participation from memory
@@ -28,11 +28,6 @@ module Page::BeforeFilters
     fetch_data
 
     true
-  rescue ErrorNotFound => e
-    @exception = e
-    render 'exceptions/show',
-           status: 404,
-           layout: request.xhr? ? nil : 'notice'
   end
 
   def default_setup_options

@@ -1,5 +1,5 @@
 #
-# controllers including this must have a before_filter setup()
+# controllers including this must have a before_action setup()
 # which must set @entity and @success_url
 #
 

@@ -23,8 +23,6 @@ module SurveyPermissionHelper
       @survey.edit_may_see_responses?
     elsif current_user.may?(:view, @page)
       @survey.view_may_see_responses?
-    else
-      false
     end
   end
 
@@ -37,8 +35,6 @@ module SurveyPermissionHelper
       @survey.edit_may_see_ratings?
     elsif current_user.may?(:view, @page)
       @survey.view_may_see_ratings?
-    else
-      false
     end
   end
 
@@ -46,17 +42,9 @@ module SurveyPermissionHelper
   # called and returned true.
   def may_view_survey_question?(response, question)
     return false unless logged_in?
+    return true unless question.private?
 
-    if question.private?
-      if current_user.may?(:admin, @page)
-        true
-      elsif current_user.id == response.user_id
-        true
-      else
-        false
-      end
-    else
-      true
-    end
+    current_user.may?(:admin, @page) ||
+      current_user.id == response.user_id
   end
 end

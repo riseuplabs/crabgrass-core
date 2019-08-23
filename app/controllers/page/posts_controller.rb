@@ -5,8 +5,8 @@ class Page::PostsController < ApplicationController
 
   helper 'page/post'
 
-  prepend_before_filter :fetch_data
-  before_filter :login_required, except: :show
+  prepend_before_action :fetch_data
+  before_action :login_required, except: :show
   after_action :verify_authorized
 
   track_actions :create, :update, :destroy

@@ -217,10 +217,10 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
   #   end
 
   def assert_removed
-    assert !@group.users(true).include?(@user), 'group should NOT have orange'
+    assert !@group.users.reload.include?(@user), 'group should NOT have orange'
   end
 
   def assert_not_removed
-    assert @group.users(true).include?(@user), 'group should still have orange'
+    assert @group.users.reload.include?(@user), 'group should still have orange'
   end
 end

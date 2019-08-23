@@ -12,13 +12,3 @@
             = filter_checkbox_li_tag :add, filter
           - for filter in disabled_filters
             = filter_checkbox_li_tag :add, filter, nil, disabled: true
-
--# for expanding sections:
--#  = link_to_toggle(section.to_s, id, open: opened_section?(section))
--#  %ul{id: id, style: (opened_section?(section) ? '' : 'display:none')}
--#    - for filter in SearchFilter.filters_for_section(section)
--#      - next if filter_active?(filter)
--#      %li
--#        = filter_checkbox_li_tag :add, filter
-
-

@@ -60,6 +60,11 @@ rainbow_own_page:
   group_id: 3
   access: 1
 
+animal_own_page:
+  page_id: 1004
+  group_id: 2
+  access: 1
+
 warm_committee_page:
   page_id: 1001
   group_id: 31

@@ -1,6 +1,6 @@
 class WikiPageController < Page::BaseController
   helper 'wikis/base', 'wikis/sections'
-  before_filter :find_last_seen, only: :show
+  before_action :find_last_seen, only: :show
 
   def show
     if default_to_edit?

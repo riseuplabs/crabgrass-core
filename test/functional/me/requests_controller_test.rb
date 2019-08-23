@@ -4,7 +4,7 @@ class Me::RequestsControllerTest < ActionController::TestCase
   def test_destroy
     login_as users(:blue)
     request = RequestToJoinUs.created_by(users(:blue)).first
-    xhr :delete, :destroy, id: request.id
+    delete :destroy, params: { id: request.id }, xhr: true
     assert_message /destroyed/i
   end
 
@@ -20,7 +20,8 @@ class Me::RequestsControllerTest < ActionController::TestCase
     request = RequestToFriend.create created_by: requesting,
                                      recipient: user
     login_as user
-    xhr :post, :update, id: request.id, mark: 'approve'
+    post :update, params: {id: request.id, mark: 'approve'},
+      xhr: true
     assert_response :success
   end
 
@@ -32,7 +33,8 @@ class Me::RequestsControllerTest < ActionController::TestCase
     requesting = FactoryBot.create(:user)
     request = RequestToJoinYou.create created_by: requesting,
                                       recipient: group
-    xhr :post, :update, id: request.id, mark: 'approve'
+    post :update, params: {id: request.id, mark: 'approve'},
+      xhr: true
     assert_response :success
   end
 
@@ -45,7 +47,8 @@ class Me::RequestsControllerTest < ActionController::TestCase
     request = RequestToJoinYou.create created_by: requesting,
                                       recipient: group
     group.add_user! requesting
-    xhr :post, :update, id: request.id, mark: 'approve'
+    post :update, params: {id: request.id, mark: 'approve'},
+      xhr: true
     assert_response :conflict
   end
 
@@ -62,7 +65,8 @@ class Me::RequestsControllerTest < ActionController::TestCase
       requestable: remove_me
     login_as user
     group.remove_user! remove_me
-    xhr :post, :update, id: request.id, mark: 'approve'
+    post :update, params: {id: request.id, mark: 'approve'},
+      xhr: true
     assert_response :conflict
   end
 
@@ -75,7 +79,7 @@ class Me::RequestsControllerTest < ActionController::TestCase
     request = RequestToJoinYou.create created_by: requesting,
                                       recipient: group
     assert_difference 'RequestToJoinYou.count', -1 do
-      xhr :delete, :destroy, id: request.id
+      delete :destroy, params: { id: request.id }, xhr: true
     end
     assert_response :success
   end
@@ -83,8 +87,7 @@ class Me::RequestsControllerTest < ActionController::TestCase
   def test_other_requests_hidden
     user = FactoryBot.create(:user)
     login_as user
-    assert_not_found do
-      get :show, id: Request.last
-    end
+    get :show, params: { id: Request.last }
+    assert_not_found
   end
 end

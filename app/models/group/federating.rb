@@ -8,16 +8,7 @@
 #                every member of the delegation will be made a member of the
 #                council.
 #
-# schema:
-#
-# create_table "federating", :force => true do |t|
-#   t.integer "group_id",     :limit => 11
-#   t.integer "network_id",   :limit => 11
-#   t.integer "council_id",   :limit => 11
-#   t.integer "delegation_id", :limit => 11
-# end
-#
-class Group::Federating < ActiveRecord::Base
+class Group::Federating < ApplicationRecord
   self.table_name = 'federatings'
 
   # required

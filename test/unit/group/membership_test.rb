@@ -13,10 +13,10 @@ class Group::MembershipTest < ActiveSupport::TestCase
 
     g.add_user! u
     assert oldcount < g.users.count, 'group should have more users after add user'
-    assert_nothing_raised('group.users.find should return user') do
+    assert_nothing_raised do
       g.users.find(u.id)
     end
-    assert_nothing_raised('user.group.find should return group') do
+    assert_nothing_raised do
       u.groups.find(g.id)
     end
     assert u.member_of?(g), 'user must be a member_of? group'

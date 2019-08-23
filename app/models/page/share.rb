@@ -39,7 +39,7 @@
 # The needed user_participation and group_partication objects will get saved
 # unless page is modified, in which case they will not get saved.
 # (assuming that page.save will get called eventually, which will then save
-# the new participation objects. BasePageController has an after_filter that
+# the new participation objects. BasePageController has an after_action that
 # auto saves the @page if has been changed.)
 #
 
@@ -49,7 +49,7 @@ class Page::Share
   def initialize(page, sender, defaults = {})
     @page = page
     @sender = sender
-    @defaults = defaults.with_indifferent_access
+    @defaults = defaults
   end
 
   def with(recipient_params)
@@ -61,9 +61,13 @@ class Page::Share
   protected
 
   def build_recipients(recipient_params)
-    Array(recipient_params).map! do |param|
-      Page::Recipients.new(param, page)
+    recipients = []
+    recipient_params = [recipient_params] unless recipient_params.respond_to?(:each)
+    recipient_params.each do |name, options|
+      options = options.permit(:access) if options.respond_to?(:permit)
+      recipients.push Page::Recipients.new([name, options], page)
     end
+    recipients
   end
 
   def share_and_email(recipients)

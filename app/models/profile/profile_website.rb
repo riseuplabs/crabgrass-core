@@ -1,6 +1,6 @@
 #
 
-class ProfileWebsite < ActiveRecord::Base
+class ProfileWebsite < ApplicationRecord
   self.table_name = 'websites'
 
   validates_presence_of :site_title

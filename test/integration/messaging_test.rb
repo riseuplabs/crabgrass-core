@@ -3,8 +3,6 @@ require 'javascript_integration_test'
 class MessagingTest < JavascriptIntegrationTest
   include Integration::Comments
 
-  fixtures :users, 'castle_gates/keys'
-
   def test_send_message
     login users(:blue)
     send_message text, to: 'red'

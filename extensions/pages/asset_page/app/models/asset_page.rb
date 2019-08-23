@@ -14,7 +14,7 @@ class AssetPage < Page
 
   after_save :update_access
   def update_access
-    asset.update_access if asset && public_changed?
+    asset.update_access if asset && saved_change_to_public?
   end
 
   def asset

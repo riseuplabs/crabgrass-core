@@ -12,10 +12,10 @@ module Common::Requests
     helper_method :current_state
     helper_method :request_path
     helper_method :requests_path
-    before_filter :fetch_request, only: %i[update destroy show]
+    before_action :fetch_request, only: %i[update destroy show]
 
-    after_filter :create_notices, only: :create
-    after_filter :dismiss_notices, only: :update
+    after_action :create_notices, only: :create
+    after_action :dismiss_notices, only: :update
   end
 
   #
@@ -86,6 +86,8 @@ module Common::Requests
     if params[:code] && @req.recipient != current_user
       @req.try.redeem_code!(current_user)
     end
+  rescue ActiveRecord::RecordNotFound => e
+    raise_not_found
   end
 
   def request_context

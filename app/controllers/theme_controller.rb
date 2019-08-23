@@ -22,7 +22,7 @@ class ThemeController < ApplicationController
   caches_page :show, if: proc { |ctrl| ctrl.cache_css }
 
   def show
-    if stale?(@theme, file: @file, last_modified: css_last_modified)
+    if stale?(@theme, last_modified: css_last_modified)
       render :show, content_type: 'text/css', formats: [:css]
     end
   rescue Sass::SyntaxError => exc
@@ -35,7 +35,7 @@ class ThemeController < ApplicationController
 
   # don't cache css if '_refresh' is in the theme or stylesheet name.
   # useful for debugging.
-  prepend_before_filter :get_theme
+  prepend_before_action :get_theme
   def get_theme
     self.cache_css = true
     [params[:name], *params[:file]].each do |param|

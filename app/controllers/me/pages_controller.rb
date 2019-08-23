@@ -6,23 +6,23 @@ class Me::PagesController < Me::BaseController
   #
   def index
     @path = apply_path_modifiers(parsed_path)
+    @page_search_navigation = page_search_navigation
     if request.xhr?
       # note: pagination_params is used just for defaults,
       #       normal pagination is done through @path.
-      @pages = Page.paginate_by_path(@path, options_for_me(method: :sphinx), pagination_params).compact
+      @pages = Page.paginate_by_path(@path, options_for_me(method: :sphinx), pagination_params)
     end
     render template: 'common/pages/search/index', locals: { columns: :updated_with_owner }
   end
 
   protected
 
-  def setup_navigation(nav)
-    nav[:local] = [
+  def page_search_navigation
+    [
       { active: false, visible: true, html: { partial: 'common/pages/search/create' } },
       { active: true,  visible: true, html: { partial: 'common/pages/search/controls_active' } },
       { active: false, visible: true, html: { partial: 'common/pages/search/controls_possible' } }
     ]
-    nav
   end
 
   #

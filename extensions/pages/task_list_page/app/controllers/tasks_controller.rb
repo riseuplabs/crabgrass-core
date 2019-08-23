@@ -1,7 +1,7 @@
 class TasksController < Page::BaseController
-  before_filter :fetch_task, only: %i[edit update destroy]
-  before_filter :setup_second_nav
-  after_filter :update_participations, only: %i[create update destroy]
+  before_action :fetch_task, only: %i[edit update destroy]
+  before_action :setup_second_nav
+  after_action :update_participations, only: %i[create update destroy]
 
   def create
     @task = @page.tasks.new task_params.merge created_by: current_user
@@ -30,6 +30,7 @@ class TasksController < Page::BaseController
     state = params[:task].try.delete(:state)
     if state.present?
       @task.state = state
+      @task.save!
       @task.move_to_bottom
     else
       @task.update_attributes task_params
@@ -60,8 +61,8 @@ class TasksController < Page::BaseController
 
   def task_params
     params.require(:task)
-          .reverse_merge(user_ids: [])
-          .permit(:name, :description, user_ids: [])
+      .permit(:name, :description, user_ids: []).to_h
+      .reverse_merge(user_ids: [])
   end
 
   def sort_params
@@ -70,7 +71,7 @@ class TasksController < Page::BaseController
   end
 
   def list_params
-    params.permit sort_list_pending: [], sort_list_completed: []
+    params.permit(sort_list_pending: [], sort_list_completed: []).to_h
   end
 
   def update_participations

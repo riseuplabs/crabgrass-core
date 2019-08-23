@@ -15,7 +15,7 @@ class Person::FriendRequestsControllerTest < ActionController::TestCase
     login_as requesting
 
     assert_difference 'Notice::RequestNotice.count', 1 do
-      xhr :post, :create, person_id: recipient.login
+      post :create, params: { person_id: recipient.login }, xhr: true
     end
 
     notice = Notice::RequestNotice.last
@@ -28,8 +28,7 @@ class Person::FriendRequestsControllerTest < ActionController::TestCase
     recipient  = users(:yellow)
     login_as requesting
 
-    assert_permission_denied do
-      xhr :post, :create, person_id: recipient.login
-    end
+    post :create, params: { person_id: recipient.login }, xhr: true
+    assert_permission_denied
   end
 end

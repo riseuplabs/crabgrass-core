@@ -17,8 +17,8 @@ Crabgrass::Application.configure do
   config.consider_all_requests_local = false
 
   # Configure static asset server for tests with Cache-Control for performance
-  config.serve_static_files = true
-  config.static_cache_control = 'public, max-age=3600'
+  config.public_file_server.enabled = true
+  config.public_file_server.headers = { 'Cache-Control' => 'public, max-age=3600' }
 
   # Use SQL instead of Active Record's schema dumper when creating the
   # test database.  This is necessary if your schema can't be completely
@@ -45,4 +45,24 @@ Crabgrass::Application.configure do
   ##
 
   require "crabgrass/debug.rb"
+
+  # additional config from rails app:update task to Rails 5.1
+
+  config.public_file_server.headers = {
+    'Cache-Control' => "public, max-age=#{1.hour.seconds.to_i}"
+  }
+
+  config.action_mailer.perform_caching = false
+
+
+  ##
+  ## DEBUGGING
+  ## See doc/DEBUGGING for tips.
+  ##
+  # Print deprecation notices to the stderr.
+  #config.active_support.deprecation = :stderr
+
+  # Raises error for missing translations
+  # config.action_view.raise_on_missing_translations = true
+
 end

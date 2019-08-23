@@ -4,7 +4,7 @@ class EntitiesControllerTest < ActionController::TestCase
   def test_preloading_entities
     login_as :blue
     blue = users(:blue)
-    xhr :get, :index, format: :json, view: :all, query: ''
+    get :index, params: {format: :json, query: "", view: :all}, xhr: true
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     friends_and_peers = (blue.friends + blue.peers).uniq
@@ -17,7 +17,7 @@ class EntitiesControllerTest < ActionController::TestCase
 
   def test_querying_entities
     login_as :red
-    xhr :get, :index, format: :json, view: :all, query: 'pu'
+    get :index, params: {format: :json, query: "pu", view: :all}, xhr: true
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     assert_holds_entities(response, 'pu')
@@ -30,7 +30,7 @@ class EntitiesControllerTest < ActionController::TestCase
     login_as :quentin
     assert_equal 0, users(:quentin).groups.count,
                  'quentin should not be in any groups.'
-    xhr :get, :index, format: :json, view: :all, query: 'an'
+    get :index, params: {format: :json, query: "an", view: :all}, xhr: true
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     assert_holds_entities(response, 'an')
@@ -43,7 +43,7 @@ class EntitiesControllerTest < ActionController::TestCase
     login_as :red
     assert_equal 0, users(:red).friends.count,
                  'red should not have any friends.'
-    xhr :get, :index, format: :json, view: :all, query: 'qu'
+    get :index, params: {format: :json, query: "qu", view: :all}, xhr: true
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     assert_holds_entities(response, 'qu')
@@ -53,28 +53,28 @@ class EntitiesControllerTest < ActionController::TestCase
     login_as :red
     assert !users(:red).member_of?(groups(:private_group)),
            'red should not be in the private group.'
-    xhr :get, :index, format: :json, view: :all, query: 'pri'
+    get :index, params: {format: :json, query: "pri", view: :all}, xhr: true
     assert_no_suggestions "red can't see any group starting with 'pri'"
   end
 
   def test_entities_respect_user_privacy
     login_as :gerrard
     users(:red).revoke_access! public: :view
-    xhr :get, :index, format: :json, view: :all, query: 're'
+    get :index, params: {format: :json, query: "re", view: :all}, xhr: true
     assert_no_suggestions "gerrard can't see red after it removed public access"
   end
 
   def test_people_respect_user_privacy
     login_as :gerrard
     users(:red).revoke_access! public: :view
-    xhr :get, :index, format: :json, view: :users, query: 're'
+    get :index, params: {format: :json, query: "re", view: :users}, xhr: true
     assert_no_suggestions "gerrard can't see red after it removed public access"
   end
 
   def test_recipients_respect_user_privacy
     login_as :gerrard
     users(:red).revoke_access! public: :view
-    xhr :get, :index, format: :json, view: :recipients, query: 're'
+    get :index, params: {format: :json, query: "re", view: :recipients}, xhr: true
     assert_no_suggestions "gerrard can't see red after it removed public access"
   end
 

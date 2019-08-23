@@ -17,7 +17,6 @@ else
 end
 
 # update the view toggles, if needed
-# page << activate_toggle_bug('toggle_view_'+(@path.arg_for('view') || 'compact'))
 page << hide_spinner('view_toggle')
 
 # scroll to top if paginating

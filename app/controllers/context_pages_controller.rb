@@ -33,7 +33,11 @@ class ContextPagesController < DispatchController
     @page = finder.page
     @group = finder.group
     @user = finder.user
-    new_controller controller_name
+    if @page
+      new_controller @page.controller
+    else
+      controller_for_missing_page
+    end
   end
 
   def finder
@@ -41,21 +45,12 @@ class ContextPagesController < DispatchController
                                  params[:id]
   end
 
-  def controller_name
-    if @page
-      @page.controller
-    else
-      controller_for_missing_page
-    end
-  end
-
   def controller_for_missing_page
     if create_page?
       prepare_params_to_create_page
-      'page/create'
+      new_controller 'page/create'
     else
-      prepare_params_for_not_found
-      'exceptions'
+      not_found
     end
   end
 
@@ -75,18 +70,8 @@ class ContextPagesController < DispatchController
                   page: { title: new_title }
   end
 
-  def prepare_params_for_not_found
-    env['action_dispatch.exception'] = ErrorNotFound.new(:page)
-  end
-
   def new_title
     params[:id].sub(/\+\d*/, '').split('+').join(' ').humanize
   end
 
-  # def controller_for_list_of_pages(name)
-  #  params[:action] = 'index'
-  #  params[:search] = {:text => name}
-  #  params[:controller] = 'search'
-  #  SearchController.new()
-  # end
 end

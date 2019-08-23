@@ -6,9 +6,8 @@ class Me::PasswordsControllerTest < ActionController::TestCase
   end
 
   def test_not_logged_in
-    assert_login_required do
-      get :edit
-    end
+    get :edit
+    assert_login_required
   end
 
   def test_edit
@@ -19,14 +18,14 @@ class Me::PasswordsControllerTest < ActionController::TestCase
 
   def test_update
     login_as @user
-    post :update, user: { password: 'sdofi33si', password_confirmation: 'sdofi33si' }
+    post :update, params: { user: { password: 'sdofi33si', password_confirmation: 'sdofi33si' } }
     @user.reload
     assert @user.authenticate('sdofi33si')
   end
 
   def test_password_fail
     login_as @user
-    post :update, user: { password: 'sdofi33si', password_confirmation: 'xxxxxxx' }
+    post :update, params: { user: { password: 'sdofi33si', password_confirmation: 'xxxxxxx' } }
     assert_error_message /doesn.t match/i
   end
 end

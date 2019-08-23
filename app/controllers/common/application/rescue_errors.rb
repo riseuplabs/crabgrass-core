@@ -43,9 +43,9 @@ module Common::Application::RescueErrors
       # Use the ExceptionApp with ExceptionsController for these:
       # ( this is the default for errors that do not inherit from
       #   one of the above)
-      rescue_from ErrorNotFound,               with: :raise
-      rescue_from AuthenticationRequired,      with: :raise
-      rescue_from PermissionDenied,            with: :raise
+      rescue_from ErrorNotFound,               with: :render_not_found
+      rescue_from AuthenticationRequired,      with: :render_exception
+      rescue_from PermissionDenied,            with: :render_exception
       rescue_from Pundit::NotAuthorizedError,  with: :log_and_permission_denied
 
     end
@@ -86,16 +86,6 @@ module Common::Application::RescueErrors
 
   protected
 
-  #  # allows us to set a new path for the rescue templates
-  #  def rescues_path(template_name)
-  #    file = "#{Rails.root}/app/views/rescues/#{template_name}.erb"
-  #    if File.exists?(file)
-  #      return file
-  #    else
-  #      return super(template_name)
-  #    end
-  #  end
-
   #
   # handles suspected "cross-site request forgery" errors
   #
@@ -125,10 +115,37 @@ module Common::Application::RescueErrors
     end
   end
 
+  #
+  # shows a generic not found page or error message, customized
+  # by any message in the exception.
+  #
+  # Please do not call this directly but rather use
+  # `raise_not_found :file`
+  #
+  def render_not_found(exception=nil)
+    render_exception exception || ErrorNotFound.new(:page)
+  end
+
+  def render_exception(exception)
+    @exception = exception
+    status = status_for_exception(exception)
+    respond_to do |format|
+      format.html do
+        render 'exceptions/show', status: status, layout: (!request.xhr? && 'notice')
+      end
+      format.js do
+        render_error_js exception, status: status
+      end
+      format.any do
+        render status: status, body: nil
+      end
+    end
+  end
+
   def log_and_permission_denied(exception)
     Rails.logger.info exception
     Rails.logger.info "User id: #{current_user.id}"
-    raise PermissionDenied
+    render_exception PermissionDenied.new
   end
 
   def status_for_exception(exception)
@@ -145,31 +162,6 @@ module Common::Application::RescueErrors
   def render_alert
     render template: 'error/alert', layout: 'notice'
   end
-
-  #
-  # override the default 'rescue_action_locally' so that we can print an error
-  # message when the request is an ajax one.
-  #
-  # How is this different than 'render_error' with format.js?
-  #
-  #  def rescue_action_locally_with_js(exception)
-  #    respond_to do |format|
-  #      format.html do
-  #        if Rails.env.production? or Rails.env.development?
-  #          rescue_action_locally_without_js(exception)
-  #        else
-  #          render plain: exception
-  #         end
-  #      end
-  #      format.js do
-  #        add_variables_to_assigns
-  #        @template.instance_variable_set("@exception", exception)
-  #        @template.instance_variable_set("@rescues_path", File.dirname(rescues_path("stub")))
-  #        @template.send!(:assign_variables_from_controller)
-  #        render :template => 'rescues/diagnostics.rjs', :layout => false
-  #      end
-  #    end
-  #  end
 
   private
 
@@ -217,7 +209,7 @@ module Common::Application::RescueErrors
   def render_error_js(exception = nil, options = {})
     error exception if exception.present?
     log_exception(exception)
-    return if performed? # error in after_filter
+    return if performed? # error in after_action
     render template: 'error/alert', locals: { exception: exception },
            status: options[:status]
   end
@@ -230,17 +222,4 @@ module Common::Application::RescueErrors
     end
   end
 
-  # def flash_auth_error(mode)
-  #  if mode == :now
-  #    flsh = flash.now
-  #  else
-  #    flsh = flash
-  #  end
-  #
-  #  if logged_in?
-  #    add_flash_message(flsh, :title => I18n.t(:permission_denied), :error => I18n.t(:permission_denied_description))
-  #  else
-  #    add_flash_message(flsh, :title => I18n.t(:login_required), :type => 'info', :text => I18n.t(:login_required_description))
-  #  end
-  # end
 end

@@ -1,35 +1,11 @@
-# create_table "groups", :force => true do |t|
-#   t.string   "name"
-#   t.string   "full_name"
-#   t.string   "summary"
-#   t.string   "url"
-#   t.string   "type"
-#   t.integer  "parent_id",  :limit => 11
-#   t.integer  "council_id", :limit => 11
-#   t.datetime "created_at"
-#   t.datetime "updated_at"
-#   t.integer  "avatar_id",  :limit => 11
-#   t.string   "style"
-#   t.string   "language",   :limit => 5
-#   t.integer  "version",    :limit => 11, :default => 0
-#   t.integer  "min_stars",  :limit => 11, :default => 1
-#   t.integer  "site_id",    :limit => 11
-# end
-#
-#   associations:
-#   group.children   => groups
-#   group.parent     => group
-#   group.council    => nil or group
-#   group.users      => users
-
-class Group < ActiveRecord::Base
+class Group < ApplicationRecord
   extend RouteInheritance # subclasses use /groups routes
 
   # core group extentions
   include Group::Groups     # group <--> group behavior
   include Group::Users      # group <--> user behavior
-  include Group::Featured   # this makes this group's pages featureable
   include Group::Pages      # group <--> page behavior
+  include Group::Featured   # this makes this group's pages featureable
   include Group::Cache      # only versioning so far
 
   acts_as_castle
@@ -304,7 +280,7 @@ class Group < ActiveRecord::Base
   # if our name has changed, ensure that denormalized references
   # to it also get changed
   def update_name_copies
-    if name_changed? and !name_was.nil?
+    if saved_change_to_name? and !name_before_last_save.nil?
       pages_owned.update_all(owner_name: name)
       Wiki.clear_all_html(self) # in case there were links using the old name
       # update all committees (this will also trigger the after_save of committees)

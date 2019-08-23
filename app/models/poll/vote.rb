@@ -1,4 +1,4 @@
-class Poll::Vote < ActiveRecord::Base
+class Poll::Vote < ApplicationRecord
   self.table_name = 'votes'
 
   validates_presence_of :votable_id

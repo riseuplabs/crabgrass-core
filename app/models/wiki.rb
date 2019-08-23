@@ -1,28 +1,13 @@
 #  This is a generic versioned wiki, primarily used by the WikiPage,
 #  but also used directly sometimes by other classes (like for Group's
 #  landing page wiki's).
-#
-#
-#     create_table "wikis", :force => true do |t|
-#       t.text     "body"
-#       t.text     "body_html"
-#       t.datetime "updated_at"
-#       t.integer  "user_id",       :limit => 11
-#       t.integer  "version",       :limit => 11
-#       t.text     "raw_structure"
-#     end
-#
-#     add_index "wikis", ["user_id"], :name => "index_wikis_user_id"
-#
-
-##
 
 # requirements/ideas:
 # 1. nothing should get saved until we say save!
 # 2. updating body automatically updates html and structure
 # 3. wiki should never get saved with body/body products mismatch
 # 4. loaded wiki should see only the latest body products, if body was updated from outside
-class Wiki < ActiveRecord::Base
+class Wiki < ApplicationRecord
   include Wiki::Locking
   include Wiki::Sections
   include Wiki::Versioning
@@ -65,10 +50,9 @@ class Wiki < ActiveRecord::Base
   end
 
   # section locks should never be nil
-  alias existing_section_locks section_locks
-  def section_locks(force_reload = false)
+  def section_locks
     # current section_locks or create a new one if it doesn't exist
-    locks = (existing_section_locks(force_reload) || build_section_locks(wiki: self))
+    locks = (reload_section_locks || build_section_locks(wiki: self))
     # section_locks should always have self as its wiki instance
     # in case self.body is updated (and section names get changed)
     locks.wiki = self
@@ -172,9 +156,9 @@ class Wiki < ActiveRecord::Base
 
   # reload the association
   def reload_versions_and_locks
-    versions(true)
+    versions.reload
     # will clear out obsolete locks (expired or non-existant sections)
-    section_locks(true)
+    section_locks
   end
 
   ##

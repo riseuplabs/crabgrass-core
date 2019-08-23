@@ -5,62 +5,8 @@ require 'English'
 #
 # A Page is the main content class. All actual content is a subclass of this class.
 #
-# denormalization
-# ---------------
-#
-#   * updated_by_login
-#   * created_by_login
-#   * owner_name
-#
-# Upon further investigation, I am not sure that these are needed.
-#
-# schema
-# --------
-#
-#   create_table "pages", :force => true do |t|
-#     t.string   "title"
-#     t.datetime "created_at"
-#     t.datetime "updated_at"
-#     t.boolean  "resolved",                         :default => true
-#     t.boolean  "public"
-#     t.integer  "created_by_id",      :limit => 11
-#     t.integer  "updated_by_id",      :limit => 11
-#     t.text     "summary"
-#     t.string   "type"
-#     t.integer  "message_count",      :limit => 11, :default => 0
-#     t.integer  "data_id",            :limit => 11
-#     t.string   "data_type"
-#     t.integer  "contributors_count", :limit => 11, :default => 0
-#     t.string   "name"
-#     t.string   "updated_by_login"
-#     t.string   "created_by_login"
-#     t.integer  "flow",               :limit => 11
-#     t.integer  "stars_count",              :limit => 11, :default => 0
-#     t.integer  "owner_id",           :limit => 11
-#     t.string   "owner_type"
-#     t.string   "owner_name"
-#     t.boolean  "is_image"
-#     t.boolean  "is_audio"
-#     t.boolean  "is_video"
-#     t.boolean  "is_document"
-#     t.integer  "site_id",            :limit => 11
-#     t.datetime "happens_at"
-#   end
-#
-#   add_index "pages", ["name","owner_id"], :name => "index_pages_on_name"
-#   add_index "pages", ["created_by_id"], :name => "index_page_created_by_id"
-#   add_index "pages", ["updated_by_id"], :name => "index_page_updated_by_id"
-#   add_index "pages", ["type"], :name => "index_pages_on_type"
-#   add_index "pages", ["flow"], :name => "index_pages_on_flow"
-#   add_index "pages", ["public"], :name => "index_pages_on_public"
-#   add_index "pages", ["resolved"], :name => "index_pages_on_resolved"
-#   add_index "pages", ["created_at"], :name => "index_pages_on_created_at"
-#   add_index "pages", ["updated_at"], :name => "index_pages_on_updated_at"
-#   execute "CREATE INDEX owner_name_4 ON pages (owner_name(4))"
-#
-#   Yeah, so, there are way too many indices on the pages table.
 
-class Page < ActiveRecord::Base
+class Page < ApplicationRecord
   extend RouteInheritance # subclasses use /pages routes
 
   include Page::Users           # page <> users relationship
@@ -117,10 +63,10 @@ class Page < ActiveRecord::Base
 
   validate :unique_name_in_context
   def unique_name_in_context
-    if (name_changed? or owner_id_changed? or groups_changed) and name_taken?
+    if (will_save_change_to_name? or will_save_change_to_owner_id?) and name_taken?
       context = owner || created_by
       errors.add 'name', "is already used for another page by #{context.display_name}"
-    elsif name_changed? and name.present?
+    elsif will_save_change_to_name? and name.present?
       errors.add 'name', 'name is invalid' if name != name.nameize
     end
   end
@@ -144,6 +90,10 @@ class Page < ActiveRecord::Base
   alias to_param friendly_url
   # used for caching access
   alias to_s friendly_url
+
+  def to_partial_path
+    'common/pages/page'
+  end
 
   # using only knowledge of this page, returns
   # best guess uri string, sans protocol/host/port.
@@ -202,7 +152,7 @@ class Page < ActiveRecord::Base
   before_save :clear_tag_cache
 
   def clear_tag_cache
-    User.clear_tag_cache(user_ids) if @tags_changed
+    User.clear_tag_cache(user_participations.map(&:user_id)) if @tags_changed
   end
 
   #
@@ -233,29 +183,6 @@ class Page < ActiveRecord::Base
     end
     self.resolved = value
     save
-  end
-
-  def association_will_change(assn)
-    (@associations_to_save ||= []) << assn
-  end
-
-  def association_changed?
-    @associations_to_save.any?
-  end
-
-  after_save :save_associations
-  def save_associations
-    return true unless @associations_to_save
-    @associations_to_save.uniq.each do |assn|
-      if assn == :posts
-        discussion.posts.each { |post| post.save! if post.changed? }
-      elsif assn == :users
-        user_participations.each { |up| up.save! if up.changed? }
-      elsif assn == :groups
-        group_participations.each { |gp| gp.save! if gp.changed? }
-      end
-    end
-    true
   end
 
   ##

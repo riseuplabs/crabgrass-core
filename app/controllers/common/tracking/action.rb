@@ -4,7 +4,7 @@
 #
 # This module makes creating the records from the controller easy.
 #
-# If you follow the conventions all you need to do is add a after_filter for
+# If you follow the conventions all you need to do is add a after_action for
 # the actions you want to track:
 #
 # class Groups::GroupsController < ...
@@ -12,7 +12,7 @@
 # ...
 #
 # This will have the same effect as an after filter for track_action:
-#   after_filter :track_action, only: [:create, :destroy]
+#   after_action :track_action, only: [:create, :destroy]
 #
 # track_action will call Action.track(:create_group, options). It will include
 # the following default arguments if the corresponding variables are set:
@@ -54,7 +54,7 @@ module Common::Tracking::Action
   module ClassMethods
     def track_actions(*actions)
       options = actions.extract_options!
-      after_filter :track_action, options.merge(only: actions)
+      after_action :track_action, options.merge(only: actions)
     end
   end
 end

@@ -9,32 +9,27 @@ class Page::SharesControllerTest < ActionController::TestCase
   def test_show_share_popup
     login_as @owner
     page = FactoryBot.create :page, created_by: @owner
-    xhr :get, :show, page_id: page.id, mode: 'share'
+    get :show, params: { page_id: page.id, mode: "share" }, xhr: true
     assert_response :success
   end
 
   def test_show_share_popup_not_allowed
     login_as @recipient
     page = FactoryBot.create :page, created_by: @owner
-    assert_permission_denied do
-      xhr :get, :show, page_id: page.id, mode: 'share'
-    end
+    get :show, params: { page_id: page.id, mode: "share" }, xhr: true
+    assert_permission_denied
   end
 
   def test_show_notify_popup
     login_as @owner
     page = FactoryBot.create :page, created_by: @owner
-    xhr :get, :show, page_id: page.id, mode: 'notify'
+    get :show, params: { page_id: page.id, mode: "notify" }, xhr: true
     assert_response :success
   end
 
   def test_autocomplete_user_for_new_page
     login_as @owner
-    xhr :post, :update, recipient: { name: @recipient.name, access: :admin },
-                        page_id: '0',
-                        add: true,
-                        mode: 'share',
-                        format: :js
+    post :update, params: { recipient: { name: @recipient.name, access: :admin }, page_id: "0", add: true, mode: "share", format: :js }, xhr: true
     assert @response.body.include?(@recipient.login)
     assert_template partial: '_add_recipient'
   end
@@ -44,11 +39,7 @@ class Page::SharesControllerTest < ActionController::TestCase
     login_as @owner
     admin = { access: 'admin' }
     assert_difference 'Page::History.count', 2 do
-      xhr :post, :update, share_button: true,
-                          recipients: { blue: admin, animals: admin, contributors: '0' },
-                          page_id: page.id,
-                          mode: 'share',
-                          format: :js
+      post :update, params: { share_button: true, recipients: { blue: admin, animals: admin, contributors: "0" }, page_id: page.id, mode: "share", format: :js }, xhr: true
     end
   end
 
@@ -57,11 +48,7 @@ class Page::SharesControllerTest < ActionController::TestCase
     login_as @owner
     admin = { access: 'admin' }
     assert_difference 'Page::History.count' do
-      xhr :post, :update, share_button: true,
-                          recipients: { animals: admin },
-                          page_id: page.id,
-                          mode: 'share',
-                          format: :js
+      post :update, params: { share_button: true, recipients: { animals: admin }, page_id: page.id, mode: "share", format: :js }, xhr: true
     end
     assert_equal 'page_history_granted_group_full_access',
                  Page::History.last.description_key
@@ -72,11 +59,7 @@ class Page::SharesControllerTest < ActionController::TestCase
     login_as @owner
     admin = { access: 'admin' }
     assert_difference 'Page::History.count' do
-      xhr :post, :update, share_button: true,
-                          recipients: { blue: admin },
-                          page_id: page.id,
-                          mode: 'share',
-                          format: :js
+      post :update, params: { share_button: true, recipients: { blue: admin }, page_id: page.id, mode: "share", format: :js }, xhr: true
     end
     assert_equal 'page_history_granted_user_full_access',
                  Page::History.last.description_key
@@ -86,12 +69,7 @@ class Page::SharesControllerTest < ActionController::TestCase
     page = FactoryBot.create :page, created_by: @owner
     login_as @recipient
     admin = { access: 'admin' }
-    assert_permission_denied do
-      xhr :post, :update, share_button: true,
-                          recipients: { blue: admin },
-                          page_id: page.id,
-                          mode: 'share',
-                          format: :js
-    end
+    post :update, params: { share_button: true, recipients: { blue: admin }, page_id: page.id, mode: "share", format: :js }, xhr: true
+    assert_permission_denied
   end
 end

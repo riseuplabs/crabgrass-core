@@ -5,8 +5,6 @@ require 'javascript_integration_test'
 class PageSearchTest < JavascriptIntegrationTest
   include Integration::Search
 
-  fixtures :all
-
   def test_sphinx
     user = users(:blue)
     page = user.pages.first

@@ -38,6 +38,7 @@ purple_orange:
 <% end %>
 
 on_blues_page:
-  commentable_id: 1002
-  commentable_type: "Page"
+  page_id: 1002
 
+committee_page:
+  page_id: 1001

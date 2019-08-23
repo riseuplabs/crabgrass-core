@@ -1,2 +1,0 @@
--# i don't think this is used anymore
-page.redirect_to(group_home_url(@group))

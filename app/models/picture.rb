@@ -51,7 +51,7 @@ require 'pathname'     # required for relative paths
 MAX_HEIGHT = 1024
 MAX_WIDTH = 1024
 
-class Picture < ActiveRecord::Base
+class Picture < ApplicationRecord
   serialize :dimensions      # Hash
   serialize :average_color   # Array
   after_destroy :destroy_files

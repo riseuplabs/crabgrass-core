@@ -1,5 +1,5 @@
 class CreateAssetPageController < Page::CreateController
-  before_filter :ensure_asset, only: :create
+  before_action :ensure_asset, only: :create
 
   def new
     @form_sections.unshift('file')
@@ -32,7 +32,7 @@ class CreateAssetPageController < Page::CreateController
   end
 
   def ensure_asset
-    if params[:asset].blank?
+    if params[:asset].blank? || params[:asset][:uploaded_data].blank?
       warning :select_file_to_upload.t
       new
     end

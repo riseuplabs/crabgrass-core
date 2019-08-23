@@ -176,7 +176,7 @@ module ActiveRecord #:nodoc:
         self.version_sequence_name        = options[:sequence_name]
         self.max_version_limit            = options[:limit].to_i
         self.version_condition            = options[:if] || true
-        self.non_versioned_columns        = [primary_key, inheritance_column, version_column, 'lock_version', versioned_inheritance_column] + options[:non_versioned_columns].to_a.map(&:to_s)
+        self.non_versioned_columns        = ['id', inheritance_column, version_column, 'lock_version', versioned_inheritance_column] + options[:non_versioned_columns].to_a.map(&:to_s)
         self.version_association_options  = {
           class_name: "#{self}::#{versioned_class_name}",
           foreign_key: versioned_foreign_key,
@@ -205,7 +205,7 @@ module ActiveRecord #:nodoc:
         #
         # Create the dynamic versioned model
         #
-        const_set(versioned_class_name, Class.new(ActiveRecord::Base)).class_eval do
+        const_set(versioned_class_name, Class.new(ApplicationRecord)).class_eval do
           def self.reloadable?
             false
           end

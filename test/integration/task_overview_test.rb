@@ -1,9 +1,6 @@
-require 'test_helper'
 require 'javascript_integration_test'
 
 class TaskOverviewTest < JavascriptIntegrationTest
-  fixtures :users, :pages, 'page/terms', :tasks, 'task/participations'
-
   def test_list_only_pages_with_assigned_tasks
     login users(:blue)
     visit '/me/tasks'

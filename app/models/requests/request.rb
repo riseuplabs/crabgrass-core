@@ -1,33 +1,8 @@
-# -*- coding: utf-8 -*-
-#     create_table "requests", :force => true do |t|
-#       t.integer  "created_by_id"
-#       t.integer  "approved_by_id"
-#
-#       t.integer  "recipient_id"
-#       t.string   "recipient_type", :limit => 5
-#
-#       t.string   "email"
-#       t.string   "code", :limit => 8
-#
-#       t.integer  "requestable_id"
-#       t.string   "requestable_type", :limit => 10
-#
-#       t.integer  "shared_discussion_id"
-#       t.integer  "private_discussion_id"
-#
-#       t.string   "state", :limit => 10
-#       t.string   "type"
-#       t.datetime "created_at"
-#       t.datetime "updated_at"
-#
-#       t.integer  "site_id"
-#     end
-
 #
 # Anytime an action needs approval, a Request is made.
 # This includes invitations, requests to join, RSVP, etc.
 #
-class Request < ActiveRecord::Base
+class Request < ApplicationRecord
   include AASM
 
   # Raised when approving a Request to do something
@@ -383,8 +358,8 @@ class Request < ActiveRecord::Base
 
   # destroy all requests relating to this user
   def self.destroy_for_user(user)
-    destroy_all ['created_by_id = ?', user.id]
-    destroy_all ["recipient_id = ? AND recipient_type = 'User'", user.id]
+    where('created_by_id = ?', user.id).
+      or(Request.where("recipient_id = ? AND recipient_type = 'User'", user.id)).destroy_all
   end
 
   # destroy all requests relating to this group

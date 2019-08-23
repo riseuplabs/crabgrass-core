@@ -1,6 +1,0 @@
-- avatar_size = local_assigns[:avatar_size] || 'small'
-%tr{class: "avatar_height_#{avatar_size}"}
-  %td= avatar_link(request.created_by, avatar_size)
-  %td= expand_links(request_description(request))
-  %td= friendly_date(request.created_at)
-

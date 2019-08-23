@@ -2,7 +2,7 @@
 # the join table for assets that are in photo galleries.
 #
 
-class Showing < ActiveRecord::Base
+class Showing < ApplicationRecord
   belongs_to :gallery
   belongs_to :asset
 

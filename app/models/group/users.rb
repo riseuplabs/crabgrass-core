@@ -159,14 +159,6 @@ module Group::Users
         I18n.t(:no_such_membership_error, group: self.name, user: user.name)
     end
 
-    # removing all participations (makes the stars disappear - not sure
-    # if we want this)
-    pages = membership.group.pages_owned
-    pages.each do |page|
-      page.users.delete user if page.users.include? user
-      page.save!
-    end
-
     user.clear_peer_cache_of_my_peers
     membership.destroy
     Notice::UserRemovedNotice.create! group: self, user: user

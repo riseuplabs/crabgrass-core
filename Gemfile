@@ -1,22 +1,18 @@
 source 'https://rubygems.org'
 
 # ensure github urls use https rather than insecure git protocol.
-git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
-  "https://github.com/#{repo_name}.git"
-end
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ##
 #  Core components
 ##
 
 # Rails is the framework we use.
-# use the 4.2 series including all security fixes
-gem 'rails', '~> 4.2.11'
+gem 'rails', '~> 5.2.3'
 
 # Security updates
-# https://github.com/sparklemotion/nokogiri/issues/1785
-gem 'nokogiri', '~> 1.8.5'
+#https://github.com/sparklemotion/nokogiri/issues/1892
+gem 'nokogiri', '~> 1.10.3'
 
 # Rake is rubys make... performing tasks
 # locking in to latest major to fix API
@@ -25,13 +21,15 @@ gem 'rake', '~> 10.0', require: false
 # Application preloader for faster start time
 gem 'spring', group: :development
 
-# translating strings for the user interface
+# reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', '>= 1.1.0', require: false
+
 # locking in to latest major to fix API
 gem 'i18n', '~> 0.7'
 
 # improved gem to access mysql database
 # locking in to latest major to fix API
-gem 'mysql2', '~> 0.3.18'
+gem 'mysql2', '~> 0.5.2'
 
 # parsing and generating JSON
 # locking in to latest major to fix API
@@ -39,8 +37,8 @@ gem 'json', '~> 1.8'
 
 # Markup language that uses indent to indicate nesting
 # locking in to latest major to fix API
-gem 'haml', '~> 4.0'
-gem 'haml-rails', '~> 0.9.0'
+gem 'haml', '~> 5.0'
+gem 'haml-rails', '~> 1.0'
 
 # Extendet scriptable CSS language
 # locking in to latest major to fix API
@@ -48,29 +46,21 @@ gem 'sass'
 
 ##
 # Prototype - yes. we still use it.
-# these will be replaced by jquery equivalents at some point:
-##
-
-# main part of prototype
-# needs special branch for rails 4.2
-gem 'prototype-rails', github: 'rails/prototype-rails', branch: '4.2'
+# we use a fork which is rails 5.x compatible
+# tests do not pass for this fork
+gem 'prototype-rails', github: 'voxmedia/prototype-rails', ref: 'e385756cbabb5608d1eab47b6416cdd49613c73b'
 
 # Full text search for the database
 gem 'thinking-sphinx', '~> 3.4.2'
 
 # Enhanced Tagging lib. Used to tag pages
-gem 'acts-as-taggable-on', '~> 4.0'
+gem 'acts-as-taggable-on', '~> 6.0'
 
+# Rails 5 migration
 ##
-# security updates
-##
-#
-# CVE-2018-16471
-# Criticality: Unknown
-# URL:
-# https://groups.google.com/forum/#!topic/ruby-security-ann/NAalCee8n6o
-# Title: Possible XSS vulnerability in Rack
-gem 'rack', '~> 1.6.11'
+
+# ActionView::Helpers::RecordTagHelper moved to external gem
+gem 'record_tag_helper', '~> 1.0'
 
 ##
 # Upgrade pending
@@ -95,9 +85,7 @@ gem 'pundit', '~> 1.1'
 # Bcrypt for has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
-#
 gem 'secure_headers', '~> 4.0.2'
-
 
 # ?
 # locking in to latest major to fix API
@@ -144,7 +132,7 @@ gem 'greencloth', require: 'greencloth',
 
 # media upload post processing has it's own repo
 # version is rather strict for now as api may still change.
-gem 'crabgrass_media', '~> 0.2.1', require: 'media'
+gem 'crabgrass_media', '~> 0.3.1', require: 'media'
 
 ##
 ## not required, but a really good idea
@@ -181,6 +169,7 @@ group :production do
   # runs independendly - so no version restriction for now
   # TODO: check if we want this or nodejs
   gem 'therubyracer'
+  # gem 'mini_racer', platforms: :ruby # new default in Rails 5.2
 end
 
 group :production, :development do
@@ -204,6 +193,8 @@ group :test, :development do
   gem 'byebug'
 end
 
+gem 'web-console', group: :development
+
 group :test, :ci do
   ##
   ## TESTS
@@ -212,7 +203,11 @@ group :test, :ci do
   gem 'factory_bot_rails'
   gem 'faker', '~> 1.0.0'
 
-  gem 'minitest', require: false
+  # temporary fix for minitest 5.11 issue
+  gem 'minitest', '~>5.10.3', require: false
+
+  # contains helper methods like assigns and assert_template
+  gem 'rails-controller-testing'
 
   ##
   ## INTEGRATION TESTS

@@ -2,7 +2,6 @@ module Common::Application::RenderWithViewSetup
 
   def render(*args)
     setup_theme
-    setup_context
     super(*args)
   end
 
@@ -14,10 +13,10 @@ module Common::Application::BeforeFilters
 
   included do
     # the order of these filters matters. change with caution.
-    before_filter :set_session_locale
-    before_filter :set_session_timezone
-    before_filter :header_hack_for_ie6
-    before_filter :redirect_unverified_user
+    before_action :set_session_locale
+    before_action :set_session_timezone
+    before_action :header_hack_for_ie6
+    before_action :redirect_unverified_user
   end
 
   private
@@ -48,14 +47,13 @@ module Common::Application::BeforeFilters
   #
   # To not require logins for specific actions, use this in your controllers:
   #
-  #   skip_before_filter :login_required, :only => [ :view, :index ]
+  #   skip_before_action :login_required, :only => [ :view, :index ]
   #
   # To not require them for any action:
   #
-  #   skip_before_filter :login_required
+  #   skip_before_action :login_required
   #
   def login_required
-    process_login
     raise AuthenticationRequired unless logged_in?
   end
 

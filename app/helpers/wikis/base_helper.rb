@@ -1,11 +1,4 @@
 module Wikis::BaseHelper
-  #
-  # html element options for the main div enclosing the wiki
-  #
-  def wiki_div(wiki)
-    { id: dom_id(wiki) }
-  end
-
   ##
   ## TABS
   ##

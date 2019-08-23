@@ -10,36 +10,34 @@ class Group::SettingsControllerTest < ActionController::TestCase
 
   def test_logged_in
     login_as @user
-    get :show, group_id: @group.to_param
+    get :show, params: { group_id: @group.to_param }
     assert_response :success
     assert_select '.inline_message_list', 0
   end
 
   def test_not_logged_in
-    assert_login_required do
-      get :show, group_id: @group.to_param
-    end
+    get :show, params: { group_id: @group.to_param }
+    assert_login_required
   end
 
   def test_not_a_member
     stranger = FactoryBot.create(:user)
     login_as stranger
-    assert_permission_denied do
-      get :show, group_id: @group.to_param
-    end
+    get :show, params: { group_id: @group.to_param }
+    assert_permission_denied
   end
 
   def test_member_can_see_private
     login_as @user
     @group.revoke_access! public: :all
-    get :show, group_id: @group.to_param
+    get :show, params: { group_id: @group.to_param }
     assert_response :success
     assert_select '.inline_message_list', 0
   end
 
   def test_update
     login_as @user
-    post :update, group: { full_name: 'full name' }, group_id: @group.to_param
+    post :update, params: { group: { full_name: 'full name' }, group_id: @group.to_param }
     assert_response 302
     assert_equal 'full name', assigns('group').full_name
   end
@@ -47,9 +45,8 @@ class Group::SettingsControllerTest < ActionController::TestCase
   def test_update_not_allowed
     stranger = FactoryBot.create(:user)
     login_as stranger
-    assert_permission_denied do
-      post :update, group: { full_name: 'full name' }, group_id: @group.to_param
-    end
+    post :update, params: { group: { full_name: 'full name' }, group_id: @group.to_param }
+    assert_permission_denied
   end
 
 end

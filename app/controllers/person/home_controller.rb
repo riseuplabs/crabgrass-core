@@ -8,7 +8,6 @@ class Person::HomeController < Person::BaseController
     super()
     @user = options[:user]
   end
-  hide_action :initialize
 
   def show
     authorize @user

@@ -1,5 +1,5 @@
 class Page::TagsController < Page::SidebarsController
-  before_filter :authorize_page
+  before_action :authorize_page
   helper 'page/tags'
   SUGGESTION_COUNT = 6
 

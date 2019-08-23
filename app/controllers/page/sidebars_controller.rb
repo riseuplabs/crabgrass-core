@@ -5,9 +5,9 @@
 class Page::SidebarsController < ApplicationController
   include Common::Tracking::Action
 
-  before_filter :fetch_page
-  before_filter :login_required
-  after_filter :verify_authorized
+  before_action :fetch_page
+  before_action :login_required
+  after_action :verify_authorized
   layout false
 
   helper 'page/base', 'page/sidebar'

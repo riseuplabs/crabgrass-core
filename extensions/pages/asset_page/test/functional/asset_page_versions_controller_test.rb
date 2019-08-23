@@ -23,7 +23,7 @@ class AssetPageVersionsControllerTest < ActionController::TestCase
     user.updated(@page)
 
     assert_difference 'Asset::Version.count', -1, 'destroy should remove a version' do
-      xhr :delete, :destroy, page_id: @page, id: 1
+      delete :destroy, params: { page_id: @page, id: 1 }, xhr: true
     end
     assert File.exist?(@asset.private_filename)
     assert !File.exist?(@version_filename)
@@ -37,7 +37,7 @@ class AssetPageVersionsControllerTest < ActionController::TestCase
 
     assert_difference 'Thumbnail.count', 0,
                       'the first time an asset is shown, it should call generate preview' do
-      xhr :post, 'create', page_id: @page
+      post "create", params: { page_id: @page }, xhr: true
     end
     assert_response :success
   end
@@ -49,7 +49,7 @@ class AssetPageVersionsControllerTest < ActionController::TestCase
 
     assert_difference 'Thumbnail.count', 0,
                       'the first time an asset is shown, it should call generate preview' do
-      xhr :post, 'create', page_id: @page
+      post "create", params: { page_id: @page }, xhr: true
     end
     assert_response :success
   end

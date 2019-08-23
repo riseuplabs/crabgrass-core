@@ -6,9 +6,8 @@ class Me::DestroysControllerTest < ActionController::TestCase
   end
 
   def test_not_logged_in
-    assert_login_required do
-      get :show
-    end
+    get :show
+    assert_login_required
   end
 
   def test_update
@@ -21,15 +20,15 @@ class Me::DestroysControllerTest < ActionController::TestCase
 
   def test_update_scrub_name
     login_as @user
-    post :update, scrub_name: true
+    post :update, params: { scrub_name: true }
     # we will only have a User::Ghost if we load the user again...
-    assert_nil User.find(@user).read_attribute :display_name
+    assert_nil User.find(@user.id).read_attribute :display_name
   end
 
   def test_notification
     expecting_notifications :user_destroyed, to: @user.friends do
       login_as @user
-      post :update, scrub_name: 1
+      post :update, params: { scrub_name: 1 }
     end
   end
 

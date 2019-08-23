@@ -4,7 +4,8 @@
 #   Asset          -- main asset class.
 #   Asset::Image   -- a subclass of Asset using STI, for example.
 #   Asset::Version -- all the past and present versions of the main asset.
-#   Thumbnail      -- a processed representation of an Asset (usually a small image)
+#   Thumbnail      -- a processed representation of an Asset
+#                     (usually a small image)
 #
 #   Every asset has many versions. Each asset, and each version, also
 #   have many thumbnails.
@@ -18,60 +19,12 @@
 #
 # TODO:
 #
-#   * Image assets that are smaller than the thumbnails should not get thumbnails,
-#     or should only get one thumbnail if the format differs. It is a waste of space
-#     to keep four copies of the same image! (albeit, a very tiny image)
-#
-#   create_table "asset_versions", :force => true do |t|
-#     t.integer  "asset_id",       :limit => 11
-#     t.integer  "version",        :limit => 11
-#     t.string   "content_type"
-#     t.string   "filename"
-#     t.integer  "size",           :limit => 11
-#     t.integer  "width",          :limit => 11
-#     t.integer  "height",         :limit => 11
-#     t.integer  "page_id",        :limit => 11
-#     t.integer  "user_id",        :limit => 11
-#     t.text     "comment"
-#     t.datetime "created_at"
-#     t.string   "versioned_type"
-#     t.datetime "updated_at"
-#   end
-#
-#   add_index "asset_versions", ["asset_id"], :name => "index_asset_versions_asset_id"
-#   add_index "asset_versions", ["version"], :name => "index_asset_versions_version"
-#   add_index "asset_versions", ["page_id"], :name => "index_asset_versions_page_id"
-#
-#   create_table "assets", :force => true do |t|
-#     t.string   "content_type"
-#     t.string   "filename"
-#     t.integer  "size",          :limit => 11
-#     t.integer  "width",         :limit => 11
-#     t.integer  "height",        :limit => 11
-#     t.integer  "page_id",       :limit => 11
-#     t.datetime "created_at"
-#     t.integer  "version",       :limit => 11
-#     t.string   "type"
-#     t.integer  "page_terms_id", :limit => 11
-#     t.boolean  "is_attachment",               :default => false
-#     t.boolean  "is_image"
-#     t.boolean  "is_audio"
-#     t.boolean  "is_video"
-#     t.boolean  "is_document"
-#     t.datetime "updated_at"
-#     t.string   "caption"
-#     t.datetime "taken_at"
-#     t.string   "credit"
-#     t.integer  "user_id",        :limit => 11
-#     t.text     "comment"
-#   end
-#
-#   add_index "assets", ["version"], :name => "index_assets_version"
-#   add_index "assets", ["page_id"], :name => "index_assets_page_id"
-#   add_index "assets", ["page_terms_id"], :name => "pterms"
-#
+#   * Image assets that are smaller than the thumbnails should not get
+#     thumbnails, or should only get one thumbnail if the format
+#     differs.  It is a waste of space to keep four copies of the same
+#     image! (albeit, a very tiny image)
 
-class Asset < ActiveRecord::Base
+class Asset < ApplicationRecord
   include Crabgrass::Page::Data
 
   # fields in assets table not in asset_versions
@@ -80,7 +33,7 @@ class Asset < ActiveRecord::Base
   # This is included here because Asset may take new attachment file data, but
   # Asset::Version and Thumbnail don't need to.
   include Asset::Upload
-  validates_presence_of :filename, unless: 'new_record?'
+  validates_presence_of :filename, unless: :new_record?
 
   ##
   ## ACCESS
@@ -133,7 +86,7 @@ class Asset < ActiveRecord::Base
   # Returns true if this Asset is currently the cover of the given `gallery'.
   # A Gallery can only have one cover at a time.
   def is_cover_of?(gallery)
-    raise ArgumentError.new unless gallery.is_a? Gallery
+    raise ArgumentError unless gallery.is_a? Gallery
     showing = gallery.showings.find_by_asset_id(id)
     !showing.nil? && showing.is_cover
   end
@@ -144,7 +97,7 @@ class Asset < ActiveRecord::Base
 
   # one of :image, :audio, :video, :document
   def self.media_type(type)
-    raise TypeError.new unless %i[image audio video document].include?(type)
+    raise TypeError unless %i[image audio video document].include?(type)
     where("is_#{type} = ?", true)
   end
 
@@ -165,19 +118,8 @@ class Asset < ActiveRecord::Base
       base.has_many :thumbnails, class_name: '::Thumbnail', as: :parent,
                                  dependent: :destroy do
         def preview_images
-          small, medium, large = nil
-          each do |tn|
-            if tn.name == 'small'
-              small = tn
-            elsif tn.name == 'medium'
-              medium = tn
-            elsif tn.name == 'large'
-              large = tn
-            end
-          end
-          large = nil if medium && large && large.size == medium.size
-          medium = nil if small && medium && medium.size == small.size
-          [small, medium, large].compact
+          select { |t| %w[small medium large].include?(t.name) }.
+            sort_by(&:size).uniq(&:size)
         end
 
         def other_formats

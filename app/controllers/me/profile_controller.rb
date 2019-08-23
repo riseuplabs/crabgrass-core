@@ -1,5 +1,5 @@
 class Me::ProfileController < Me::BaseController
-  before_filter :fetch_profile
+  before_action :fetch_profile
   helper :profile
 
   def edit; end

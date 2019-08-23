@@ -5,20 +5,10 @@
 #  (1) provide url obfuscation for links in email
 #  (2) or, to give url or url+email access to a page
 #
-#  create_table :codes do |t|
-#    t.string :code, :limit => 10
-#    t.integer :page_id
-#    t.integer :user_id
-#    t.integer :access
-#    t.datetime :expires_at
-#    t.string :email
-#    t.timestamps
-#  end
-#
 
 require 'password'
 
-class Page::AccessCode < ActiveRecord::Base
+class Page::AccessCode < ApplicationRecord
   self.table_name = 'page_access_codes'
 
   belongs_to :user
@@ -42,7 +32,7 @@ class Page::AccessCode < ActiveRecord::Base
   end
 
   def self.cleanup_expired
-    delete_all ['expires_at < ?', Time.now.utc]
+    where('expires_at < ?', Time.now.utc).delete_all
   end
 
   def days_left

@@ -1,20 +1,6 @@
 - @avatar_in_banner = false
 - anything = false
 
--# currently, the profile.picture i used for the banner, although there
--# is potential support for separate banner pictures, it is not
--# currently enabled. so, don't bother showing the same image twice.
--# leaving this here because it might be useful in the future.
--# if @profile.picture
--#  - anything = true
--#  - sidebox_inside_width = current_theme.columns_width(current_theme.local_sidecolumn_width) - 2 * current_theme.resolve_width(current_theme.local_content_padding)
--#  = picture_tag(@profile.picture, max_width: sidebox_inside_width, min_width: sidebox_inside_width)
-
--# allow the avatar image to scale as big as it can,
--# but keep the aspect ratio.
--#%div.margin-bottom(style="position: relative")
--#  %div{:style => 'position: absolute; top: 0; bottom: 0; left: 0; right: 0; height: 202px; max-width: 202px;' + avatar_style(@user, 'huge')}
-
 - if @profile
   %img.margin-bottom{ style: "display:block; width: 100% !important; height: auto !important",
     src: avatar_url_for(@user, :huge)}

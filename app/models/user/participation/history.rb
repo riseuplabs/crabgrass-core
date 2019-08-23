@@ -1,21 +1,21 @@
 module User::Participation::History
   def start_watching?
-    watch_changed? && watch == true
+    saved_change_to_watch? && watch == true
   end
 
   def stop_watching?
-    watch_changed? && watch != true
+    saved_change_to_watch? && watch != true
   end
 
   def star_added?
-    star_changed? && star == true
+    saved_change_to_star? && star == true
   end
 
   def star_removed?
-    star_changed? && star != true
+    saved_change_to_star? && star != true
   end
 
   def cleared_user_access?
-    access_changed? && access_sym.nil?
+    saved_change_to_access? && access_sym.nil?
   end
 end

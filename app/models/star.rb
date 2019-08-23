@@ -1,4 +1,4 @@
-class Star < ActiveRecord::Base
+class Star < ApplicationRecord
   belongs_to :user, inverse_of: :stars
   belongs_to :starred, polymorphic: true, counter_cache: true
 

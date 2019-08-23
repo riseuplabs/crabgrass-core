@@ -16,31 +16,6 @@ module Common::Ui::JavascriptHelper
   end
 
   ##
-  ## dynamic styles
-  ##
-
-  #
-  # set_style -- dynamically alter a global css rule
-  #
-  # most of the time it makes sense to alter the class or style of a particular
-  # element when you want it to change. however, there are cases where you to
-  # create or alter a global css rule dynamically via javascript.
-  #
-  # this is currently used by the page searching system.
-  #
-  # requires crabgrass's javascript class 'Style'
-  #
-  # def set_style(selector, css)
-  #  id = selector.downcase.gsub(' ','_').gsub(/[^a-z0-9_]/,'') + '_dynamic_style'
-  #  "Style.set('%s','%s {%s}');" % [id, selector, css]
-  # end
-  #
-  # def clear_style(selector)
-  #  id = selector.downcase.gsub(' ','_').gsub(/[^a-z0-9_]/,'') + '_dynamic_style'
-  #  "Style.clear('%s');" % id
-  # end
-
-  ##
   ## request queueing
   ##
 
@@ -95,16 +70,6 @@ module Common::Ui::JavascriptHelper
   end
 
   ##
-  ## dom basics
-  ##
-
-  def dom_loaded
-    concat "document.observe('dom:loaded',function(){"
-    yield
-    concat '});'
-  end
-
-  ##
   ## visibility
   ##
 
@@ -139,94 +104,9 @@ module Common::Ui::JavascriptHelper
     format("$('%s').show();", spinner_id(id))
   end
 
-  def activate_panel_row(item, load_url_function)
-    loader = case load_url_function
-             when String
-               load_url_function
-             when Proc
-               url = load_url_function.call(item)
-               remote_function(url: url, method: :get) + ";\n"
-             else
-               ''
-             end
-    loader + "activatePanelRow('#{dom_id(item)}');".html_safe
-  end
-
-  #
-  # called when a user clicks on a row in a 'sliding list'
-  # sliding list is currently deprecated
-  #
-
-  def activate_sliding_row(url)
-    # left_domid = 'content'
-    # right_domid = 'sliding-item'
-    # right_path = url
-    # "activateSlidingRow({domid:'%s',path:window.location.pathname}, {domid:'%s',path:'%s'})" %
-    #  [left_domid, right_domid, right_path]
-
-    format("window.location.href = '%s'", url)
-  end
-
-  #
-  # returns a string that will get a prototype extended dom element.
-  #
-  def get_dom_element(identifier, context = nil)
-    case identifier
-    when ActiveRecord::Base
-      "$('#{dom_id(identifier, context)}')"
-    when nil
-      '$(this)'
-    when /^\$\(/ # already uses prototype
-      identifier
-    when String
-      "$('#{identifier}')"
-    end
-  end
-
-  ##
-  ## classes
-  ##
-
-  def replace_class_name(element_id, old_class, new_class)
-    if element_id.is_a? String
-      element_id = "$('" + element_id + "')" if element_id != 'this'
-    else
-      element_id = "$('" + dom_id(element_id) + "')"
-    end
-    "replaceClassName(#{element_id}, '#{old_class}', '#{new_class}');"
-  end
-
-  def add_class_name(element_id, class_name)
-    element_id = dom_id(element_id) unless element_id.is_a? String
-    format("$('%s').addClassName('%s');", element_id, class_name)
-  end
-
-  def remove_class_name(element_id, class_name)
-    element_id = dom_id(element_id) unless element_id.is_a? String
-    format("$('%s').removeClassName('%s');", element_id, class_name)
-  end
-
   ##
   ## MISC
   ##
-
-  def replace_html(element_id, html)
-    element_id = dom_id(element_id) unless element_id.is_a?(String)
-    format(%[$('%s').update(%s);], element_id, html.inspect)
-  end
-
-  def dom_loaded_javascript_tag(javascript)
-    javascript_tag %[
-      document.observe('dom:loaded', function() {
-        #{javascript}
-      })
-    ]
-  end
-
-  def reset_form(id)
-    "$('#{id}').reset();"
-    # "Form.getInputs($('#{id}'), 'submit').each(function(x){x.disabled=false}.bind(this));"
-  end
 
   # submits the named formed and eats the event.
   # e.g. :onkeydown => submit_form(x)
@@ -240,23 +120,8 @@ module Common::Ui::JavascriptHelper
     'return(!enterPressed(event));'
   end
 
-  # used with text input elements that have some value set which acts like help text
-  # it disappears when user focues on the input
-  def show_default_value
-    "if(this.value=='') this.value=this.defaultValue;"
-  end
-
-  def hide_default_value
-    "if(this.value==this.defaultValue) this.value='';"
-  end
-
   def focus_form(id)
     javascript_tag "Form.focusFirstElement('#{id}');"
   end
 
-  # toggle all checkboxes off and then toggle a subset of them on
-  # selectors are css expressions
-  # def checkboxes_subset_function(all_selector, subset_selector)
-  #  "toggleAllCheckboxes(false, '#{all_selector}'); toggleAllCheckboxes(true, '#{subset_selector}')"
-  # end
 end

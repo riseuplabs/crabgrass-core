@@ -43,10 +43,10 @@ class JoinOurNetworkRequestTest < ActiveSupport::TestCase
     req = RequestToJoinOurNetwork.create! created_by: inviter,
                                           recipient: @group,
                                           requestable: @network
-    assert !@network.groups(true).include?(@group)
+    assert !@network.groups.reload.include?(@group)
     assert_nothing_raised do
       req.approve_by!(@user)
     end
-    assert @network.groups(true).include?(@group)
+    assert @network.groups.reload.include?(@group)
   end
 end

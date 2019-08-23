@@ -11,7 +11,7 @@ class Group::HomeControllerTest < ActionController::TestCase
 
   def test_show
     login_as @user
-    get :show, group_id: @group.to_param
+    get :show, params: { group_id: @group.to_param }
     assert_response :success
     assert_equal @pub, assigns('public_wiki')
     assert_equal @priv, assigns('private_wiki')
@@ -20,7 +20,7 @@ class Group::HomeControllerTest < ActionController::TestCase
   end
 
   def test_show_public
-    get :show, group_id: 'animals'
+    get :show, params: { group_id: 'animals' }
     assert_response :success
     assert assigns('group').present?
   end
@@ -28,7 +28,7 @@ class Group::HomeControllerTest < ActionController::TestCase
   def test_show_public_only
     login_as FactoryBot.create(:user)
     @group.grant_access! public: :view
-    get :show, group_id: @group.to_param
+    get :show, params: { group_id: @group.to_param }
     assert_response :success
     assert_nil assigns('private_wiki')
     assert_equal @pub, assigns('public_wiki')
@@ -37,8 +37,7 @@ class Group::HomeControllerTest < ActionController::TestCase
   def test_may_not_show
     login_as FactoryBot.create(:user)
     @group.revoke_access! public: :view
-    assert_not_found do
-      get :show, group_id: @group.to_param
-    end
+    get :show, params: { group_id: @group.to_param }
+    assert_not_found
   end
 end

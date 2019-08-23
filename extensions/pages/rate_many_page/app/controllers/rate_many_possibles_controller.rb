@@ -1,5 +1,5 @@
 class RateManyPossiblesController < Page::BaseController
-  before_filter :fetch_poll
+  before_action :fetch_poll
 
   # ajax only, returns nothing
   # for this to work, there must be a <ul id='sort_list_xxx'> element

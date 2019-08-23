@@ -24,6 +24,7 @@ class IntegrationTest < ActionDispatch::IntegrationTest
 
   def setup
     super
+    Capybara.server = :webrick
     # we reset the defaults during setup because we rely on the
     # driver and the session in the enhanced_logging module.
     # Make sure to call super BEFORE the initialization in subclasses.
@@ -45,7 +46,7 @@ class IntegrationTest < ActionDispatch::IntegrationTest
   # Page::Terms live in an MyIsam table
   # so they do not get cleaned up by transactional fixtures.
   def reload_page_terms
-    return unless self.class.use_transactional_fixtures
+    return unless self.class.use_transactional_tests
     Page::Terms.delete_all
     ActiveRecord::FixtureSet.cache_fixtures ActiveRecord::Base.connection,
                                             'page/terms' => nil

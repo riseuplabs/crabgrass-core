@@ -11,13 +11,8 @@ class JavascriptIntegrationTest < IntegrationTest
   include AjaxPending
   include Autocomplete
 
-  # transactionaly fixtures make js tests fail non deterministicly
-  self.use_transactional_fixtures = false
-
-  # only use fixtures required explicitly in the tests
-  self.fixture_table_names = []
-
   Capybara.javascript_driver = :poltergeist
+  self.use_transactional_tests = false
 
   def setup
     super

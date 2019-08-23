@@ -7,7 +7,7 @@ class Me::PostsControllerTest < ActionController::TestCase
     login_as me
     Message.send from: me, to: you, body: 'test message'
     discussion = me.discussions.from_user(you).first
-    get :index, discussion_id: you.login
+    get :index, params: { discussion_id: you.login }
     assert_response :success
     assert_equal discussion, assigns(:discussion)
     assert_equal you, assigns(:recipient)
@@ -17,7 +17,7 @@ class Me::PostsControllerTest < ActionController::TestCase
     me = users(:gerrard)
     you = users(:green)
     login_as me
-    get :index, discussion_id: you.login
+    get :index, params: { discussion_id: you.login }
     assert_response :success
     assert_equal [], assigns(:posts)
   end
@@ -28,7 +28,7 @@ class Me::PostsControllerTest < ActionController::TestCase
     post = Message.send from: me, to: you, body: 'test message'
     login_as me
     assert_difference 'Post.count', -1 do
-      xhr :delete, :destroy, discussion_id: you.login, id: post
+      delete :destroy, params: { discussion_id: you.login, id: post }, xhr: true
       assert_response :success
     end
   end
@@ -39,7 +39,7 @@ class Me::PostsControllerTest < ActionController::TestCase
     post = Message.send from: me, to: you, body: 'test message'
     login_as me
     assert_difference 'Post.count', -1 do
-      delete :destroy, discussion_id: you.login, id: post
+      delete :destroy, params: { discussion_id: you.login, id: post }
       assert_response :redirect
     end
   end

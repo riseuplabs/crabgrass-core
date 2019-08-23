@@ -14,6 +14,6 @@ module LoginTestHelper
   # the normal acts_as_authenticated 'login_as' does not work for
   # integration tests
   def login(user)
-    post '/account/login', login: user.to_s, password: user.to_s
+    post '/account/login', params: { login: user.to_s, password: user.to_s }
   end
 end

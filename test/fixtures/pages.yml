@@ -91,7 +91,7 @@ blue_page:
 
 rainbow_page:
   id: 1003
-  name: "rainbow_page"
+  name: "duplicate-name"
   title: "page owned by rainbow"
   <% updated = rand(46080); created = updated + rand(46080) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
@@ -102,6 +102,18 @@ rainbow_page:
   updated_by_id: 4
   type: DiscussionPage
 
+animals_page:
+  id: 1004
+  name: "duplicate-name"
+  title: "page owned by animals"
+  <% updated = rand(46080); created = updated + rand(46080) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+  owner_id: 2
+  owner_type: Group
+  owner_name: animals
+  updated_by_id: 4
+  type: DiscussionPage
 
 ranked_vote:
   id: 190

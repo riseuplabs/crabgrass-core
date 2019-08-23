@@ -1,18 +1,13 @@
 module FunctionalTestHelper
   def assert_permission_denied
-    if block_given?
-      begin
-        yield
-      rescue PermissionDenied
-        return true
-      end
-    end
     errors = flash_messages :warning
-    assert_includes message_text(errors), 'Permission Denied'
+    content = errors.present? ? message_text(errors) : @response.body
+    assert_includes content, 'Permission Denied'
+    assert_response :forbidden
   end
 
-  def assert_login_required(&block)
-    assert_raises AuthenticationRequired, &block
+  def assert_login_required
+    assert_response :unauthorized
   end
 
   NOT_FOUND_ERRORS = [
@@ -21,13 +16,7 @@ module FunctionalTestHelper
   ].freeze
 
   def assert_not_found
-    if block_given?
-      assert_raises(*NOT_FOUND_ERRORS) do
-        yield
-      end
-    else
-      assert_response :not_found
-    end
+    assert_response :not_found
   end
 
   # can pass either a regexp of the flash error string,

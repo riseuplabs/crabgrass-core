@@ -14,7 +14,8 @@ module Page::Users
       has_many :user_participations,
                class_name: 'User::Participation',
                dependent: :destroy,
-               inverse_of: :page
+               inverse_of: :page,
+               autosave: true
       has_many :users, through: :user_participations do
         def with_access
           where('access IS NOT NULL')
@@ -59,7 +60,7 @@ module Page::Users
 
   # denormalize hack follows:
   def denormalize
-    if updated_by_id_changed?
+    if will_save_change_to_updated_by_id?
       self.updated_by_login = (updated_by.login if updated_by)
     end
     true
@@ -98,14 +99,13 @@ module Page::Users
   # used for sphinx index
   # e: why not just use the normal user_ids()? i guess the assumption is that
   # user_participations will always be already loaded if we are saving the page.
+  # Plus it may be the first time we save the page. So
+  # user_participations may not exist in the database yet.
+  # We also only want user participations that actually grant access.
+  #
   def user_ids
-    user_participations.collect(&:user_id)
+    user_participations.to_a.select(&:access).map(&:user_id)
   end
-
-  # like users.with_access, but uses already included data
-  # def users_with_access
-  #  user_participations.collect{|part| part.user if part.access }.compact
-  # end
 
   # A contributor has actually modified the page in some way. A participant
   # simply has a user_participation record, maybe they have never even seen

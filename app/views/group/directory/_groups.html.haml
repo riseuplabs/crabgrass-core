@@ -6,5 +6,5 @@
       = render partial: 'group', collection: group_list,
         spacer_template: 'common/divider'
 
-= pagination_links(@groups, params: params.except(:utf8))
+= pagination_links(@groups, params: params.permit(:controller, :action, :path, :q))
 

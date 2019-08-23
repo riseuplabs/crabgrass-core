@@ -2,9 +2,9 @@ class ExceptionsController < ApplicationController
   layout 'application'
 
   def show
-    @exception       = env['action_dispatch.exception']
-    @former_params   = env['action_dispatch.request.parameters']
-    @status_code     = ActionDispatch::ExceptionWrapper.new(env, @exception).status_code
+    @exception       = request.env['action_dispatch.exception']
+    @former_params   = request.env['action_dispatch.request.parameters']
+    @status_code     = ActionDispatch::ExceptionWrapper.new(request.env, @exception).status_code
     @rescue_response = ActionDispatch::ExceptionWrapper.rescue_responses[@exception.class.name]
 
     respond_to do |format|

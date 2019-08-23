@@ -3,7 +3,16 @@ require_relative '../lib/crabgrass/info.rb'
 info 'LOAD FRAMEWORK'
 require_relative 'boot'
 
-require 'rails/all'
+require 'rails'
+require 'active_record/railtie'
+# require 'active_storage/engine'
+require 'action_controller/railtie'
+require 'action_view/railtie'
+require 'action_mailer/railtie'
+require 'active_job/railtie'
+# require 'action_cable/engine'
+require 'rails/test_unit/railtie'
+require 'sprockets/railtie'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -15,6 +24,21 @@ require_relative '../lib/crabgrass/public_exceptions.rb'
 module Crabgrass
   class Application < Rails::Application
     info 'LOAD CONFIG BLOCK'
+
+#    config.load_defaults 5.2
+
+    # Rails 5.2 migration
+    #
+    # TODO: remove to use the new default
+    # Rails now embeds the expiry information also in encrypted
+    # or signed cookies value.
+    # This new embed information make those cookies incompatible with
+    # versions of Rails older than 5.2.
+    config.action_dispatch.use_authenticated_cookie_encryption = false
+
+    # we use namespaced controllers but still want to be able to do
+    # render @pages
+    config.action_view.prefix_partial_path_with_controller_namespace = false
 
     config.autoload_paths << "#{Rails.root}/lib"
     config.autoload_paths << "#{Rails.root}/app/models"
@@ -28,18 +52,9 @@ module Crabgrass
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = 'utf-8'
 
-    # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password]
-
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
-    config.active_record.disable_implicit_join_references = true
-    config.active_record.raise_in_transactional_callbacks = true
-
     config.active_support.deprecation = :notify
-
-    config.session_store :cookie_store,
-                         key: 'crabgrass_session'
 
     # Enable the asset pipeline
     config.assets.enabled = true

@@ -5,7 +5,7 @@ class DiscussionPageController < Page::BaseController
 
   def print
     authorize @page, :show?
-    render layout: 'printer-friendly'
+    render layout: 'printer_friendly'
   end
 
   protected

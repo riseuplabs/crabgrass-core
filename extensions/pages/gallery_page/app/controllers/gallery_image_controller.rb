@@ -2,23 +2,18 @@ class GalleryImageController < Page::BaseController
   helper 'gallery'
 
   # default_fetch_data is disabled for new in Pages::BaseController
-  prepend_before_filter :fetch_page_for_new, only: :new
+  prepend_before_action :fetch_page_for_new, only: :new
 
   def show
     authorize @page
     @showing = @page.try.showings.includes(:asset).find_by_asset_id(params[:id])
-    raise ErrorNotFound, :file unless @showing.try.asset
+    raise_not_found :file unless @showing.try.asset
     @image = @showing.asset
     # position sometimes starts at 0 and sometimes at 1?
     @image_index = @page.images.index(@image).next
     @image_count = @page.showings.count
     @next = @showing.lower_item
     @previous = @showing.higher_item
-  rescue ErrorNotFound => e
-    @exception = e
-    render 'exceptions/show',
-            status: 404,
-            layout: request.xhr? ? nil : 'notice'
   end
 
   # removed an non ajax fallback, azul

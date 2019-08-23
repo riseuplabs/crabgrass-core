@@ -16,7 +16,6 @@
         - r.input user.text_field(:email, class: 'form-control')
         - unless Conf.require_user_email
           - r.info :signup_email_info.t
-      - # call_hook :signup_form_password
       - f.button submit_tag(:signup_button.t, class: 'btn btn-primary')
 
     - if params[:redirect]

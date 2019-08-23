@@ -5,8 +5,7 @@
 # for example, suppose the request was for /pages/25/posts/create, we still
 # create links that look like /:context/:page_name?posts=2
 #
-# CURRENTLY UNUSED
-#
+# Used for example to paginate posts on pages.
 class LinkRenderer::Page < LinkRenderer::CrabgrassBase
   # page        --> the pagination page (integer)
   # page_object --> the object of class Page

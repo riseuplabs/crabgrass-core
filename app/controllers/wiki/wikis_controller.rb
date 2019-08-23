@@ -8,7 +8,7 @@
 class Wiki::WikisController < Wiki::BaseController
   include Common::Tracking::Action
 
-  skip_before_filter :login_required, only: :show
+  skip_before_action :login_required, only: :show
   track_actions :update
 
   helper 'wikis/sections'

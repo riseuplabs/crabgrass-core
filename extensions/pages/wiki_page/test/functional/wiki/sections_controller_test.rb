@@ -7,7 +7,7 @@ class Wiki::SectionsControllerTest < ActionController::TestCase
 
   def test_edit
     login_as :blue
-    xhr :get, :edit, id: pages(:multi_section_wiki).data_id, section: 'second-oversection'
+    get :edit, params: { id: pages(:multi_section_wiki).data_id, section: "second-oversection" }, xhr: true
 
     assert_response :success
 
@@ -34,10 +34,10 @@ class Wiki::SectionsControllerTest < ActionController::TestCase
     page = WikiPage.create! title: 'problem text', owner: 'blue' do |page|
       page.data = Wiki.new(body: "\n\nh1. hello\n\n** what?\n\nh1. goodbye\n\n 😁")
     end
-    get :show, id: page.data_id
+    get :show, params: { id: page.data_id }
     page = assigns(:page)
     assert_nothing_raised do
-      xhr :get, :edit, id: page.data_id, section: 'hello'
+      get :edit, params: { id: page.data_id, section: "hello" }, xhr: true
     end
 
     assert_response :success
@@ -47,11 +47,7 @@ class Wiki::SectionsControllerTest < ActionController::TestCase
     starting_all_sections = pages(:multi_section_wiki).wiki.all_sections
     login_as :blue
     # save the new (without a header)
-    xhr :put, :update,
-        id: pages(:multi_section_wiki).data_id,
-        section: 'section-three',
-        wiki: { body: 'a line' },
-        save: true
+    put :update, params: { id: pages(:multi_section_wiki).data_id, section: "section-three", wiki: { body: "a line" }, save: true }, xhr: true
 
     assert_response :success
     wiki = assigns(:wiki)

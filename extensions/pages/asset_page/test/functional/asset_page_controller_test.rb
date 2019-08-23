@@ -13,7 +13,7 @@ class AssetPageControllerTest < ActionController::TestCase
   def test_show
     page = create_page data: @asset, public: true
 
-    post :show, id: page.id
+    post :show, params: { id: page.id }
     assert_response :success
     assert_template 'show'
     assert_equal @asset.private_filename, assigns(:asset).private_filename,
@@ -26,8 +26,8 @@ class AssetPageControllerTest < ActionController::TestCase
     create_page created_by: users(:gerrard), asset: @asset
 
     assert_difference 'Asset::Version.count', 1, 'jpg should version' do
-      post 'update', id: @page.id,
-                     asset: { uploaded_data: upload_data('photo.jpg') }
+      post 'update', params: { id: @page.id,
+                               asset: { uploaded_data: upload_data('photo.jpg') } }
     end
   end
 
@@ -40,8 +40,8 @@ class AssetPageControllerTest < ActionController::TestCase
     assert_equal users(:blue).id, page.updated_by_id
 
     login_as :kangaroo
-    post 'update', id: page.id,
-                   asset: { uploaded_data: upload_data('photo.jpg') }
+    post 'update', params: { id: page.id,
+                             asset: { uploaded_data: upload_data('photo.jpg') } }
     assert_equal 'kangaroo', page.reload.updated_by_login
   end
 

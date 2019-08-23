@@ -2,4 +2,4 @@
   = render partial: 'user', collection: @users,
     spacer_template: 'common/divider'
 
-= pagination_links(@users, params: params.except(:utf8))
+= pagination_links @users, params: params.permit(:page, :path)

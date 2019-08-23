@@ -9,7 +9,7 @@ class RateManyPageControllerTest < ActionController::TestCase
   def test_show
     login_as @user
 
-    get :show, id: @page.id
+    get :show, params:{ id: @page.id }
     assert_response :success
   end
 end

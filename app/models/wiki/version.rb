@@ -1,4 +1,4 @@
-class Wiki::Version < ActiveRecord::Base
+class Wiki::Version < ApplicationRecord
   before_destroy :confirm_existance_of_other_version
 
   def self.most_recent

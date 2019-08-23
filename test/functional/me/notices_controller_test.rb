@@ -29,7 +29,7 @@ class Me::NoticesControllerTest < ActionController::TestCase
   end
 
   def test_destroy_all_ajax
-    xhr :delete, :destroy_all
+    delete :destroy_all, xhr: true
     assert_empty @blue.notices.where(dismissed: false)
     assert_response :success
   end

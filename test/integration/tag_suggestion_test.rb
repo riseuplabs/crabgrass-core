@@ -4,8 +4,6 @@ require 'javascript_integration_test'
 
 class TagSuggestionTest < JavascriptIntegrationTest
 
-  fixtures :all
-
   def test_tag_from_user_suggestion
     create_user_page tag_list: %w[summer winter],
       created_by: users(:dolphin)
@@ -39,7 +37,7 @@ class TagSuggestionTest < JavascriptIntegrationTest
 
   def test_tag_suggested_via_group_participations
     tag_source_page = create_user_page tag_list: ['sharedtag']
-    tag_source_page.add [users(:dolphin), groups(:rainbow)]
+    tag_source_page.add [users(:dolphin), groups(:rainbow)], access: :edit
     tag_source_page.save!
     tag_me = create_user_page
     tag_me.add [users(:dolphin), groups(:rainbow)], access: :edit

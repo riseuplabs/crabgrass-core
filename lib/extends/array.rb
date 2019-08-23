@@ -18,14 +18,6 @@ class Array
     collect { |a| [I18n.t(a.to_sym, default: a.to_s), a] }
   end
 
-  # [1,2,3].to_h {|i| [i, i*2]}
-  # => {1 => 2, 2 => 4, 3 => 6}
-  def to_h
-    Hash[*collect do |v|
-      yield(v)
-    end.flatten]
-  end
-
   def path
     join('/')
   end

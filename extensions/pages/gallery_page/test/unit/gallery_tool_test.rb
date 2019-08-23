@@ -39,7 +39,7 @@ class GalleryToolTest < ActiveSupport::TestCase
 
     @gal.sort_images(correct_new_positions)
 
-    new_positions = @gal.images(true).collect(&:id)
+    new_positions = @gal.images.reload.collect(&:id)
     assert_equal correct_new_positions, new_positions
   end
 
@@ -48,7 +48,7 @@ class GalleryToolTest < ActiveSupport::TestCase
 
     @gal.public = true
     @gal.save
-    @gal.images(true).each do |image|
+    @gal.images.reload.each do |image|
       assert image.public?
     end
   end

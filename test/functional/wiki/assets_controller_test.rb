@@ -13,7 +13,7 @@ class Wiki::AssetsControllerTest < ActionController::TestCase
 
   def test_new
     login_as @user
-    get :new, wiki_id: @wiki.id
+    get :new, params: { wiki_id: @wiki.id }
     assert_response :success
     assert_equal [@old_image], assigns('images')
   end
@@ -23,8 +23,7 @@ class Wiki::AssetsControllerTest < ActionController::TestCase
       assert_difference 'Asset.count' do
         assert_difference '@group.pages.count' do
           sleep 1 # make sure most recent always works
-          xhr :post, :create, wiki_id: @wiki.id,
-                              asset: { uploaded_data: upload_data('gears.jpg') }
+          post :create, params: { wiki_id: @wiki.id, asset: { uploaded_data: upload_data("gears.jpg") } }, xhr: true
         end
     end
     assert_equal [Asset.last, @old_image], assigns('images')

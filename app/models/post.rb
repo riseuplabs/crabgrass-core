@@ -1,15 +1,4 @@
-#  create_table "posts", :force => true do |t|
-#    t.integer  "user_id",       :limit => 11
-#    t.integer  "discussion_id", :limit => 11
-#    t.text     "body"
-#    t.text     "body_html"
-#    t.datetime "created_at"
-#    t.datetime "updated_at"
-#    t.datetime "deleted_at"
-#    t.string   "type"
-#  end
-
-class Post < ActiveRecord::Base
+class Post < ApplicationRecord
   ##
   ## ASSOCIATIONS
   ##
@@ -79,22 +68,6 @@ class Post < ActiveRecord::Base
   ##
   ## METHODS
   ##
-
-  # build a new post in memory, setting up the associations which need to be in
-  # place, but don't save anything yet (however, if the page doesn't have a
-  # discussion record yet, then it is created and saved). Arg is a hash, with
-  # these required keys: :user, :page, and :body. Afterwards, you must save the
-  # post, and the probably the page too, although it is not required.
-  # In a non-page context, this method is not needed. simply calling
-  # discussion.posts.build() is sufficient.
-  # def self.build(options)
-  #   raise ArgumentError.new unless options[:user] && options[:page] && options[:body]
-  #   page = options.delete(:page)
-  #   page.discussion ||= Discussion.create!(:page => page)
-  #   post = page.discussion.posts.build(options)
-  #   post.page_terms_id = page.page_terms_id
-  #   return post
-  # end
 
   #
   # this is like a normal create, except that it optionally accepts multiple arguments:

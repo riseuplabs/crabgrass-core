@@ -24,8 +24,6 @@ ThinkingSphinx::Index.define 'page/terms', with: :active_record,
   has :created_by_id
   has :updated_by_id
   has :owner_id
-  # has :updated_by_ids, :type => :multi
-  # has :watched_by_ids, :type => :multi
 
   # counts
   has :stars_count

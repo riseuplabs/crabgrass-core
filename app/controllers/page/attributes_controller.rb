@@ -5,7 +5,7 @@
 #
 
 class Page::AttributesController < Page::SidebarsController
-  before_filter :login_required
+  before_action :login_required
   track_actions :update
 
   def update

@@ -1,6 +1,6 @@
 if Rails.env.development?
   class DebugController < ApplicationController
-    before_filter :authorization_required
+    before_action :authorization_required
 
     # make the user assume the identity of another user
     def become

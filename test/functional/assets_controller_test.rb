@@ -16,36 +16,35 @@ class AssetsControllerTest < ActionController::TestCase
   def test_get_permissions
     page = FactoryBot.create :page
     asset = FactoryBot.create :image_asset, parent_page: page
-    assert_permission_denied do
-      get :show, id: asset.id, path: asset.basename
-    end
+    get :show, params: { id: asset.id, path: asset.basename }
+    assert_permission_denied
   end
 
   def test_get_with_escaped_chars
     asset = FactoryBot.create :image_asset
-    get :show, id: asset.id, path: asset.basename + '\xF3'
+    get :show, params: { id: asset.id, path: asset.basename + '\xF3' }
     assert_response :redirect
-    get :show, id: asset.id, path: asset.basename + '\xF3'
+    get :show, params: { id: asset.id, path: asset.basename + '\xF3' }
     assert_response :success
   end
 
   def test_not_found
     assert_raises ActiveRecord::RecordNotFound do
-      get :show, id: :non_existant
+      get :show, params: { id: :non_existant }
     end
   end
 
   def test_not_found_with_version
     assert_raises ActiveRecord::RecordNotFound do
-      get :show, id: :non_existant, version: 123
+      get :show, params: { id: :non_existant, version: 123 }
     end
   end
 
   def test_thumbnail_get
     asset = FactoryBot.create :image_asset
-    get :show, id: asset.id, path: thumbnail(asset.basename)
+    get :show, params: { id: asset.id, path: thumbnail(asset.basename) }
     assert_response :redirect
-    get :show, id: asset.id, path: thumbnail(asset.basename)
+    get :show, params: { id: asset.id, path: thumbnail(asset.basename) }
     assert_response :success
   end
 
@@ -56,7 +55,7 @@ class AssetsControllerTest < ActionController::TestCase
     user.updated(page)
     login_as user
     assert_difference 'page.assets.count', -1 do
-      delete :destroy, id: asset.id, page_id: page.id
+      delete :destroy, params: { id: asset.id, page_id: page.id }
     end
   end
 
@@ -66,9 +65,8 @@ class AssetsControllerTest < ActionController::TestCase
     asset = page.add_attachment! uploaded_data: upload_data('photo.jpg')
     user.updated(page)
     login_as user
-    assert_permission_denied do
-      delete :destroy, id: asset.id, page_id: page.id
-    end
+    delete :destroy, params: { id: asset.id, page_id: page.id }
+    assert_permission_denied
   end
 
   private

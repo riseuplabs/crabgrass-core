@@ -9,7 +9,7 @@ class Page::AssetsControllerTest < ActionController::TestCase
   end
 
   def test_index
-    get :index, page_id: @page.id
+    get :index, params: { page_id: @page.id }
     assert_response :success
   end
 
@@ -18,8 +18,7 @@ class Page::AssetsControllerTest < ActionController::TestCase
     @page.save!
     login_as :red
     assert_difference '@page.assets.count' do
-      xhr :post, :create, page_id: @page.id,
-                          asset: { uploaded_data: upload_data('photo.jpg') }
+      post :create, params: { page_id: @page.id, asset: { uploaded_data: upload_data("photo.jpg") } }, xhr: true
     end
     assert_equal @page.id, Asset.last.page_id
   end
@@ -29,10 +28,8 @@ class Page::AssetsControllerTest < ActionController::TestCase
     @page.save!
     login_as :red
     assert_no_difference '@page.assets.count' do
-      assert_permission_denied do
-        post :create, page_id: @page.id,
-                      asset: { uploaded_data: upload_data('photo.jpg') }
-      end
+      post :create, params: { page_id: @page.id, asset: { uploaded_data: upload_data('photo.jpg') } }
+      assert_permission_denied
     end
   end
 end

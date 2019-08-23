@@ -12,7 +12,7 @@ class GalleryControllerTest < ActionController::TestCase
 
   def test_show
     login_as :blue
-    get :show, id: @gallery.id
+    get :show, params: { id: @gallery.id }
     assert_response :success
     assert_not_nil assigns(:images)
   end
@@ -21,14 +21,14 @@ class GalleryControllerTest < ActionController::TestCase
     login_as :blue
     gallery = Gallery.create!(user: users(:blue),
                               title: 'Empty Gallery')
-    get :show, id: gallery.id
+    get :show, params: { id: gallery.id }
     assert_response :redirect
     assert_redirected_to @controller.send(:page_url, gallery, action: 'edit')
   end
 
   def test_edit
     login_as :blue
-    get :edit, id: @gallery.id
+    get :edit, params: { id: @gallery.id }
     assert_response :success
   end
 end

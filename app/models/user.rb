@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
 
   ##
   ## CORE EXTENSIONS
@@ -102,7 +102,7 @@ class User < ActiveRecord::Base
   before_save :display_name_update
 
   def display_name_update
-    if display_name_changed?
+    if will_save_change_to_display_name?
       increment :version
       Group.increment_version(group_ids)
     end
@@ -110,7 +110,7 @@ class User < ActiveRecord::Base
 
   after_save :update_name
   def update_name
-    if login_changed? and !login_was.nil?
+    if saved_change_to_login? and !login_before_last_save.nil?
       pages_owned.update_all(owner_name: login)
       pages_created.update_all(created_by_login: login)
       pages_updated.update_all(updated_by_login: login)

@@ -14,7 +14,7 @@ module Asset::Upload
     before_validation :process_attachment
     after_update :finalize_attachment  #  \  both are
     after_create :finalize_attachment  #  /  needed
-
+    attribute :uploaded_data
     attr_reader :uploaded_data
   end
 

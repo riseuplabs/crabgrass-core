@@ -4,7 +4,7 @@
 
 class SessionController < ApplicationController
   layout 'notice'
-  skip_before_filter :redirect_unverified_user
+  skip_before_action :redirect_unverified_user
 
   def login
     return unless request.post?

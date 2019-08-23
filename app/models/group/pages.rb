@@ -56,16 +56,12 @@ module Group::Pages
     else
       participation = page.group_participations.build attributes.merge(page_id: page.id, group_id: id)
     end
-    page.association_will_change(:groups)
-    page.groups_changed = true
     participation
   end
 
   def remove_page(page)
     page.groups.delete(self)
-    page.association_will_change(:groups)
     page.group_participations.reset
-    page.groups_changed = true
     page
   end
 

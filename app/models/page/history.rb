@@ -1,4 +1,4 @@
-class Page::History < ActiveRecord::Base
+class Page::History < ApplicationRecord
   belongs_to :user
   belongs_to :page
   belongs_to :item, polymorphic: true
@@ -26,7 +26,7 @@ class Page::History < ActiveRecord::Base
 
   # all subclasses use the same partial
   def to_partial_path
-    'page_histories/page_history'
+    'page/history/history'
   end
 
   def self.recipients_for_page(page)
@@ -83,10 +83,9 @@ class Page::History::Update < Page::History
   protected
 
   def self.class_for_update(page)
-    # FIXME: does not work, because page.public_changed? is always false
     return Page::History::MakePrivate if page.marked_as_private?
     return Page::History::MakePublic if page.marked_as_public?
-    # return Page::History::ChangeOwner if page.owner_id_changed?
+    # return Page::History::ChangeOwner if page.owner_id_previously_changed?
   end
 end
 class Page::History::MakePublic     < Page::History; end

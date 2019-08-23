@@ -25,8 +25,8 @@
 class Page::SharesController < Page::SidebarsController
   helper 'page/share', 'page/participation'
 
-  before_filter :close_popup, only: :update, if: :cancel_update?
-  before_filter :add_recipients, only: :update, if: :add_recipients?
+  before_action :close_popup, only: :update, if: :cancel_update?
+  before_action :add_recipients, only: :update, if: :add_recipients?
   track_actions :update
 
   # display the share or notify forms.
@@ -44,9 +44,9 @@ class Page::SharesController < Page::SidebarsController
   # there are four ways to submit the forms:
   #
   #   (1) cancel button (params[:cancel]==true)
-  #       -> before_filter :close_popup
+  #       -> before_action :close_popup
   #   (2) add button or return in add field (params[:add]==true)
-  #       -> before_filter :add_recipients
+  #       -> before_action :add_recipients
   #   (3) share button (params[:share_button]==true)
   #   (3) notify button (params[:notify_button]==true)
   #
@@ -77,9 +77,9 @@ class Page::SharesController < Page::SidebarsController
   protected
 
   def share_options
-    options = params[:notification] || HashWithIndifferentAccess.new
+    options = params.fetch(:notification, {}).permit(:send_email, :send_message)
     convert_checkbox_boolean(options)
-    options[:send_notice] ||= params[:notify_button].present?
+    options[:send_notice] ||= params.fetch(:notify_button, false)
     options.reverse_merge mailer_options: mailer_options
   end
 

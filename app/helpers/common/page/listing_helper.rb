@@ -5,18 +5,6 @@
 module Common::Page::ListingHelper
   protected
 
-  #
-  # this is a workaround for the missing to_partial_path before rails 3.2
-  #
-  # In rails 3.2 we'll be able to just set to_partial_path for pages and use
-  # render pages, locals
-  def render_pages(pages, locals)
-    render partial: 'common/pages/page',
-           collection: pages,
-           as: :page,
-           locals: locals
-  end
-
   def partial_from_style(style)
     case style
     when Symbol, String
