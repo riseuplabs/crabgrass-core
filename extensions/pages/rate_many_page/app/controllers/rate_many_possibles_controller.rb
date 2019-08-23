@@ -12,7 +12,7 @@ class RateManyPossiblesController < Page::BaseController
       position = ids.index(possible.id.to_s)
       possible.update_attribute('position', position + 1) if position
     end
-    render nothing: true
+    render body: nil
   end
 
   def create
