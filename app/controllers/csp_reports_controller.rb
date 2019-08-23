@@ -19,6 +19,6 @@ class CspReportsController < ApplicationController
       user_agent: request.user_agent,
       violated_directive: report['violated-directive']
     )
-    render nothing: true
+    render body: nil
   end
 end

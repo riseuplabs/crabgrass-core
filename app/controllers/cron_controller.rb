@@ -20,7 +20,7 @@ class CronController < ActionController::Base
     else
       raise 'no such cron action'
     end
-    render nothing: true
+    render body: nil
   end
 
   protected

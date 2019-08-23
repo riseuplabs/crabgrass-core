@@ -11,7 +11,7 @@ class RankedVotePossiblesController < Page::BaseController
     current_user.updated(@page)
     find_possibles
   rescue ActionController::ParameterMissing
-    render nothing: true
+    render body: nil
   end
 
   def create
