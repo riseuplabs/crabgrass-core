@@ -170,8 +170,7 @@ class Post < ApplicationRecord
 
   def with_link?
     format_body
-    body_html.gsub(/<(\/*)a\s([^>]*?)>/) { |_m| return true }
-    return false
+    /<(\/*)a\s([^>]*?)>/ === body_html
   end
 
   protected
