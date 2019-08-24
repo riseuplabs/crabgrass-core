@@ -13,6 +13,7 @@ class PostTest < ActiveSupport::TestCase
     refute posts(fixture_name).with_link?,
       "Post fixture '#{fixture_name}' has no link but with_link? says it does."
 
+    refute Post.new.with_link?
   end
 
   def test_prevent_creation_of_spam
