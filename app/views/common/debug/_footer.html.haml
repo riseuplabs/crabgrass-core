@@ -1,14 +1,4 @@
-
 %div.debug
-
-  .p
-    %h3 Stylesheets
-    %ul
-      - optional_stylesheets.each do |style|
-        %li= link_to "#{style}.css", current_theme.stylesheet_url(style), target: '_blank'
-      %li
-        = link_to 'screen.css', current_theme.stylesheet_url('screen'), target: '_blank'
-        = link_to '(refresh)', current_theme.stylesheet_url('screen_refresh'), target: '_blank'
 
   #debug_history.p
   %script
