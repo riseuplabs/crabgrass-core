@@ -119,7 +119,7 @@ class Asset < ApplicationRecord
                                  dependent: :destroy do
         def preview_images
           select { |t| %w[small medium large].include?(t.name) }.
-            sort_by(&:size).uniq(&:size)
+            sort_by(&:name).reverse.uniq(&:size)
         end
 
         def other_formats
