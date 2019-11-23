@@ -150,7 +150,7 @@ gem 'delayed_job_active_record', '~> 4.0'
 gem 'daemons'
 
 # unpack file uploads
-gem 'rubyzip', '~> 1.2.2', require: false
+gem 'rubyzip', '~> 1.3', require: false
 
 # load new rubyzip, but with the old API.
 # TODO: use the new zip api and remove gem zip-zip
