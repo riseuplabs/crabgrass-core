@@ -1,4 +1,4 @@
-- cache [current_language, page.uri, short_date(page.updated_at)] do
+- cache [current_language, page, page.owner_name, short_date(page.updated_at)] do
   %tr
     %td.owner.hidden-xs
       = link_to_entity(page.owner, avatar: :xsmall)
