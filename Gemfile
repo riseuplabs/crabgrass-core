@@ -70,7 +70,7 @@ gem 'acts-as-taggable-on', '~> 4.0'
 # URL:
 # https://groups.google.com/forum/#!topic/ruby-security-ann/NAalCee8n6o
 # Title: Possible XSS vulnerability in Rack
-gem 'rack', '~> 1.6.11'
+gem 'rack', '~> 1.6.12'
 
 ##
 # Upgrade pending
