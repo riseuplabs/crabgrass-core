@@ -1,0 +1,810 @@
+fa:
+  congratulations_you_have_signed_up: تبریک! شما برای %{site_title} ثبت‌نام کردید.
+  cookie_disabled_warning: شما کوکی‌ها را غیرفعال کرده‌اید. شما تا زمانی که کوکی‌ها را فعال کنید نمی‌توانید وارد حساب خود شوید.
+  email_verification_body: |-
+      شما برای %{site_title} (%{host}) ثبت‌نام کرده‌اید.
+
+      قبل از این‌که بتوانید وارد حساب خود شوید، باید رایانامه خود را تایید کنید.
+
+      %{verify_email_link}
+
+      اگر قصد ندارید که عضو شوید، این رایانامه را نادیده بگیرید.
+  forgotten_email_address: چه نشانی رایانامه‌ای را به ما دادید وقتی که حساب خود را ساختید؟
+  invalid_email_text: نشانی رایانامه‌ای که به ما دادید معتبر نیست.
+  invalid_token: نشان نامعتبر
+  invalid_token_text: پیوند بازنشانی رمزی که مشخص کردید نامعتبر است. احتمالا قبلا استفاده یا منقضی شده.
+  login: ورود
+  login_failed: نتوانستیم وارد شویم
+  login_failure_reason: نام کاربری یا رمز عبور نادرست است.
+  logout_success: خدا نگهدار
+  logout_success_message: شما خارج شده‌اید.
+  sign_in: وارد شوید
+  signup_button: ثبت‌نام کنید
+  signup_email_info: 'اختیاری: در صورت فراموشی رمز عبور استفاده می‌شود'
+  signup_link: یک کاربر جدید بسازید
+  signup_success: عضویت موفقیت‌آمیز بود
+  signup_success_message: ممنون که عضو شدید!
+  signup_title: حساب خود را بسازید
+  you_should_receive_instructions_email: شما باید یک رایانامه حاوی دستورالعمل دریافت کنید تا مراحل ساخت حساب خود را کامل کنید.
+  account_successfully_removed: حساب شما با موفقیت حذف شد. ما آن و تمام داده‌های مرتبط با آن را از پایگاه داده حذف می‌کنیم.
+  anonymize_display_name: نام نمایشی را مخفی کن
+  anonymize_display_name_info: نام نمایشی خود را همه‌جا با «گمنام» تغییر بده
+  confirm_account_removal: آیا مطمئنید که می‌خواهید حساب خود را پاک کنید؟ این کار قابل بازگشت نیست و تمام داده‌های شما حذف خواهد شد.
+  destroy_comments: پاسخ‌ها را نابود کن
+  destroy_comments_info: این تمام پاسخ‌هایی که در صفحات مختلف ایجاد کرده‌اید را نابود می‌کند. این کار ممکن است فهمیدن پاسخ‌های بازمانده از دیگران را سخت کند.
+  remove_your_account: حساب خود را حذف کنید
+  change_password: رمز عبور را تغییر دهید
+  confirm_new_password: رمز عبور جدید را تایید کنید
+  forgot_password_link: رمز عبور خود را فراموش کرده‌اید؟
+  forgot_password_mail_expiry: این پیوند برای 24 ساعت معتبر می‌ماند. اگر بعد از این مدت نیاز داشتید رمز عبور خود را بازیابی کنید، باید دوباره به صفحه فراموشی رمز عبور مراجعه کنید و یک لینک جدید درخواست کنید.
+  forgot_password_mail_greeting: "%{user}، برای بازیابی رمز عبور خود، لطفا مراجعه کنید به"
+  forgot_password_text: اگر رمز عبوری که برای وارد شدن به حساب استفاده می‌کردید را فراموش کرده‌اید، ما می‌توانیم به شما یک رایانامه حاوی یک پیوند ارسال کنیم که به شما اجازه می‌دهد یک رمز عبور جدید تولید کنید.
+  new_password: رمز عبور جدید
+  password: رمز عبور
+  password_confirmation: تایید رمز عبور
+  password_reset: بازیابی رمز عبور
+  password_reset_ok_text: رمز عبور شما با موفقیت بازیابی شد. حالا شما می‌توانید با رمز تازه تغییر کرده خود وارد حساب کاربری خود شوید.
+  password_was_reset: رمز عبور شما بازیابی شد
+  requested_forgot_password: شما درخواست تغییر رمز عبور داده‌اید
+  reset_password: بازیابی رمز عبور
+  reset_password_email_sent: اگر این نشانی رایانامه با یک نام کاربری در ارتباط باشد، یک رایانامه حاوی دستورالعمل بازیابی رمز عبور خود برای شما ارسال شده است.
+  reset_password_mail_greeting: "%{user}، رمز عبور شما همان‌طور که درخواست داده بودید تغییر کرد."
+  reset_password_mail_warning: اگر درخواستی برای تغییر رمز عبور خود نداده بودید، لطفا با ما تماس بگیرید.
+  reset_password_text: سلام %{user}. اگر شما رمز عبوری که با آن وارد حساب خود می‌شدید را فراموش کرده‌اید، این‌جا می‌توانید یک رمز عبور جدید برای خود تنظیم کنید.
+  crabgrass:
+    description_html: '، <a href="https://www.gnu.org/licenses/agpl-3.0.html">نرم‌افزار آزاد تحت لیسانس AGPL</a> برای سازماندهی شبکه
+
+      '
+    get_involved: مشارکت کنید
+    help_pages: صفحات راهنمای Crabgrass
+    help_translate: کمک برای ترجمه
+    powered_by_html: 'این تارنما از <a href="https://0xacab.org/riseuplabs/crabgrass">crabgrass</a> قدرت گرفته%{description}
+
+      '
+    report_a_bug: گزارش یک اشکال
+    request_a_feature: درخواست یک ویژگی
+  actions:
+    possible:
+      add: اضافه کردن یک امکان
+    task:
+      add: اضافه کردن یک تکلیف
+  add_button: اضافه کردن
+  alert: هشدار
+  approve: تایید
+  approved: تایید شده
+  cancel: لغو کردن
+  close_button: بستن
+  confirm: تایید کردن
+  create: ساختن
+  create_a_new_thing: ساختن یک %{thing}
+  create_button: ساختن
+  create_thing: ساختن %{thing}
+  created_by: ساخته شده توسط
+  created_by_user_on: ساخته شده توسط %{user} در %{when}.
+  delete: حذف
+  delete_thing: حذف %{thing}
+  deleted: حذف شده
+  destroy: نابودسازی
+  destroy_confirmation: آیا مطمئنید که می‌خواهید این %{thing} را حذف کنید؟ این کار قابل بازگشت نیست.
+  destroy_thing: نابود کردن%{thing}
+  drop_files_here: فایل‌ها را این‌جا رها کنید
+  edit: ویرایش
+  files_pending: پرونده‌های در حال انتظار
+  loading_progress: بارگزاری...
+  ok_button: بسیار خوب
+  optional: اختیاری
+  pending: در حال انتظار
+  reject: رد کردن
+  rejected: رد شده
+  remove: حذف
+  required: الزامی
+  save_button: ذخیره
+  saved: ذخیره شده
+  select_files: فایل‌های انتخاب شده
+  send_button: ارسال
+  show_thing: نمایش %{thing}
+  thing_destroyed: "%{thing} نابود شد"
+  thing_required: "%{thing} الزامی است"
+  updated_by: به‌روز شده توسط
+  upload: بارگزاری
+  mailer:
+    hello: درود %{user_name}
+    pgp_key:
+      key_uploaded: شما همین الآن یک کلید جدید را بارگزاری کردید. این کلید برای رمزنگاری اعلان‌هایی که توسط رایانامه‌ها برای شما ارسال می‌شوند (یک ویژگی آزمایشی که به زودی آماده می‌شود) ، استفاده می‌شود.
+      key_uploaded_subject: اعلان‌ها
+    page_histories:
+      change_your_settings_here: 'تنظیمات اعلان‌های خود از طریق رایانامه را از این‌جا تغییر دهید: %{page_link}'
+      daily_digest: "%{site}: خلاصه روزانه تغییرات صفحات"
+      page_update: "%{site}: در یک صفحه اصلاحاتی اعمال شده"
+      pages_you_are_watching_have_been_modified:
+        one: "%{count} صفحه که شما تماشا می‌کردید از زمان اعلان قبلی دچار تغییراتی شده‌اند."
+        other: "تعداد %{count} صفحه که شما تماشا می‌کنید از اعلان قبلی تا کنون دچار اصلاحاتی شده‌اند."
+      the_page_you_are_watching_description: صفحه «%{page_title}» که شما تماشایش می‌کنید دچار اصلاحاتی شده.
+      upload_your_public_pgp_key: برای دریافت جزئیات بیش‌تر از به‌روزرسانی‌ها در قالب رایانامه‌های رمزنگاری شده، لطفا کلید عمومی PGP خود را بارگزاری کنید.
+      we_leave_out_details: ما جزئیات را در این رایانامه نمی‌آوریم تا از اطلاعاتی که ممکن است برای شما محرمانه باشد محافظت کنیم.
+      you_can_find_updates_here: 'شما این‌جا اطلاعات بیش‌تر و یک فهرست از تغییرات اخیر را پیدا می‌کنید:'
+      you_can_turn_off_or_configure_notifications: اعلان‌ها از طریق رایانامه را غیرفعال کنید، یک خلاصه از تغییرات را دریافت کنید یا هر دفعه که در این صفحه تغییری ایجاد شد یک رایانامه دریافت کنید
+  exception:
+    description:
+      forbidden: ببخشید. شما قابلیت انجام این کار را ندارید.
+      group:
+        not_found: ببخشید، ما نتوانستیم گروهی که دنبالش بودید را پیدا کنیم.
+      not_found: ببخشید، ما نتوانستیم چیزی که دنبالش بودید را پیدا کنیم.
+      unauthorized: لطفا برای انجام این کار وارد حساب خود شوید.
+    title:
+      forbidden: اجازه رد شد
+      group:
+        not_found: گروه پیدا نشد
+      not_found: "%{thing} پیدا نشد"
+      unauthorized: نیازمند ورود به حساب کاربری
+  add_comment: اضافه کردن پاسخ
+  add_images_to_gallery_link: اضافه کرده عکس‌ها به آلبوم
+  close_and_reload_gallery: بستن و بارگیری مجدد آلبوم
+  confirm_image_delete: آیا واقعا می‌خواهید این عکس را حذف کنید؟ این کار قابل بازگشت نیست.
+  edit_image: ویرایش عکس
+  edit_gallery_explanation: عکس‌های جدید اضافه کنید یا برای تنظیم مجدد جایگاه عکس‌ها، آن‌ها بکشید.
+  image_count: عکس %{number} از %{count}
+  image_count_total: "%{count} عکس"
+  upload_new_image: بارگزاری یک عکس جدید
+  upload_zip_file_link: بارگزاری یک فایل زیپ
+  approved_by_entity: تایید شده توسط %{entity}
+  friends: دوستان
+  name: نام
+  owner: صاحب
+  people: افراد
+  person: فرد
+  recipient: گیرنده
+  recipients: گیرنده‌ها
+  rejected_by_entity: رد شده توسط %{entity}
+  user: کاربر
+  users: کاربرها
+  thing_was_not_sent:
+    one: "%{thing} قابل ارسال به %{recipient} نبود."
+    other: "%{count}%{thing} قابل ارسال نبودند."
+  thing_was_sent:
+    one: "%{thing} به %{recipient} ارسال شد."
+    other: "%{count}%{thing} ارسال شدند."
+  all: همه
+  autocomplete:
+    placeholder:
+      enter_name_of_group_or_person: نام یک گروه یا فرد را وارد کنید
+      enter_name_of_group: نام یک گروه را وارد کنید
+      enter_name_of_person: نام یک فرد را وارد کنید
+      enter_name_of_contact: نام یک مخاطب را وارد کنید
+      enter_name_of_peer: نام یک همتا را وارد کنید
+  everybody: همه
+  go: برو
+  list_things: فهرست %{things}
+  modified: اصلاح شده
+  new: جدید
+  next: بعدی
+  no_search_results: بدون نتیجه
+  no_things_found: هیچ %{things} پیدا نشد.
+  none: هیچی
+  or: یا
+  previous: قبلی
+  return: بازگشت
+  search: جست‌وجو
+  see_all_link: مشاهده همه
+  see_more_link: بیش‌تر
+  sorry: متاسفیم
+  thing_not_found: "%{thing} پیدا نشد"
+  total: "کلا %{count} تا"
+  unknown: ناشناس
+  contacts: مخاطبین
+  member_groups_of_network: اعضای گروه
+  my_contacts: مخاطبین من
+  peers: همتایان
+  action_cannot_be_undone: این کار قابل بازگشت نیست.
+  administration: مدیریت
+  back: بازگشت
+  comments: پاسخ‌ها
+  contributed: مشارکت کرد
+  description: توضیحات
+  details: جزئیات
+  dismiss_all_notices: معاف کردن همه
+  dismiss_all_notices_confirmation: آیا مطمئنید که می‌خواهید همه اعلان‌ها را معاف کنید؟
+  display: نمایش
+  hide: مخفی کردن
+  locale: محلی
+  me: من
+  message: پیام
+  messages: پیام‌ها
+  notice: اطلاع
+  notices: اعلامیه‌ها
+  notification: اعلان
+  page: صفحه
+  permissions: مجوزها
+  print: چاپ
+  private: خصوصی
+  private_message_notice: اعلان پیام خصوصی
+  public: عمومی
+  settings: تنظیمات
+  share: اشتراک‌گزاری
+  show: نمایش
+  statistics: آمار
+  summary: خلاصه
+  tasks: تکالیف
+  title: عنوان
+  visibility: پدیداری
+  visits: بازدیدها
+  all_groups: تمام گروه‌ها
+  basic_settings: تنظیمات اولیه
+  committee: کمیته
+  committees: کمیته‌ها
+  council: شورا
+  councils: شوراها
+  group: گروه
+  groups: گروه‌ها
+  my_groups: گروه‌های من
+  members: اعضا
+  membership: عضویت
+  network: شبکه
+  networks: شبکه‌ها
+  organization: سازمان
+  organizations: سازمان‌ها
+  structure: ساختار
+  group_destroyed_email: "%{group}%{group_type} نابود شد!"
+  group_destroyed_subject: "%{group}%{group_type} توسط %{user} حذف شد!"
+  group_invite_email: |-
+      %{from_user} شما را به عضویت گروه %{group} دعوت کرده. اگر مایل هستید عضو این گروه شوید، این‌جا کلیک کنید:
+
+      %{accept_invite_link}
+
+      صفحه اصلی این گروه را می‌توانید این‌جا پیدا کنید:
+      %{group_home_link}
+
+      اگر مایل به عضویت در این گروه نیستید، این رایانامه را نادیده بگیرید.
+  group_invite_subject: دعوت‌نامه برای عضویت در گروه «%{group}»
+  committee_choose_group: 'یک گروه برای این %{group_type} در نظر بگیرید:'
+  committee_description: کمیته‌ها، گروه‌هایی درون یک سازمان یا شبکه هستند. یک کمیته کاملا تابع سازمان یا شبکه اصلی خود است. یک کاربر که از خارج از یک سازمان یا شبکه به کمیته آن اضافه شده، فقط به کمیته دسترسی خواهد داشت.
+  council_description: شوراها، گروه‌هایی هستند با قابلیت‌های مدیریتی ویژه. هر سازمان یا شبکه ممکن است یک شورا داشته باشد. اگر داشته باشد، افرادی که که در شورا هستند قدرت ویژه‌ای روی شبکه یا سازمان دارند.
+  council_description_details: به صورت پیش‌فرض، تمام اعضا می‌توانند %{group} را اصلاح کنند. اگر می‌خواهید قدرت‌های مدیریت را به کاربران خاصی محدود کنید، یک شورا ایجاد کنید و کاربرانی را به آن اضافه کنید.
+  create_public_group_wiki: عمومی
+  create_private_group_wiki: خصوصی
+  group_creation_info: 'چهار نوع گروه وجود دارد:'
+  group_description: سازمان‌ها، گروه‌های خودمختاری هستند که افراد در آن‌ها عضو می‌شوند.
+  network_committees_may_not_join_networks: کمیته‌های دیگر شبکه‌ها ممکن است عضو نشوند.
+  network_description: شبکه‌ها، گروه‌هایی هستند که می‌توانند سازمان‌ها را به عنوان عضو داشته باشند. یک شبکه، می‌تواند به عنوان یک اتحادیه از سازمان‌های مختلف استفاده شود یا مکانی برای دو سازمان برای همکاری باشد.
+  networks_may_not_join_networks: شبکه‌ها نمی‌توانند عضو دیگر شبکه‌ها شوند.
+  group_membership_count: "%{count} عضو."
+  membership_destroy_confirm_message: آیا هم‌چنان می‌خواهید %{entity} را از گروه %{group} حذف کنید؟
+  membership_exists_error: عضویت برای %{member} وجود دارد
+  membership_leave_message: شما از گروه %{group} حذف شدید
+  membership_notification: اعلان عضویت
+  membership_requests: درخواست عضویت
+  public_groups: گروه‌های عمومی
+  shared_groups: گروه‌های اشتراکی
+  may_request_membership_description: یک پیوند «عضویت گروه %{group}» در صفحه گروه %{group} شما ظاهر می‌شود. این یک درخواست برای عضویت ارسال می‌کند که می‌تواند تایید یا رد شود.
+  open_group: باز کردن گروه %{group}
+  open_group_description: اعضا فورا به گروه %{group} اضافه شدند - نیاز به تایید هیچ درخواستی نیست
+  group_wiki: ویکی گروه
+  members_may_edit_wiki: تمام اعضا می‌توانند این ویکی را ویرایش کنند
+  members_may_edit_wiki_description: اگر علامت زده نشود، فقط اعضای شورا می‌توانند ویکی گروه %{group} را ویرایش کنند.
+  public_group_wiki: عمومی
+  private_group_wiki: خصوصی
+  add_members_to_committee: یک عضو گروه به این %{group_type} اضافه کنید. برای اضافه کردن افرادی که در گروه مادر نیستند، یک دعوت‌نامه بفرستید.
+  allow_membership_requests: اجازه دادن برای درخواست عضویت
+  committee_publicly_visible: کمیته‌ها را به شکل عمومی نمایش بده
+  committee_publicly_visible_description: کمیته‌ها به افرادی که عضو نیستند نشان داده می‌شود در %{domain}/نام-گروه-شما
+  descriptive_name_for_display: یک اسم توصیفی برای نمایش دادن
+  group_language: زبان عمومی این %{group}.
+  group_members_publicly_visible: اعضا را به شکل عمومی نمایش بده
+  group_members_publicly_visible_description: نام اعضا به افراد غیر عضو نمایش داده می‌شود در %{domain}/نام-گروه-شما. %{group} می‌تواند در صفحات اعضا فهرست شود (%{domain}/نام-کاربری)
+  group_publicly_visible: گروه %{group} را به صورت عمومی نمایش بده
+  group_publicly_visible_description: "گروه %{group} در دایکتوری عمومی نمایش داده می‌شود. <i>صفحه کاربری</i> به افراد غیر عضو در %{domain}/نام-گروه-شما نمایش داده می‌شود."
+  group_successfully_created: گروه با موفقیت ساخته شد.
+  join_group_confirmation: آیا مطمئنید که می‌خواهید عضو یک گروه %{group_type} شوید؟
+  join_group_link: عضویت در گروه %{group_type}
+  leave_group_confirmation: آیا مطمئن هستید که می‌خواهید این %{group_type} را ترک کنید؟ شما دسترسی به تمام صفحاتی که مالکشان %{group_type} است را از دست می‌دهید.
+  leave_group_link: ترک %{group_type}
+  link_name_description: این نام، نحوه ارجاع دادن شما به این گروه در پیوندها و نشانی‌های وب است. این نام فقط می‌توانید حروف الفبای انگلیسی داشته باشد و هیچ فاصله‌ای قابل قبول نیست.
+  network_initial_member: یک سازمان را انتخاب کنید تا عضو اولیه این شبکه باشد.
+  networks_publicly_visible: شبکه‌ها را به صورت عمومی نمایان کنید
+  networks_publicly_visible_description: شبکه‌ها به افراد غیر عضو در آدرس %{domain}/نام-گروه-شما نمایش داده می‌شوند
+  request_exists: درخواست عضویت شما در صف انتظار برای تایید قرار گرفت.
+  request_join_group_link: درخواست برای عضویت در %{group_type}
+  rss_feed: خوراک RSS
+  send_invites: ارسال دعوت‌نامه
+  this_is_committee: این کمیته بخشی از %{parent_group} است.
+  view_requests: نمایش درخواست‌ها
+  headings:
+    info:
+      page_search: پیدا کردن تمام صفحاتی که شما مستقیم یا از طریق گروه‌ها به آن‌ها دسترسی دارید
+      recent_pages: این صفحه به تازگی ساخته یا به‌روزرسانی شده است.
+    page_search: جست‌وجو برای صفحات
+    recent_pages: صفحات اخیر
+  display_name: نام نمایشی
+  do_you_want_to_receive_email_notifications: آیا می‌خواهید درباره تغییرات صفحاتی که تماشا می‌کنید رایانامه دریافت کنید؟
+  email: رایانامه
+  fingerprint: اثر انگشت
+  language: زبان
+  message_user_wrote_caption: "%{user} نوشت:"
+  message_you_wrote_caption: 'شما نوشتید:'
+  my_dashboard: میز کار من
+  notification_select:
+    digest: 'بله: خلاصه روزانه تغییرات'
+    none: 'نه: هیچ رایانامه‌ای برای تغییرات'
+    single: 'بله: یک ایمیل برای هر تغییر'
+  or_image_url: یا آدرس اینترنتی تصویر
+  pgp_key: کلید PGP
+  pgp_public_key: کلید عمومی
+  pgp_key_description: 'آزمایشی: اگر می‌خواهید رایانامه‌های رمزنگاری شده را به عنوان اعلان‌ها دریافت کنید، کلید عمومی PGP خود را بارگزاری کنید (ویژگی‌ها بیش‌تر به زودی اضافه می‌شوند). ما یک رایانامه رمزنگاری شده برای تایید برای شما ارسال می‌کنیم.'
+  pgp_key_invalid: کلیدی که افزودید نمی‌تواند اضافه شود. آیا واقعا یک کلید عمومی PGP را الصاق کردید؟
+  pgp_key_expired: کلید PGP که اضافه کردید منقضی شده.
+  pgp_key_placeholder: کلید عمومی PGP خود را وارد کنید
+  private_profile: نمایه خصوصی
+  remove_image_link: حذف تصویر
+  save_changes: ذخیره تغییرات
+  select_image_file: انتخاب فایل تصویر
+  send_message_link: ارسال پیام
+  time_zone: منطقه زمانی
+  unread_private_message: شما یک پیام خصوصی خوانده نشده از %{user} دارید
+  upload_image: بارگزاری تصویر
+  uploaded_image_cropped: تصویر بارگزاری شده چیده شده و به ۲۰۲ پیکسل مربعی پهن می‌شود.
+  username: نام کاربری
+  account_settings: تنظیمات حساب کاربری
+  back_to_group: بازگشت به گروه
+  back_to_page: بازگشت به صفحه
+  home: خانه
+  menu_admin: مدیر
+  menu_link_logout: خروج %{user}
+  profile: نمایه
+  access: دسترسی
+  action: عمل
+  advanced: پیش‌رفته
+  my_pages: صفحات من
+  pages: صفحات
+  popular_pages: صفحات معروف
+  properties: خواص
+  recent_pages: صفحات اخیر
+  current_video_sources: 'در حال حاضر پشتیبانی می‌شود: یوتیوب، بلیپ.تی‌وی، ویدئو گوگل، ویمئو.'
+  video_embed_code_description: این نشانی تارنما نیست. این یک کد محصور شده بین < و > است که تارنمایی که ویدئو از آن است – یوتیوب یا غیره – در دسترس شما قرار می‌دهد که بتوانید ویدئو را در دیگر تارنماها قرار بدهید.
+  video_embed_code_prompt: جا دادن کد از یک منبع ویدئو بیرونی.
+  access_code_expired: کد %{code} منقضی شده و وجود ندارد.
+  email_link_expires: این پیوند %{days} روز دیگر منقضی می‌شود.
+  email_notice_access: 'شما می‌توانید به این صقحه از این‌جا درسترسی پیدا کنید:'
+  email_notice_hello: درود، %{from} یک تارنما برای شما ارسال کرده است.
+  email_notice_hello_with_message: 'درود، %{from} یک تارنما برای شما ارسال کرده به همراه این پیام: %{message}'
+  email_notice_subject: صفحه «%{title}» را بررسی کنید
+  page_notice: اعلان صفحه
+  page_notice_title: <user>%{from}</user> صفحه «%{page_title}» را برای شما ارسال کرده
+  page_notice_title_with_message: '<user>%{from}</user> صفحه «%{page_title}» را برای شما ارسال کرده همراه با این پیام:'
+  page_update: به‌روزرسانی صفحه
+  page_updated: <user>%{from}</user> صفحه «%{page_title}» را به‌روزرسانی کرد
+  page_history_add_star: "%{user_name} یک ستاره اضافه کرد"
+  page_history_added_comment: "%{user_name} یک پاسخ اضافه کرد"
+  page_history_change_title: "%{user_name} نام صفحه را اصلاح کرده است"
+  page_history_deleted_page: "%{user_name} صفحه را حذف کرد"
+  page_history_destroyed_comment: "%{user_name} یک پاسخ را نابود کرد"
+  page_history_details_change_title: 'از «%{from}» به: «%{to}»'
+  page_history_granted_group_full_access: "%{user_name} دسترسی کامل را به گروه %{item_name} تقدیم کرد"
+  page_history_granted_group_read_access: "%{user_name} دسترسی خواندن را به گروه %{item_name} تقدیم کرد"
+  page_history_granted_group_write_access: "%{user_name} دسترسی نوشتن را به گروه %{item_name} تقدیم کرد"
+  page_history_granted_user_full_access: "%{user_name} دسترسی کامل را به کاربر %{item_name} تقدیم کرد"
+  page_history_granted_user_read_access: "%{user_name} دسترسی خواندن را به کاربر %{item_name} تقدیم کرد"
+  page_history_granted_user_write_access: "%{user_name} دسترسی نوشتن را به کاربر %{item_name} تقدیم کرد"
+  page_history_make_private: "%{user_name} گزینه عمومی کردن صفحه را غیرفعال کرده است"
+  page_history_make_public: "%{user_name} صفحه را عمومی کرده است."
+  page_history_remove_star: "%{user_name} یک ستاره را پاک کرد"
+  page_history_revoked_group_access: "%{user_name} دسترسی به گروه %{item_name} را باطل کرد"
+  page_history_revoked_user_access: "%{user_name} دسترسی به کاربر %{item_name} را باطل کرد"
+  page_history_start_watching: "%{user_name} شروع به تماشای این صفحه کرده است"
+  page_history_stop_watching: "%{user_name} دیگر این صفحه را تماشا نمی‌کند"
+  page_history_updated_comment: "%{user_name} یک پاسخ را به‌روزرسانی کرد"
+  page_history_updated_content: "%{user_name} محتوای صفحه را به‌روزرسانی کرد"
+  page_history_user_created_page: "%{user_name} صفحه را ایجاد کرد"
+  active_filters: فعال کردن فیلترها
+  all_page_types: تمام انواع صفحات
+  all_pages: تمام صفحات
+  created: ساخته شد
+  created_by_dotdotdot: ساخته شده توسط...
+  created_by_me: ساخته شده
+  created_by_user: ساخته شده توسط %{user}
+  created_by_user_description: جست‌وجو برای صفحاتی که توسط یک فرد خاص ساخته شده‌اند.
+  data_for_page_missing: داده‌ها برای این صفحه گم شده‌اند.
+  edit_title: ویرایش تیتر
+  edited: ویرایش شد
+  edited_by_user: ویرایش شده توسط %{user}
+  filter_group_description: جست‌وجو برای صفحاتی که یک گروه خاص به آن دسترسی دارند.
+  filter_tag_description: جست‌وجو برای صفحاتی با یک برچست خاص.
+  filter_user_description: جست‌وجو برای صفحاتی که یک کاربر خاص به آن دسترسی دارد.
+  most_active: فعال‌ترین
+  most_stars: پرستاره‌ترین
+  most_viewed: دیده‌شده‌ترین
+  no_change: بدون تغییر
+  owned_by_me: خودی
+  owned_by_user: متعلق به %{user}
+  page_name_description: نام خاص اختیاری (استفاده شده برای نشانی این صفحه)
+  read: خواندن
+  starred: ستاره‌دار شده
+  starred_by_user: ستاده‌دار شده توسط %{user}
+  type: نوع
+  unread: خوانده نشده
+  updated: به‌روزرسانی شده
+  viewed: دیده شده
+  watched_by_me: تماشا کردن
+  watched_by_user: تماشا شده توسط %{user}
+  add_star_link: ستاره‌دار کنید (%{star_count})
+  delete_page_link: حذف %{page_class}
+  destroy_page_via_shred: نابودسازی فوری
+  destroy_page_via_shred_info: این عمل به شکل دائم، این صفحه را نابود می‌کند. این عمل غیر قابل بازگشت است.
+  destroy_page_via_trash: منتقل کردن به سطل آشغال
+  destroy_page_via_trash_info: این عمل، این صفحه را به سطل آشغال منتقل می‌کند. می‌توانید بعدا این صفحه را بازگردانید.
+  information: اطلاعات
+  page_details_link: "جزئیات %{page_class}"
+  page_is_public: این صفحه عمومی است.
+  participation: مشارکت
+  public_checkbox_help: اگر فعال شود، هر کسی می‌تواند این صفحه را ببیند.
+  remove_access_error: دسترسی به این صفحه نمی‌تواند پاک شود. شما نمی‌توانید دسترسی صاحبان یا دسترسی‌های واجب خود برای مدیریت این صفحه را پاک کنید.
+  remove_star_link: پاک کردن ستاره (%{star_count})
+  undelete_from_trash: خنثی
+  watch_checkbox: به‌روزرسانی‌ها را تماشا کنید
+  add_new_attachment: اضافه کردن پیوست جدید
+  page_access_admin: دسترسی کامل
+  page_access_edit: قابلیت نوشتن
+  page_access_none: بدون دسترسی
+  page_access_view: فقط خواندن
+  edit_attachments: ویرایش پیوست‌ها
+  current_attachments: پیوست‌های فعلی
+  use_radio_buttons_to_select_page_cover: برای انتخاب جلد صفحه، از دکمه‌های رادیویی استفاده کنید
+  share_already_exists_error: '«%{name}» از قبل به این صفحه دسترسی دارد.'
+  share_grant_required_error: "%{name} برای دیدن این صفحه مجاز نیست. اول باید به آن‌ها دسترسی به‌تری اعطا شود."
+  share_include_message: قرار دادن یک پیام سفارشی
+  share_include_paranoid_message: قرار دادن یک پیام سفارشی در اعلان (نه در رایانامه).
+  share_page_link: اشتراک‌گذاری %{page_class}
+  share_page_recipients: اشتراک‌گذاری صفحه با
+  share_send_notification: ارسال اعلان
+  shared_page_success: شما با موفقیت این صفحه را به اشتراک گذاشتید.
+  share_permission_denied_error: شما مجاز به تغییر اجازه‌های دسترسی این صفحه نیستید
+  share_pester_error: متاسفیم، شما به اشتراک‌گذاری با «%{name}» مجاز نیستید.
+  notification_message: پیام‌های اعلانات
+  notify_contribution: "<b>مشارکت‌های قبلی:</b> کسانی که قبلا در این صفحه <b>مشارکت</b> داشتند را مطلع کن."
+  notify_current_access: "<b>دسترسی فعلی:</b> کسانی که هم‌اکنون به این صفحه دسترسی دارند را مطلع کن."
+  notify_no_access_error: متاسفیم، «%{name}» به این صفحه دسترسی ندارد.
+  notify_page_link: ارسال اعلان
+  notify_success: شما با موفقیت اعلان‌ها را ارسال کردید.
+  send_only_with_encryption: فقط در صورتی که توسعه رمزنگاری شده ممکن است ارسال کن
+  send_email: ارسال رایانامه
+  name_or_email_not_found: '«%{name}» با هیچ نام کاربر یا گروهی مطابقت ندارد و یک رایانامه معتبر نیست.'
+  additional_page_access: دسترسی اضافه
+  announcement_page_description: یک اعلام
+  announcement_page_display: اعلام
+  announcements_page_display: اعلام‌ها
+  article_page_description: ساختن یک پست وبلاگ یا مقاله خبری.
+  article_page_display: مقاله
+  asset_page_description: بارگزاری یک تصویر، سند، صفحه گسترده، ارائه، یا هر فایل دیگر.
+  asset_page_display: فایل
+  attachments: پیوست‌ها
+  collection_class_description: صفحات ویژه که صفحات دیگر را نگه می‌دارند.
+  collection_page_display: مجموعه
+  create_page: ساختن صفحه
+  discussion_page_description: بحث کردن درباره یک موضوع مشخص با گروه‌ها یا دیگر کاربران
+  discussion_page_display: بحث گروهی
+  event_page_description: یک رویداد در تقویم
+  external_video_page_description: نمایش یک ویدئو که در یک تارنمای بیرونی میزبانی می‌شود.
+  external_video_page_display: ویدئوی بیرونی
+  folder_class_description: یک پوشه بسازید یا دیگر صفحات را سازمان دهید.
+  folder_display: پوشه
+  gallery_description: چند تصویر را بارگزاری کنید یا تصاویر موجود را به صورت یک مججموعه تنظیم کنید.
+  gallery_display: آلبوم عکس
+  message_page_description: یک پیام شخصی را به یک فرد گیرنده ارسال کنید.
+  message_page_display: پیام شخصی
+  page_added_to_group: این صفحه به %{group_type} %{group_name} اضافه می‌شود.
+  page_create_owner: مالک صفحه
+  page_owner_error: مالکیت صفحه نمی‌تواند خالی باشد.
+  ranked_vote_page_description: فهرستی از گزینه‌ها را برای افراد ایجاد کنید تا به ترتیب اولویت رتبه‌بندی شوند.
+  ranked_vote_page_display: رای داد
+  rate_many_page_description: فهرستی از گزینه‌ها را برای تایید یا عدم تایید افراد ایجاد کنید.
+  rate_many_page_display: نظرسنجی تایید
+  select_file_to_upload: یک فایل برای بارگزاری انتخاب کنید.
+  survey_page_description: یک سری از سوال‌ها را برای افراد ایجاد کنید تا به آن پاسخ دهند.
+  survey_page_display: نظرسنجی
+  task_list_page_description: فهرستی از موارد انجام کار را ایجاد کنید و تکالیف خود و دیگران را به آن اضافه کنید.
+  task_list_page_display: فهرست تکالیف
+  wiki_page_description: یک سند متنی قابل ویرایش ایجاد کنید.
+  wiki_page_display: صفحه ویکی
+  assign_to: اختصاص به
+  completed: انجام شده
+  completed_tasks: تکالیف انجام شده
+  no_completed_tasks: هیچ تکلیف انجام شده‌ای نیست
+  no_pending_tasks: هیچ تکلیف در انتظاری نیست
+  page_group_media: چندرسانه‌ای
+  page_group_planning: ابزار برنامه‌ریزی
+  page_group_text: متن و بحث
+  page_group_vote: نظرسنجی‌ها و رای‌ها
+  pending_tasks: تکالیف در انتظار
+  confirm_vote_button: تایید رای
+  edit_my_vote_tab: ویرایش رای من
+  first_choice_of: انتخاب اول
+  ranked_vote_instructions: موارد را در این فهرست بکشید و رها کنید تا زمانی که آن‌ها به ترتیب ارجح‌ترین در بالا و حداقل ترجیح داده شده در پایین قرار بگیرند.
+  show_results_tab: نمایش نتایج
+  top_pick: انتخاب برتر
+  vote:
+    not_voted_on: رای نیاورد
+    really_remove_this: آیا واقعا می‌خواهید این گزینه را حذف کنید؟
+    voted_on: رای آورد
+    you_have_not_ranked: 'شما هنوز به این رتبه نداده‌اید:'
+  vote_bad: بد
+  vote_good: خوب
+  vote_no: 'نه'
+  vote_none: هیچ
+  vote_ok: خوب
+  add_long_text_question_link: پاسخ طولانی
+  add_select_many_question_link: چند پاسخ را انتخاب کنید
+  add_select_one_question_link: یک پاسخ را انتخاب کنید
+  add_short_text_question_link: پاسخ کوتاه
+  drag_to_move_tip: برای حرکت دادن، بکشید
+  each_line_is_a_choice_caption: "(هر خط یک انتخاب ممکن است)"
+  no_data_uploaded_label: هیچ داده‌ای بارگزاری نشده
+  private_question_label: سوال خصوصی
+  save_survey_button: ذخیره نظرسنجی
+  see_whole_response_link: نمایش پاسخ کامل
+  select_many_choices_label: 'انتخاب تعداد زیادی از پاسخ‌ها:'
+  select_one_choices_label: 'انتخاب یکی از پاسخ‌ها:'
+  survey_average_rating_heading: 'میانگین رتبه:'
+  survey_description_explaination: این متن در برگه معرفی نشان داده می‌شود و اولین چیزی است که کسانی که نظرسنجی را کامل می‌کنند می‌بینند.
+  survey_introduction_tab: معرفی
+  survey_list_all_tab: فهرست کردن پاسخ‌ها
+  survey_may_create_response: امکان ایجاد پاسخ؟
+  survey_may_rate: امکان رتبه‌بندی پاسخ‌ها؟
+  survey_may_see_ratings: امکان مشاهده رتبه‌ها؟
+  survey_may_see_responses: امکان مشاهده پاسخ‌ها؟
+  survey_my_response_tab: پاسخ من
+  survey_please_check_and_rate_message: لطفا سوالات خود را بازنگری کنید و به پاسخ‌های دیگران رتبه دهید.
+  survey_please_check_message: لطفا سوالات خود را بازنگری کنید.
+  survey_previous_result: قبلی
+  survey_question_label: 'سوال:'
+  survey_questions: سوالات
+  survey_rate_this_response_heading: رتبه‌بندی این پاسخ
+  survey_rated_by_1_person_caption: توسط یک نفر رتبه‌بندی شده.
+  survey_rated_by_x_people_caption: توسط %{count} نفر رتبه‌بندی شده.
+  survey_respond_button: پاسخ دادن
+  survey_response_by: پاسخ از %{login}
+  survey_select_a_rating_message: یک رتبه را انتخاب کنید تا مورد بعدی را ببینید.
+  survey_skip_next_link: پرش به بعدی
+  survey_thanks_submit_message: سپاس از شما بابت ثبت پاسخ خود.
+  survey_you_already_rated_response_with_rating_heading: شما قبلا این پاسخ را رتبه‌بندی کرده‌اید. شما به آن %{rating} دادید.
+  survey_you_previousely_rated_message: شما قبلا به این مورد رتبه %{rating} را داده‌اید.
+  survey_your_rating_heading: 'رتبه شما:'
+  their_answer_goes_here_label: پاسخ آن‌ها به این‌جا می‌آید...
+  video_link_question_link: پیوند ویدئو
+  friends_description: دوستان شما
+  may_pester_description: به دیگران اجازه بدهید که برای شما پیام، صفحه و دعوت‌نامه بفرستند.
+  may_pester_label: اشتراک با من؟
+  may_request_contact_description: به دیگران اجازه بده که مخاطب شما باشند.
+  may_request_contact_label: ثبت مخاطب
+  may_see_contacts_description: اجازه دادن به افراد برای مشاهده مخاطبین شما.
+  may_see_contacts_label: مشاهده مخاطبین من؟
+  may_see_groups_description: اجازه دادن به افراد برای دیدن گروه‌هایی که شما در آن‌ها عضو هستید.
+  may_see_groups_label: مشاهده گروه‌های من؟
+  may_view_description: اگر علامت نزنید، نمایه شما به صورت کلی مخفی می‌شود.
+  may_view_label: مشاهده نمایه من؟
+  peers_description: اعضای گروه‌های شما
+  permissions_key: کلید
+  public_description: هر کسی که در اینترنت است
+  sharing_and_requests: اشتراک‌گزاری و درخواست‌ها
+  banner: بنر
+  banner_info: ابعاد بهینه %{optimal_dimensions} پیکسل هستند
+  edit_profile_link: ویرایش نمایه
+  organizational_role: نقش سازمانی
+  post_message: ارسال پیام
+  profile_member_since: عضو از
+  profile_saved: نمایه شما ذخیره شد.
+  remove_friend_link: حذف کردن از مخاطبین من
+  request_friend_link: اضافه کردن به مخاطبین من
+  view_profile: نمایش نمایه
+  all_requests: تمام درخواست‌ها
+  incoming: ورودی
+  not_allowed_to_respond_to_request: "%{user} مجاز به %{command} کردن درخواست نیست."
+  outgoing: خروجی
+  request: درخواست
+  request_pending: "%{request} در انتظار است"
+  requests: درخواست‌ها
+  send_request_button: ارسال درخواست
+  try_again: تلاش دوباره
+  friend_remove_confirmation: آیا مطمئنید که دیگر نمی‌خواهید مخاطب %{user} باشید؟
+  friend_request_message_label: به %{user} بگویید چرا می‌خواهید مخاطب او باشید.
+  invite_error_already_member: شما از قبل عضو این گروه هستید.
+  invite_error_redeemed: این دعوت قبلا استفاده شده است.
+  invite_info: فهرستی از اطلاعات ورود کاربران یا رایانامه‌های افرادی که می‌خواهید به این %{group_type} دعوت کنید را وارد کنید.
+  network_invite_info: نام گروه‌های که می‌خواهید به این شبکه دعوت کنید را وارد کنید.
+  recipient_tip: گیرنده‌ها را با ویرگول‌ها، فاصله‌ها و یا خطوط جدید جدا کنید.
+  request_exists_error: این درخواست از قبل برای %{recipient} وجود دارد
+  you_are_invited: شما برای عضویت دعوت شده‌اید.
+  activerecord:
+    models:
+      request_to_create_council: درخواست برای تشکیل شورا
+      request_to_destroy_our_group: درخواست برای نابود کردن گروه
+      request_to_friend: درخواست برای مخاطب شدن
+      request_to_join_our_network:
+        one: دعوت‌نامه برای عضویت
+        other: دعوت‌نامه‌ها برای عضویت
+      request_to_join_us:
+        one: دعوت‌نامه برای عضویت
+        other: دعوت‌نامه‌ها برای عضویت
+      request_to_join_us_via_email:
+        one: دعوت‌نامه برای عضویت
+        other: دعوت‌نامه‌ها برای عضویت
+      request_to_join_you: درخواست عضویت
+      request_to_join_your_network: درخواست عضویت
+      request_to_remove_user: درخواست برای حذف عضو
+  request_to_join_our_network:
+    one: دعوت‌نامه برای عضویت
+    other: دعوت‌نامه‌ها برای عضویت
+  invitation_to_join:
+    one: دعوت‌نامه برای عضویت
+    other: دعوت‌نامه‌ها برای عضویت
+  request_to_join_us_via_email:
+    one: دعوت‌نامه برای عضویت
+    other: دعوت‌نامه‌ها برای عضویت
+  request_to_create_council: درخواست برای تشکیل شورا
+  request_to_create_council_description: کاربر %{user} درخواست داده که شورایی برای %{group_type} %{group} ایجاد شود.
+  request_to_create_council_short: آیا %{group} باید شورا داشته باشد؟
+  request_to_destroy_our_group: درخواست برای نابود کردن گروه
+  request_to_destroy_our_group_description: کاربر %{user} درخواست داده تا %{group_type} %{group} نابود شود.
+  request_to_destroy_our_group_short: آیا %{group} باید نابود شود؟
+  request_to_friend: درخواست برای مخاطب شدن
+  request_to_friend_description: کاربر %{user} درخواست داده تا مخاطب کاربر %{other_user} شود.
+  request_to_friend_short: آیا %{user} باید مخاطب %{other_user} شود؟
+  request_to_join: درخواست عضویت
+  request_to_join_network_short: آیا %{group} باید عضو %{network} شود؟
+  request_to_join_our_network_description: گروه %{group} برای عضوت در شبکه %{network} دعوت شده.
+  request_to_join_short: آیا %{user} باید عضو %{group} شود؟
+  request_to_join_us: درخواست عضویت
+  request_to_join_us_short: آیا %{user} باید عضو %{group} شود؟
+  request_to_join_us_description: کاربر %{user} برای عضوت در گروه %{group} دعوت شده.
+  request_to_join_us_via_email_description: رایانامه %{email} برای عضوت در گروه %{group} دعوت شده.
+  request_to_join_us_via_email_short: آیا %{email} باید عضو %{group} شود؟
+  request_to_join_you: درخواست عضویت
+  request_to_join_you_description: کاربر %{user} درخواست داده تا عضو گروه %{group} شود.
+  request_to_join_your_network: درخواست عضویت
+  request_to_join_your_network_description: گروه %{group} درخواست داده تا عضو شبکه %{network} شود.
+  request_to_remove_user: درخواست برای حذف عضو
+  request_to_remove_user_description: کاربر %{user} درخواست داده تا %{member} از %{group_type} %{group} حذف شود.
+  request_to_remove_user_short: 'آیا %{member} باید از %{group} حذف شود؟ '
+  request_to_remove_group: درخواست برای حذف گروه
+  request_to_remove_group_description: کاربر %{user} درخواست داده تا %{group} از %{network} حذف شود.
+  request_to_remove_group_short: آیا %{group} باید از %{network} حذف شود؟
+  view_label: نمایش
+  activity_twinkled: '%{user} پست %{post} را ستاره‌دار کرد.'
+  asset_version_list_version_heading: نسخه
+  created_on: ساخته شده در
+  delete_version_confirm: آیا مطمئنید که می‌خواهید این نسخه را حذف کنید؟
+  file_size: حجم فایل
+  file_version_deleted: نسخه فایل حذف شد
+  format: قالب
+  full: کامل
+  galleries: آلبوم‌ها
+  history: تاریخچه
+  image_options_info: آیا تصویر گنجانده شده در ویکی به تصویر با اندازه اصلی پیوند دارد؟
+  image_select_info: یک تصویر از میان تصاویری که قبلا در گروه بارگزاری کردید را انتخاب کنید
+  image_size_info: اندازه تصویر برای اضافه کردن را انتخاب کنید
+  image_upload_info: یک تصویر تازه را در گروه بارگزاری کنید تا برای ویکی از آن استفاده شود
+  large: بزرگ
+  media_image: تصویر
+  media_images: تصاویر
+  medium: متوسط
+  other_formats: قالب‌های دیگر
+  regenerate: بازسازی تصاویر بندانگشتی
+  small: کوچک
+  version_number: نسخه %{version}
+  zip_file: فایل زیپ
+  anonymous: ناشناس
+  login_required: نیازمند ورود به حساب کاربری
+  login_required_description: لطفا برای انجام این کار وارد حساب خود شوید.
+  permission_denied: اجازه رد شد
+  permission_denied_description: شما دسترسی لازم برای انجام این عمل را ندارید.
+  date_all_time: تمام زمان‌ها
+  date_this_month: این ماه
+  date_this_week: این هفته
+  date_this_year: امسال
+  date_today: امروز
+  friday: جمعه
+  monday: دوشنبه
+  saturday: شنبه
+  sunday: یک‌شنبه
+  thursday: پنج‌شنبه
+  tuesday: سه‌شنبه
+  wednesday: چهارشنبه
+  alert_field_errors: در زمینه‌های زیر مشکلاتی است
+  alert_not_saved: تغییرات نتوانستند ذخیره شوند
+  alert_saved: تغییرات ذخیره شدند
+  csrf_error_message: 'درخواست ورود شما شبیه به تلاشی برای هک کردن این وب‌سایت است. نگران نباشید: این خطا معمولا حتی برای درخواست‌های بی‌گناه هم اتفاق می‌افتد. ما فقط بیش از حد نگرانیم. تمام کاری که باید بکنید این است که قبل از تلاش برای ورود، صفحه را دوباره بارگزاری کنید. شما می‌توانید از این پیوند برای تلاش دوباره استفاده کنید.'
+  error_saving_new_order_message: 'خطا در ذخیره ترتیب جدید: %{error_message}'
+  activate_js_to_rearrange_photos: جاوااسکریپت را برای استفاده از کشیدن و رها کردن فعال کنید تا بتوانید تصاویر را ترتیب دهید!
+  add_another_file: فایل دیگری اضافه کنید
+  add_existing_image: اضافه کردن تصویر
+  add_photo_to_gallery: روی یک تصویر کلیک کنید تا آن را اضافه کنید
+  album_cover_changed: جلد آلبوم تغییر کرد
+  back_to_gallery_link: بازگشت به آلبوم عکس
+  cancel_link: لغو
+  download: بارگیری
+  download_gallery: بارگیری آلبوم عکس
+  drag_and_drop_to_rearrange_photos: عکس‌ها را بکشید و رها کنید تا به آن‌ها ترتیب دوباره دهید
+  edit_gallery: ویرایش آلبوم عکس
+  error_saving_new_order: خطا در ذخیره ترتیب جدید!
+  file_must_be_image_error: این فایل باید یک تصویر باشد تا بتوان از آن به عنوان بخشی از آلبوم عکس استفاده کرد.
+  gallery_changing_cover_message: در حال تغییر دادن جلد...
+  gallery_slideshow_apply_settings_button: اعمال
+  gallery_undo_link: خنثی‌سازی
+  make_album_cover: این تصویر را جلد آلبوم عکس کن
+  move_image_left: تصویر را به چپ منتقل کن
+  move_image_right: تصویر را به راست منتقل کن
+  no_images_in_gallery: هیچ تصویری در آلبوم عکس نیست
+  order_changed: ترتیب عوض شد
+  remove_from_gallery: حذف کردن از آلبوم عکس
+  removing_image: در حال حذف کردن تصویر...
+  saved_new_order: ترتیب جدید ذخیره شد!
+  saving_your_changes: در حال ذخیره کردن تغییرات شما...
+  slideshow_delay_input: هر %{input_field} ثانیه به‌روزرسانی کن
+  successful_undelete_image: تصویر با موفقیت از حذف شدن بازگردانی شد.
+  successfully_removed_image: تصویر با موفقیت حذف شد! (%{undo_link})
+  upload_images_link: بارگزاری تصاویر
+  you_are_not_allowed_to_do_that: شما مجاز به انجام این کار نیستید!
+  caption: زیرنویس
+  file: فایل
+  files: فایل‌ها
+  icon: تمثال
+  photo: تصویر
+  photo_credit: اعتبار تصویر
+  size: حجم
+  video_embed: تعبیه کردن
+  add_tags: اضافه کردن برچسب
+  current_tags: برچسب‌های فعلی
+  no_tags: بدون برچسب
+  popular_tags: برچسب‌های مشهور
+  recent_tags: برچسب‌های اخیر
+  separate_tags: برچسب‌ها را با ویرگول جدا کنید.
+  tag: برچسب
+  tags: برچسب‌ها
+  set_status_button: به‌روزرسانی وضعیت
+  welcome_message: Crabgrass به سازمان‌های تغییرات اجتماعی قدرت می‌دهد که کارها را به انجام برسانند، هم‌کاری کنند و شبکه بسازند.
+  welcome_title: به %{site_title} خوش‌آمدید
+  a_message_link: یک پیام
+  a_reply_link: یک پاسخ
+  add_one_or_more_tags: یک یا چند برچسب اضافه کنید که با ویرگول جدا شده‌اند
+  chat: چت
+  confirm_discarding_text_area: تمام کارهای ذخیره نشده شما از بین می‌روند. %{cancel} را فشار دهید تا به ویرایش ادامه دهید.
+  illegal_redirect: انتقال غیرقانونی
+  include_full_checkbox: اضافه کردن پیوند به تصور کامل
+  left_the_chatroom: از اتاق چت رفت
+  place: مکان
+  preview_selected_image: پیش‌نمایش تصویر انتخاب‌شده
+  redirect_to_foreign_domain: شما در تلاش برای انتقال به یک دامنه خارجی (%{url}) بعد از ورود هستید. به دلایل امنیتی، ما این پارامتر را از نشانی وب حذف کردیم.
+  save_wiki_before_adding_image: لطفا قبل اضافه کردن تصویر، ویکی را ذخیره کنید.
+  view_slideshow: نمایش اسلاید
+  break_lock_button: قفل کردن
+  can_still_save: شما هم‌چنان می‌توانید ذخیره کنید.
+  cant_edit_section_html: ناتوان در ویرایش <b>%{section}</b>.
+  cant_find_wiki_section: ناتوان در پیدا کردن بخش %{section}
+  changes_made: تغییرات در %{when} اعمال شده‌اند.
+  changes_might_be_overwritten: تغییرات شما ممکن است رونویسی شوند.
+  diff_link: نمایش تغییرات
+  edit_wiki: ویرایش ویکی
+  force_save_button: قفل و ذخیره کردن
+  formatting_reference_link: راهنمای ویرایش
+  insert_image: اضافه کردن تصویر
+  leave_editing_wiki_page_warning: اگر این صفحه را ترک کنید، تغییرات خود را از دست می‌دهید.
+  next_change: تغییر بعدی
+  other_section_locked_error_html: فقط یک بخش را در آن واحد می‌توان قفل کرد. شما از قبل <b>%{section}</b> را قفل کرده‌اید.
+  prev_change: تغییر قبلی
+  preview: پیش‌نمایش
+  private_wiki: ویکی خصوصی
+  public_wiki: ویکی عمومی
+  save_or_cancel_edit_lock_wiki_error: شما این ویکی را قفل کرده‌اید. کاربران دیگر تا زمانی که شما %{save_button} یا %{cancel} را برای اتمام ویرایش فشار ندهید، نمی‌توانند این ویکی را ویرایش کنند.
+  user_locked_section_html: "<b>%{user}</b> بخش <b>%{section}</b> را قفل کرده است."
+  version: نسخه
+  version_doesnt_exist: هیچ نسخه %{version} وجود ندارد
+  version_exists_error: این ویکی قفل است چرا که کاربر %{user} به تازگی تغییراتی را ذخیره کرده است. شما هم‌چنان می‌توانید تغییرات خود را ذخیره کنید ولی این، نسخه جدید را رونویسی می‌کند.
+  version_link: نمایش نسخه
+  versions: نسخه‌ها
+  wiki: ویکی
+  wiki_existed_new_version_created: این ویکی از قبل توسط یک کاربر دیگر ایجاد شده. تغییرات شما به عنوان یک نسخه جدید ذخیره می‌شوند.
+  wiki_is_locked_html: این ویکی هم‌اکنون توسط <b>%{user}</b> قفل شده است.
+  wiki_revert_version: بازگشت به نسخه %{version}
+  wiki_section_edit: ویرایش این بخش
+  wiki_section_is_locked: بخش %{section} هم‌اکنون توسط %{user} قفل است.
+  wiki_version_creator_heading: فرد
+  wiki_version_revert_link: برگرداندن
+  you_are_viewing_version: شما در حال تماشای نسخه %{version} توسط %{user} هستید
