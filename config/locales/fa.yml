@@ -427,6 +427,7 @@ fa:
   watched_by_user: تماشا شده توسط %{user}
   add_star_link: ستاره‌دار کنید (%{star_count})
   delete_page_link: حذف %{page_class}
+  destroy_immediately: نابودسازی فوری
   destroy_page_via_shred: نابودسازی فوری
   destroy_page_via_shred_info: این عمل به شکل دائم، این صفحه را نابود می‌کند. این عمل غیر قابل بازگشت است.
   destroy_page_via_trash: منتقل کردن به سطل آشغال
