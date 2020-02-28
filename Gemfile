@@ -16,7 +16,7 @@ gem 'nokogiri', '~> 1.10.3'
 
 # Rake is rubys make... performing tasks
 # locking in to latest major to fix API
-gem 'rake', '~> 10.0', require: false
+gem 'rake', '~> 12.3', require: false
 
 # Application preloader for faster start time
 gem 'spring', group: :development
