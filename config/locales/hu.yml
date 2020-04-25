@@ -1,0 +1,813 @@
+hu:
+  congratulations_you_have_signed_up: Gratulálunk! Sikeresen regisztráltál %{site_title} -ra.
+  cookie_disabled_warning: Letiltottad a sütiket. Addig nem fogsz tudni bejelentkezni, amíg nem engedélyezed a sütik használatát.
+  email_verification_body: |-
+      Feliratkoztál a %{site_title} (%{host} oldalra.
+
+      A bejelentkezés előtt ellenőrizned kell, hogy ez a Te e-mail címed.
+
+      Kattints az alábbi linkre, vagy másold át, és illeszd be böngésződbe:
+
+      %{verify_email_link}
+
+      Ha nem kívánsz csatlakozni, egyszerűen hagyd figyelmen kívül ezt az e-mailt.
+  forgotten_email_address: Milyen e-mail címet adtál meg nekünk, a fiókod létrehozásakor?
+  invalid_email_text: Az általad megadott e-mail cím érvénytelen.
+  invalid_token: Érvénytelen token
+  invalid_token_text: A megadott jelszó-visszaállítási link érvénytelen. Valószínűleg már felhasználták, vagy lejárt.
+  login: Belépés
+  login_failed: Sikertelen belépés
+  login_failure_reason: Helytelen a felhasználó vagy a jelszó.
+  logout_success: Viszlát!
+  logout_success_message: Kijelentkeztél.
+  sign_in: Bejelentkezés
+  signup_button: Regisztráció
+  signup_email_info: 'Opcionális: akkor kerül használba, ha elfelejtette a jelszavát'
+  signup_link: Új felhasználó létrehozása
+  signup_success: A regisztráció sikeres
+  signup_success_message: Köszönjük a regisztrációt.
+  signup_title: Saját fiók létrehozása
+  you_should_receive_instructions_email: E-mailt kellene kapnod a fiók létrehozásának befejezéséről szóló utasításokkal.
+  account_successfully_removed: Fiókodat sikeresen eltávolítottuk. Törölni fogjuk az összes kapcsolódó adattal együtt az adatbázisból.
+  anonymize_display_name: A megjelenített név anonimizálása
+  anonymize_display_name_info: A megjelenített nevet mindenütt lecseréli az 'Névtelen' -re
+  confirm_account_removal: Biztos vagy benne, hogy el akarod távolítani a fiókod? Ezt a lépést nem lehet visszavonni, és adataid elvesznek.
+  destroy_comments: Hozzászólások megsemmisítése
+  destroy_comments_info: Ezzel eltávolítod az összes megjegyzést, amelyet az oldalakhoz fűztél. Ez megnehezítheti mások megjegyzéseinek megértését.
+  remove_your_account: Fiókod eltávolítása
+  change_password: Jelszócsere
+  confirm_new_password: Új jelszó megerősítése
+  forgot_password_link: Elfelejtette jelszavát?
+  forgot_password_mail_expiry: Ez a link 24 órán keresztül marad érvényben. Ha ezt követően vissza kell állítani a jelszavad, akkor új linket kell kérned az elfelejtett jelszó oldalon.
+  forgot_password_mail_greeting: "%{user}, jelszavának visszaállításához kérjük, látogass el ide"
+  forgot_password_text: Ha elfelejtetted a bejelentkezéshez használt jelszót, e-mail linket küldhetünk, amely lehetővé teszi egy új jelszó létrehozását.
+  new_password: Új jelszó
+  password: Jelszó
+  password_confirmation: Jelszó megerősítése
+  password_reset: Jelszó visszaállítása
+  password_reset_ok_text: Jelszava sikeresen vissza lett állítva. Most bejelentkezhet az újonnan megváltoztatott jelszóval.
+  password_was_reset: A jelszavad vissza lett állítva
+  requested_forgot_password: A jelszó megváltoztatását kérted
+  reset_password: Visszaállítod a jelszavad
+  reset_password_email_sent: Ha az e-mail cím felhasználónévvel van társítva, akkor egy a jelszavad visszaállításának útmutatásait tartalmazzó e-mailt lesz kiküldve.
+  reset_password_mail_greeting: "%{user}, a jelszavad vissza lett állítva, ahogy kérted."
+  reset_password_mail_warning: Ha nem kérted jelszavad megváltoztatását, kérjük, vedd fel velünk a kapcsolatot.
+  reset_password_text: Üdvözlet, %{felhasználó}! Ha elfelejtetted a bejelentkezéshez használt jelszót, itt beállíthatsz egy új jelszót.
+  crabgrass:
+    description_html: ', <a href="http://gnu.hu/agplv3.html">AGPL szoftver könyvtár</a> hálózat szervezéséhez
+
+      '
+    get_involved: Részvétel
+    help_pages: Crabgrass súgó oldalak
+    help_translate: Segíts fordítani
+    powered_by_html: 'Ezt az oldalt a <a href="https://0xacab.org/riseuplabs/crabgrass">crabgrass</a> %{description} szolgálja ki
+
+      '
+    report_a_bug: Hiba jelentése
+    request_a_feature: Funkció kérése
+  actions:
+    possible:
+      add: Új lehetőség hozzáadása
+    task:
+      add: Új feladat hozzáadása
+  add_button: Hozzáad
+  alert: Riasztás
+  approve: Jóváhagy
+  approved: Jóváhagyva
+  cancel: Mégsem
+  close_button: Lezár
+  confirm: Megerősít
+  create: Létrehoz
+  create_a_new_thing: Egy új %{thing} létrehozása
+  create_button: Létrehoz
+  create_thing: A(z) %{thing} létrehozása
+  created_by: Létrehozta
+  created_by_user_on: 'Készítette: %{user} %{when} -n.'
+  delete: Töröl
+  delete_thing: A(z) %{thing} törlése
+  deleted: Törölve
+  destroy: Megsemmisít
+  destroy_confirmation: Biztosan törli ezt a(z) %{thing} fájlt? Ez a művelet nem visszavonható.
+  destroy_thing: A(z) %{dolog} megsemmisítése
+  drop_files_here: Dobd ide a fájlokat
+  edit: Javít
+  files_pending: Fájlok felfüggesztve
+  loading_progress: Betöltés...
+  ok_button: OK
+  optional: Választható
+  pending: Függő
+  reject: Visszautasít
+  rejected: Visszautasítva
+  remove: Eltávolít
+  required: Kötelező
+  save_button: Ment
+  saved: Mentve
+  select_files: Fájlok kiválasztása
+  send_button: Küld
+  show_thing: A(z) %{thing} megmutatása
+  thing_destroyed: "A(z) %{thing} megsemmisítve"
+  thing_required: "%{dolog} szükséges"
+  updated_by: Frissítette
+  upload: Feltölt
+  mailer:
+    hello: Üdvözlet %{user_name}
+    pgp_key:
+      key_uploaded: Most töltött fel egy új kulcsot. Ezt titkosított e-mail értesítésekre fogják használni (kísérleti szolgáltatás, hamarosan).
+      key_uploaded_subject: Értesítés
+    page_histories:
+      change_your_settings_here: 'Itt módosíthatod az e-mail értesítési beállításait: %{page_link}'
+      daily_digest: "%{site} : Az oldal módosításának napi összefoglalója"
+      page_update: "% {site}: Egy oldal módosult"
+      pages_you_are_watching_have_been_modified:
+        one: "Az általad figyelt %{count} oldal az utolsó értesítés óta módosult."
+        other: "Az általad figyelt %{count} oldal az utolsó értesítés óta módosult."
+      the_page_you_are_watching_description: Az általad figyelt "%{page_title}" oldal módosult
+      upload_your_public_pgp_key: A titkosított e-mailek részletesebb frissítéséhez kérjük töltsd fel a nyilvános pgp kulcsod.
+      we_leave_out_details: Az e-mailben részleteket hagyjuk el, hogy megvédjük az esetleges privát információkat.
+      you_can_find_updates_here: 'További részletek és a nemrégiben megváltozott oldalak listája itt található:'
+      you_can_turn_off_or_configure_notifications: Kapcsold ki az e-mail értesítéseket, kapd meg a változások összefoglalását, vagy menjen e-mailt minden alkalommal, amikor az oldal megváltozik
+  exception:
+    description:
+      forbidden: Sajnálom. Nem tudod végrehajtani ezt a műveletet.
+      group:
+        not_found: Sajnáljuk, a keresett csoport nem található.
+      not_found: Sajnáljuk, nem találtuk meg azt, amit kerestél.
+      unauthorized: Kérjük, jelentkezz be a művelet végrehajtásához.
+    title:
+      forbidden: Hozzáférés megtagadva
+      group:
+        not_found: Csoport nem található
+      not_found: "%{thing} nem található"
+      unauthorized: Bejelentkezés szükséges
+  add_comment: Hozzászólás hozzáadása
+  add_images_to_gallery_link: Képek hozzáadása a galériához
+  close_and_reload_gallery: Galéria lezárása és újratöltése
+  confirm_image_delete: Tényleg törlöd ezt a képet? Ez a művelet nem visszavonható.
+  edit_image: Kép szerkesztése
+  edit_gallery_explanation: Új képek hozzáadása vagy húzza a képeket a sorrend átrendezéséhez.
+  image_count: Kép %{szám} / %{count}
+  image_count_total: "%{count} fotó"
+  upload_new_image: Új kép feltöltése
+  upload_zip_file_link: ZIP-fájl feltöltése
+  approved_by_entity: Jóváhagyta %{entity}
+  friends: Barátok
+  name: Név
+  owner: Tulajdonos
+  people: Ember
+  person: Személy
+  recipient: Címzett
+  recipients: Címzettek
+  rejected_by_entity: Visszautasította %{entity}
+  user: Felhasználó
+  users: Felhasználók
+  thing_was_not_sent:
+    one: "A(z) %{count} %{thing} nem küldhető el."
+    other: "A(z) %{count} %{thing} nem küldhető el."
+  thing_was_sent:
+    one: "%{count} %{thing} elküldésre került."
+    other: "%{count} %{thing} elküldésre került."
+  all: Mind
+  autocomplete:
+    placeholder:
+      enter_name_of_group_or_person: Írd be egy csoport vagy személy nevét
+      enter_name_of_group: Írd be egy csoport nevét
+      enter_name_of_person: Írd be egy személy nevét
+      enter_name_of_contact: Írd be egy partner nevét
+      enter_name_of_peer: Írd be egy társ nevét
+  everybody: Mindenki
+  go: Gyerünk
+  list_things: '%{things} felsorolása'
+  modified: módosítva
+  new: új
+  next: Következő
+  no_search_results: Eredménytelen
+  no_things_found: Nem található %{things}.
+  none: Semmi
+  or: vagy
+  previous: Előző
+  return: Visszatér
+  search: Keres
+  see_all_link: Az összes megtekintése
+  see_more_link: Több
+  sorry: Sajnál
+  thing_not_found: "%{thing} nem található"
+  total: "%{count} összesen"
+  unknown: Ismeretlen
+  contacts: Kapcsolatok
+  member_groups_of_network: Tagcsoportok
+  my_contacts: Kapcsolataim
+  peers: Társak
+  action_cannot_be_undone: Ez a művelet nem visszavonható.
+  administration: Adminisztráció
+  back: Vissza
+  comments: Hozzászólások
+  contributed: Közreműködött
+  description: Leírás
+  details: Részletek
+  dismiss_all_notices: Mindet elutasít
+  dismiss_all_notices_confirmation: Biztosan el akarod utasítani az összes értesítést?
+  display: Bemutat
+  hide: Elrejt
+  locale: Nyelv
+  me: Én
+  message: Üzenet
+  messages: Üzenetek
+  notice: Értesítés
+  notices: Értesítések
+  notification: Értesítés
+  page: Oldal
+  permissions: Engedélyek
+  print: Nyomtat
+  private: Privát
+  private_message_notice: Privát üzenet értesítés
+  public: Nyilvános
+  settings: Beállítások
+  share: Megoszt
+  show: Megmutat
+  statistics: Statisztika
+  summary: Összegzés
+  tasks: Feladatok
+  title: Cím
+  visibility: Láthatóság
+  visits: Megtekintések
+  all_groups: Minden csoport
+  basic_settings: Alapbeállítások
+  committee: Bizottság
+  committees: Bizottságok
+  council: Tanács
+  councils: Tanácsok
+  group: Csoport
+  groups: Csoportok
+  my_groups: A csoportom
+  members: Tagok
+  membership: Tagság
+  network: Hálózat
+  networks: Hálózatok
+  organization: Szervezet
+  organizations: Szervezetek
+  structure: Struktúra
+  group_destroyed_email: "A(z) %{group_type} %{group} megsemmisült!"
+  group_destroyed_subject: "A(z) %{group_type} %{group} csoportot %{felhasználó} felhasználó törölte!"
+  group_invite_email: |-
+      A(z) %{from_user} felhasználó meghívott, hogy csatlakozzon a(z) %{group} csoporthoz. Ha csatlakozni szeretnél ehhez a csoporthoz, kattints ide:
+
+      %{accept_invite_link}
+
+      A csoport honlapja itt található:
+
+      %{group_home_link}
+
+      Ha nem kívánsz csatlakozni ehhez a csoporthoz, egyszerűen hagyd figyelmen kívül ezt az e-mailt.
+  group_invite_subject: Meghívó a(z) "%{group}" csoporthoz való csatlakozásra
+  committee_choose_group: 'Válasszon egy csoportot ehhez a(z) %{group_type} csoporttípushoz:'
+  committee_description: A bizottságok csoportok egy szervezeten vagy hálózaton belül. A bizottság teljesen alá van rendelve a létrehozó szervezetének vagy hálózatának. A szervezet vagy hálózat bizottságába kívülről felvett felhasználó csak a bizottsághoz fér hozzá.
+  council_description: A tanácsok különleges adminisztratív hatáskörrel rendelkező csoportok. Minden szervezetnek vagy hálózatnak lehet tanácsa. Ha rendelkezik ilyennel, akkor a tanács tagjai hatalommal bírnak a hálózat vagy a szervezet felett.
+  council_description_details: Alapértelmezés szerint minden tag módosíthatja a(z) %{group} csoportot. Ha bizonyos felhasználókra korlátozni kívánod az adminisztratív hatásköröket, hozz létre egy tanácsot, és adj felhasználókat hozzá.
+  create_public_group_wiki: Nyilvános
+  create_private_group_wiki: Privát
+  group_creation_info: 'Négyféle csoport létezik:'
+  group_description: A szervezetek autonóm csoportok, amelyek tagjai az emberek.
+  network_committees_may_not_join_networks: Más hálózatok bizottságai nem csatlakozhatnak.
+  network_description: A hálózatok olyan csoportok, amelyek tagjai lehetnek szervezetek. A hálózat felhasználható több szervezet társulására vagy két szervezet együttműködési helyeként.
+  networks_may_not_join_networks: A hálózatok nem csatlakozhatnak más hálózatokhoz.
+  group_membership_count: "%{count} tag"
+  membership_destroy_confirm_message: Biztos vagy benne, hogy el akarod távolítani a(z) %{entitást} a(z) %{group} csoportból?
+  membership_exists_error: A(z) %{member} tagság már létezik
+  membership_leave_message: Eltávolítottak a(z) %{group} csoportból
+  membership_notification: Tagság értesítés
+  membership_requests: Tagság kérelmek
+  public_groups: Nyilvános csoportok
+  shared_groups: Közös csoportok
+  may_request_membership_description: A(z) "%{group}" csoport link megjelenik a %{group} oldalon. Ezzel a tagsági kérelmet továbbítódik, amelyet elfogadni vagy elutasítani lehet.
+  open_group: A(z) %{group} csoport megnyitása
+  open_group_description: A felhasználók azonnal bekerülnek a %{group} csoportba - a kérelmeket nem kell jóváhagyni
+  group_wiki: Csoport wiki
+  members_may_edit_wiki: Minden tag szerkesztheti a wikit
+  members_may_edit_wiki_description: Ha nincs bejelölve, akkor csak a tanács tagjai szerkeszthetik a %{group} csoport wikit.
+  public_group_wiki: Nyilvános
+  private_group_wiki: Privát
+  add_members_to_committee: Adj hozzá egy csoporttagot ehhez a %{group_type} csoportípushoz. A létrehozó csoportba nem tartozó személyek felvételéhez inkább küldj meghívót.
+  allow_membership_requests: Csatlakozási kérelmek engedélyezése
+  committee_publicly_visible: A bizottságok nyilvánossá tétele
+  committee_publicly_visible_description: 'A bizottságok a nem tagok számára a következő címen láthatóak: %{domain}/acsoportnév'
+  descriptive_name_for_display: A megjelenítéshez használt beszédes név
+  group_language: A(z) %{csoport} csoport elsődleges nyelve.
+  group_members_publicly_visible: A tagok nyilvánossá tétele
+  group_members_publicly_visible_description: 'A tagok a nem tagok számára a következő címen láthatóak : %{domain} /acsoportnév. A %{group} csoport felsorolható a tagok profiloldalán (%{domain}/felhasználónév)'
+  group_publicly_visible: A(z) %{group} csoport nyilvánosan láthatóvá tétele
+  group_publicly_visible_description: "A(z) %{group} csoport megjelenik a nyilvános könyvtárban. A profilt a nem tagok a(z) %{domain}/csoportnév alatt láthatják."
+  group_successfully_created: A csoport sikeresen létrejött.
+  join_group_confirmation: Biztosan csatlakozol ehhez a(z) %{group_type} csoporttípushoz?
+  join_group_link: Csatlakozol a(z) %{group_type} csoporttípushoz
+  leave_group_confirmation: Biztosan el akarod hagyni ezt a(z) %{group_type} csoporttípust? A(z) %{group_type} csoporttípus tulajdonában lévő összes oldalhoz elveszíted a hozzáférést.
+  leave_group_link: Elhagyod a(z) %{group_type} csoporttípust
+  link_name_description: Ez a név az, amivel erre a csoportra hivatkozol a linkekben és az URL-ekben. Csak alfanumerikus karaktereket tartalmazhat, szóközök nem megengedettek.
+  network_initial_member: Válasszon egy szervezetet, amely a hálózat első tagja lesz.
+  networks_publicly_visible: Hálózatok nyilvánossá tétele
+  networks_publicly_visible_description: 'A hálózatok a nem tagok számára a következő címen láthatóak: %{domain}/acsoportnév'
+  request_exists: Csatlakozási kérelmed jóváhagyásra vár.
+  request_join_group_link: Csatlakozási kérelem %{group_type}
+  rss_feed: RSS hírcsatorna
+  send_invites: Invitációk küldése
+  this_is_committee: Ez a bizottság a(z) %{parent_group} csoport tagja.
+  view_requests: Kérelmek megtekintése
+  headings:
+    info:
+      page_search: Az összes olyan oldalt megkeresése, amelyhez közvetlenül vagy csoportjaival hozzáférhet
+      recent_pages: Ezeket az oldalakat nemrégiben hozták létre vagy frissítették.
+    page_search: Oldalak keresése
+    recent_pages: Legutóbbi oldalak
+  display_name: Megjelenítendő név
+  do_you_want_to_receive_email_notifications: Szeretnél e-mail értesítést kapni a „figyelt” oldalak változásairól?
+  email: Email
+  fingerprint: Ujjlenyomat
+  language: Nyelv
+  message_user_wrote_caption: "%{user} írta: "
+  message_you_wrote_caption: 'Te írtad:'
+  my_dashboard: Saját irányítópultom
+  notification_select:
+    digest: 'Igen: a változások napi összefoglalója'
+    none: 'Nem: nincs e-mail a változásokról'
+    single: 'Igen: változásonként e-mailt'
+  or_image_url: vagy kép URL
+  pgp_key: PGP kulcs
+  pgp_public_key: Nyilvános kulcs
+  pgp_key_description: 'Kísérleti: Töltsd fel PGP nyilvános kulcsod, ha titkosított e-mail értesítéseket szeretnél kapni (az új szolgáltatás hamarosan megjelenik). Titkosított megerősítő e-mailt küldünk Neked.'
+  pgp_key_invalid: A beírt kulcs nem importálható. Tényleg egy nyilvános PGP kulcsot illesztett be?
+  pgp_key_expired: A megadott PGP kulcs lejárt.
+  pgp_key_placeholder: Add meg a nyilvános PGP kulcsod
+  private_profile: Privát profil
+  remove_image_link: kép eltávolítása
+  save_changes: Változtatások mentése
+  select_image_file: Képfájl kiválasztása
+  send_message_link: Üzenet küldése
+  time_zone: Időzóna
+  unread_private_message: Olvasatlan privát üzeneted van a(z) %{user} felhasználótól
+  upload_image: Kép feltöltése
+  uploaded_image_cropped: A feltöltött kép 202 pixel négyzetre lesz kivágva és széthúzva.
+  username: Felhasználónév
+  account_settings: Fiókbeállítások
+  back_to_group: Vissza a csoportba
+  back_to_page: Vissza a lapra
+  home: Főoldal
+  menu_admin: Admin
+  menu_link_logout: A(z) %{user} felhasználó kiléptetése
+  profile: Profil
+  access: Hozzáférés
+  action: Esemény
+  advanced: Haladó
+  my_pages: Oldalaim
+  pages: Oldalak
+  popular_pages: Népszerű oldalak
+  properties: Tulajdonságok
+  recent_pages: Legutóbbi oldalak
+  current_video_sources: 'Jelenleg támogatott: youtube, blip.tv, google video, vimeo.'
+  video_embed_code_description: Ez nem a weboldal címe. Ez egy olyan kód, amelyet a < és > vesznek körül,  a videó webhely - youtube, stb. - elérhetővé teszi számodra a videó más oldalakra történő elhelyezését.
+  video_embed_code_prompt: Beágyazási kód külső videoforrásból.
+  access_code_expired: A(z) %{code} kód lejárt vagy nem létezik.
+  email_link_expires: Ez a link %{days} nap múlva lejár.
+  email_notice_access: 'Itt érheted el ezt az oldalt:'
+  email_notice_hello: Üdvözlet, %{from} küldött neked egy weboldalt.
+  email_notice_hello_with_message: 'Üdvözlet, %{from} küldött egy weblapot a következő üzenettel: %{message}'
+  email_notice_subject: Nézd meg a(z) "%{title}" oldalt
+  page_notice: Megjegyzés az oldalról
+  page_notice_title: <user>%{from}</user> küldte a(z) "%{page_title}" oldalt
+  page_notice_title_with_message: '<user>%{from}</user> küldte a(z) "%{page_title}" oldalt a következő üzenettel:'
+  page_update: Oldalfrissítés
+  page_updated: A(z) %{from} frissítette a(z) "%{page_title}" oldalt
+  page_history_add_star: "%{user_name} hozzáadott egy csillagot"
+  page_history_added_comment: "%{user_name} hozzáadott egy megjegyzést"
+  page_history_change_title: "%{user_name} módosította az oldal címét"
+  page_history_deleted_page: "%{user_name} törölte az oldalt"
+  page_history_destroyed_comment: "%{user_name} megsemmisített egy megjegyzést"
+  page_history_details_change_title: 'Feladó: "%{from}" Címzett: "%{to}"'
+  page_history_granted_group_full_access: "A(z) %{user_name} felhasználó teljes hozzáférést kapott a(z) %{item_name} csoporthoz"
+  page_history_granted_group_read_access: "A(z) %{user_name} felhasználó olvasási hozzáférést kapott a(z) %{item_name} csoporthoz "
+  page_history_granted_group_write_access: "A(z) %{user_name} felhasználó írási hozzáférést kapott a(z) %{item_name} csoporthoz "
+  page_history_granted_user_full_access: "A(z) %{user_name} felhasználó teljes hozzáférést kapott a(z) %{item_name} felhasználóhoz"
+  page_history_granted_user_read_access: "A(z) %{user_name} felhasználó olvasási hozzáférést kapott a(z) %{item_name} felhasználóhoz"
+  page_history_granted_user_write_access: "A(z) %{user_name} felhasználó írási hozzáférést kapott a(z) %{item_name} felhasználóhoz"
+  page_history_make_private: "A(z) %{user_name} felhasználó nem jelölte be az oldal nyilvánosságra hozatalának lehetőségét"
+  page_history_make_public: "A(z) %{user_name} felhasználó tette közzé az oldalt"
+  page_history_remove_star: "A(z) %{user_name} felhasználó eltávolította a csillagot"
+  page_history_revoked_group_access: "A(z) %{user_name} felhasználó visszavonta a hozzáférést a(z) %{item_name} csoporthoz"
+  page_history_revoked_user_access: "A(z) %{user_name} felhasználó visszavonta a hozzáférést a(z) %{item_name} felhasználóhoz"
+  page_history_start_watching: "A(z) %{user_name} felhasználó elkezdte figyelni ezt az oldalt"
+  page_history_stop_watching: "A(z) %{user_name} felhasználó abbahagyta az oldal figyelését"
+  page_history_updated_comment: "A(z) %{user_name} felhasználó frissítette a hozzáállást"
+  page_history_updated_content: "A(z) %{user_name} felhasználó frissítette az oldal tartalmát"
+  page_history_user_created_page: "A(z) %{user_name} felhasználó készítette az oldalt"
+  active_filters: Aktív szűrők
+  all_page_types: minden oldaltípus
+  all_pages: Az összes oldal
+  created: létrehozva
+  created_by_dotdotdot: Létrehozta...
+  created_by_me: Létrehozva
+  created_by_user: Létrehozva %{user} felhasználó által.
+  created_by_user_description: 'Egy adott felhasználó által létrehozott oldalak keresése. '
+  data_for_page_missing: Az oldal az adatai hiányoznak.
+  edit_title: cím szerkesztése
+  edited: Javítva
+  edited_by_user: 'Szerkesztve: %{user} által'
+  filter_group_description: Egy adott csoport által hozzáférhető oldalak keresése.
+  filter_tag_description: Egy adott címkével rendelkező oldalak keresése.
+  filter_user_description: Egy adott felhasználó által hozzáférhető oldalak keresése.
+  most_active: Legaktívabb
+  most_stars: Legértékeltebb
+  most_viewed: Legnézettebb
+  no_change: nincs változtatás
+  owned_by_me: Saját
+  owned_by_user: A(z) %{user} birtokában
+  page_name_description: Opcionális egyedi név (az oldal URL-jének létrehozására szolgál)
+  read: olvasott
+  starred: Értékelt
+  starred_by_user: 'Csillagozva: %{user} által'
+  type: Típus
+  unread: olvasatlan
+  updated: frissített
+  viewed: Megtekintett
+  watched_by_me: Figyelés
+  watched_by_user: 'Figyelt: %{user} által'
+  add_star_link: Csillag hozzáadása (%{star_count})
+  delete_page_link: A(z) %{page_class} törlése
+  destroy_page_via_shred: Azonnali megsemmisítés
+  destroy_page_via_shred_info: Ez véglegesen megsemmisíti az oldalt. Ez a művelet nem visszavonható.
+  destroy_page_via_trash: Kukába dob
+  destroy_page_via_trash_info: Ezt az oldalt a kukába helyezi, ahonnan később visszaállítható.
+  information: Információ
+  page_details_link: "A(z) %{page_class} részletei"
+  page_is_public: 'Ez a lap is nyilvános. '
+  participation: Résztvevő
+  public_checkbox_help: Ha be van jelölve, bárki megtekintheti ezt az oldalt.
+  remove_access_error: Ezen oldal elérését nem lehetett eltávolítani. Nem távolíthatja el a tulajdonosok hozzáférését vagy az oldal adminisztrációjához szükséges hozzáférést.
+  remove_star_link: Csillag eltávolítása (%{star_count})
+  undelete_from_trash: Visszaállít
+  watch_checkbox: Figyelje a frissítéseket
+  add_new_attachment: Új melléklet hozzáadása
+  page_access_admin: Teljes hozzáférés
+  page_access_edit: Írás képesség
+  page_access_none: Nincs hozzáférés
+  page_access_view: Csak olvasható
+  edit_attachments: Mellékletek szerkesztése
+  current_attachments: Jelenlegi mellékletek
+  use_radio_buttons_to_select_page_cover: A választógombok segítségével válaszd ki az oldal borítóját
+  share_already_exists_error: 'A "%{name}" már hozzáféréssel rendelkezik ehhez az oldalhoz.'
+  share_grant_required_error: "A(z) %{name} nem tekintheti meg ezt az oldalt. Előbb nagyobb hozzáférést kell biztosítani számukra."
+  share_include_message: Tégy bele egy egyéni üzenetet
+  share_include_paranoid_message: Egyéni üzenetet elhelyezése értesítésben (nem az e-mailben).
+  share_page_link: A(z) %{page_class} megosztása
+  share_page_recipients: Oldal megosztása
+  share_send_notification: Értesítés küldése
+  shared_page_success: Sikeresen megosztottad ezt az oldalt.
+  share_permission_denied_error: Nem változtathatod meg az oldal hozzáférési engedélyét
+  share_pester_error: 'Sajnáljuk, de nem oszthatod meg a következővel: "%{name}".'
+  notification_message: Értesítő üzenet
+  notify_contribution: "<b>Előzetes közreműködés:</b> értesítse azokat az embereket, akik <b>hozzájárultak</b> ehhez az oldalhoz."
+  notify_current_access: "<b>Jelenlegi hozzáférés:</b> értesítse azokat az embereket vagy csoportokat, akik jelenleg hozzáférnek az oldalhoz."
+  notify_no_access_error: Sajnáljuk, a(z) "%{name}" nem férsz hozzá ehhez az oldalhoz.
+  notify_page_link: Értesítés küldése
+  notify_success: Sikeresen küldtél értesítéseket.
+  send_only_with_encryption: Csak akkor küld el, ha titkosított terjesztés lehetséges
+  send_email: Email küldése
+  name_or_email_not_found: 'A(z) "%{name}" nem felel meg egyetlen felhasználó vagy csoport nevének, és nem érvényes e-mail cím.'
+  additional_page_access: További hozzáférés
+  announcement_page_description: Egy közlemény.
+  announcement_page_display: Közlemény
+  announcements_page_display: Közlemények
+  article_page_description: Hozz létre egy blogbejegyzést vagy egy hírt.
+  article_page_display: Cikk
+  asset_page_description: Tölts fel képet, dokumentumot, táblázatot, prezentációt vagy bármilyen fájlt.
+  asset_page_display: Fájl
+  attachments: Csatolmányok
+  collection_class_description: Különleges oldalak, amelyek más oldalakat tartalmaznak.
+  collection_page_display: Gyűjtemény
+  create_page: Oldal létrehozása
+  discussion_page_description: Beszélgess egy adott témáról csoportokkal vagy más felhasználókkal.
+  discussion_page_display: Csoport beszélgetés
+  event_page_description: Naptári esemény.
+  external_video_page_description: Egy videó bemutatás egy külső webhelyről.
+  external_video_page_display: Külső videó
+  folder_class_description: Hozz létre egy mappát a többi oldal rendezéséhez.
+  folder_display: Könyvtár
+  gallery_description: Töltsön fel több képet, vagy rendezze a meglévő képeket egy szettbe.
+  gallery_display: Galéria
+  message_page_description: Személyes üzenet küldése az egyes címzetteknek.
+  message_page_display: Személyes üzenetet
+  page_added_to_group: 'Ez az oldal hozzáadódik a következőhöz: %{group_type} %{group_name}.'
+  page_create_owner: Laptuladonos
+  page_owner_error: Az oldal tulajdonosa nem lehet üres.
+  ranked_vote_page_description: Készíts egy listát azokról a választási lehetőségekről, amelyek alapján az emberek preferencia sorrendje szerint rangsorolhatnak.
+  ranked_vote_page_display: Besorolási szavazás
+  rate_many_page_description: Készíts egy listát azokról a lehetőségekről, amelyeket az emberek jóváhagyhatnak vagy elutasíthatnak.
+  rate_many_page_display: Jóváhagyási szavazás
+  select_file_to_upload: Válaszd ki a feltölteni kívánt fájlt.
+  survey_page_description: Készíts egy sor kérdést az emberek válaszait várva.
+  survey_page_display: Felmérés
+  task_list_page_description: Készíts listát a teendőkből és rendeld a feladatokat magadhoz vagy másokhoz.
+  task_list_page_display: Feladatlista
+  wiki_page_description: Egy szerkeszthető, szabad formátumú szöveges dokumentumot létrehozása.
+  wiki_page_display: Wiki oldal
+  assign_to: Hozzárendelve
+  completed: Befejezve
+  completed_tasks: Befejezett feladatok
+  no_completed_tasks: Nincsenek befejezett feladatok
+  no_pending_tasks: Nincsenek felfüggesztett feladatok
+  page_group_media: Multimédia
+  page_group_planning: Tervező eszközök
+  page_group_text: Szöveg és beszélgetések
+  page_group_vote: Szavazások és szavazatok
+  pending_tasks: Felfüggesztett feladatok
+  confirm_vote_button: Szavazat megerősítése
+  edit_my_vote_tab: Szavazatom szerkesztése
+  first_choice_of: első választása
+  ranked_vote_instructions: Húzza és dobja az elemeket a következő listába, amíg a sorrendben a legelőnyösebb felől a legelőnytelenebb alul van.
+  show_results_tab: Eredmények mutatása
+  top_pick: csúcs válasz
+  vote:
+    not_voted_on: Nem szavazott
+    really_remove_this: Valóban el akarja távolítani ezt a lehetőséget?
+    voted_on: Szavazott
+    you_have_not_ranked: 'Még nem rangsoroltad:'
+  vote_bad: rossz
+  vote_good: jó
+  vote_no: 'nem'
+  vote_none: semmi
+  vote_ok: ok
+  add_long_text_question_link: Hosszú válasz
+  add_select_many_question_link: Válassz több válaszlehetőséget
+  add_select_one_question_link: Válassz egy válaszlehetőséget
+  add_short_text_question_link: Rövid válasz
+  drag_to_move_tip: fogja meg a mozgatáshoz
+  each_line_is_a_choice_caption: "(minden sor egy lehetséges választás)"
+  no_data_uploaded_label: Nincs feltöltött adat
+  private_question_label: Privát kérdés
+  save_survey_button: Felmérés elmentése
+  see_whole_response_link: a teljes válasz megtekintése
+  select_many_choices_label: 'Válassz több választási lehetőséget:'
+  select_one_choices_label: 'Válassz egy választási lehetőséget:'
+  survey_average_rating_heading: 'Átlag értékelés:'
+  survey_description_explaination: Ez a szöveg megjelenik a bevezető lapon, és ez lesz az első dolog, amelyet a felmérés résztvevői látnak.
+  survey_introduction_tab: Bevezetés
+  survey_list_all_tab: Válaszok felsorolása
+  survey_may_create_response: Válasz létrehozható?
+  survey_may_rate: Válaszok értékelhetőek?
+  survey_may_see_ratings: Értékelések láthatóak?
+  survey_may_see_responses: Válaszok láthatóak?
+  survey_my_response_tab: Válaszom
+  survey_please_check_and_rate_message: Kérjük, ellenőrizd a válaszokat, és értékeld mások válaszát.
+  survey_please_check_message: Kérjük, ellenőrizd a válaszokat.
+  survey_previous_result: Előzetesen
+  survey_question_label: 'Kérdés:'
+  survey_questions: 'Kérdések:'
+  survey_rate_this_response_heading: Értékeli ezt a választ
+  survey_rated_by_1_person_caption: Valaki értékelte.
+  survey_rated_by_x_people_caption: '%{count} ember értékelte.'
+  survey_respond_button: Válaszol
+  survey_response_by: '%{login} válasza'
+  survey_select_a_rating_message: Válassz egy besorolást a következő elem megtekintéséhez.
+  survey_skip_next_link: Ugrás a következőre
+  survey_thanks_submit_message: Köszönjük, hogy elküldted válaszod.
+  survey_you_already_rated_response_with_rating_heading: Már értékelted ezt a választ. A %{rating} értéket adtad.
+  survey_you_previousely_rated_message: Korábban %{rating} -el értékelted ezt az elemet.
+  survey_your_rating_heading: 'Az értékelésed:'
+  their_answer_goes_here_label: Válaszuk itt található ...
+  video_link_question_link: Videó link
+  friends_description: Barátaid
+  may_pester_description: Engedélyezed az embereknek, hogy üzeneteket, oldalakat és meghívókat küldjenek neked.
+  may_pester_label: Megosztod velem?
+  may_request_contact_description: Engedélyezed másoknak, hogy kapcsolatid közé kéredzkedjenek.
+  may_request_contact_label: Kapcsolatfelvételt kér?
+  may_see_contacts_description: Engedélyezed mások számára, névjegyeid láthatóságát.
+  may_see_contacts_label: Látod a névjegyeimet?
+  may_see_groups_description: Engedélyezed másoknak, hogy láthassák melyik csoporthoz tartozol.
+  may_see_groups_label: Látod a csoportjaimat?
+  may_view_description: Ha nincs bejelölve, akkor a profil teljesen el lesz rejtve.
+  may_view_label: Látod a profilomat?
+  peers_description: A csoportjaid tagjai
+  permissions_key: Kulcs
+  public_description: Mindenki az interneten
+  sharing_and_requests: Megosztás és kérelmek
+  banner: Transzparens
+  banner_info: Az optimális méret %{optimal_dimensions} pixel
+  edit_profile_link: Profil szerkesztése
+  organizational_role: Szervezeti szerep
+  post_message: Üzenet posztolása
+  profile_member_since: 'Mióta tag:'
+  profile_saved: A profilod el lett mentve.
+  remove_friend_link: Eltávolítás a saját névjegyekből
+  request_friend_link: Hozzáadás a saját névjegyekhez
+  view_profile: Profil megtekintése
+  all_requests: Minden kérelem
+  incoming: Bejövő
+  not_allowed_to_respond_to_request: "A(z) %{user} nem jogosult, hogy %{command} a kérést."
+  outgoing: Kimenő
+  request: Kérelem
+  request_pending: "%{request} függőben van"
+  requests: Kérelmek
+  send_request_button: Kérelem elküldése
+  try_again: Újrapróbál
+  friend_remove_confirmation: Biztos vagy benne, hogy már nem akarsz a(z) %{user} névjegyei között lenni?
+  friend_request_message_label: Mond el a(z) %{user} felhasználónak, miért szeretnél kapcsolattartójuk lenni.
+  invite_error_already_member: A csoport tagja vagy már.
+  invite_error_redeemed: A meghívót már felhasználták.
+  invite_info: Írd be azon felhasználói bejelentkezések vagy e-mail címeknek a listáját, akiket fel szeretne hívni ehhez a %{group_type} csoporthoz.
+  network_invite_info: Írd be azoknak a csoportoknak a nevét, amelyeket invitálni szeretnél ebbe a hálózatba.
+  recipient_tip: A címzetteket elválaszthatja vesszőkkel, szóközökkel vagy új sorokkal.
+  request_exists_error: A kérés már létezik a(z)% %{recipient} címzetthez
+  you_are_invited: Felkértek a csatlakozásra.
+  activerecord:
+    models:
+      request_to_create_council: Tanács létrehozásának kérése
+      request_to_destroy_our_group: Csoport megsemmisítési kérelem
+      request_to_friend: Kapcsolattartási kérelem
+      request_to_join_our_network:
+        one: Meghívók csatlakozásra
+        other: Meghívók csatlakozásra
+      request_to_join_us:
+        one: Meghívók csatlakozásra
+        other: Meghívók csatlakozásra
+      request_to_join_us_via_email:
+        one: Meghívók csatlakozásra
+        other: Meghívók csatlakozásra
+      request_to_join_you: Csatlakozási kérelem
+      request_to_join_your_network: Csatlakozási kérelem
+      request_to_remove_user: Tag eltávolítási kérelem
+  request_to_join_our_network:
+    one: Meghívók csatlakozásra
+    other: Meghívók csatlakozásra
+  invitation_to_join:
+    one: Meghívók csatlakozásra
+    other: Meghívók csatlakozásra
+  request_to_join_us_via_email:
+    one: Meghívók csatlakozásra
+    other: Meghívók csatlakozásra
+  request_to_create_council: Tanács létrehozásának kérése
+  request_to_create_council_description: A(z) %{user} felhasználó javasolta a(z) %{group_type} %{group} tanács létrehozását.
+  request_to_create_council_short: Legyen a(z) %{group} csoportnak tanácsa?
+  request_to_destroy_our_group: Csoport megsemmisítési kérelem
+  request_to_destroy_our_group_description: A(z) %{user} felhasználó javasolta a(z) %{group_type} %{group} megsemmisítését.
+  request_to_destroy_our_group_short: Legyen a %{group} csoport megsemmisítve?
+  request_to_friend: Kapcsolattartási kérelem
+  request_to_friend_description: A(z) %{user} felhasználó azt kérte, hogy legyen a(z) %{other_user} felhasználó kapcsolattartója.
+  request_to_friend_short: Legyen a(z) %{user} a(z) %{other_user} kapcsolattartója?
+  request_to_join: Csatlakozási kérelem
+  request_to_join_network_short: Csatlakozzon a(z) %{group} csoport a(z) %{network} hálózathoz?
+  request_to_join_our_network_description: A(z) %{group} csoport meghívást kapott, hogy csatlakozzon a(z) %{network} hálózathoz.
+  request_to_join_short: Csatlakozzon a %{user} a(z) %{group} csoporthoz?
+  request_to_join_us: Csatlakozási kérelem
+  request_to_join_us_short: Csatlakozzon a %{user} a(z) %{group} csoporthoz?
+  request_to_join_us_description: A(z) %{user} felhasználót meghívták, hogy csatlakozzon a(z) %{group} csoporthoz.
+  request_to_join_us_via_email_description: A(z) %{user} felhasználót meghívták, hogy csatlakozzon a(z) %{group} csoporthoz.
+  request_to_join_us_via_email_short: 'Csatlakozzon %{email} a(z) %{group} csoporthoz? '
+  request_to_join_you: Csatlakozási kérelem
+  request_to_join_you_description: A(z) %{user} felhasználó csatlakozni kíván a(z) %{group} csoporthoz.
+  request_to_join_your_network: Csatlakozási kérelem
+  request_to_join_your_network_description: A(z) %{group} csoport csatlakozni kíván a(z) %{network} hálózathoz.
+  request_to_remove_user: Tag eltávolításának kérelmezése
+  request_to_remove_user_description: A(z) %{user} felhasználó javasolta, hogy távolítd el a(z) %{member} felhasználót a(z) %{group_type} %{group} csoportból.
+  request_to_remove_user_short: Legyen a(z) %{member} felhasználó eltávolítva a(z) %{group} csoportból?
+  request_to_remove_group: A csoport eltávolításának kérelmezése
+  request_to_remove_group_description: A(z) %{user} felhasználó javasolta, hogy távolítsd el a(z) %{group} csoportot a(z) %{network} hálózatról.
+  request_to_remove_group_short: Legyen a(z) %{group} csoport eltávolítva a(z) %{network} hálózatról?
+  view_label: Nézet
+  activity_twinkled: 'A(z) %{user} felhasználó értékelte a(z) "%{post}" posztod'
+  asset_version_list_version_heading: verzió
+  created_on: Létrehozva
+  delete_version_confirm: Biztosan törlöd ezt a verziót?
+  file_size: Fájl méret
+  file_version_deleted: fájl verziója törölve
+  format: Formátum
+  full: teljes
+  galleries: Galériák
+  history: Történet
+  image_options_info: A wiki-ben szereplő képnek hivatkoznia kell-e a teljes méretű képre?
+  image_select_info: Válassz ki egy képet, amelyet beilleszthető a korábban a csoportba feltöltött képekbe
+  image_size_info: Válaszd ki a beillesztendő kép méretét
+  image_upload_info: Tölts fel egy új képet a csoportba, hogy felhasználható legyen a wikiben
+  large: nagy
+  media_image: Kép
+  media_images: Képek
+  medium: közepes
+  other_formats: Más formátumok
+  regenerate: miniatűrök regenerálása
+  small: kicsi
+  version_number: '%{version} verzió'
+  zip_file: Zip fájl
+  anonymous: névtelen
+  login_required: Bejelentkezés szükséges
+  login_required_description: Kérjük, jelentkezz be a művelet végrehajtásához.
+  permission_denied: Hozzáférés megtagadva
+  permission_denied_description: Nincs elegendő engedélyed ennek a műveletnek a végrehajtásához.
+  date_all_time: Mindenkori
+  date_this_month: Ehavi
+  date_this_week: Eheti
+  date_this_year: Idei
+  date_today: Ma
+  friday: Péntek
+  monday: Hétfő
+  saturday: Szombat
+  sunday: Vasárnap
+  thursday: Csütörtök
+  tuesday: Kedd
+  wednesday: Szerda
+  alert_field_errors: Problémák vannak a következő mezőkkel
+  alert_not_saved: A módosításokat nem sikerült menteni
+  alert_saved: Változtatások elmentve
+  csrf_error_message: 'A bejelentkezési igényed úgy látszik megpróbálta feltörni ezt a weboldalt. Ne aggódjon: ez a hiba gyakran előfordul még ártatlan kérelmek esetén is. Csak extra paranoidok vagyunk. Csak annyit kell tennie, hogy újból feltölti az oldalt, mielőtt megpróbálna bejelentkezni. Ezen a linken ismét megpróbálhatja.'
+  error_saving_new_order_message: 'Hiba az új rendezés mentésekor: %{error_message}'
+  activate_js_to_rearrange_photos: Aktiválja a JavaScriptet, hogy a Húzd & Dobd használatával átrendezhesd a képeket!
+  add_another_file: Adj hozzá egy másik fájlt
+  add_existing_image: Fotó hozzáadása
+  add_photo_to_gallery: Kattints egy fotóra a hozzáadásához
+  album_cover_changed: Az album borítója megváltozott
+  back_to_gallery_link: Vissza a galériához
+  cancel_link: mégsem
+  download: Letöltés
+  download_gallery: Galéria letöltése
+  drag_and_drop_to_rearrange_photos: Húzza és dobja be a képeket az átrendezéshez
+  edit_gallery: Galéria szerkesztése
+  error_saving_new_order: Hiba történt az új sorrend mentésekor!
+  file_must_be_image_error: A fájlnak egy képnek kell lennie, hogy a galéria részét képezze.
+  gallery_changing_cover_message: A borító cseréje...
+  gallery_slideshow_apply_settings_button: alkalmaz
+  gallery_undo_link: visszavonás
+  make_album_cover: tedd ezt a képet az album borítójává
+  move_image_left: Mozgassa a képet balra
+  move_image_right: Mozgassa a képet jobbra
+  no_images_in_gallery: Nincsenek képek a galériában
+  order_changed: A sorrend megváltozott.
+  remove_from_gallery: Távolítsd el a galériából
+  removing_image: Kép eltávolítása...
+  saved_new_order: Új sorrend elmentve!
+  saving_your_changes: Módosításaid mentése ...
+  slideshow_delay_input: Frissítsen %{input_field} másodpercenként
+  successful_undelete_image: A kép sikeresen visszaállítva.
+  successfully_removed_image: A kép sikeresen eltávolítva! (%{undo_link})
+  upload_images_link: Képek feltöltése
+  you_are_not_allowed_to_do_that: Ez nem engedélyezett számodra!
+  caption: Felirat
+  file: Fájl
+  files: Fájlok
+  icon: Ikon
+  photo: Fotó
+  photo_credit: Fotó jóváírás
+  size: Méret
+  video_embed: Beágyaz
+  add_tags: Címkék hozzáadása
+  current_tags: Jelenlegi címkék
+  no_tags: nincsenek címkék
+  popular_tags: Népszerű címkék
+  recent_tags: Legutóbbi címkék
+  separate_tags: Válasszd el a címkéket vesszővel.
+  tag: Cimke
+  tags: Cimkék
+  set_status_button: Állapot frissítése
+  welcome_message: A Crabgrass lehetővé teszi a társadalmi változásokkal foglalkozó szervezetek számára a dolgok elvégzését, a szavak megfogalmazását, az együttműködést és a hálózatépítést.
+  welcome_title: Üdvözlünk a %{site_title} -on.
+  a_message_link: egy üzenet
+  a_reply_link: egy válasz
+  add_one_or_more_tags: Adj hozzá egy vagy több címkét vesszővel elválasztva
+  chat: Csevej
+  confirm_discarding_text_area: Az összes nem mentett munkád el fog veszni. A szerkesztés folytatásához nyomd meg a %{cancel} gombot.
+  illegal_redirect: Illegális átirányítás
+  include_full_checkbox: a teljes képhez tartozó link belefoglalása
+  left_the_chatroom: elhagyta a csevegőszobát
+  place: hely
+  preview_selected_image: A kiválasztott kép előnézete
+  redirect_to_foreign_domain: Megpróbálsz átirányítani egy idegen domainre (%{url}) a bejelentkezés után. Biztonsági okokból eltávolítottuk ezt a paramétert az URL -ből.
+  save_wiki_before_adding_image: Kérjük, mentsd el a wikit, mielőtt hozzáfűznél egy képet.
+  view_slideshow: Diavetítés megtekintése
+  break_lock_button: Lezárás megszüntetése
+  can_still_save: Még mindig menthetsz.
+  cant_edit_section_html: A(z) %{section} szerkesztése nem lehetséges.
+  cant_find_wiki_section: Nem található a(z) %{section} wiki szakasz
+  changes_made: A változtatások %{when} -n.
+  changes_might_be_overwritten: Lehet, hogy a változtatásaid felülíródnak.
+  diff_link: változtatások megtekintése
+  edit_wiki: Wiki szerkesztése
+  force_save_button: Lezárás megszüntetése és mentés
+  formatting_reference_link: Szerkesztési súgó
+  insert_image: Kép beszúrása
+  leave_editing_wiki_page_warning: Ha elhagyja ezt az oldalt, akkor el fogja veszíteni a változásait.
+  next_change: Következő változtatás
+  other_section_locked_error_html: Egyszerre csak egy szakasz zárható le. A(z) %{szakasz} -t már lezártad.
+  prev_change: Előző változtatás
+  preview: Előnézet
+  private_wiki: Privát wiki
+  public_wiki: Nyilvános wiki
+  save_or_cancel_edit_lock_wiki_error: Lezártad ezt a wikit. Más felhasználók csak akkor tudják szerkeszteni, ha a %{save_button} vagy a %{cancel} gombra kattintanak a szerkesztés leállításához.
+  user_locked_section_html: "A(z) %{section} %{user} által lezárva."
+  version: Verzió
+  version_doesnt_exist: Nincs %{version} verzió
+  version_exists_error: A wiki zárolva van, mert a(z) %{user} felhasználó nemrégiben mentett új változtatásokat. Még mentheted a módosításokat, de ez felülírja az új verziót.
+  version_link: verzió megtekintése
+  versions: Verziók
+  wiki: Wiki
+  wiki_existed_new_version_created: Ezt a wiki-t egy másik felhasználó hozta létre. A módosításait új verzióként mentettük.
+  wiki_is_locked_html: Ezt a wiki-t jelenleg a(z) <b>%{user}</b> zárolja.
+  wiki_revert_version: Visszaállítás a(z) %{version} verzióhoz
+  wiki_section_edit: Ezen szakasz szerkesztése
+  wiki_section_is_locked: A(z) %{section} szakaszt jelenleg a(z) %{felhasználó} zárolja.
+  wiki_version_creator_heading: személy
+  wiki_version_revert_link: visszaállít
+  you_are_viewing_version: A(z) %{user} %{version} verzióját tekinted meg

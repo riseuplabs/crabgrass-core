@@ -1,0 +1,22 @@
+da:
+  login: Log ind
+  login_failed: Kunne ikke logge ind
+  login_failure_reason: Brugernavn eller kodeord er forkert
+  logout_success: Farvel
+  logout_success_message: Du er nu logget ud
+  signup_email_info: 'Valgfrit: brugt hvis du glemmer dit kodeord'
+  signup_link: Brug for en ny profil?
+  signup_success: Registrering vellykket
+  signup_success_message: Tak for oprettelsen!
+  signup_title: Opret Din Profil
+  forgot_password_link: Jeg har glemt mit kodeord
+  password: Kodeord
+  people: Mennesker
+  me: Mig
+  groups: Grupper
+  networks: Netværk
+  home: Hjem
+  menu_link_logout: Log ud
+  invite_info: Indtast brugernavnene eller emails på dem du vil have til at tilmelde sig denne %{group_type}
+  network_invite_info: Indtast navnene på de grupper du har lyst til at invitere til dette netværk.
+  recipient_tip: Adskil modtagere med kommaer, mellemrum eller nye linjer

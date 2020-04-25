@@ -1,0 +1,17 @@
+hu:
+  riseup:
+    run_by_html: "Az oldalt %{provider} %{description} szolgáltatja."
+    description: ", az Ön barátságosan autonóm tech kollektívája 1999 óta."
+    privacy_policy: "Adatvédelmi irányelvek"
+    terms_of_service: "Szolgáltatási feltételek"
+    about_us: "Rólunk"
+    email_accounts: "Email fiókok"
+    mailing_lists: "Levelezési listák"
+    system_status: "Rendszer státusz"
+    donate: "Támogasd a Riseup -ot"
+    riseup_black: "Riseup Fekete"
+    riseup_red: "Riseup Vörös"
+    accounts_note: >
+        MEGJEGYZÉS: A webhely felhasználói fiókjai függetlenek a riseup.net szolgáltatástól.
+        Más szóval, nem használhatja a %{riseup_black} vagy a %{riseup_red} fiókjait
+        a webhelyre történő bejelentkezéshez.
