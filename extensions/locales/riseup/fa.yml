@@ -1,0 +1,17 @@
+fa:
+  riseup:
+    run_by_html: "این سایت توسط %{provider}%{description} اداره می‌شود"
+    description: "، جمع فناوری خودمختار دوستانه شما از سال 1999."
+    privacy_policy: "سیاست حریم خصوصی"
+    terms_of_service: "شرایط استفاده از خدمات"
+    about_us: "درباره ما"
+    email_accounts: "حساب‌های رایانامه"
+    mailing_lists: "فهرست‌های رایانامه"
+    system_status: "وضعیت سیستم"
+    donate: "کمک به رایزآپ"
+    riseup_black: "رایزآپ مشکی"
+    riseup_red: "رایزآپ سرخ"
+    accounts_note: >
+        توجه: حساب‌های کابری این وب‌سایت جدا از خدمات riseup.net هستند. این به این
+        معنی است که کاربر نمی‌تواند از حساب‌های %{riseup_black} یا %{riseup_red} خود
+        برای ورود استفاده کند.
