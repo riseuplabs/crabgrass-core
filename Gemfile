@@ -8,7 +8,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ##
 
 # Rails is the framework we use.
-gem 'rails', '~> 5.2.3'
+gem 'rails', '~> 5.2.4'
 
 # Security updates
 #https://github.com/sparklemotion/nokogiri/issues/1892
@@ -16,7 +16,7 @@ gem 'nokogiri', '~> 1.10.3'
 
 # Rake is rubys make... performing tasks
 # locking in to latest major to fix API
-gem 'rake', '~> 10.0', require: false
+gem 'rake', '~> 12.3', require: false
 
 # Application preloader for faster start time
 gem 'spring', group: :development
@@ -33,7 +33,7 @@ gem 'mysql2', '~> 0.5.2'
 
 # parsing and generating JSON
 # locking in to latest major to fix API
-gem 'json', '~> 1.8'
+gem 'json', '~> 2.3'
 
 # Markup language that uses indent to indicate nesting
 # locking in to latest major to fix API
@@ -85,7 +85,7 @@ gem 'pundit', '~> 1.1'
 # Bcrypt for has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
-gem 'secure_headers', '~> 4.0.2'
+gem 'secure_headers', '~> 5.2'
 
 # ?
 # locking in to latest major to fix API
