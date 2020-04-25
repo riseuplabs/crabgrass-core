@@ -298,6 +298,7 @@ ca:
   group_successfully_created: S'ha creat el grup correctament.
   join_group_confirmation: Esteu segur que voleu afegir-vos a aquest %{group_type}?
   join_group_link: Adherir-se a %{group_type}
+  leave_group_confirmation: De debò voleu deixar aquest %{group_type}? Perdreu l'accés a totes les pàgines creades per aquest %{group_type}.
   leave_group_link: Deixa %{group_type}
   link_name_description: 'Aquest serà el nom de referència d''aquest grup als enllaços i adreces web.  Només pot contenir caràcters alfanumèrics sense espais. '
   network_initial_member: Trieu la organització que serà un membre inicial d'aquesta xarxa.
