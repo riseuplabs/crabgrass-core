@@ -33,7 +33,7 @@ gem 'mysql2', '~> 0.5.2'
 
 # parsing and generating JSON
 # locking in to latest major to fix API
-gem 'json', '~> 1.8'
+gem 'json', '~> 2.3'
 
 # Markup language that uses indent to indicate nesting
 # locking in to latest major to fix API

@@ -133,7 +133,7 @@ GEM
     innertube (1.1.0)
     joiner (0.4.2)
       activerecord (>= 5.2.beta1)
-    json (1.8.6)
+    json (2.3.0)
     libv8 (3.16.14.19)
     loofah (2.5.0)
       crass (~> 1.0.2)
@@ -306,7 +306,7 @@ DEPENDENCIES
   haml-rails (~> 1.0)
   http_accept_language (~> 2.0)
   i18n (~> 0.7)
-  json (~> 1.8)
+  json (~> 2.3)
   mail-gpg (~> 0.3.3)
   mime-types
   minitest (~> 5.10.3)
