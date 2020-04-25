@@ -85,7 +85,7 @@ gem 'pundit', '~> 1.1'
 # Bcrypt for has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
-gem 'secure_headers', '~> 4.0.2'
+gem 'secure_headers', '~> 5.2'
 
 # ?
 # locking in to latest major to fix API
