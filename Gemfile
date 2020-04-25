@@ -8,7 +8,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ##
 
 # Rails is the framework we use.
-gem 'rails', '~> 5.2.3'
+gem 'rails', '~> 5.2.4'
 
 # Security updates
 #https://github.com/sparklemotion/nokogiri/issues/1892
