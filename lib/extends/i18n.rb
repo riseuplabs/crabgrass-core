@@ -54,28 +54,31 @@ module I18n
   class << self
     def languages
       @languages ||= begin
+        # sorted here alphabetically.
+        # order attribute is roughly according to
+        # https://en.wikipedia.org/wiki/List_of_languages_by_number_of_native_speakers
         hsh = HashWithIndifferentAccess.new(Lang.new('Unknown', :xx, false))
-        # In order of number of speakers worldwide
-        # http://en.wikipedia.org/wiki/Most_spoken_languages
-        hsh[:en] = Lang.new('English',   'en',  3, false)
-        hsh[:es] = Lang.new('Español',   'es',  2, false)
         hsh[:ar] = Lang.new('العربية',   'ar',  5, true)
-        hsh[:ru] = Lang.new('Pyccĸий',   'ru',  7, false)
-        hsh[:pt] = Lang.new('Português', 'pt',  6, false)
-        hsh[:fr] = Lang.new('Français',  'fr',  9, false)
-        hsh[:de] = Lang.new('Deutsch',   'de',  8, false)
-        hsh[:tr] = Lang.new('Türkçe',    'tr', 10, false)
-        hsh[:it] = Lang.new('Italiano',  'it', 11, false)
-        hsh[:pl] = Lang.new('Polski',    'pl', 12, false)
-        hsh[:nl] = Lang.new('Nederlands', 'nl', 14, false)
-        hsh[:el] = Lang.new('Ελληνικά',  'el', 15, false)
-        hsh[:sv] = Lang.new('Svenska',   'sv', 16, false)
-        hsh[:he] = Lang.new('עִבְרִית',     'he', 17, true)
         hsh[:bg] = Lang.new('български език', 'bg', 18, false)
         hsh[:ca] = Lang.new('Català',    'ca', 19, false)
-        hsh[:no] = Lang.new('Norsk',     'no', 21, false)
         hsh[:cs] = Lang.new('Čeština',   'cs', 100, false)
+        hsh[:de] = Lang.new('Deutsch',   'de',  8, false)
+        hsh[:el] = Lang.new('Ελληνικά',  'el', 15, false)
+        hsh[:en] = Lang.new('English',   'en',  3, false)
+        hsh[:es] = Lang.new('Español',   'es',  2, false)
         hsh[:eu] = Lang.new('Euskara',   'eu', 101, false)
+        hsh[:fa] = Lang.new('فارسی',  'fa', 25, true)
+        hsh[:fr] = Lang.new('Français',  'fr',  9, false)
+        hsh[:he] = Lang.new('עִבְרִית',     'he', 17, true)
+        hsh[:hu] = Lang.new('magyar nyelv',     'hu', 78, true)
+        hsh[:it] = Lang.new('Italiano',  'it', 11, false)
+        hsh[:nl] = Lang.new('Nederlands', 'nl', 14, false)
+        hsh[:no] = Lang.new('Norsk',     'no', 21, false)
+        hsh[:pl] = Lang.new('Polski',    'pl', 12, false)
+        hsh[:pt] = Lang.new('Português', 'pt',  6, false)
+        hsh[:ru] = Lang.new('Pyccĸий',   'ru',  7, false)
+        hsh[:sv] = Lang.new('Svenska',   'sv', 16, false)
+        hsh[:tr] = Lang.new('Türkçe',    'tr', 10, false)
         hsh
       end
     end
