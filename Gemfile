@@ -12,7 +12,7 @@ gem 'rails', '~> 5.2.4'
 
 # Security updates
 #https://github.com/sparklemotion/nokogiri/issues/1892
-gem 'nokogiri', '~> 1.10.3'
+gem 'nokogiri', '~> 1.11.4'
 
 # Rake is rubys make... performing tasks
 # locking in to latest major to fix API
